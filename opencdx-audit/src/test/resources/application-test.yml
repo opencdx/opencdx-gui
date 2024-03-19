@@ -1,0 +1,32 @@
+# Properties for a local development environment go here.
+grpc:
+  port: 0
+
+server:
+  port: 8080
+  servlet:
+    context-path: /service/v1
+
+management:
+  endpoint:
+    health:
+      enabled: true
+logging:
+  level:
+    root: TRACE
+    health:
+      safe: DEBUG
+spring:
+  application:
+    name: Audit
+  cloud:
+    config:
+      enabled: false
+  spring.data.mongodb:
+    uri: mongodb+srv://<username>:<password>@database:27017/opencdx/
+    username: root
+    password: root
+
+opencdx:
+  client:
+    trustStore: ../certs/opencdx-clients.pem

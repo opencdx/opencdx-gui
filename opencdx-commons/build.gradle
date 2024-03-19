@@ -1,0 +1,62 @@
+plugins {
+    id "java-library"
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-validation:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-aop:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-security:${springBootVersion}"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
+    implementation "com.google.protobuf:protobuf-java:${protobufVersion}"
+    implementation "com.google.api.grpc:proto-google-common-protos:${protoGoogleCommonLibraryVersion}"
+    implementation "io.github.lognet:grpc-spring-boot-starter:${grpcSpringBootStarterVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-cache:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-webflux:${springBootVersion}"
+
+    implementation 'io.micrometer:micrometer-observation'
+    implementation 'io.micrometer:micrometer-tracing'
+    implementation 'io.micrometer:micrometer-tracing-bridge-brave'
+    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+    implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
+    runtimeOnly "com.github.loki4j:loki-logback-appender:${lokiLogBackAppenderVersion}"
+    
+    implementation "org.springframework.boot:spring-boot-starter-data-mongodb:${springBootVersion}"
+
+    implementation "org.springframework:spring-context:${springContextVersion}"
+    implementation "org.springframework:spring-context-support:${springContextVersion}"
+    implementation "com.hubspot.jackson:jackson-datatype-protobuf:${jacksonProtobufVersion}"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonDataTypeJsr310}"
+    implementation "org.apache.commons:commons-lang3:${commonsLang3Version}"
+
+    implementation "com.google.protobuf:protobuf-java:${protobufVersion}"
+    implementation "com.google.protobuf:protobuf-java-util:${protobufVersion}"
+
+
+    implementation "io.jsonwebtoken:jjwt-api:${jsonWebTokenVersion}"
+    implementation "io.jsonwebtoken:jjwt-impl:${jsonWebTokenVersion}"
+    implementation "io.jsonwebtoken:jjwt-jackson:${jsonWebTokenVersion}"
+
+    implementation "com.googlecode.owasp-java-html-sanitizer:owasp-java-html-sanitizer:${owaspSanitizerVersion}"
+    // Swagger
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springDocVersion}"
+    implementation 'com.hubspot.jackson:jackson-datatype-protobuf:0.9.14'
+    implementation 'io.swagger.core.v3:swagger-core-jakarta:2.2.19'
+    implementation project(":opencdx-proto")
+    implementation project(":opencdx-client")
+    implementation "io.nats:nats-spring:${natsSpringVersion}"
+
+    testImplementation platform("org.junit:junit-bom:${junitBomVersion}")
+    testImplementation "org.junit.jupiter:junit-jupiter"
+}
+
+bootJar {
+    enabled = false
+}
+
+test {
+    useJUnitPlatform()
+}

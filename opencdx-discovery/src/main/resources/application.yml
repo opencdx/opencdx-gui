@@ -1,0 +1,52 @@
+spring:
+  banner:
+    location: /banner.txt
+  application:
+    name: Discovery
+
+server:
+  port: 8761
+  ssl:
+    enabled: true
+    client-auth: none
+    key-store: file:/certs/opencdx-keystore.p12
+    key-store-password: opencdx
+    key-alias: discovery
+
+management:
+  info:
+    java:
+      enabled: true
+    env:
+      enabled: true
+    git:
+      mode: full
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      enabled: true
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  tracing:
+    enabled: true
+    sampling.probability: 1.0
+    propagation:
+      type: b3
+  zipkin:
+    tracing:
+      endpoint: https://zipkin:9411/api/v2/spans
+
+logging:
+  level:
+    health:
+      safe: debug
+  pattern:
+    level: "${spring.application.name:} trace_id=%mdc{traceId} span_id=%mdc{spanId} trace_flags=%mdc{traceFlags} %p"
+    file: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${spring.application.name:} trace_id=%mdc{traceId} span_id=%mdc{spanId} trace_flags=%mdc{traceFlags} %p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx"
+  file:
+    name: "/var/log/sample-boot-application.log"
+
