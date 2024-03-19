@@ -84,32 +84,7 @@ check_openssl_version
 check_keytool
 
 # Array of service names
-services=(  "Audit"
-            "HelloWorld"
-            "Communications"
-            "Health"
-            "Connected-Lab"
-            "IAM"
-            "Media"
-            "Tinkar"
-            "Config"
-            "Admin"
-            "Gateway"
-            "Discovery"
-            "Routine"
-            "Predictor"
-            "Protector"
-            "Questionnaire"
-            "ANF"
-            "mongodb"
-            "nats"
-            "Classification"
-            "Dashboard"
-            "GraphQl"
-            "Prometheus"
-            "Grafana"
-            "Zipkin"
-            "Logistics"
+services=(  "Dashboard"
         )
 
 check_ca_files_exist
@@ -122,13 +97,3 @@ for service in "${services[@]}"; do
         generate_certificate "$service"
     fi
 done
-
-# Setup keys and certificate for Mongodb
-cat mongodb-key.pem mongodb-cert.pem > mongodb.pem
-
-# Concatenate client certs into a client truststore
-cat Admin-cert.pem ANF-cert.pem Audit-cert.pem Classification-cert.pem Communications-cert.pem Config-cert.pem Connected-lab-cert.pem Health-cert.pem Discovery-cert.pem Config-cert.pem HelloWorld-cert.pem IAM-cert.pem Media-cert.pem Predictor-cert.pem Prometheus-cert.pem Protector-cert.pem Questionnaire-cert.pem Routine-cert.pem Tinkar-cert.pem Logistics-cert.pem Zipkin-cert.pem > opencdx-clients.pem
-
-
-#Regenerating the JKS Keystore will require re-generating the encrypted password/passcodes in the configuration.
-#keytool -genkeypair -alias config-server-key -keyalg RSA -keysize 2048 -dname 'C=US,ST=CA,L=SanDiego,O=SafeHealth,OU=OpenCDx,CN=Config' -keypass opencdx -keystore config-server.jks -storepass opencdx

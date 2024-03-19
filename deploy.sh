@@ -104,13 +104,6 @@ delete_except() {
   done
 }
 
-check_tinkar_directory() {
-  dir="./data/solor-us-tinkar.sa"
-  if [[ ! -d "$dir" ]]; then
-    handle_warn "Error: Directory $dir does not exist. Please copy solor-us-tinkar.sa to the data directory, for opencdx-tinkar to function."
-  fi
-}
-
 generate_version_number() {
   # Check if $skip variable is set to true
   if [ "$skip" = true ]; then
@@ -259,95 +252,12 @@ check_container_status() {
 # Parameters: $1 - Type of report or documentation to open
 open_reports() {
     case $1 in
-    jmeter)
-        run_jmeter_tests smoke
-        open_url "build/reports/jmeter/index.html"
-        ;;
-    jmeter_performance)
-        run_jmeter_tests performance
-        open_url "build/reports/jmeter/index.html"
-        ;;
-    jmeter_edit)
-        handle_info "Opening JMeter Test Script in Editor"
-        copy_files "./opencdx-proto/src/main/proto" "/tmp/opencdx/proto"
-        export HEAP="-Xms5g -Xmx16g -XX:MaxMetaspaceSize=1g"
-        jmeter -t ./jmeter/OpenCDX.jmx
-        ;;
-    admin)
-        handle_info "Opening Admin Dashboard..."
-        open_url "https://localhost:8861/admin/wallboard"
-        ;;
-    test)
-        handle_info "Opening Test Report..."
-        ./gradlew testReport || handle_error "Failed to generate the test report."
-        open_url "build/reports/allTests/index.html"
-        ;;
+
     dashboard)
         handle_info "Opening OpenCDX Dashboard..."
         open_url "https://localhost:3005"
         ;;
-    jacoco)
-        handle_info "Opening JaCoCo Report..."
-        ./gradlew jacocoRootReport -x bootBuildInfo -x generateGitProperties || handle_error "Failed to generate the JaCoCo report."
-        open_url "build/reports/jacoco/jacocoRootReport/html/index.html"
-        ;;
-    check)
-        handle_info "Opening JavaDoc..."
-        ./gradlew allJavadoc || handle_error "Failed to generate the JavaDoc."
-        open_url "build/docs/javadoc-all/index.html"
-        ;;
-    dependency)
-        handle_info "Opening Dependency Check Report..."
-        open_url "build/reports/dependency-check-report.html"
-        ;;
-    publish)
-        read -p "Enter the path to protoc-gen-doc installation (or press Enter to skip): " proto_gen_doc_path
-        handle_info "Cleaning doc folder"
-        rm -rf ./opencdx-admin/src/main/resources/public
-        mkdir opencdx-admin/src/main/resources/public
-        handle_info "Creating JavaDoc..."
-        ./gradlew allJavadoc || handle_error "Failed to generate the JavaDoc."
-        mv build/docs/javadoc-all ./opencdx-admin/src/main/resources/public/javadoc
 
-        handle_info "Creating ProtoDoc..."
-        mkdir -p opencdx-admin/src/main/resources/public/protodoc/protodoc
-        protoc -Iopencdx-proto/src/main/proto --doc_out=./opencdx-admin/src/main/resources/public/protodoc --doc_opt=html,index.html opencdx-proto/src/main/proto/*.proto --plugin=protoc-gen-doc="$proto_gen_doc_path" || handle_error "Failed to generate Proto documentation."
-        handle_info "Creating Dependency Check Report..."
-        mkdir -p ./opencdx-admin/src/main/resources/public/dependency
-        cp build/reports/dependency-check-report.html ./opencdx-admin/src/main/resources/public/dependency
-        handle_info "Running Smoke Test...."
-        mkdir -p doc/jmeter
-
-        run_jmeter_tests smoke
-
-        mv build/reports/jmeter ./opencdx-admin/src/main/resources/public
-
-        ;;
-    proto)
-        handle_info "Opening Proto Doc..."
-        # Check for Protoc
-        if ! command -v protoc &> /dev/null; then
-            handle_error "Protoc is not installed. Please install Protoc and try again."
-        fi
-        read -p "Enter the path to proto-gen-doc installation (or press Enter to skip): " proto_gen_doc_path
-
-        if [ -n "$proto_gen_doc_path" ]; then
-            mkdir -p ./build/reports/proto
-            protoc -Iopencdx-proto/src/main/proto --doc_out=./build/reports/proto --doc_opt=html,index.html opencdx-proto/src/main/proto/*.proto --plugin=protoc-gen-doc="$proto_gen_doc_path" || handle_error "Failed to generate Proto documentation."
-            open_url "./build/reports/proto/index.html"
-        else
-            handle_info "Skipping Proto documentation generation."
-        fi
-        ;;
-    micrometer_tracing)
-        handle_info "Opening Zipkin Microservice Tracing Dashboard..."
-        open_url "https://localhost:9411/zipkin"
-        ;;
-
-    status)
-        handle_info "Checking Docker container status..."
-        check_container_status
-        ;;
     esac
 }
 
@@ -357,16 +267,8 @@ print_usage() {
     echo "  --skip          Skip the build process and directly open reports/documentation."
     echo "  --clean          Clean the project before building."
     echo "  --no_menu       Skip the interactive menu and perform actions directly."
-    echo "  --all           Skip the interactive menu and open all available reports/documentation."
-    echo "  --check         Perform build and check all requirements"
     echo "  --deploy        Will Start Docker and launch the user on the Docker Menu."
-    echo "  --smoke        Will Start JMeter Smoke test 60 seconds after deployment, 60 second duration."
-    echo "  --performance   Will Start JMeter Performance test 60 seconds after deployment. 1 hour duration"
-    echo "  --soak          Will Start JMeter Soak test 60 seconds after deployment. 8 hour duration"
-    echo "  --fast          Will perform a fast build skipping tests."
-    echo "  --wipe          Will wipe the contents of the ./data directory."
     echo "  --cert          Will wipe the contents of the ./certs directory."
-    echo "  --proto         Will force the rebuild of the proto files only and exit."
     echo "  --no_ui         Will skip opencdx-dashboard in the build process."
     echo "  --help          Show this help message."
     exit 0
@@ -381,11 +283,7 @@ build_docker() {
   local auto_select_all=$1
   local auto_confirm_all=$2
 
-  components=("opencdx/mongodb" "opencdx/admin" "opencdx/config" "opencdx/tinkar"
-    "opencdx/audit" "opencdx/communications" "opencdx/media" "opencdx/health" "opencdx/connected-lab"
-    "opencdx/iam" "opencdx/routine" "opencdx/protector" "opencdx/predictor"
-    "opencdx/questionnaire" "opencdx/classification" "opencdx/gateway" "opencdx/logistics"
-    "opencdx/discovery" "opencdx/anf" "opencdx/dashboard" "opencdx/graphql")
+  components=( "opencdx/dashboard" )
 
   selected_components=()
 
@@ -469,14 +367,14 @@ start_docker() {
     fi
 
     handle_info "Starting Docker services using $1..."
-    (cd docker && docker compose --project-name opencdx -f "$1" up -d) || handle_error "Failed to start Docker services."
+    (cd docker && docker compose --project-name opencdx-gui -f "$1" up -d) || handle_error "Failed to start Docker services."
 }
 
 # Function to stop Docker services
 # Parameters: $1 (optional) - Docker Compose filename
 stop_docker() {
     handle_info "Stopping Docker services"
-    (cd docker && docker compose --project-name opencdx -f "docker-compose.yml" down) || handle_error "Failed to stop Docker services."
+    (cd docker && docker compose --project-name opencdx-gui -f "docker-compose.yml" down) || handle_error "Failed to stop Docker services."
     DEPLOYED="NONE"
 }
 
@@ -491,7 +389,7 @@ generate_docker_compose() {
   compose_file="docker/docker-compose.yml"
 
   # Define services to always include
-  always_include=("discovery" "config" "database" "nats" "trace_storage" "gateway" "iam" "zipkin" "tempo" "loki")
+  always_include=()
 
   # Extract service names from the original Docker Compose file using yq
   services=($(yq e '.services | keys | .[]' "$compose_file"))
@@ -616,12 +514,7 @@ menu() {
         menu_items=(
             "Build Docker Image" "Start Docker (All Services)"
             "Start Docker (Custom)" "Stop Docker"
-            "Open Admin Dashboard" "Run JMeter Test Script"
-            "Open JMeter Test Script" "Open Microservice Tracing Zipkin"
-            "Open Test Report" "Publish Doc"
-            "Open JaCoCo Report" "Check JavaDoc"
-            "Open Proto Doc" "Container Status"
-            "Dependency Check" "OpenCDX Dashboard"
+            "OpenCDX Dashboard"
         )
 
         # Calculate the number of menu items
@@ -665,18 +558,7 @@ menu() {
             2) build_docker true false; DEPLOYED="ALL"; start_docker "docker-compose.yml" ;;
             3) build_docker false false; generate_docker_compose;DEPLOYED="Custom"; start_docker "generated-docker-compose.yaml" ;;
             4) stop_docker ;;
-            5) open_reports "admin" ;;
-            6) run_jmeter_tests; open_url "build/reports/jmeter/index.html" ;;
-            7) open_reports "jmeter_edit" ;;
-            8) open_reports "micrometer_tracing" ;;
-            9) open_reports "test" ;;
-            10) open_reports "publish" ;;
-            11) open_reports "jacoco" ;;
-            12) open_reports "check" ;;
-            13) open_reports "proto" ;;
-            14) open_reports "status" ;;
-            15) open_reports "dependency" ;;
-            16) open_reports "dashboard" ;;
+            5) open_reports "dashboard" ;;
             x)
                 handle_info "Exiting..."
                 exit 0
@@ -693,15 +575,9 @@ menu() {
 skip=false
 clean=false
 no_menu=false
-open_all=false
-check=false
 deploy=false
-jmeter=false
-fast_build=false
 wipe=false
 cert=false
-proto=false
-jmeter_test=""
 no_ui=false
 
 # Parse command-line arguments
@@ -772,8 +648,7 @@ if [[ "$java_version" == *"$required_jdk_version"* ]]; then
 else
     handle_error "JDK $required_jdk_version is required. Please install the required JDK version."
 fi
-# Check for Tinkar Directory
-check_tinkar_directory
+
 
 # Check for Docker
 if ! command -v docker &> /dev/null; then
@@ -817,7 +692,7 @@ if [ "$skip" = false ]; then
 fi
 if [ "$wipe" = true ]; then
     handle_info "Wiping Data"
-    delete_except ./data solor-us-tinkar.sa
+    rm -rf ./data
 fi
 if [ "$cert" = true ]; then
     handle_info "Wiping Certificates"
@@ -840,103 +715,19 @@ handle_info "Version: ${version}"
 
 sleep 2
 
-./gradlew -stop all
+# Change directory to opencdx-dashboard
+cd opencdx-dashboard || handle_error "Unable to change directory to opencdx-dashboard"
 
-if [ "$proto" = true ]; then
-    handle_info "Wiping Proto generated files"
-    rm -rf ./opencdx-proto/build
-    if ./gradlew opencdx-proto:build opencdx-proto:publish --parallel; then
-        # Build Completed Successfully
-        handle_info "Proto files generated successfully"
-    else
-        # Build Failed
-        handle_error "Proto files failed to generate. Please review output to determine the issue."
-    fi
-    exit 0
-fi
+# Install dependencies
+yarn install || handle_error "yarn install failed"
 
-# Clean the project if --clean is specified
-if [ "$fast_build" = true ]; then
-    git_info
-    if ./gradlew build publish -x test -x dependencyCheckAggregate -x sonarlintMain -x sonarlintMain -x spotlessApply -x spotlessCheck --parallel; then
-        # Build Completed Successfully
-        handle_info "Fast Build completed successfully"
-    else
-        # Build Failed
-        handle_error "Build failed. Please review output to determine the issue."
-    fi
-elif [ "$clean" = true ] && [ "$skip" = true ]; then
-    ./gradlew clean --parallel || handle_error "Failed to clean the project."
-elif [ "$clean" = true ] && [ "$skip" = false ]; then
-    git_info
-    if ./gradlew spotlessApply; then
-        # Build Completed Successfully
-        handle_info "Spotless completed successfully"
-    else
-        # Build Failed
-        handle_error "Spotless failed. Please review output to determine the issue."
-    fi
-    if ./gradlew clean build publish -x sonarlintMain -x sonarlintTest -x spotlessApply --parallel; then
-        # Build Completed Successfully
-        handle_info "Build & Clean completed successfully"
-    else
-        # Build Failed
-        handle_error "Build failed. Please review output to determine the issue."
-    fi
-    if ./gradlew sonarlintMain sonarlintTest --parallel; then
-        # Build Completed Successfully
-        handle_info "Sonarlint completed successfully"
-    else
-        # Build Failed
-        handle_error "Sonarlint failed. Please review output to determine the issue."
-    fi
-elif [ "$clean" = false ] && [ "$skip" = false ]; then
-    git_info
-    if ./gradlew spotlessApply; then
-        # Build Completed Successfully
-        handle_info "Spotless completed successfully"
-    else
-        # Build Failed
-        handle_error "Spotless failed. Please review output to determine the issue."
-    fi
-    if ./gradlew build publish -x sonarlintMain -x sonarlintTest --parallel; then
-        # Build Completed Successfully
-        handle_info "Build completed successfully"
-    else
-        # Build Failed
-        handle_error "Build failed. Please review output to determine the issue."
-    fi
-    if ./gradlew sonarlintMain sonarlintTest --parallel; then
-            # Build Completed Successfully
-            handle_info "Sonarlint completed successfully"
-        else
-            # Build Failed
-            handle_error "Sonarlint failed. Please review output to determine the issue."
-        fi
-fi
+# Run linting
+yarn run lint
 
-if [ "$no_ui" = false ] && [ "$skip" = false ]; then
-  # Change directory to opencdx-dashboard
-  cd opencdx-dashboard || handle_error "Unable to change directory to opencdx-dashboard"
+# Change back to the previous directory
+cd - || handle_error "Unable to change back to the previous directory"
 
-  # Install dependencies
-  yarn install || handle_error "yarn install failed"
 
-  # Run linting
-  yarn run lint
-
-  # Change back to the previous directory
-  cd - || handle_error "Unable to change back to the previous directory"
-fi
-
-if [ "$check" = true ]; then
-    handle_info "Performing Check on JavaDoc"
-    handle_info "TODO: Fix dependencyCheckAggregate"
-    ./gradlew  versionUpToDateReport versionReport allJavadoc --parallel || handle_error "Failed to generate the JavaDoc."
-    echo
-    handle_info "Project Passes all checks"
-fi
-echo
 # Main Menu
 if [ "$no_menu" = false ]; then
 
@@ -956,11 +747,3 @@ if [ "$no_menu" = false ]; then
     menu;
 fi
 
-# If --all is specified, open all reports and documentation
-if [ "$open_all" = true ]; then
-    open_reports "test"
-    open_reports "dependency"
-    open_reports "jacoco"
-    open_reports "javadoc"
-    open_reports "proto"
-fi
