@@ -14,9 +14,11 @@ export default function App({ questionnaire, navigation}) {
 
     const onSubmit = (data) => {
         questionnaire.item.forEach((field, index) => {
+            if (field.item) {
                 field.item.forEach((connector) => {
                     if (
                         connector &&
+                        connector.anfStatementConnector &&
                         connector.anfStatementConnector[0] &&
                         connector.anfStatementConnector[0].anfStatement &&
                         connector.anfStatementConnector[0].anfStatement.circumstanceChoice
@@ -25,24 +27,19 @@ export default function App({ questionnaire, navigation}) {
 
                     }
                 });
+            }
             
+            field.answer = [];
+
             switch (field.type) {
                 case 'integer':
-                    field.answerInteger = data[field.linkId];
-                    break;
-                case 'string':
-                    field.answerString = data[field.linkId];
-                    break;
-                case 'text':
-                    field.answerText = data[field.linkId];
+                    field.answer.push({valueInteger: data[field.linkId]});
                     break;
                 case 'boolean':
-                    field.answerBoolean = data[field.linkId] === 'yes';
-                    break;
-                case 'choice':
-                    field.answerString = data[field.linkId];
+                    field.answer.push({valueBoolean: data[field.linkId] === 'yes'});
                     break;
                 default:
+                    field.answer.push({valueString: data[field.linkId]});
                     break;
             }
         });
