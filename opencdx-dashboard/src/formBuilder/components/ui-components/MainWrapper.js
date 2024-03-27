@@ -7,7 +7,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { Grid } from '@mui/material';
 import { useAnfFormStore } from '../../utils/useAnfFormStore';
-import axios from 'axios';
+import axios from 'utils/axios';
 
 const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
     const { formData } = useAnfFormStore();
@@ -99,7 +99,7 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
         });
         const saveQuestionnare = async () => {
             const response = await axios.post(
-                'https://localhost:8080/questionnaire/questionnaire',
+                '/questionnaire/questionnaire',
                 {
                     questionnaire: anf.updated
                 },
