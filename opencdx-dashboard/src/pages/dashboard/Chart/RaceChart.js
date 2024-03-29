@@ -11,7 +11,7 @@ const RaceChart = () => {
 
     const fetchData = useCallback(async () => {
         try {
-            const response = await axios.post('http://localhost:8632/graphql', {
+            const response = await axios.post('http://localhost:8632', {
                 query: `{
                     getPatients {
                         race
