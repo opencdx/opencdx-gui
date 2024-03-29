@@ -9,7 +9,7 @@ import formsbuilder from './forms-builder';
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
-    items: [dashboardPage, formsbuilder, pages, administration, documentation, reports, other]
+    items: [dashboardPage, formsbuilder, pages, reports, other]
 };
 
 export default menuItems;
