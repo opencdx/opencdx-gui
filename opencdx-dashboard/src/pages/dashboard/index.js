@@ -20,6 +20,7 @@ const Dashboard = () => {
 
     const [userResponses, setUserResponses] = useState([]);
     const [users, setUsers] = useState([]);
+    const [graphqlData, setGraphqlData] = useState([]);
 
     useEffect(() => {
         const fetchUserResponses = async () => {
@@ -58,8 +59,21 @@ const Dashboard = () => {
             );
             setUsers(response.data);
         };
+        const fetchGraphqlData = async () => {
+            const response = await axios.post('http://localhost:8632', {
+                query: `{
+                    active: getUsersCountByStatus(status: "IAM_USER_STATUS_ACTIVE")
+                    inactive: getUsersCountByStatus(status: "IAM_USER_STATUS_INACTIVE")
+                    getOrganizationCount
+                    getDevicesCount
+                    getQuestionnaireCount
+                  }`
+            });
+            setGraphqlData(response.data);
+        };
         fetchUserResponses();
         fetchUsers();
+        fetchGraphqlData();
     }, []);
 
     return (
@@ -68,26 +82,34 @@ const Dashboard = () => {
                 <DataCard primary="Total users" secondary={users?.pagination?.totalRecords} color={theme.palette.primary.main} iconPrimary={AccountCircleTwoToneIcon} />
             </Grid>
             <Grid item xs={12} lg={2}>
-                <DataCard primary="Active users" secondary="4" color={theme.palette.orange.dark} iconPrimary={EmojiEmotionsTwoToneIcon} />
+                <DataCard primary="Active users"
+                    secondary={graphqlData?.data?.active}
+                    color={theme.palette.orange.dark}
+                    iconPrimary={EmojiEmotionsTwoToneIcon} />
             </Grid>
             <Grid item xs={12} lg={2}>
                 <DataCard
                     primary="Inactive users"
-                    secondary="0"
+                    secondary={graphqlData?.data?.inactive}
                     color={theme.palette.warning.dark}
                     iconPrimary={RemoveRedEyeTwoToneIcon}
                 />
             </Grid>
             <Grid item xs={12} lg={2}>
-                <DataCard primary="Test types" secondary="2" color={theme.palette.primary.main} iconPrimary={MonetizationOnTwoToneIcon} />
+                <DataCard primary="Test types"
+                secondary={graphqlData?.data?.getDevicesCount}
+                color={theme.palette.primary.main}
+                iconPrimary={MonetizationOnTwoToneIcon} />
             </Grid>
             <Grid item xs={12} lg={2}>
-                <DataCard primary="Organizations" secondary="2" color={theme.palette.success.main} iconPrimary={ShoppingCartTwoToneIcon} />
+                <DataCard primary="Organizations"
+                secondary={graphqlData?.data?.getOrganizationCount}
+                color={theme.palette.success.main} iconPrimary={ShoppingCartTwoToneIcon} />
             </Grid>
             <Grid item xs={12} lg={2}>
                 <DataCard
                     primary="User Responses"
-                    secondary={userResponses?.pagination?.totalRecords}
+                    secondary={graphqlData?.data?.getQuestionnaireCount}
                     color={theme.palette.orange.main}
                     iconPrimary={AccountBalanceWalletTwoToneIcon}
                 />
