@@ -20,10 +20,11 @@ const Dashboard = () => {
 
     const [userResponses, setUserResponses] = useState([]);
     const [users, setUsers] = useState([]);
+    const [graphqlData, setGraphqlData] = useState([]);
 
     useEffect(() => {
         const fetchUserResponses = async () => {
-            const response = await axios.post(
+            axios.post(
                 '/questionnaire/user/questionnaire/list',
                 {
                     pagination: {
@@ -37,11 +38,13 @@ const Dashboard = () => {
                         Authorization: `Bearer ${localStorage.getItem('serviceToken')}`
                     }
                 }
-            );
-            setUserResponses(response.data);
+            ).then((response) => {
+                setUserResponses(response.data);
+            })
+            .catch(err => err);
         };
         const fetchUsers = async () => {
-            const response = await axios.post(
+            axios.post(
                 '/iam/user/list',
                 {
                     pagination: {
@@ -55,39 +58,66 @@ const Dashboard = () => {
                         Authorization: `Bearer ${localStorage.getItem('serviceToken')}`
                     }
                 }
-            );
-            setUsers(response.data);
+            ).then((response) => {
+                setUsers(response.data);
+            })
+            .catch(err => err);
+        };
+        const fetchGraphqlData = async () => {
+            axios.post('http://localhost:8632', {
+                query: `{
+                    active: getUsersCountByStatus(status: "IAM_USER_STATUS_ACTIVE")
+                    inactive: getUsersCountByStatus(status: "IAM_USER_STATUS_INACTIVE")
+                    getOrganizationCount
+                    getDevicesCount
+                    getQuestionnaireCount
+                  }`
+            }).then((response) => {
+                setGraphqlData(response.data);
+            })
+            .catch(err => err);
         };
         fetchUserResponses();
         fetchUsers();
+        fetchGraphqlData();
     }, []);
 
     return (
         <Grid container spacing={gridSpacing} alignItems="center">
             <Grid item xs={12} lg={2}>
-                <DataCard primary="Total users" secondary={users?.pagination?.totalRecords} color={theme.palette.primary.main} iconPrimary={AccountCircleTwoToneIcon} />
+                <DataCard primary="Total users"
+                secondary={'' + users?.pagination?.totalRecords !== 'undefined' ? users?.pagination?.totalRecords : 'Pending'}
+                color={theme.palette.primary.main} iconPrimary={AccountCircleTwoToneIcon} />
             </Grid>
             <Grid item xs={12} lg={2}>
-                <DataCard primary="Active users" secondary="4" color={theme.palette.orange.dark} iconPrimary={EmojiEmotionsTwoToneIcon} />
+                <DataCard primary="Active users"
+                    secondary={'' + graphqlData?.data?.active !== 'undefined' ? graphqlData?.data?.active : 'Pending'}
+                    color={theme.palette.orange.dark}
+                    iconPrimary={EmojiEmotionsTwoToneIcon} />
             </Grid>
             <Grid item xs={12} lg={2}>
                 <DataCard
                     primary="Inactive users"
-                    secondary="0"
+                    secondary={'' + graphqlData?.data?.inactive !== 'undefined' ? graphqlData?.data?.inactive : 'Pending'}
                     color={theme.palette.warning.dark}
                     iconPrimary={RemoveRedEyeTwoToneIcon}
                 />
             </Grid>
             <Grid item xs={12} lg={2}>
-                <DataCard primary="Test types" secondary="2" color={theme.palette.primary.main} iconPrimary={MonetizationOnTwoToneIcon} />
+                <DataCard primary="Test types"
+                secondary={'' + graphqlData?.data?.getDevicesCount !== 'undefined' ? graphqlData?.data?.getDevicesCount : 'Pending'}
+                color={theme.palette.primary.main}
+                iconPrimary={MonetizationOnTwoToneIcon} />
             </Grid>
             <Grid item xs={12} lg={2}>
-                <DataCard primary="Organizations" secondary="2" color={theme.palette.success.main} iconPrimary={ShoppingCartTwoToneIcon} />
+                <DataCard primary="Organizations"
+                secondary={'' + graphqlData?.data?.getOrganizationCount !== 'undefined' ? graphqlData?.data?.getOrganizationCount : 'Pending'}
+                color={theme.palette.success.main} iconPrimary={ShoppingCartTwoToneIcon} />
             </Grid>
             <Grid item xs={12} lg={2}>
                 <DataCard
                     primary="User Responses"
-                    secondary={userResponses?.pagination?.totalRecords}
+                    secondary={'' + userResponses?.pagination?.totalRecords !== 'undefined' ? userResponses?.pagination?.totalRecords : 'Pending'}
                     color={theme.palette.orange.main}
                     iconPrimary={AccountBalanceWalletTwoToneIcon}
                 />

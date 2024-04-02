@@ -13,29 +13,17 @@ const RaceChart = () => {
         try {
             const response = await axios.post('http://localhost:8632', {
                 query: `{
-                    getPatients {
-                        race
-                        
-                    }
+                    white: getRaceCount(race:"white")
+                    black: getRaceCount(race:"black")
+                    hispanic: getRaceCount(race:"hispanic")
+                    asian: getRaceCount(race:"asian")
                 }`
             });
 
-            let blackCount = 0;
-            let whiteCount = 0;
-            let hispanicCount = 0;
-            let asianCount = 0;
-
-            response.data.data?.getPatients.forEach((item) => {
-                if (item.race === 'black') {
-                    blackCount++;
-                } else if (item.race === 'white') {
-                    whiteCount++;
-                } else if (item.race === 'Hispanic') {
-                    hispanicCount++;
-                } else if (item.race === 'Asian') {
-                    asianCount++;
-                }
-            });
+            let blackCount = response.data.data?.black;
+            let whiteCount = response.data.data?.white;
+            let hispanicCount = response.data.data?.hispanic;
+            let asianCount = response.data.data?.asian;
 
             setRace([blackCount, whiteCount, hispanicCount, asianCount]);
         } catch (error) {

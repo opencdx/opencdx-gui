@@ -13,22 +13,13 @@ const GenderChart = () => {
         try {
             const response = await axios.post('http://localhost:8632', {
                 query: `{
-                    getPatients {
-                        gender
-                    }
-                }`
+                    male: getGenderCount(gender: "GENDER_MALE")
+                    female: getGenderCount(gender: "GENDER_FEMALE")
+                  }`
             });
 
-            let maleCount = 0;
-            let femaleCount = 0;
-
-            response.data.data?.getPatients.forEach((item) => {
-                if (item.gender === 'M') {
-                    maleCount++;
-                } else if (item.gender === 'F') {
-                    femaleCount++;
-                }
-            });
+            let maleCount = response.data.data?.male;
+            let femaleCount = response.data.data?.female;
 
             setGender([maleCount, femaleCount]);
         } catch (error) {
