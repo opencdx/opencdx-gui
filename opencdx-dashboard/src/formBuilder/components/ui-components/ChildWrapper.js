@@ -99,6 +99,36 @@ const ChildWrapper = ({ control, register }) => {
                         />
                     </FormControl>
                 </Grid>
+                <Grid item xs={12} sm={3} lg={2}>
+                    <Typography variant="h5" gutterBottom>
+                        Select response for rule
+                    </Typography>
+                </Grid>
+                <Grid item xs={12} sm={9} lg={10}>
+                    <FormControl fullWidth>
+                        <Controller
+                            name={`item.ruleQuestionId`}
+                            {...register(`item.ruleQuestionId`)}
+                            control={control}
+                            defaultValue={formData ? formData.ruleQuestionId : ''}
+                            render={({ field }) => (
+                                <Select
+                                    {...field}
+                                    id={`item.ruleQuestionId`}
+                                    fullWidth
+                                    variant="outlined"
+                                    size="small"
+                                >
+                                    {formData.item.map((item) => (
+                                        <MenuItem key={item.linkId} value={item.linkId}>
+                                            {item.text}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            )}
+                        />
+                    </FormControl>
+                </Grid>
             </Grid>
         </div>
     );

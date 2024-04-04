@@ -34,6 +34,8 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
         const anf = JSON.parse(localStorage.getItem('anf-form')); // Parse the JSON string to an object
         anf.updated.item = data.item;
         anf.updated.ruleId = data.item.ruleId;
+        anf.updated.ruleQuestionId = [];
+        anf.updated.ruleQuestionId.push(data.item.ruleQuestionId);
         localStorage.setItem('anf-form', JSON.stringify(anf));
 
         anf.updated.item.forEach((element) => {
