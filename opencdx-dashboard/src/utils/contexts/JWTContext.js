@@ -11,7 +11,8 @@ import accountReducer from 'utils/store/accountReducer';
 
 // project imports
 import Loader from 'ui-component/Loader';
-import axios from 'utils/axios';
+import axios from 'utils/axios/apiInterceptors';
+import { Endpoints } from 'utils/axios/apiEndpoints';
 
 const chance = new Chance();
 
@@ -81,7 +82,7 @@ export const JWTProvider = ({ children }) => {
     }, []);
 
     const login = async () => {
-        const response = await axios.post('/iam/user/login', { userName: 'admin@opencdx.org', password: 'password' });
+        const response = await Endpoints.login({ userName: 'admin@opencdx.org', password: 'password' });
         const { token, user } = response.data;
         setSession(token);
         dispatch({
@@ -96,7 +97,7 @@ export const JWTProvider = ({ children }) => {
     const register = async (email, password, firstName, lastName) => {
         // todo: this flow need to be recode as it not verified
         const id = chance.bb_pin();
-        const response = await axios.post('/iam/user/signup ', {
+        const response = await Endpoints.signup({
             type: 'IAM_USER_TYPE_REGULAR',
             firstName: 'Karthick',
             lastName: 'Raja',

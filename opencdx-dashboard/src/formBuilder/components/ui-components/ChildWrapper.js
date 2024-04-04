@@ -10,7 +10,7 @@ import { useTheme } from '@mui/material/styles';
 import { Controller } from 'react-hook-form';
 import { useAnfFormStore } from '../../utils/useAnfFormStore';
 import { statementType } from '../../store/constant';
-import axios from 'utils/axios';
+import { Endpoints } from 'utils/axios/apiEndpoints';
 
 const ChildWrapper = ({ control, register }) => {
     const { formData } = useAnfFormStore();
@@ -25,16 +25,10 @@ const ChildWrapper = ({ control, register }) => {
 
     useEffect(() => {
         const fetchRules = async () => {
-            axios.post('/classification/ruleset/list',
+            Endpoints.rulesetList(
             {
                 organizationId: "organizationId",
                 workspaceId: "workspaceId"
-            },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('serviceToken')}`
-                }
             }).then((response) => {
                 setRuleSets(response.data.ruleSets);
             }).catch(err => err);
