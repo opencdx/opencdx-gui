@@ -110,7 +110,7 @@ const ChildWrapper = ({ control, register }) => {
                             name={`item.ruleQuestionId`}
                             {...register(`item.ruleQuestionId`)}
                             control={control}
-                            defaultValue={formData.ruleQuestionId[0] ? formData.ruleQuestionId[0] : ''}
+                            defaultValue={formData.ruleQuestionId ? formData.ruleQuestionId[0] : ''}
                             render={({ field }) => (
                                 <Select
                                     {...field}
