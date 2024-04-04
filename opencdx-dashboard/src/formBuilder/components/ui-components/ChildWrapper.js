@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useFieldArray } from 'react-hook-form';
 import StatementTypes from './StatementTypes';
@@ -10,6 +10,7 @@ import { useTheme } from '@mui/material/styles';
 import { Controller } from 'react-hook-form';
 import { useAnfFormStore } from '../../utils/useAnfFormStore';
 import { statementType } from '../../store/constant';
+import axios from 'utils/axios';
 
 const ChildWrapper = ({ control, register }) => {
     const { formData } = useAnfFormStore();
@@ -18,22 +19,29 @@ const ChildWrapper = ({ control, register }) => {
         control,
         name: 'item'
     });
-    const [rulesets] = React.useState([
-        {
-            ruleId: '1',
-            type: 'Business Rule',
-            category: 'Validation',
-            description: 'Validate user responses'
-        },
-        {
-            ruleId: '2',
-            type: 'Authorization Rule',
-            category: 'Access Control',
-            description: 'Control access based on user responses'
-        }
-    ]);
+    const [ruleSets, setRuleSets] = React.useState([]);
     const theme = useTheme();
     const handleStatementTypeChange = (value) => setHideOptions(value !== statementType.USER_QUESTION);
+
+    useEffect(() => {
+        const fetchRules = async () => {
+            axios.post('/classification/ruleset/list',
+            {
+                organizationId: "organizationId",
+                workspaceId: "workspaceId"
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem('serviceToken')}`
+                }
+            }).then((response) => {
+                setRuleSets(response.data.ruleSets);
+            })
+        };
+        fetchRules();
+    }, []);
+
     return (
         <div className="wrapper">
             {fields.map((item, index) => (
@@ -68,22 +76,22 @@ const ChildWrapper = ({ control, register }) => {
                 <Grid item xs={12} sm={9} lg={10}>
                     <FormControl fullWidth>
                         <Controller
-                            name={`item.ruleset`}
-                            {...register(`item.ruleset`)}
+                            name={`item.ruleId`}
+                            {...register(`item.ruleId`)}
                             control={control}
-                            defaultValue={formData ? formData.ruleset : ''}
+                            defaultValue={formData ? formData.ruleId : ''}
                             render={({ field }) => (
                                 <Select
                                     {...field}
-                                    id={`item.rulesets`}
+                                    id={`item.ruleIds`}
                                     fullWidth
                                     variant="outlined"
                                     size="small"
                                     // onClick={(e) => setFormData({ ruleset: e.target.value })}
                                 >
-                                    {rulesets.map((ruleset) => (
+                                    {ruleSets.map((ruleset) => (
                                         <MenuItem key={ruleset.ruleId} value={ruleset.ruleId}>
-                                            {ruleset.type} - {ruleset.category} - {ruleset.description}
+                                            {ruleset.type} - {ruleset.category} - {ruleset.description} - {ruleset.ruleId}
                                         </MenuItem>
                                     ))}
                                 </Select>
