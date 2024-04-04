@@ -37,7 +37,7 @@ const ChildWrapper = ({ control, register }) => {
                 }
             }).then((response) => {
                 setRuleSets(response.data.ruleSets);
-            })
+            }).catch(err => err);
         };
         fetchRules();
     }, []);
@@ -110,7 +110,7 @@ const ChildWrapper = ({ control, register }) => {
                             name={`item.ruleQuestionId`}
                             {...register(`item.ruleQuestionId`)}
                             control={control}
-                            defaultValue={formData ? formData.ruleQuestionId : ''}
+                            defaultValue={formData.ruleQuestionId[0] ? formData.ruleQuestionId[0] : ''}
                             render={({ field }) => (
                                 <Select
                                     {...field}
