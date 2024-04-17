@@ -123,7 +123,7 @@ const JWTLogin = ({ ...others }) => {
                     )}
                     <Box sx={{ mt: 2 }}>
                         <AnimateButton>
-                            <Button color="secondary" disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained">
+                            <Button color="secondary" disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" data-testid="login-btn">
                                 Sign In
                             </Button>
                         </AnimateButton>

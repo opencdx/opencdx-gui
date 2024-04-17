@@ -19,7 +19,8 @@ const SystemVariables = React.forwardRef(({ index, currentIndex, getValues, tab 
         <>
             <Grid container>
                 <Grid item xs={12} lg={12} ref={ref} justifyContent="flex-end" sx={{ display: 'flex', pb: 2 }}>
-                    <Button variant="contained" color="warning" size="small" onClick={handleClickOpen}>
+                    <Button variant="contained" color="warning" size="small" onClick={handleClickOpen} data-testid="system-variables-button"
+                    >
                         <DisplaySettingsIcon />
                         <Typography sx={{ pl: 1 }}>System Variables</Typography>
                     </Button>
@@ -36,7 +37,7 @@ const SystemVariables = React.forwardRef(({ index, currentIndex, getValues, tab 
                     <QuestionsList index={index} currentIndex={currentIndex} getValues={getValues} tab={tab} />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCloseDialog}>Close</Button>
+                    <Button data-testid='system-variable-close-btn' onClick={handleCloseDialog}>Close</Button>
                 </DialogActions>
             </Dialog>
         </>

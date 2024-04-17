@@ -77,6 +77,7 @@ const ChildWrapper = ({ control, register }) => {
                                     {...field}
                                     id={`item.rulesets`}
                                     fullWidth
+                                    data-testid="item.rulesets"
                                     variant="outlined"
                                     size="small"
                                     // onClick={(e) => setFormData({ ruleset: e.target.value })}

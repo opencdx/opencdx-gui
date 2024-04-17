@@ -21,6 +21,13 @@ import StartVirtualConsult from './screens/VirtualConsult/StartVirtualConsult';
 import CheckVirtualConsult from './screens/VirtualConsult/CheckVirtualConsult';
 import ConfirmVirtualConsult from './screens/VirtualConsult/ConfirmVirtualConsult';
 import PriorVirtualConsult from './screens/VirtualConsult/PriorVirtualConsult';
+import DoctorVirtualConsult from './screens/VirtualConsult/DoctorVirtualConsult';
+import HowSlideVirtualConsult from './screens/VirtualConsult/HowSlideVirtualConsult';
+import ProlongedVirtualConsult from './screens/VirtualConsult/ProlongedVirtualConsult';
+
+import Scan from './screens/Scan';
+
+
 import SlideVirtualConsult from './screens/VirtualConsult/SlideVirtualConsult';
 import GetTested from './screens/TakeTest/GetTested';
 import ScheduleAppointment from './screens/TakeTest/ScheduleAppoinment';
@@ -28,6 +35,8 @@ import TestKit from './screens/TakeTest/TestKit';
 import TestHistory from './screens/TestHistory/TestHistory';
 import VaccineHistory from './screens/VaccineHistory/VaccineHistory';
 import TestRecord from './screens/VaccineHistory/TestRecord';
+import CameraScreen from './screens/CameraScreen';
+import UploadScreen from './screens/UploadScreen';
 
 const Stack = createStackNavigator();
 
@@ -84,7 +93,23 @@ const App = () => {
               }
             }}
             />
-           
+          <Stack.Screen name="Camera" component={CameraScreen}
+            options={{
+              headerShown: false,
+              cardStyle: {
+                backgroundColor: '#FFFFFF'
+              }
+            }}
+          />
+          <Stack.Screen name="UploadScreen" component={UploadScreen}
+            options={{
+              headerShown: false,
+              cardStyle: {
+                backgroundColor: '#FFFFFF'
+              }
+            }}
+          />
+          
             <Stack.Screen name="TestDetails" component={TestDetailsScreen}
             options={{
               headerShown: false,
@@ -149,6 +174,31 @@ const App = () => {
               headerTitle: 'Virtual Consult',
             }}
             />
+          <Stack.Screen name="DoctorVirtualConsult" component={DoctorVirtualConsult}
+            options={{
+              cardStyle: {
+                backgroundColor: '#FFFFFF'
+              },
+              headerTitle: 'Virtual Consult',
+            }}
+          />
+          <Stack.Screen name="HowSlideVirtualConsult" component={HowSlideVirtualConsult}
+            options={{
+              cardStyle: {
+                backgroundColor: '#FFFFFF'
+              },
+              headerTitle: 'Virtual Consult',
+            }}
+          />
+          <Stack.Screen name="ProlongedVirtualConsult" component={ProlongedVirtualConsult}
+            options={{
+              cardStyle: {
+                backgroundColor: '#FFFFFF'
+              },
+              headerTitle: 'Virtual Consult',
+            }}
+          />
+          
           <Stack.Screen name="ConfirmVirtualConsult" component={ConfirmVirtualConsult}
             options={{
               cardStyle:{
@@ -182,6 +232,14 @@ const App = () => {
               headerTitle: 'Get Tested',
             }}
             />
+          <Stack.Screen name="Scan" component={Scan}
+            options={{
+              cardStyle: {
+                backgroundColor: '#FFFFFF'
+              },
+              headerTitle: 'Scan',
+            }}
+          />
           <Stack.Screen name="ScheduleAppointment" component={ScheduleAppointment}
             options={{
               cardStyle:{

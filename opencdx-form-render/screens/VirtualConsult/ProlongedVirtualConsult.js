@@ -3,65 +3,32 @@ import { View, StyleSheet, Platform, SafeAreaView } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 import Checkbox from "react-native-bouncy-checkbox";
 
-const CheckVirtualConsult = ({ navigation }) => {
+const ProlongedVirtualConsult = ({ navigation }) => {
     const [isChecked, setChecked] = useState(false);
     const [isChecked1, setChecked1] = useState(false);
-    const [isChecked2, setChecked2] = useState(false);
-    const [isChecked3, setChecked3] = useState(false);
-    const [isChecked4, setChecked4] = useState(false);
-    const [isChecked5, setChecked5] = useState(false);
-    const [isChecked6, setChecked6] = useState(false);
-    const [isChecked7, setChecked7] = useState(false);
-    const [isChecked8, setChecked8] = useState(false);
+  
 
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.body}>
                 <Text style={styles.input} variant='titleMedium'>
-                    Which of the following Covid-19 symptoms do you currently have
+                    Have you prolonged, close contact (15 minutes or longer at less than 6 feet) with someone diagonsed positive for COVID-19?
                 </Text>
                 <View style={styles.containerCheck}>
                     <View style={styles.section}>
                         <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-                        <Text style={styles.paragraph}>Sore Throat</Text>
+                        <Text style={styles.paragraph}>Yes</Text>
                     </View>
                     <View style={styles.section}>
                         <Checkbox style={styles.checkbox} value={isChecked1} onValueChange={setChecked1} />
-                        <Text style={styles.paragraph}>Cough</Text>
+                        <Text style={styles.paragraph}>No</Text>
                     </View>
-                    <View style={styles.section}>
-                        <Checkbox style={styles.checkbox} value={isChecked2} onValueChange={setChecked2} />
-                        <Text style={styles.paragraph}>Fever</Text>
-                    </View>
-                    <View style={styles.section}>
-                        <Checkbox style={styles.checkbox} value={isChecked3} onValueChange={setChecked3} />
-                        <Text style={styles.paragraph}>Shortness of Breath</Text>
-                    </View>
-                    <View style={styles.section}>
-                        <Checkbox style={styles.checkbox} value={isChecked4} onValueChange={setChecked4} />
-                        <Text style={styles.paragraph}>Loss of Taste or Smell</Text>
-                    </View>
-                    <View style={styles.section}>
-                        <Checkbox style={styles.checkbox} value={isChecked5} onValueChange={setChecked5} />
-                        <Text style={styles.paragraph}>Muscle Aches</Text>
-                    </View>
-                    <View style={styles.section}>
-                        <Checkbox style={styles.checkbox} value={isChecked6} onValueChange={setChecked6} />
-                        <Text style={styles.paragraph}>Headache</Text>
-                    </View>
-                    <View style={styles.section}>
-                        <Checkbox style={styles.checkbox} value={isChecked7} onValueChange={setChecked7} />
-                        <Text style={styles.paragraph}>Chills</Text>
-                    </View>
-                    <View style={styles.section}>
-                        <Checkbox style={styles.checkbox} value={isChecked8} onValueChange={setChecked8} />
-                        <Text style={styles.paragraph}>Fatigue</Text>
-                    </View>
+                    
                 </View>
             </View>
             <View style={styles.footer}>
                 <Button title="Sign In" mode="contained-tonal"
-                 style={styles.button} onPress={() => navigation.navigate('SlideVirtualConsult')}>
+                    style={styles.button} onPress={() => navigation.navigate('ConfirmVirtualConsult')}>
                     Continue
                 </Button>
             </View>
@@ -98,7 +65,7 @@ const styles = StyleSheet.create({
         }),
     },
     input: {
-        textAlign: 'center',        
+        textAlign: 'center',
     },
     containerCheck: {
         flex: 1,
@@ -137,7 +104,7 @@ const styles = StyleSheet.create({
             },
         }),
     },
-    
+
 });
 
-export default CheckVirtualConsult;
+export default ProlongedVirtualConsult;

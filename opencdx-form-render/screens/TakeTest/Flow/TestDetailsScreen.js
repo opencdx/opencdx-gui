@@ -83,14 +83,7 @@ const TestDetailsScreen = ({ route }) => {
                 <Text style={{ color: 'gray', fontSize: 18, marginTop: 5 }}>{route.params.test.description}</Text>
                 <View style={{ borderBottomWidth: 1, borderBottomColor: '#E5E5E5', marginTop: 10 }}></View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
-                    <View style={styles.card}>
-                        <Text style={{ fontWeight: 'bold', marginTop: 5, fontSize: 16 }}>FASTING</Text>
-                        <Text style={{ color: 'gray', fontSize: 16, marginTop: 5, alignItems: 'center', padding: 5, borderRadius: 5, justifyContent: 'center', alignItems: 'center' }}>No</Text>
-                    </View>
-                    <View style={styles.card}>
-                        <Text style={{ fontWeight: 'bold', marginTop: 5, fontSize: 16 }}>SAMPLE</Text>
-                        <Text style={{ color: 'gray', fontSize: 16, marginTop: 5, alignItems: 'center', padding: 5, borderRadius: 5, justifyContent: 'center', alignItems: 'center' }}>Blood</Text>
-                    </View>
+                   
                     <View style={styles.countWrapper}>
                         <TouchableOpacity onPress={decrementCount} style={styles.countButton}>
                             <Text style={styles.countButtonText}>-</Text>

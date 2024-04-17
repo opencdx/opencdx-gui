@@ -81,7 +81,9 @@ export const JWTProvider = ({ children }) => {
     }, []);
 
     const login = async () => {
-        const response = await axios.post('/iam/user/login', { userName: 'admin@opencdx.org', password: 'password' });
+        const response = await axios.post('https://ec2-3-13-148-183.us-east-2.compute.amazonaws.com:8080/iam/user/login', { userName: 'admin@opencdx.org', password: 'password' });
+
+        //const response = await axios.post('/iam/user/login', { userName: 'admin@opencdx.org', password: 'password' });
         const { token, user } = response.data;
         setSession(token);
         dispatch({

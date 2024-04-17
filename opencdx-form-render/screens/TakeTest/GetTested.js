@@ -17,9 +17,10 @@ const GetTested = ({ navigation }) => {
                 }}>
                 <Text variant='titleMedium'>
                     Select how you would like to get tested            </Text>
+                <AnimatedCard navigation={navigation} link='TestList' src={require('../../assets/lab2.json')} title='Order a Test Kit' subtitle='I need to order a test kit' />
+
                     <AnimatedCard navigation={navigation} link='ScheduleAppointment' src={require('../../assets/schedule.json')} title='Schedule Appointment' subtitle='Schedule an appointment to get tested' />
                     <AnimatedCard navigation={navigation} link='TestKit' src={require('../../assets/test.json')} title='I have a Test Kit' subtitle='I have a test kit and need to submit my results' />
-                    <AnimatedCard navigation={navigation} link='TestList' src={require('../../assets/lab2.json')} title='Order a Test Kit' subtitle='I need to order a test kit' />
             </ScrollView>
         </View>
     );

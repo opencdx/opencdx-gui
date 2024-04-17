@@ -32,7 +32,8 @@ const ListScreen = ({ navigation }) => {
     );
 
     return (
-        <View style={styles.container}>
+        <View style={styles.container} 
+>
             <SafeAreaView>
                 <View style={styles.body}>
                     <Text style={styles.dateText}>{currentDate}</Text>
@@ -50,6 +51,7 @@ const ListScreen = ({ navigation }) => {
                     "If you don't already have a test kit, you can order one and have it shipped to you.",
                     () => navigation.navigate('GetTested')
                 )}
+                <TouchableOpacity onPress={() => navigation.navigate('Scan')}>
 
                 <LinearGradient
                     colors={['#90EE90', '#90EE90']}
@@ -57,6 +59,7 @@ const ListScreen = ({ navigation }) => {
                     end={[1.0, 0.5]}
                     locations={[0.0, 1.0]}
                     style={styles.passportContainer}
+
                 >
                     <View style={styles.leftContainer}>
                         <Text style={styles.passportTitle}>My Passport</Text>
@@ -66,9 +69,10 @@ const ListScreen = ({ navigation }) => {
                     </View>
                     <View style={styles.rightContainer}>
                         <MaterialCommunityIcons name="qrcode-scan" size={80} color="black" />
-                        <Text>Sample QR code</Text>
+                        <Text>Scan QR code</Text>
                     </View>
                 </LinearGradient>
+                </TouchableOpacity>
 
                 {renderLinearGradientButton(
                     'Test History',

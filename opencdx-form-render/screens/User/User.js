@@ -166,7 +166,7 @@ const User = ({navigation}) => {
             try {
                 const jwtToken = await AsyncStorage.getItem('jwtToken');
                 const response = await axios.post(
-                    '/questionnaire/questionnaire/list',
+                    'https://ec2-3-13-148-183.us-east-2.compute.amazonaws.com:8080/questionnaire/questionnaire/list',
                     {
                         pagination: {
                             pageSize: 30,

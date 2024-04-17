@@ -1,7 +1,6 @@
 import { JsonView, allExpanded, defaultStyles } from 'react-json-view-lite';
 import PropTypes from 'prop-types';
 import 'react-json-view-lite/dist/index.css';
-import * as React from 'react';
 import {
     Box,
     Drawer,
@@ -20,6 +19,8 @@ import {
     DialogActions,
     IconButton
 } from '@mui/material';
+import React, { useCallback } from 'react'
+import { useDropzone } from 'react-dropzone'
 import MuiAppBar from '@mui/material/AppBar';
 import { styled, useTheme } from '@mui/material/styles';
 
@@ -38,6 +39,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import { useAnfFormStore } from './utils/useAnfFormStore';
 
+
+import Slide from '@mui/material/Slide';
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 import './custom.css';
 
 /* end - anf statement type */
@@ -111,10 +117,22 @@ const VisuallyHiddenInput = styled('input')({
 const FormBuilder = () => {
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
+    const [open1, setOpen1] = React.useState(true);
+    const onDrop = useCallback(acceptedFiles => {
+        // Do something with the files
+    }, [])
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+
     const [openDialog, setOpenDialog] = React.useState(false);
     const [openAnfDialog, setOpenAnfDialog] = React.useState(false);
     const { formData, setFormData, uploadData, setUploadData } = useAnfFormStore();
+    const handleClickOpen1 = () => {
+        setOpen1(true);
+    };
 
+    const handleClose1 = () => {
+        setOpen1(false);
+    };
     const handleChange = (e) => {
         const fileReader = new FileReader();
         fileReader.readAsText(e.target.files[0], 'UTF-8');
@@ -198,9 +216,53 @@ const FormBuilder = () => {
     };
 
     return (
+        <>
+            {open1 ?<React.Fragment>
+                <Button variant="outlined" onClick={handleClickOpen1}>
+                    Open full-screen dialog
+                </Button>
+                <Dialog
+                    fullScreen
+                    open={open1}
+                    onClose={handleClose1}
+                    TransitionComponent={Transition}
+                >
+                    <AppBar sx={{ position: 'relative' }}>
+                        <Toolbar>
+                            <IconButton
+                                edge="end"
+                                color="inherit"
+                                onClick={handleClose1}
+                                aria-label="close"
+                            >
+                                <CloseIcon />
+                            </IconButton>
+                            
+                            <Button autoFocus color="inherit" onClick={handleClose1}>
+                                Ok
+                            </Button>
+                        </Toolbar>
+                    </AppBar>
+                    <List>
+                        <ListItemButton>
+                            <ListItemText primary="Phone ringtone" secondary="Titania" />
+                        </ListItemButton>
+                        <Divider />
+                        <div {...getRootProps()}>
+                            <input {...getInputProps()} />
+                            {
+                                isDragActive ?
+                                    <p>Drop the files here ...</p> :
+                                    <p>Drag 'n' drop some files here, or click to select files</p>
+                            }
+                        </div>
+                    </List>
+                </Dialog>
+            </React.Fragment>:
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            <AppBar position="fixed" open={open} style={{ backgroundColor: 'white' }}>
+           
+            <AppBar position="fixed" open={open1} style={{ backgroundColor: 'white' }}>
                 <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <IconButton
                         color="inherit"
@@ -287,7 +349,8 @@ const FormBuilder = () => {
                     {formData && formData.item && <MainWrapper uploadedFile={formData} />}
                 </Box>
             </Main>
-        </Box>
+        </Box>}
+        </>
     );
 };
 FormBuilder.propTypes = {
