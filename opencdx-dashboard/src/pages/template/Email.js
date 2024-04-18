@@ -6,7 +6,7 @@ import { useTheme } from '@mui/material/styles';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { gridSpacing } from 'utils/store/constant';
-import axios from 'utils/axios';
+import { Endpoints } from 'utils/axios/apiEndpoints';
 // ==============================|| Admin PAGE ||============================== //
 
 const Email = () => {
@@ -14,8 +14,7 @@ const Email = () => {
     const [emailTemplates, setEmailTemplates] = useState([]);
     useEffect(() => {
         const fetchEmailList = async () => {
-            const response = await axios.post(
-                '/communications/email/list',
+            const response = await Endpoints.getEmailList(
                 {
                     pagination: {
                         pageSize: 30,

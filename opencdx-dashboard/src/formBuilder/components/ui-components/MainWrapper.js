@@ -7,7 +7,8 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { Grid } from '@mui/material';
 import { useAnfFormStore } from '../../utils/useAnfFormStore';
-import axios from 'utils/axios';
+import axios from 'utils/axios/apiInterceptors';
+import { Endpoints } from 'utils/axios/apiEndpoints';
 
 const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
     const { formData } = useAnfFormStore();
@@ -33,7 +34,9 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
         setShowAlert(true);
         const anf = JSON.parse(localStorage.getItem('anf-form')); // Parse the JSON string to an object
         anf.updated.item = data.item;
-        anf.updated.ruleset = data.item.ruleset;
+        anf.updated.ruleId = data.item.ruleId;
+        anf.updated.ruleQuestionId = [];
+        anf.updated.ruleQuestionId.push(data.item.ruleQuestionId);
         localStorage.setItem('anf-form', JSON.stringify(anf));
 
         anf.updated.item.forEach((element) => {
@@ -98,18 +101,10 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
             delete element.answerTextValue;
         });
         const saveQuestionnare = async () => {
-            const response = await axios.post(
-                '/questionnaire/questionnaire',
+            const response = await Endpoints.submitQuestionnaire(
                 {
                     questionnaire: anf.updated
-                },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${localStorage.getItem('serviceToken')}`
-                    }
-                }
-            );
+                });
             console.log(response.data);
         };
         saveQuestionnare();

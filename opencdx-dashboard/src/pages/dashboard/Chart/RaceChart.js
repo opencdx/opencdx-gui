@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Chart from 'react-apexcharts';
 import MainCard from 'ui-component/cards/MainCard';
 import axios from 'axios';
+import { Graphql } from 'utils/axios/graphqlEndpoints';
 
 // ==============================|| WIDGET - Race CHART ||============================== //
 
@@ -11,7 +12,7 @@ const RaceChart = () => {
 
     const fetchData = useCallback(async () => {
         try {
-            const response = await axios.post('http://localhost:8632', {
+            const response = await Graphql.post({
                 query: `{
                     white: getRaceCount(race:"white")
                     black: getRaceCount(race:"black")

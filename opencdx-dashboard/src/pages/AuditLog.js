@@ -3,12 +3,13 @@ import Box from '@mui/material/Box';
 import DataGrid from 'ui-component/extended/DataGrid';
 import { useEffect, useCallback, useState } from 'react';
 import axios from 'axios';
+import { Graphql } from 'utils/axios/graphqlEndpoints';
 
 export default function AuditLog() {
     const [auditEventList, setAuditEventList] = useState([]);
     const fetchData = useCallback(async () => {
         try {
-            const response = await axios.post('http://localhost:8632', {
+            const response = await Graphql.post({
                 query: `{
                     getAudit {
                         purposeOfUse,

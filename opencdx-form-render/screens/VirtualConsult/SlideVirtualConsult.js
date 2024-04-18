@@ -20,19 +20,17 @@ const SlideVirtualConsult = ({ navigation }) => {
                 <Text style={styles.input} variant='titleMedium'>
                     Please enter your current body temperature                 </Text>
                 <View style={styles.containerCheck}>
+                    <Text style={styles.input} variant='titleMedium'>
+                        36                 </Text>
                     <Slider
-                        style={styles.slider}
-                        min={0}
-                        max={100}
-                        step={1}
-                        floatingLabel
-                        renderThumb={renderThumb}
-                        renderRail={renderRail}
-                        renderRailSelected={renderRailSelected}
-                        renderLabel={renderLabel}
-                        renderNotch={renderNotch}
-                        onValueChanged={handleValueChange}
+                        style={{ width: 200, height: 40 }}
+                        minimumValue={0}
+                        maximumValue={1}
+                        minimumTrackTintColor="red"
+                        maximumTrackTintColor="#000000"
                     />
+                    <Text style={styles.input} variant='titleMedium'>
+                        50                 </Text>
                 </View>
             </View>
             <View style={styles.footer}>

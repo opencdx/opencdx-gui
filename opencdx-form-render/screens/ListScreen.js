@@ -75,14 +75,14 @@ const ListScreen = ({ navigation }) => {
                 </TouchableOpacity>
 
                 {renderLinearGradientButton(
-                    'Test History',
-                    'See your test history.',
+                    'Vaccine History',
+                    'See your vaccine history.',
                     () => navigation.navigate('TestHistory')
                 )}
 
                 {renderLinearGradientButton(
-                    'Vaccine History',
-                    'See your vaccine history.',
+                    'Test History',
+                    'See your test history.',
                     () => navigation.navigate('VaccineHistory')
                 )}
 
