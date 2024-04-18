@@ -13,7 +13,8 @@ import GenderChart from './Chart/GenderChart';
 import RaceChart from './Chart/RaceChart';
 import { gridSpacing } from 'utils/store/constant';
 
-import axios from 'utils/axios';
+import { Endpoints } from 'utils/axios/apiEndpoints';
+import { Graphql } from 'utils/axios/graphqlEndpoints';
 
 const Dashboard = () => {
     const theme = useTheme();
@@ -24,18 +25,11 @@ const Dashboard = () => {
 
     useEffect(() => {
         const fetchUserResponses = async () => {
-            axios.post(
-                '/questionnaire/user/questionnaire/list',
+            Endpoints.userResponses(
                 {
                     pagination: {
                         pageSize: 30,
                         sortAscending: true
-                    }
-                },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${localStorage.getItem('serviceToken')}`
                     }
                 }
             ).then((response) => {
@@ -44,18 +38,11 @@ const Dashboard = () => {
             .catch(err => err);
         };
         const fetchUsers = async () => {
-            axios.post(
-                '/iam/user/list',
+            Endpoints.userList(
                 {
                     pagination: {
                         pageSize: 30,
                         sortAscending: true
-                    }
-                },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${localStorage.getItem('serviceToken')}`
                     }
                 }
             ).then((response) => {
@@ -64,7 +51,8 @@ const Dashboard = () => {
             .catch(err => err);
         };
         const fetchGraphqlData = async () => {
-            axios.post('http://localhost:8632', {
+            Graphql.post(
+            {
                 query: `{
                     active: getUsersCountByStatus(status: "IAM_USER_STATUS_ACTIVE")
                     inactive: getUsersCountByStatus(status: "IAM_USER_STATUS_INACTIVE")

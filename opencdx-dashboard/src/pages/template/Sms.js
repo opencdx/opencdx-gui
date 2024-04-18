@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react';
 import { Grid, Stack, TextField, MenuItem } from '@mui/material';
 import MainCard from 'ui-component/cards/MainCard';
 import { useTheme } from '@mui/material/styles';
-import axios from 'utils/axios';
+import axios from 'utils/axios/apiInterceptors';
 
 // third party
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { gridSpacing } from 'utils/store/constant';
+import { Endpoints } from 'utils/axios/apiEndpoints';
 
 // ==============================|| Admin PAGE ||============================== //
 
@@ -16,8 +17,7 @@ const Sms = () => {
     const [SmsTemplates, setSmsTemplates] = useState([]);
     useEffect(() => {
         const fetchSmsList = async () => {
-            const response = await axios.post(
-                '/communications/sms/list',
+            const response = await Endpoints.getSmsList(
                 {
                     pagination: {
                         pageSize: 30,

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useState, useEffect, useCallback } from 'react';
 import Chart from 'react-apexcharts';
 import MainCard from 'ui-component/cards/MainCard';
-import axios from 'axios';
+import { Graphql } from 'utils/axios/graphqlEndpoints';
 
 // ==============================|| WIDGET - Gender CHART ||============================== //
 
@@ -11,7 +11,7 @@ const GenderChart = () => {
 
     const fetchData = useCallback(async () => {
         try {
-            const response = await axios.post('http://localhost:8632', {
+            const response = await Graphql.post({
                 query: `{
                     male: getGenderCount(gender: "GENDER_MALE")
                     female: getGenderCount(gender: "GENDER_FEMALE")
