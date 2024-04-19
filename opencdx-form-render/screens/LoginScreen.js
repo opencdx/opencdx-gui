@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Platform, SafeAreaView } from 'react-native';
-import axios from '../utils/axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
     Button, Input, ButtonText, InputField, Image, Link, LinkText, Text,
@@ -10,6 +9,8 @@ import {
     EyeOffIcon,
     Switch,
 } from '@gluestack-ui/themed';
+import { Endpoints } from '../utils/axios/apiEndpoints';
+
 const LoginScreen = ({ navigation }) => {
     const [username, setUsername] = useState('admin@opencdx.org');
     const [password, setPassword] = useState('password');
@@ -26,7 +27,7 @@ const LoginScreen = ({ navigation }) => {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post('https://ec2-3-13-148-183.us-east-2.compute.amazonaws.com:8080/iam/user/login', { userName: username, password: password });
+            const response = await Endpoints.login({ userName: username, password: password });
             await AsyncStorage.setItem('jwtToken', response.data.token);
             navigation.navigate('List');
         } catch (error) {

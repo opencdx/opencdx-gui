@@ -8,7 +8,8 @@ apiInterceptors.interceptors.request.use((config) => {
         ...config,
         headers: {
             ...config.headers,
-            Authorization: `Bearer ${localStorage.getItem('serviceToken')}` || '',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('jwtToken')}` || '',
         },
     })
 },

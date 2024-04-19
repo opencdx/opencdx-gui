@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import axios from '../../utils/axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, StyleSheet, Platform } from 'react-native';
 import { Text } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Endpoints } from '../../utils/axios/apiEndpoints';
 
 const User = ({navigation}) => {
     const [buttonTitles, setButtonTitles] = useState([{
@@ -164,19 +164,11 @@ const User = ({navigation}) => {
     useEffect(() => {
         const fetchQuestionnaireList = async () => {
             try {
-                const jwtToken = await AsyncStorage.getItem('jwtToken');
-                const response = await axios.post(
-                    'https://ec2-3-13-148-183.us-east-2.compute.amazonaws.com:8080/questionnaire/questionnaire/list',
+                const response = await Endpoints.questionnaireList(
                     {
                         pagination: {
                             pageSize: 30,
                             sortAscending: true,
-                        },
-                    },
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Authorization: `Bearer ${jwtToken}`,
                         },
                     }
                 );

@@ -6,17 +6,18 @@ import { Text, View, StyleSheet, Platform, SafeAreaView } from 'react-native';
 import { Button, ButtonText, FormControlLabel, FormControlLabelText, Heading } from '@gluestack-ui/themed';
 import { useForm, FormProvider } from 'react-hook-form';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from '../utils/axios';
-
+import { Endpoints } from '../utils/axios/apiEndpoints';
 
 export default function App({ questionnaire, navigation}) {
     const { ...methods } = useForm({ mode: 'onChange' });
 
     const onSubmit = (data) => {
         questionnaire.item.forEach((field, index) => {
+            if (field.item) {
                 field.item.forEach((connector) => {
                     if (
                         connector &&
+                        connector.anfStatementConnector &&
                         connector.anfStatementConnector[0] &&
                         connector.anfStatementConnector[0].anfStatement &&
                         connector.anfStatementConnector[0].anfStatement.circumstanceChoice
@@ -25,31 +26,26 @@ export default function App({ questionnaire, navigation}) {
 
                     }
                 });
+            }
             
+            field.answer = [];
+
             switch (field.type) {
                 case 'integer':
-                    field.answerInteger = data[field.linkId];
-                    break;
-                case 'string':
-                    field.answerString = data[field.linkId];
-                    break;
-                case 'text':
-                    field.answerText = data[field.linkId];
+                    field.answer.push({valueInteger: data[field.linkId]});
                     break;
                 case 'boolean':
-                    field.answerBoolean = data[field.linkId] === 'yes';
-                    break;
-                case 'choice':
-                    field.answerString = data[field.linkId];
+                    field.answer.push({valueBoolean: data[field.linkId] === 'yes'});
                     break;
                 default:
+                    field.answer.push({valueString: data[field.linkId]});
                     break;
             }
         });
       
         const userQuestionnaireData = {
             "userQuestionnaireData": {
-                "patientId": "65e9d6589f21925367ccef18",
+                "patientId": "6622c6c330275c13ca7b8ff3",
                 "questionnaireData": [
                     questionnaire
 
@@ -61,13 +57,7 @@ export default function App({ questionnaire, navigation}) {
             console.log(userQuestionnaireData)
             const data=JSON.stringify(userQuestionnaireData);
             try {
-                const jwtToken = await AsyncStorage.getItem('jwtToken');
-                const response = await axios.post('/questionnaire/user/questionnaire', data, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${jwtToken}`,
-                    },
-                });
+                const response = await Endpoints.submitUserQuestionnaire(data);
                 console.log(response)
                 navigation.navigate('Success');
             } catch (error) {
