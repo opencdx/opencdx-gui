@@ -26,8 +26,8 @@ const LoginScreen = ({ navigation }) => {
 
     const handleLogin = async () => {
         try {
-            // const response = await axios.post('https://ec2-3-13-148-183.us-east-2.compute.amazonaws.com:8080/iam/user/login', { userName: username, password: password });
-            // await AsyncStorage.setItem('jwtToken', response.data.token);
+            const response = await axios.post('https://ec2-3-13-148-183.us-east-2.compute.amazonaws.com:8080/iam/user/login', { userName: username, password: password });
+            await AsyncStorage.setItem('jwtToken', response.data.token);
             navigation.navigate('List');
         } catch (error) {
             alert(error);
