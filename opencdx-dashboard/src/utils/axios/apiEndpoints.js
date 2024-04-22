@@ -9,6 +9,8 @@ export const Endpoints = {
         post('/iam/user/list', params),
     userResponses: (params) =>
         post('/questionnaire/user/questionnaire/list', params),
+    getQuestionnaireList: (params) =>
+        post('/questionnaire/questionnaire/list', params),
     rulesetList: (params) =>
         post('/classification/ruleset/list', params),
     submitQuestionnaire: (params) =>
