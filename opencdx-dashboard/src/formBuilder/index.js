@@ -28,7 +28,7 @@ import { styled, useTheme } from '@mui/material/styles';
 
 import { Endpoints } from 'utils/axios/apiEndpoints';
 
-
+import alpha from './store/alpha.json';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -143,19 +143,27 @@ const FormBuilder = () => {
     }, []);
 
     const handleChange = (e) => {
-        const fileReader = new FileReader();
-        fileReader.readAsText(e.target.files[0], 'UTF-8');
-        fileReader.onload = (e) => {
-            const formData = JSON.parse(e.target.result);
-            setFormData(formData);
-            setUploadData(formData);
+        setFormData(alpha);
+        setUploadData(alpha);
             const data = {
-                default: formData,
-                updated: formData
+                default: alpha,
+                updated: alpha
             };
             localStorage.setItem('anf-form', JSON.stringify(data));
-        };
         setOpen1(false);
+        // const fileReader = new FileReader();
+        // fileReader.readAsText(e.target.files[0], 'UTF-8');
+        // fileReader.onload = (e) => {
+        //     const formData = JSON.parse(e.target.result);
+        //     setFormData(formData);
+        //     setUploadData(formData);
+        //     const data = {
+        //         default: formData,
+        //         updated: formData
+        //     };
+        //     localStorage.setItem('anf-form', JSON.stringify(data));
+        // };
+        // setOpen1(false);
 
     };
 
@@ -285,15 +293,16 @@ const FormBuilder = () => {
                                 padding: 2
                             }}
                         >
+                                {/* <Button onChange={handleChange} component="label" variant="contained" startIcon={<CloudUploadIcon />}> */}
 
-                        <Button onChange={handleChange} component="label" variant="contained" startIcon={<CloudUploadIcon />}>
+                        <Button onClick={handleChange} component="label" variant="contained" startIcon={<CloudUploadIcon />}>
                             Upload file
-                            <VisuallyHiddenInput type="file" />
+                            {/* <VisuallyHiddenInput type="file" /> */}
                         </Button>
                         </Box>
                         <Grid item style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>   
                             {
-                                    userResponses&&  userResponses?.questionnaires.map((response) => (
+                                    userResponses&&  userResponses?.questionnaires?.map((response) => (
                                         <Box
                                             key={response.id}
                                             sx={{
