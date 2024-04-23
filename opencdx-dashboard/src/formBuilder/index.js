@@ -2,6 +2,7 @@ import { JsonView, allExpanded, defaultStyles } from 'react-json-view-lite';
 import PropTypes from 'prop-types';
 import 'react-json-view-lite/dist/index.css';
 import {
+    Avatar,
     Box,
     Drawer,
     CssBaseline,
@@ -17,16 +18,17 @@ import {
     DialogTitle,
     DialogContent,
     DialogActions,
-    IconButton
+    IconButton,
+    Tooltip
 } from '@mui/material';
-import React, { useCallback } from 'react'
+import React, { useCallback, useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone'
 import MuiAppBar from '@mui/material/AppBar';
 import { styled, useTheme } from '@mui/material/styles';
 
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { Endpoints } from 'utils/axios/apiEndpoints';
 
+import alpha from './store/alpha.json';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -117,7 +119,9 @@ const VisuallyHiddenInput = styled('input')({
 const FormBuilder = () => {
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
-    const [open1, setOpen1] = React.useState(true);
+    const [open1, setOpen1] = React.useState(false);
+    const [userResponses, setUserResponses] = useState([]);
+
     const onDrop = useCallback(acceptedFiles => {
         // Do something with the files
     }, [])
@@ -133,19 +137,34 @@ const FormBuilder = () => {
     const handleClose1 = () => {
         setOpen1(false);
     };
+    const handleToggle = useCallback(() => {
+        setOpen1(true);
+
+    }, []);
+
     const handleChange = (e) => {
-        const fileReader = new FileReader();
-        fileReader.readAsText(e.target.files[0], 'UTF-8');
-        fileReader.onload = (e) => {
-            const formData = JSON.parse(e.target.result);
-            setFormData(formData);
-            setUploadData(formData);
+        setFormData(alpha);
+        setUploadData(alpha);
             const data = {
-                default: formData,
-                updated: formData
+                default: alpha,
+                updated: alpha
             };
             localStorage.setItem('anf-form', JSON.stringify(data));
-        };
+        setOpen1(false);
+        // const fileReader = new FileReader();
+        // fileReader.readAsText(e.target.files[0], 'UTF-8');
+        // fileReader.onload = (e) => {
+        //     const formData = JSON.parse(e.target.result);
+        //     setFormData(formData);
+        //     setUploadData(formData);
+        //     const data = {
+        //         default: formData,
+        //         updated: formData
+        //     };
+        //     localStorage.setItem('anf-form', JSON.stringify(data));
+        // };
+        // setOpen1(false);
+
     };
 
     const handleClickOpen = () => {
@@ -169,7 +188,26 @@ const FormBuilder = () => {
     const handleDrawerOpen = () => {
         setOpen(true);
     };
+    useEffect(() => {
+        
+        const fetchUserResponses = async () => {
+            Endpoints.getQuestionnaireList(
+                {
+                    pagination: {
+                        pageSize: 30,
+                        sortAscending: true
+                    }
+                }
+            ).then((response) => {
+                
+                setUserResponses(response.data);
+            })
+                .catch(err => err);
+        };
 
+        fetchUserResponses();
+      
+    }, []);
     const handleDrawerClose = () => {
         setOpen(false);
     };
@@ -217,139 +255,202 @@ const FormBuilder = () => {
 
     return (
         <>
-            {open1 ?<React.Fragment>
-                <Button variant="outlined" onClick={handleClickOpen1}>
-                    Open full-screen dialog
-                </Button>
-                <Dialog
-                    fullScreen
+            {open1 ? <React.Fragment>
+                
+                <BootstrapDialog
+                    onClose={handleClose}
+                    aria-labelledby="customized-dialog-title"
                     open={open1}
-                    onClose={handleClose1}
-                    TransitionComponent={Transition}
                 >
-                    <AppBar sx={{ position: 'relative' }}>
-                        <Toolbar>
-                            <IconButton
-                                edge="end"
-                                color="inherit"
-                                onClick={handleClose1}
-                                aria-label="close"
-                            >
-                                <CloseIcon />
-                            </IconButton>
+                    <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+                       Choose Questionarrie
+                    </DialogTitle>
+                    <IconButton
+                        aria-label="close"
+                        onClick={handleClose1}
+                        sx={{
+                            position: 'absolute',
+                            right: 8,
+                            top: 8,
+                            color: (theme) => theme.palette.grey[500],
+                        }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                    <DialogContent dividers>
+                        <Grid item style={{ display: 'flex', justifyContent: 'space-between' , alignContent: 'center', alignItems: 'center'}}>
                             
-                            <Button autoFocus color="inherit" onClick={handleClose1}>
-                                Ok
-                            </Button>
+                        <Box
+                            {...getRootProps()}
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                height: '100%',
+                                border: '1px dashed',
+                                borderColor: 'primary.main',
+                                borderRadius: 1,
+                                padding: 2
+                            }}
+                        >
+                                {/* <Button onChange={handleChange} component="label" variant="contained" startIcon={<CloudUploadIcon />}> */}
+
+                        <Button onClick={handleChange} component="label" variant="contained" startIcon={<CloudUploadIcon />}>
+                            Upload file
+                            {/* <VisuallyHiddenInput type="file" /> */}
+                        </Button>
+                        </Box>
+                        <Grid item style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>   
+                            {
+                                    userResponses&&  userResponses?.questionnaires?.map((response) => (
+                                        <Box
+                                            key={response.id}
+                                            sx={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                height: '100%',
+                                                
+                                            }}
+                                        >
+                                            <Button onClick={handleClickOpen1} >
+                                                {response.title}
+                                            </Button>
+                                        </Box>
+                                    ))
+                            }
+                            </Grid>
+
+                        </Grid>
+                        
+                    </DialogContent>
+                    {/* <DialogActions>
+                        <Button autoFocus onClick={handleClose1}>
+                            Save changes
+                        </Button>
+                    </DialogActions> */}
+                </BootstrapDialog>
+            </React.Fragment> :
+                <Box sx={{ display: 'flex' }}>
+                    <CssBaseline />
+
+                    <AppBar position="fixed" open={open1} style={{ backgroundColor: 'white' }}>
+                        <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <IconButton
+                                color="inherit"
+                                aria-label="open drawer"
+                                onClick={handleDrawerOpen}
+                                edge="start"
+                                sx={{ mr: 2, ...(open && { display: 'none' }) }}
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                            <Typography variant="h3" component="div">
+                                ANF Statement
+                            </Typography>
+                            <Grid item style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <Grid item style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <Box sx={{ ml: 2, mr: 2 }}>
+                                        <Tooltip title={'Choose Questionarrie'}>
+                                            <Avatar
+                                                variant="rounded"
+                                                sx={{
+                                                    ...theme.typography.commonAvatar,
+                                                    ...theme.typography.mediumAvatar,
+                                                    border: '1px solid',
+                                                    borderColor: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.primary.light,
+                                                    background: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.primary.light,
+                                                    color: theme.palette.primary.dark,
+                                                    transition: 'all .2s ease-in-out',
+                                                    '&[aria-controls="menu-list-grow"],&:hover': {
+                                                        borderColor: theme.palette.primary.main,
+                                                        background: theme.palette.primary.main,
+                                                        color: theme.palette.primary.light
+                                                    }
+                                                }}
+                                                aria-controls={open ? 'menu-list-grow' : undefined}
+                                                aria-haspopup="true"
+                                                onClick={handleToggle}
+                                                color="inherit"
+                                            >
+                                                <CloudUploadIcon />
+
+                                            </Avatar>
+                                        </Tooltip>
+                                    </Box>
+                                    <FullScreenSection />
+
+                                </Grid>
+                            </Grid>
                         </Toolbar>
                     </AppBar>
-                    <List>
-                        <ListItemButton>
-                            <ListItemText primary="Phone ringtone" secondary="Titania" />
-                        </ListItemButton>
-                        <Divider />
-                        <div {...getRootProps()}>
-                            <input {...getInputProps()} />
-                            {
-                                isDragActive ?
-                                    <p>Drop the files here ...</p> :
-                                    <p>Drag 'n' drop some files here, or click to select files</p>
+                    <Drawer
+                        sx={{
+                            width: drawerWidth,
+                            flexShrink: 0,
+                            '& .MuiDrawer-paper': {
+                                width: drawerWidth,
+                                boxSizing: 'border-box'
                             }
-                        </div>
-                    </List>
-                </Dialog>
-            </React.Fragment>:
-        <Box sx={{ display: 'flex' }}>
-            <CssBaseline />
-           
-            <AppBar position="fixed" open={open1} style={{ backgroundColor: 'white' }}>
-                <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                        sx={{ mr: 2, ...(open && { display: 'none' }) }}
+                        }}
+                        variant="persistent"
+                        anchor="left"
+                        open={open}
                     >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h3" component="div">
-                        ANF Statement
-                    </Typography>
-                    <Grid item style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Box sx={{ display: { xs: 'none', lg: 'block' } }}>
-                            <FullScreenSection />
+                        {/* <DrawerHeader>
+                            <Button onChange={handleChange} component="label" variant="contained" startIcon={<CloudUploadIcon />}>
+                                Upload file
+                                <VisuallyHiddenInput type="file" />
+                            </Button>
+                            <IconButton onClick={handleDrawerClose}>
+                                {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                            </IconButton>
+                        </DrawerHeader> */}
+
+                        <Divider />
+                        <List>
+                            {formData &&
+                                formData.item &&
+                                formData.item.map(({ linkId, text }) => (
+                                    <ListItem key={text} disablePadding>
+                                        <ListItemButton>
+                                            <ListItemText primary={linkId + ' - ' + text} />
+                                        </ListItemButton>
+                                    </ListItem>
+                                ))}
+                        </List>
+                    </Drawer>
+                    <Main open={open}>
+                        <DrawerHeader />
+                        <Box component="main" sx={{ flexGrow: 1, bgcolor: 'background.default' }}>
+                            {uploadData && uploadData.item && (
+                                <Button sx={{ m: 1 }} variant="contained" id="user-form-json" onClick={handleClickOpen}>
+                                    User Form JSON
+                                </Button>
+                            )}
+                            {formData && formData.item && (
+                                <Button sx={{ m: 1 }} variant="contained" id="anf-statement-json" onClick={handleClickOpenAnfDialog}>
+                                    ANF Statement JSON
+                                </Button>
+                            )}
+
+                            <DialogWrapper open={openDialog} handleClose={handleClose} title="Preview JSON" handleDownload={handlePreviewDownload}>
+                                <JsonView data={uploadData} shouldExpandNode={allExpanded} style={defaultStyles} />
+                            </DialogWrapper>
+                            <DialogWrapper
+                                open={openAnfDialog}
+                                handleClose={handleCloseAnfDialog}
+                                title="ANF Statement"
+                                handleDownload={handleAnfDownload}
+                            >
+                                <JsonView data={formData} shouldExpandNode={allExpanded} style={defaultStyles} />
+                            </DialogWrapper>
+                            <StatementTypesReport />
+
+                            {formData && formData.item && <MainWrapper uploadedFile={formData} />}
                         </Box>
-                    </Grid>
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                sx={{
-                    width: drawerWidth,
-                    flexShrink: 0,
-                    '& .MuiDrawer-paper': {
-                        width: drawerWidth,
-                        boxSizing: 'border-box'
-                    }
-                }}
-                variant="persistent"
-                anchor="left"
-                open={open}
-            >
-                <DrawerHeader>
-                    <Button onChange={handleChange} component="label" variant="contained" startIcon={<CloudUploadIcon />}>
-                        Upload file
-                        <VisuallyHiddenInput type="file" />
-                    </Button>
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                    </IconButton>
-                </DrawerHeader>
-
-                <Divider />
-                <List>
-                    {formData &&
-                        formData.item &&
-                        formData.item.map(({ linkId, text }) => (
-                            <ListItem key={text} disablePadding>
-                                <ListItemButton>
-                                    <ListItemText primary={linkId + ' - ' + text} />
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
-                </List>
-            </Drawer>
-            <Main open={open}>
-                <DrawerHeader />
-                <Box component="main" sx={{ flexGrow: 1, bgcolor: 'background.default' }}>
-                    {uploadData && uploadData.item && (
-                        <Button sx={{ m: 1 }} variant="contained" id="user-form-json" onClick={handleClickOpen}>
-                            User Form JSON
-                        </Button>
-                    )}
-                    {formData && formData.item && (
-                        <Button sx={{ m: 1 }} variant="contained" id="anf-statement-json" onClick={handleClickOpenAnfDialog}>
-                            ANF Statement JSON
-                        </Button>
-                    )}
-
-                    <DialogWrapper open={openDialog} handleClose={handleClose} title="Preview JSON" handleDownload={handlePreviewDownload}>
-                        <JsonView data={uploadData} shouldExpandNode={allExpanded} style={defaultStyles} />
-                    </DialogWrapper>
-                    <DialogWrapper
-                        open={openAnfDialog}
-                        handleClose={handleCloseAnfDialog}
-                        title="ANF Statement"
-                        handleDownload={handleAnfDownload}
-                    >
-                        <JsonView data={formData} shouldExpandNode={allExpanded} style={defaultStyles} />
-                    </DialogWrapper>
-                    <StatementTypesReport />
-
-                    {formData && formData.item && <MainWrapper uploadedFile={formData} />}
-                </Box>
-            </Main>
-        </Box>}
+                    </Main>
+                </Box>}
         </>
     );
 };
