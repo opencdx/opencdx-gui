@@ -69,13 +69,7 @@ To skip the build and jump to the deployment menu, use the following command:
 
 
 ### Accessing
-1. Open OpenCDX Admin Dashboard: [http://localhost:8080](http://localhost:8861) or option 5 from the deployment menu.
-2. The dashboard menu bar offers the following:
-   1. A drop-down list of observability tools and their links.
-   2. A drop-down list of documentation and their links.
-   3. A drop-down list of microservices with their swagger links.
-   4. Link to the Discovery Dashboard.
-   5. Link to the NATS Dashboard.
+1. Open OpenCDX Dashboard: [https://localhost:3005](https://localhost:3005) or option 5 from the deployment menu.
 
 ## Support Team
 
