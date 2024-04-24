@@ -5,6 +5,9 @@
 ## Software Required
 - Node: 20
 - Git
+- Xcode (if running iOS emulator)
+- Android SDK (if running Android emulator)
+- Docker
 
 ℹ️ Specific version not required, but the latest version is recommended.
 
@@ -17,7 +20,9 @@ OpenCDX is a platform for the management of clinical data exchange. It is design
 - [OpenCdx Dashboard](opencdx-dashboard/README.md)
 - [OpenCdx Form Render](opencdx-form-render/README.md)
 
-## Deployment Procedures
+## Deployment Procedures (Docker)
+
+The following is for deploying the dashboard to Docker. To run the Dashboard and Form Render locally using Node, please refere to the README in their repective folders.
 
 1. Run the command "chmod 755 deploy.sh" in the root directory.
 2. Run the command "./deploy.sh --deploy" in the root directory of the repository.
