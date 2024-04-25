@@ -31,7 +31,9 @@ OpenCDX is a platform for the management of clinical data exchange. It is design
 
 ## Deployment Procedures (Docker)
 
-The following is for deploying the dashboard to Docker. To run the Dashboard and Form Render locally using Node, please refer to the README in the repective module folders.
+It is recommended to run the two UI modules locally. Please refer to the README in the repective module folders [OpenCdx Dashboard](opencdx-dashboard/README.md) and [OpenCdx Form Render](opencdx-form-render/README.md).
+
+The following is for deploying the dashboard to Docker.
 
 1. Run the command "chmod 755 deploy.sh" in the root directory.
 2. Run the command "./deploy.sh --deploy" in the root directory of the repository.
