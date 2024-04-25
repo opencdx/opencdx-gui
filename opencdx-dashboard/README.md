@@ -2,7 +2,7 @@
 
 ## Build & Deployment Procedures
 ### Prerequisites
-1. Node 20 installed
+1. [Node.js](https://nodejs.org/en/download/) installed
 2. Enable yarn (`corepack enable`)
 
 ### Running locally
