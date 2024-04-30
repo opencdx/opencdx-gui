@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "GENERATE_SOURCEMAP=false expo start",
+    "start": "GENERATE_SOURCEMAP=false REACT_APP_API_DEV=true expo start",
+    "startLocal": "GENERATE_SOURCEMAP=false REACT_APP_API_DEV=false expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web"
