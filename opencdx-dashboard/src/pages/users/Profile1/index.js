@@ -81,7 +81,6 @@ const Profile1 = () => {
    
     useEffect(() => {
         const fetchSmsList = async () => {
-            debugger
             const response = await Endpoints.getCurrentUser(
                 {
                     pagination: {
@@ -98,25 +97,24 @@ const Profile1 = () => {
             );
             
             setUser(response.data);
-            const fetchUser = async () => {
-                debugger
-                const response = await Endpoints.getUserProfile(
-                    {
-                        pagination: {
-                            pageSize: 30,
-                            sortAscending: true
-                        }
-                    },
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Authorization: `Bearer ${localStorage.getItem('serviceToken')}`
-                        }
-                    }
-                );
-                setUser(response.data);
-            };
-            fetchUser();
+            // const fetchUser = async () => {
+            //     const response = await Endpoints.getUserProfile(
+            //         {
+            //             pagination: {
+            //                 pageSize: 30,
+            //                 sortAscending: true
+            //             }
+            //         },
+            //         {
+            //             headers: {
+            //                 'Content-Type': 'application/json',
+            //                 Authorization: `Bearer ${localStorage.getItem('serviceToken')}`
+            //             }
+            //         }
+            //     );
+            //     setUser(response.data);
+            // };
+            // fetchUser();
         };
         fetchSmsList();
     }, []);
