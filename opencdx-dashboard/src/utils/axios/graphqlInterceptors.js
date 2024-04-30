@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const GRAPHQL_PORT = '8632'
-const graphqlUrl = 'http://localhost:' + GRAPHQL_PORT;
+const graphqlUrl = 'http://ec2-3-13-148-183.us-east-2.compute.amazonaws.com:8632/';
 const axiosServices = axios.create({ baseURL: graphqlUrl });
 
 axiosServices.interceptors.request.use((config) =>  {

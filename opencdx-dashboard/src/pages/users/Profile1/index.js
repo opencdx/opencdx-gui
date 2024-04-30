@@ -36,6 +36,7 @@ import MailTwoToneIcon from '@mui/icons-material/MailTwoTone';
 import Avatar3 from 'utils/assets/images/users/avatar-1.png';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { Endpoints } from 'utils/axios/apiEndpoints';
 
 // progress
 function LinearProgressWithLabel({ value, ...others }) {
@@ -77,18 +78,47 @@ const Profile1 = () => {
     // const { user } = useAuth();
     const [user, setUser] = useState({});
     const navigate = useNavigate();
+   
     useEffect(() => {
-        const fetchEmailList = async () => {
-            const response = await axios.get('/iam/profile/5f63a53ddcc67c7a1c3d93e8', {
-                headers: {
-                    Accept: 'application/json', // Specify expected format
-                    Authorization: `Bearer ${localStorage.getItem('serviceToken')}`
+        const fetchSmsList = async () => {
+            debugger
+            const response = await Endpoints.getCurrentUser(
+                {
+                    pagination: {
+                        pageSize: 30,
+                        sortAscending: true
+                    }
                 },
-                data: {}
-            });
-            setUser(response?.data?.userProfile);
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem('serviceToken')}`
+                    }
+                }
+            );
+            
+            setUser(response.data);
+            const fetchUser = async () => {
+                debugger
+                const response = await Endpoints.getUserProfile(
+                    {
+                        pagination: {
+                            pageSize: 30,
+                            sortAscending: true
+                        }
+                    },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${localStorage.getItem('serviceToken')}`
+                        }
+                    }
+                );
+                setUser(response.data);
+            };
+            fetchUser();
         };
-        fetchEmailList();
+        fetchSmsList();
     }, []);
 
     const {
