@@ -35,6 +35,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import StatementTypesReport from './components/ui-components/StatementTypesReport';
 import MainWrapper from './components/ui-components/MainWrapper';
 import FullScreenSection from './components/ui-components/FullScreen';
+import UplaodScreenSection from './components/ui-components/UploadScreen';
+
 import { Grid } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import GetAppIcon from '@mui/icons-material/GetApp';
@@ -238,11 +240,15 @@ const FormBuilder = () => {
                     <Typography variant="h3" component="div">
                         ANF Statement
                     </Typography>
-                    <Grid item style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Box sx={{ display: { xs: 'none', lg: 'block' } }}>
+                    <>
+                   
+                    <Grid item >
+                        <Box sx={{ display: { xs: 'none', lg: 'block'}, justifyContent: 'space-between' , alignItems: 'center', display: 'flex' }}>
+                            <UplaodScreenSection />
                             <FullScreenSection />
                         </Box>
                     </Grid>
+                    </>
                 </Toolbar>
             </AppBar>
             <Drawer

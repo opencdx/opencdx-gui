@@ -28,7 +28,7 @@ const Email = () => {
                     }
                 }
             );
-            setEmailTemplates(response.data);
+            setEmailTemplates(response?.data);
         };
         fetchEmailList();
     }, []);
@@ -40,7 +40,7 @@ const Email = () => {
     };
     const handleTemplateChange = (evt) => {
         setTemplate(evt.target.value);
-        const template = emailTemplates.templates.find((template) => template.subject === evt.target.value);
+        const template = emailTemplates?.templates?.find((template) => template.subject === evt.target.value);
         setText(template.content);
     };
 
