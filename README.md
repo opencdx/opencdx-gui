@@ -2,12 +2,12 @@
 
 ## Repository Name: [opencdx/opencdx-gui](https://github.com/opencdx/opencdx-gui)
 
-## Software Required
+## Software Used
 - Node: 20
 - Git
 - Xcode (if running iOS emulator)
 - Android SDK (if running Android emulator)
-- Docker
+- Docker (if deploying image)
 
 ℹ️ Specific version not required, but the latest version is recommended.
 
@@ -20,9 +20,20 @@ OpenCDX is a platform for the management of clinical data exchange. It is design
 - [OpenCdx Dashboard](opencdx-dashboard/README.md)
 - [OpenCdx Form Render](opencdx-form-render/README.md)
 
+## Required Software
+- [Git](https://git-scm.com/downloads): Git is a distributed version control system that enables developers to track changes in source code during software development. It allows for collaborative work, branching, and merging code efficiently.
+- [Node.js](https://nodejs.org/en/download/): Node.js is an open-source, cross-platform JavaScript runtime environment that allows developers to run JavaScript code outside of a web browser. It is commonly used for building server-side applications and command-line tools.
+
+## Optional Software
+- [Docker Desktop](https://www.docker.com/products/docker-desktop): Docker Desktop is an application for MacOS and Windows machines that enables developers to build and share containerized applications and microservices. It provides an easy-to-use interface for managing Docker containers, images, networks, and volumes.
+- [Android Studio](https://developer.android.com/studio): For managing the Android SDK and device emulators
+- [Xcode](https://developer.apple.com/xcode/): For managing iOS device emulators
+
 ## Deployment Procedures (Docker)
 
-The following is for deploying the dashboard to Docker. To run the Dashboard and Form Render locally using Node, please refere to the README in their repective folders.
+It is recommended to run the two UI modules locally. Please refer to the README in the repective module folders [OpenCdx Dashboard](opencdx-dashboard/README.md) and [OpenCdx Form Render](opencdx-form-render/README.md).
+
+The following is for deploying the dashboard to Docker.
 
 1. Run the command "chmod 755 deploy.sh" in the root directory.
 2. Run the command "./deploy.sh --deploy" in the root directory of the repository.
