@@ -25,12 +25,14 @@ const AccordianWrapper = React.forwardRef(({ title, children }, ref) => {
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
-            >
+                data-testid={title + "accordion-header"}
+                >
                 <Typography variant="h5" sx={{ fontWeight: 500 }}>
                     {title}
                 </Typography>
             </AccordionSummary>
             <AccordionDetails
+                data-testid={title + "accordion-content"}
                 sx={{
                     backgroundColor: '#f5f5f5',
                     border: '1px solid lightgray',

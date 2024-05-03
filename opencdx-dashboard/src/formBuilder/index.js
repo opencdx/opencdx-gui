@@ -21,8 +21,10 @@ import {
     IconButton
 } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
+import { useEffect } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 
+import { Endpoints } from 'utils/axios/apiEndpoints';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
@@ -33,11 +35,18 @@ import CloseIcon from '@mui/icons-material/Close';
 import StatementTypesReport from './components/ui-components/StatementTypesReport';
 import MainWrapper from './components/ui-components/MainWrapper';
 import FullScreenSection from './components/ui-components/FullScreen';
+import UplaodScreenSection from './components/ui-components/UploadScreen';
+
 import { Grid } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import { useAnfFormStore } from './utils/useAnfFormStore';
 
+
+import Slide from '@mui/material/Slide';
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 import './custom.css';
 
 /* end - anf statement type */
@@ -151,6 +160,23 @@ const FormBuilder = () => {
     const handleDrawerOpen = () => {
         setOpen(true);
     };
+    useEffect(() => {
+        const fetchUserResponses = async () => {
+            Endpoints.getQuestionnaireList(
+                {
+                    pagination: {
+                        pageSize: 30,
+                        sortAscending: true
+                    }
+                }
+            ).then((response) => {
+
+                setUserResponses(response.data);
+            })
+                .catch(err => err);
+        };
+        fetchUserResponses();
+    }, []);
 
     const handleDrawerClose = () => {
         setOpen(false);
@@ -214,11 +240,15 @@ const FormBuilder = () => {
                     <Typography variant="h3" component="div">
                         ANF Statement
                     </Typography>
-                    <Grid item style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Box sx={{ display: { xs: 'none', lg: 'block' } }}>
+                    <>
+                   
+                    <Grid item >
+                        <Box sx={{ display: { xs: 'none', lg: 'block'}, justifyContent: 'space-between' , alignItems: 'center', display: 'flex' }}>
+                            <UplaodScreenSection />
                             <FullScreenSection />
                         </Box>
                     </Grid>
+                    </>
                 </Toolbar>
             </AppBar>
             <Drawer

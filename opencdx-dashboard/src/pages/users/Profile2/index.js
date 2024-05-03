@@ -83,15 +83,15 @@ const Profile2 = () => {
 
     useEffect(() => {
         const fetchEmailList = async () => {
-            const response = await axios.get('/iam/profile/5f63a53ddcc67c7a1c3d93e8', {
-                headers: {
-                    Accept: 'application/json', // Specify expected format
-                    Authorization: `Bearer ${localStorage.getItem('serviceToken')}`
-                },
-                data: {}
-            });
+            // const response = await axios.get('/iam/profile/5f63a53ddcc67c7a1c3d93e8', {
+            //     headers: {
+            //         Accept: 'application/json', // Specify expected format
+            //         Authorization: `Bearer ${localStorage.getItem('serviceToken')}`
+            //     },
+            //     data: {}
+            // });
 
-            setUser(response.data.userProfile);
+            // setUser(response.data.userProfile);
         };
         fetchEmailList();
     }, [setUser]);

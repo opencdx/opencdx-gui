@@ -6,8 +6,7 @@ import { Text, View, StyleSheet, Platform, SafeAreaView } from 'react-native';
 import { Button, ButtonText, FormControlLabel, FormControlLabelText, Heading } from '@gluestack-ui/themed';
 import { useForm, FormProvider } from 'react-hook-form';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from '../utils/axios';
-
+import { Endpoints } from '../utils/axios/apiEndpoints';
 
 export default function App({ questionnaire, navigation}) {
     const { ...methods } = useForm({ mode: 'onChange' });
@@ -46,7 +45,7 @@ export default function App({ questionnaire, navigation}) {
       
         const userQuestionnaireData = {
             "userQuestionnaireData": {
-                "patientId": "65e9d6589f21925367ccef18",
+                "patientId": "6622c6c330275c13ca7b8ff3",
                 "questionnaireData": [
                     questionnaire
 
@@ -58,14 +57,7 @@ export default function App({ questionnaire, navigation}) {
             console.log(userQuestionnaireData)
             const data=JSON.stringify(userQuestionnaireData);
             try {
-                const jwtToken = await AsyncStorage.getItem('jwtToken');
-
-                const response = await axios.post('/questionnaire/user/questionnaire', data, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${jwtToken}`,
-                    },
-                });
+                const response = await Endpoints.submitUserQuestionnaire(data);
                 console.log(response)
                 navigation.navigate('Success');
             } catch (error) {

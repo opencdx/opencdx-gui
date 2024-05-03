@@ -4,6 +4,7 @@ import DataGrid from 'ui-component/extended/DataGrid';
 import { useEffect, useCallback, useState } from 'react';
 import axios from 'axios';
 import { Graphql } from 'utils/axios/graphqlEndpoints';
+import { Endpoints } from 'utils/axios/apiEndpoints';
 
 export default function AuditLog() {
     const [auditEventList, setAuditEventList] = useState([]);

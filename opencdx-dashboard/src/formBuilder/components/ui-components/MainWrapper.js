@@ -7,7 +7,6 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { Grid } from '@mui/material';
 import { useAnfFormStore } from '../../utils/useAnfFormStore';
-import axios from 'utils/axios/apiInterceptors';
 import { Endpoints } from 'utils/axios/apiEndpoints';
 
 const MainWrapper = forwardRef(({ uploadedFile }, ref) => {

@@ -62,7 +62,7 @@ const ChildWrapper = ({ control, register }) => {
                     }
                 }}
             >
-                <Grid item xs={12} sm={3} lg={2}>
+                <Grid item xs={12} sm={3} lg={2} marginBottom={2}>
                     <Typography variant="h5" gutterBottom>
                         Select a rule
                     </Typography>
@@ -79,6 +79,7 @@ const ChildWrapper = ({ control, register }) => {
                                     {...field}
                                     id={`item.ruleIds`}
                                     fullWidth
+                                    data-testid="item.rulesets"
                                     variant="outlined"
                                     size="small"
                                     // onClick={(e) => setFormData({ ruleset: e.target.value })}
@@ -93,12 +94,12 @@ const ChildWrapper = ({ control, register }) => {
                         />
                     </FormControl>
                 </Grid>
-                <Grid item xs={12} sm={3} lg={2}>
+                <Grid item xs={12} sm={3} lg={2} mt={2}>
                     <Typography variant="h5" gutterBottom>
                         Select response for rule
                     </Typography>
                 </Grid>
-                <Grid item xs={12} sm={9} lg={10}>
+                <Grid item xs={12} sm={9} lg={10} mt={2}>
                     <FormControl fullWidth>
                         <Controller
                             name={`item.ruleQuestionId`}

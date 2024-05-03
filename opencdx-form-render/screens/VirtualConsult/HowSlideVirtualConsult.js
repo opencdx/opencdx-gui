@@ -1,27 +1,18 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Platform, SafeAreaView } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 import Slider from '@react-native-community/slider';
 
-
-const SlideVirtualConsult = ({ navigation }) => {
-    const renderThumb = useCallback(() => <Thumb />, []);
-    const renderRail = useCallback(() => <Rail />, []);
-    const renderRailSelected = useCallback(() => <RailSelected />, []);
-    const renderLabel = useCallback(value => <Label text={value} />, []);
-    const renderNotch = useCallback(() => <Notch />, []);
-    const handleValueChange = useCallback((low, high) => {
-        setLow(low);
-        setHigh(high);
-    }, []);
+const HowSlideVirtualConsult = ({ navigation }) => {
+   
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.body}>
                 <Text style={styles.input} variant='titleMedium'>
-                    Please enter your current body temperature                 </Text>
+                    How many days have you experienced these symptoms                 </Text>
                 <View style={styles.containerCheck}>
                     <Text style={styles.input} variant='titleMedium'>
-                        36                 </Text>
+                        0                 </Text>
                     <Slider
                         style={{ width: 200, height: 40 }}
                         minimumValue={0}
@@ -30,12 +21,12 @@ const SlideVirtualConsult = ({ navigation }) => {
                         maximumTrackTintColor="#000000"
                     />
                     <Text style={styles.input} variant='titleMedium'>
-                        50                 </Text>
+                        30                 </Text>
                 </View>
             </View>
             <View style={styles.footer}>
                 <Button title="Sign In" mode="contained-tonal"
-                    style={styles.button} onPress={() => navigation.navigate('DoctorVirtualConsult')}>
+                    style={styles.button} onPress={() => navigation.navigate('ProlongedVirtualConsult')}>
                     Continue
                 </Button>
             </View>
@@ -82,7 +73,7 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         display: 'flex',
         alignItems: 'center',
-        flexDirection:'row',
+        flexDirection: 'row',
     },
     section: {
         flexDirection: 'row',
@@ -119,4 +110,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default SlideVirtualConsult;
+export default HowSlideVirtualConsult;

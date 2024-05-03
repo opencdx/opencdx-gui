@@ -19,7 +19,7 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item }, ref)
             case 'boolean':
                 return ['Yes', 'No', 'Not Answered'];
             case 'choice':
-                for (let i = 0; i < item.answerOption.length; i++) {
+                for (let i = 0; i < item.answerOption?.length; i++) {
                     choices.push(item.answerOption[i].valueCoding.display);
                 }
                 choices.push('Not Answered');

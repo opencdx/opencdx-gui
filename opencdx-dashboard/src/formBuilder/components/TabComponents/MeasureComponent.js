@@ -148,6 +148,8 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                                     setResolution(e.target.value);
                                 }}
                                 placeholder="Enter Resolution"
+                                data-testid="resolution"
+
                             />
                         ) : (
                             <TextField
@@ -158,6 +160,7 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                                     inputProps: { min: 0 }
                                 }}
                                 placeholder="Enter Resolution"
+                                data-testid="resolution"
                             />
                         )}
                     </Grid>
