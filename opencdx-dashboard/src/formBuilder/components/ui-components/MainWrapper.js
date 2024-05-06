@@ -61,31 +61,31 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
                         connector &&
                         connector.anfStatementConnector[0] &&
                         connector.anfStatementConnector[0].anfStatement &&
-                        connector.anfStatementConnector[0].anfStatement.circumstanceChoice
+                        connector.anfStatementConnector[0].anfStatement.performanceCircumstance
                     ) {
-                        connector.anfStatementConnector[0].anfStatement.circumstanceChoice.normalRange.includeLowerBound =
-                            connector.anfStatementConnector[0].anfStatement?.circumstanceChoice?.normalRange?.includeLowerBound === 'yes'
+                        connector.anfStatementConnector[0].anfStatement.performanceCircumstance.normalRange.includeLowerBound =
+                            connector.anfStatementConnector[0].anfStatement?.performanceCircumstance?.normalRange?.includeLowerBound === 'yes'
                                 ? true
                                 : false;
-                        connector.anfStatementConnector[0].anfStatement.circumstanceChoice.normalRange.includeUpperBound =
-                            connector.anfStatementConnector[0].anfStatement?.circumstanceChoice.normalRange?.includeUpperBound === 'yes'
+                        connector.anfStatementConnector[0].anfStatement.performanceCircumstance.normalRange.includeUpperBound =
+                            connector.anfStatementConnector[0].anfStatement?.performanceCircumstance.normalRange?.includeUpperBound === 'yes'
                                 ? true
                                 : false;
-                        connector.anfStatementConnector[0].anfStatement.circumstanceChoice.result.includeLowerBound =
-                            connector.anfStatementConnector[0].anfStatement?.circumstanceChoice?.result?.includeLowerBound === 'yes'
+                        connector.anfStatementConnector[0].anfStatement.performanceCircumstance.result.includeLowerBound =
+                            connector.anfStatementConnector[0].anfStatement?.performanceCircumstance?.result?.includeLowerBound === 'yes'
                                 ? true
                                 : false;
-                        connector.anfStatementConnector[0].anfStatement.circumstanceChoice.result.includeUpperBound =
-                            connector.anfStatementConnector[0].anfStatement?.circumstanceChoice?.result?.includeUpperBound === 'yes'
+                        connector.anfStatementConnector[0].anfStatement.performanceCircumstance.result.includeUpperBound =
+                            connector.anfStatementConnector[0].anfStatement?.performanceCircumstance?.result?.includeUpperBound === 'yes'
                                 ? true
                                 : false;
 
-                        connector.anfStatementConnector[0].anfStatement.circumstanceChoice.timing.includeLowerBound =
-                            connector.anfStatementConnector[0].anfStatement?.circumstanceChoice?.timing?.includeLowerBound === 'yes'
+                        connector.anfStatementConnector[0].anfStatement.performanceCircumstance.timing.includeLowerBound =
+                            connector.anfStatementConnector[0].anfStatement?.performanceCircumstance?.timing?.includeLowerBound === 'yes'
                                 ? true
                                 : false;
-                        connector.anfStatementConnector[0].anfStatement.circumstanceChoice.timing.includeUpperBound =
-                            connector.anfStatementConnector[0].anfStatement?.circumstanceChoice?.timing?.includeUpperBound === 'yes'
+                        connector.anfStatementConnector[0].anfStatement.performanceCircumstance.timing.includeUpperBound =
+                            connector.anfStatementConnector[0].anfStatement?.performanceCircumstance?.timing?.includeUpperBound === 'yes'
                                 ? true
                                 : false;
                     }

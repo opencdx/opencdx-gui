@@ -77,7 +77,7 @@
                 "topic": "{\"observationProcedure\": {\"method\": \"Examination - action\", \"hasFocus\": \"On examination - Systolic blood pressure reading\", \"procedureSiteDirect\": \"Structure of right brachial artery\", \"usingDevice\": \"Blood pressure cuff adult size\"}}",
                 "type": "\"expressionType\": \"simple\", \"expressionLanguage\": \"local\", \"expressionValue\": \"performed\", \"expressionDescription\": \"Measurement action has been performed.\""
               },
-              "circumstanceChoice": [{"healthRisk": "XXXXX ${{rules.engine.calculated[circumstanceChoice.result]}}"}],
+              "performanceCircumstance": [{"healthRisk": "XXXXX ${{rules.engine.calculated[performanceCircumstance.result]}}"}],
               "status": "\"expressionType\": \"simple\", \"expressionLanguage\": \"local\", \"expressionValue\": \"completed\", \"expressionDescription\": \"Clinical statement completed and finalized.\"",
               "result": {
                 "lowerBound": "90",

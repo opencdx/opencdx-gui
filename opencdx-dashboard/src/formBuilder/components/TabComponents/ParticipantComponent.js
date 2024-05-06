@@ -20,8 +20,8 @@ export const ParticipantComponent = React.forwardRef(({ register, index, current
 
     useEffect(() => {
         const tabLookup = {
-            'circumstanceChoice.circumstance': 'circumstance',
-            'circumstanceChoice.participant': 'participant'
+            'performanceCircumstance.circumstance': 'circumstance',
+            'performanceCircumstance.participant': 'participant'
         };
         const tabValue = tabLookup[tab] || tab;
         const systemVariable = systemVariables[tabValue];

@@ -220,7 +220,7 @@ export const systemVariables = {
         expressionValue: 'performed',
         expressionDescription: 'Measurement action has been performed.'
     },
-    circumstanceChoice: [{ healthRisk: 'XXXXX ${{rules.engine.calculated[circumstanceChoice.result]}}' }],
+    performanceCircumstance: [{ healthRisk: 'XXXXX ${{rules.engine.calculated[performanceCircumstance.result]}}' }],
     status: {
         expressionType: 'simple',
         expressionLanguage: 'local',
