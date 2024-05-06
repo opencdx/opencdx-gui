@@ -1,34 +1,41 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Platform, SafeAreaView } from 'react-native';
-import { Button, Text } from 'react-native-paper';
+import {
+    ButtonText,
+    Button,
+    Text,
+} from '@gluestack-ui/themed';
 import Slider from '@react-native-community/slider';
 
 const HowSlideVirtualConsult = ({ navigation }) => {
-   
+    const [temperature, setTemperature] = useState(0);
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.body}>
-                <Text style={styles.input} variant='titleMedium'>
-                    How many days have you experienced these symptoms                 </Text>
+                <Text style={styles.title} variant='titleMedium'>
+                    How many days have you experienced these symptoms</Text>
+                <Text style={styles.valueText} variant='titleMedium'>{temperature}</Text>
                 <View style={styles.containerCheck}>
-                    <Text style={styles.input} variant='titleMedium'>
-                        0                 </Text>
+                    <Text style={styles.input} variant='titleMedium'>0</Text>
                     <Slider
-                        style={{ width: 200, height: 40 }}
+                        style={{ width: 390, height: 40 }}
                         minimumValue={0}
-                        maximumValue={1}
+                        maximumValue={30}
                         minimumTrackTintColor="red"
                         maximumTrackTintColor="#000000"
+                        onValueChange={(value) => setTemperature(Math.floor(value))}
                     />
-                    <Text style={styles.input} variant='titleMedium'>
-                        30                 </Text>
+                    <Text style={styles.input} variant='titleMedium'>30</Text>
                 </View>
             </View>
             <View style={styles.footer}>
-                <Button title="Sign In" mode="contained-tonal"
-                    style={styles.button} onPress={() => navigation.navigate('ProlongedVirtualConsult')}>
-                    Continue
+                <Button mode="contained-tonal" width='100%' title="Sign In" style={styles.button} onPress={() => navigation.navigate('ProlongedVirtualConsult')}>
+
+                    <ButtonText style={styles.buttonText}>Continue</ButtonText>
+
                 </Button>
+
             </View>
         </SafeAreaView>
     );
@@ -64,9 +71,18 @@ const styles = StyleSheet.create({
     },
     input: {
         textAlign: 'center',
-        alignContent:'center',
+        alignContent: 'center',
         display: 'flex',
         alignItems: 'center',
+        margin: 8,
+    },
+    title: {
+        textAlign: 'center',
+        marginBottom: 24,
+    },
+    valueText: {
+        textAlign: 'center',
+        marginBottom: 24,
     },
     containerCheck: {
         textAlign: 'center',
