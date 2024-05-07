@@ -88,15 +88,15 @@ const ChildWrapper = ({ control, register }) => {
                 <Grid item xs={12} sm={9} lg={10}>
                     <FormControl fullWidth>
                         <Controller
-                            name={`item.ruleId`}
-                            {...register(`item.ruleId`)}
+                            name={`ruleId`}
+                            {...register(`ruleId`)}
                             control={control}
                             render={({ field }) => (
                                 <Autocomplete
                                     onChange={(_,data) => {
                                         field.onChange(data || '')
                                     }}
-                                    defaultValue={formData.ruleId ? formData.ruleId : ruleSets[0]}
+                                    defaultValue={formData?.ruleId ? formData?.ruleId : ruleSets[0]}
                                     id="controllable-states-demo"
                                     options={ruleSets}
                                     renderInput={(params) => <TextField {...params} {...field}  />}
@@ -113,8 +113,8 @@ const ChildWrapper = ({ control, register }) => {
                 <Grid item xs={12} sm={9} lg={10} mt={2}>
                     <FormControl fullWidth>
                         <Controller
-                            name={`item.ruleQuestionId`}
-                            {...register(`item.ruleQuestionId`)}
+                            name={`ruleQuestionId`}
+                            {...register(`ruleQuestionId`)}
                             control={control}
                             render={({ field }) => (
                                 <Autocomplete
