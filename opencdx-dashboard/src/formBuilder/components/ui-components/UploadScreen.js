@@ -9,41 +9,36 @@ import FullscreenIcon from '@mui/icons-material/List';
 
 import { useAnfFormStore } from '../../utils/useAnfFormStore';
 
-
 const UploadScreen = () => {
     const theme = useTheme();
     const [open, setOpen] = useState(false);
     const [userResponses, setUserResponses] = useState([]);
 
-   
     useEffect(() => {
         const fetchUserResponses = async () => {
-            Endpoints.getQuestionnaireList(
-                {
-                    pagination: {
-                        pageSize: 30,
-                        sortAscending: true
-                    }
+            Endpoints.getQuestionnaireList({
+                pagination: {
+                    pageSize: 30,
+                    sortAscending: true
                 }
-            ).then((response) => {
-
-                console.log(response.data);
-                setUserResponses(response.data.questionnaires);
             })
-                .catch(err => err);
+                .then((response) => {
+                    console.log(response.data);
+                    setUserResponses(response.data.questionnaires);
+                })
+                .catch((err) => err);
         };
         fetchUserResponses();
     }, []);
 
     const handleToggle = () => {
         setOpen((prevOpen) => !prevOpen);
-        
-    }
+    };
 
-    const {  setFormData, setUploadData } = useAnfFormStore();
+    const { setFormData, setUploadData } = useAnfFormStore();
 
     return (
-        <Box >
+        <Box>
             <Dialog
                 open={open}
                 onClose={() => setOpen(false)}
@@ -52,28 +47,32 @@ const UploadScreen = () => {
                 fullWidth
                 sx={{ ml: 5, mr: 1 }}
             >
-                <Box >
-                    {userResponses.length > 0 && userResponses.map((response, index) => (
-                        <Button key={index} variant="contained" color="primary" sx={{ m:1, ml:3  , width: '90%',display: 'flex',flexDirection: 'column'}}
-                            onClick={() => {
-                                setFormData(response);
-                                setUploadData(response);
-                                const data = {
-                                    default: response,
-                                    updated: response
-                                };
-                                localStorage.setItem('anf-form', JSON.stringify(data));
-                                setOpen(false)
-                            }}
-                        >
-                            {response.title}
-                        </Button>
-                    ))
-                        }
+                <Box>
+                    {userResponses.length > 0 &&
+                        userResponses.map((response, index) => (
+                            <Button
+                                key={index}
+                                variant="contained"
+                                color="primary"
+                                sx={{ m: 1, ml: 3, width: '90%', display: 'flex', flexDirection: 'column' }}
+                                onClick={() => {
+                                    setFormData(response);
+                                    setUploadData(response);
+                                    const data = {
+                                        default: response,
+                                        updated: response
+                                    };
+                                    localStorage.setItem('anf-form', JSON.stringify(data));
+                                    setOpen(false);
+                                }}
+                            >
+                                {response.title}
+                            </Button>
+                        ))}
                 </Box>
             </Dialog>
             <Box sx={{ ml: 2, mr: 2 }}>
-                <Tooltip title={ 'List'}>
+                <Tooltip title={'List'}>
                     <Avatar
                         variant="rounded"
                         sx={{
@@ -99,7 +98,6 @@ const UploadScreen = () => {
                     </Avatar>
                 </Tooltip>
             </Box>
-            
         </Box>
     );
 };

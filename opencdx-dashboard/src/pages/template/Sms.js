@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Grid, Stack, TextField, MenuItem } from '@mui/material';
 import MainCard from 'ui-component/cards/MainCard';
 import { useTheme } from '@mui/material/styles';
-import axios from 'utils/axios/apiInterceptors';
 
 // third party
 import ReactQuill from 'react-quill';

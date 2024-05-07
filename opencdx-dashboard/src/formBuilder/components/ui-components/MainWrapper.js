@@ -33,11 +33,9 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
         setShowAlert(true);
         const anf = JSON.parse(localStorage.getItem('anf-form')); // Parse the JSON string to an object
         anf.updated.item = data.item;
-        if (data.item.ruleId)
-        anf.updated.ruleId = [];
+        if (data.item.ruleId) anf.updated.ruleId = [];
         anf.updated.ruleId.push(data.item.ruleId);
-        if (data.item.ruleQuestionId)
-        anf.updated.ruleQuestionId = [];
+        if (data.item.ruleQuestionId) anf.updated.ruleQuestionId = [];
         anf.updated.ruleQuestionId.push(data.item.ruleQuestionId);
         localStorage.setItem('anf-form', JSON.stringify(anf));
 
@@ -67,11 +65,13 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
                         connector.anfStatementConnector[0].anfStatement.performanceCircumstance
                     ) {
                         connector.anfStatementConnector[0].anfStatement.performanceCircumstance.normalRange.includeLowerBound =
-                            connector.anfStatementConnector[0].anfStatement?.performanceCircumstance?.normalRange?.includeLowerBound === 'yes'
+                            connector.anfStatementConnector[0].anfStatement?.performanceCircumstance?.normalRange?.includeLowerBound ===
+                            'yes'
                                 ? true
                                 : false;
                         connector.anfStatementConnector[0].anfStatement.performanceCircumstance.normalRange.includeUpperBound =
-                            connector.anfStatementConnector[0].anfStatement?.performanceCircumstance.normalRange?.includeUpperBound === 'yes'
+                            connector.anfStatementConnector[0].anfStatement?.performanceCircumstance.normalRange?.includeUpperBound ===
+                            'yes'
                                 ? true
                                 : false;
                         connector.anfStatementConnector[0].anfStatement.performanceCircumstance.result.includeLowerBound =
@@ -103,10 +103,9 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
             delete element.answerTextValue;
         });
         const saveQuestionnare = async () => {
-            const response = await Endpoints.submitQuestionnaire(
-                {
-                    questionnaire: anf.updated
-                });
+            const response = await Endpoints.submitQuestionnaire({
+                questionnaire: anf.updated
+            });
             console.log(response.data);
         };
         saveQuestionnare();

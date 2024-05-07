@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useFieldArray } from 'react-hook-form';
 import StatementTypes from './StatementTypes';
 import OptionWrapper from './OptionWrapper';
 import { ComponentID } from '../TabComponents/ComponentID';
 import { AccordianWrapper } from './AccordianWrapper';
-import { Grid, FormControl, Select, MenuItem, Typography } from '@mui/material';
+import { Grid, FormControl, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { Controller } from 'react-hook-form';
 import { useAnfFormStore } from '../../utils/useAnfFormStore';
@@ -28,31 +28,30 @@ const ChildWrapper = ({ control, register }) => {
     const theme = useTheme();
     const handleStatementTypeChange = (value) => setHideOptions(value !== statementType.USER_QUESTION);
     // const [selectedRule, setSelectedRule] = useState(null);
-   
+
     useEffect(() => {
         const fetchRules = async () => {
-            Endpoints.rulesetList(
-                {
-                    organizationId: "organizationId",
-                    workspaceId: "workspaceId"
-                }).then((response) => {
+            Endpoints.rulesetList({
+                organizationId: 'organizationId',
+                workspaceId: 'workspaceId'
+            })
+                .then((response) => {
                     console.log(formData);
                     const rules = response.data.ruleSets.map((rule) => {
                         return {
-                            name: rule.ruleId,
+                            name: rule.ruleId
                         };
-                    })
+                    });
                     setRuleSets(rules);
                     const ruleQuestion = formData.item.map((rule) => {
                         return {
                             name: rule.text,
                             code: rule.linkId
                         };
-                    }
-                    )
+                    });
                     setResponseRule(ruleQuestion);
-                    
-                }).catch(err => err);
+                })
+                .catch((err) => err);
         };
         fetchRules();
     }, []);
@@ -95,11 +94,18 @@ const ChildWrapper = ({ control, register }) => {
                             control={control}
                             defaultValue={formData.ruleId ? formData.ruleId[0] : ''}
                             render={({ field }) => (
-                                <Dropdown id={field.name}  value={field.value} onChange={(e) => {
-                                    field.onChange(e.value||'')
-                                }
-                                    
-                                } options={ruleSets} optionLabel="name" showClear placeholder="Select a Rule" className="w-full md:w-14rem" />
+                                <Dropdown
+                                    id={field.name}
+                                    value={field.value}
+                                    onChange={(e) => {
+                                        field.onChange(e.value || '');
+                                    }}
+                                    options={ruleSets}
+                                    optionLabel="name"
+                                    showClear
+                                    placeholder="Select a Rule"
+                                    className="w-full md:w-14rem"
+                                />
                             )}
                         />
                     </FormControl>
@@ -117,7 +123,16 @@ const ChildWrapper = ({ control, register }) => {
                             control={control}
                             defaultValue={formData.ruleQuestionId ? formData.ruleQuestionId[0] : ''}
                             render={({ field }) => (
-                                <Dropdown id={field.name} value={field.value} onChange={(e) => field.onChange(e.value || '')} options={responseRule} optionLabel="name" showClear placeholder="Select a Rule" className="w-full md:w-14rem" />
+                                <Dropdown
+                                    id={field.name}
+                                    value={field.value}
+                                    onChange={(e) => field.onChange(e.value || '')}
+                                    options={responseRule}
+                                    optionLabel="name"
+                                    showClear
+                                    placeholder="Select a Rule"
+                                    className="w-full md:w-14rem"
+                                />
                             )}
                         />
                     </FormControl>

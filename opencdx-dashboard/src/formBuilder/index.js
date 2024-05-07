@@ -25,8 +25,6 @@ import { useEffect } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 
 import { Endpoints } from 'utils/axios/apiEndpoints';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import CloseIcon from '@mui/icons-material/Close';
@@ -42,13 +40,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import { useAnfFormStore } from './utils/useAnfFormStore';
 import Tooltip from '@mui/material/Tooltip';
-import Avatar from '@mui/material/Avatar';
 
-
-import Slide from '@mui/material/Slide';
-const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
 import './custom.css';
 
 /* end - anf statement type */
@@ -127,7 +119,6 @@ const FormBuilder = () => {
     const { formData, setFormData, uploadData, setUploadData } = useAnfFormStore();
 
     const handleChange = (e) => {
-
         const fileReader = new FileReader();
         fileReader.readAsText(e.target.files[0], 'UTF-8');
         fileReader.onload = (e) => {
@@ -165,25 +156,20 @@ const FormBuilder = () => {
     };
     useEffect(() => {
         const fetchUserResponses = async () => {
-            Endpoints.getQuestionnaireList(
-                {
-                    pagination: {
-                        pageSize: 30,
-                        sortAscending: true
-                    }
+            Endpoints.getQuestionnaireList({
+                pagination: {
+                    pageSize: 30,
+                    sortAscending: true
                 }
-            ).then((response) => {
-
-                setUserResponses(response.data);
             })
-                .catch(err => err);
+                .then((response) => {
+                    setUserResponses(response.data);
+                })
+                .catch((err) => err);
         };
         fetchUserResponses();
     }, []);
 
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
     const handleDownload = (uploadData, fileName) => {
         const data = JSON.stringify(uploadData);
         const blob = new Blob([data], { type: 'application/json' });
@@ -244,19 +230,29 @@ const FormBuilder = () => {
                         ANF Statement
                     </Typography>
                     <>
-
-                        <Grid item >
-                            <Box sx={{ display: { xs: 'none', lg: 'block' }, justifyContent: 'space-between', alignItems: 'center', display: 'flex' }}>
+                        <Grid item>
+                            <Box
+                                sx={{
+                                    display: { xs: 'none', lg: 'block' },
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center'
+                                }}
+                            >
                                 <Box sx={{ ml: 2, mr: 2 }}>
                                     <Tooltip title={'Upload File'}>
-                                        <Button onChange={handleChange} component="label" variant="contained"
+                                        <Button
+                                            onChange={handleChange}
+                                            component="label"
+                                            variant="contained"
                                             sx={{
                                                 ...theme.typography.commonAvatar,
                                                 ...theme.typography.mediumAvatar,
                                                 width: '100%',
                                                 border: '1px solid',
-                                                borderColor: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.primary.light,
-                                                background: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.primary.light,
+                                                borderColor:
+                                                    theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.primary.light,
+                                                background:
+                                                    theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.primary.light,
                                                 color: theme.palette.primary.dark,
                                                 transition: 'all .2s ease-in-out',
                                                 '&[aria-controls="menu-list-grow"],&:hover': {
@@ -267,11 +263,10 @@ const FormBuilder = () => {
                                             }}
                                             aria-controls={open ? 'menu-list-grow' : undefined}
                                             aria-haspopup="true"
-                                            startIcon={<CloudUploadIcon sx={{ mr: -1 }}
-                                            />}>
+                                            startIcon={<CloudUploadIcon sx={{ mr: -1 }} />}
+                                        >
                                             <VisuallyHiddenInput type="file" />
                                         </Button>
-
                                     </Tooltip>
                                 </Box>
                                 <UplaodScreenSection />
@@ -294,16 +289,6 @@ const FormBuilder = () => {
                 anchor="left"
                 open={open}
             >
-                {/* <DrawerHeader>
-                    <Button onChange={handleChange} component="label" variant="contained" startIcon={<CloudUploadIcon />}>
-                        Upload file
-                        <VisuallyHiddenInput type="file" />
-                    </Button>
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                    </IconButton>
-                </DrawerHeader> */}
-
                 <Divider />
                 <List>
                     {formData &&

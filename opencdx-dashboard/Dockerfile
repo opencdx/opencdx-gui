@@ -22,8 +22,5 @@ RUN npm run build
 # Expose port 3005 to the outside world
 EXPOSE 3005
 
-# Define environment variable
-# ENV REACT_APP_API_URL=http://localhost:3000
-
 # Command to run the application
 CMD serve -s --ssl-cert /certs/Dashboard-cert.pem --ssl-key /certs/Dashboard-key.pem build -l 3005
