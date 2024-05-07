@@ -1,6 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, Platform, SafeAreaView } from 'react-native';
-import { Button, Text } from 'react-native-paper';
+import {
+    Button, Text,
+    ButtonText
+} from '@gluestack-ui/themed';
 
 const StartVirtualConsult = ({ navigation }) => {
     return (
@@ -15,13 +18,10 @@ const StartVirtualConsult = ({ navigation }) => {
                 </Text>
             </View>
             <View style={styles.footer}>
-                <View style={styles.center}>
-                    <Text style={styles.signup}>
-                        More Info
-                    </Text>
-                </View>
-                <Button mode="contained-tonal"  width='100%' title="Sign In" style={styles.button} onPress={() => navigation.navigate('CheckVirtualConsult')}>
-                    START VIRTUAL CONSULT
+                <Button mode="contained-tonal" width='100%' title="Sign In" style={styles.button} onPress={() => navigation.navigate('CheckVirtualConsult')}>
+
+                    <ButtonText style={styles.buttonText}> START VIRTUAL CONSULT</ButtonText>
+
                 </Button>
             </View>
         </SafeAreaView>
@@ -45,9 +45,9 @@ const styles = StyleSheet.create({
         }),
     },
     input: {
-        textAlign: 'center',       
+        textAlign: 'center',
     },
-   
+
     button: {
         marginBottom: 10,
         alignItems: 'center',
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
                 width: '90%',
             }
         })
-       
+
     },
     signup: {
         textAlign: 'right',

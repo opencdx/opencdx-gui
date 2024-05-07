@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Platform, SafeAreaView } from 'react-native';
-import { Button, Text } from 'react-native-paper';
-import Checkbox from "react-native-bouncy-checkbox";
+import {
+    Checkbox,
+    CheckboxGroup,
+    CheckboxIndicator,
+    CheckboxIcon,
+    CheckboxLabel,
+    VStack,
+    ButtonText,
+    Button,
+    Text,
+} from '@gluestack-ui/themed';// import Checkbox from "react-native-bouncy-checkbox";
+
+
 
 const CheckVirtualConsult = ({ navigation }) => {
-    const [isChecked, setChecked] = useState(false);
-    const [isChecked1, setChecked1] = useState(false);
-    const [isChecked2, setChecked2] = useState(false);
-    const [isChecked3, setChecked3] = useState(false);
-    const [isChecked4, setChecked4] = useState(false);
-    const [isChecked5, setChecked5] = useState(false);
-    const [isChecked6, setChecked6] = useState(false);
-    const [isChecked7, setChecked7] = useState(false);
-    const [isChecked8, setChecked8] = useState(false);
+
+    const [values, setValues] = useState([])
 
     return (
         <SafeAreaView style={styles.container}>
@@ -21,48 +25,87 @@ const CheckVirtualConsult = ({ navigation }) => {
                     Which of the following Covid-19 symptoms do you currently have
                 </Text>
                 <View style={styles.containerCheck}>
-                    <View style={styles.section}>
-                        <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-                        <Text style={styles.paragraph}>Sore Throat</Text>
-                    </View>
-                    <View style={styles.section}>
-                        <Checkbox style={styles.checkbox} value={isChecked1} onValueChange={setChecked1} />
-                        <Text style={styles.paragraph}>Cough</Text>
-                    </View>
-                    <View style={styles.section}>
-                        <Checkbox style={styles.checkbox} value={isChecked2} onValueChange={setChecked2} />
-                        <Text style={styles.paragraph}>Fever</Text>
-                    </View>
-                    <View style={styles.section}>
-                        <Checkbox style={styles.checkbox} value={isChecked3} onValueChange={setChecked3} />
-                        <Text style={styles.paragraph}>Shortness of Breath</Text>
-                    </View>
-                    <View style={styles.section}>
-                        <Checkbox style={styles.checkbox} value={isChecked4} onValueChange={setChecked4} />
-                        <Text style={styles.paragraph}>Loss of Taste or Smell</Text>
-                    </View>
-                    <View style={styles.section}>
-                        <Checkbox style={styles.checkbox} value={isChecked5} onValueChange={setChecked5} />
-                        <Text style={styles.paragraph}>Muscle Aches</Text>
-                    </View>
-                    <View style={styles.section}>
-                        <Checkbox style={styles.checkbox} value={isChecked6} onValueChange={setChecked6} />
-                        <Text style={styles.paragraph}>Headache</Text>
-                    </View>
-                    <View style={styles.section}>
-                        <Checkbox style={styles.checkbox} value={isChecked7} onValueChange={setChecked7} />
-                        <Text style={styles.paragraph}>Chills</Text>
-                    </View>
-                    <View style={styles.section}>
-                        <Checkbox style={styles.checkbox} value={isChecked8} onValueChange={setChecked8} />
-                        <Text style={styles.paragraph}>Fatigue</Text>
-                    </View>
+                    <CheckboxGroup
+                        value={values}
+                        onChange={(keys) => {
+                            setValues(keys)
+                        }}
+                    >
+                        <VStack space="lg" w="$40">
+                            <Checkbox value="Sore Throat">
+                                <CheckboxIndicator mr="$2">
+                                    <CheckboxIcon />
+                                </CheckboxIndicator>
+                                <CheckboxLabel>Sore Throat</CheckboxLabel>
+
+                            </Checkbox>
+                            <Checkbox value="Cough" >
+                                <CheckboxIndicator mr="$2">
+                                    <CheckboxIcon />
+                                </CheckboxIndicator>
+                                <CheckboxLabel>Cough</CheckboxLabel>
+
+                            </Checkbox>
+                            <Checkbox value="Fever">
+                                <CheckboxIndicator mr="$2">
+                                    <CheckboxIcon />
+                                </CheckboxIndicator>
+                                <CheckboxLabel>Fever</CheckboxLabel>
+
+                            </Checkbox>
+                            <Checkbox value="Shortness of Breath">
+                                <CheckboxIndicator mr="$2">
+                                    <CheckboxIcon />
+                                </CheckboxIndicator>
+                                <CheckboxLabel>Shortness of Breath</CheckboxLabel>
+
+                            </Checkbox> <Checkbox value="Loss of Taste or Smell">
+                                <CheckboxIndicator mr="$2">
+                                    <CheckboxIcon />
+                                </CheckboxIndicator>
+                                <CheckboxLabel>Loss of Taste or Smell</CheckboxLabel>
+
+                            </Checkbox> <Checkbox value="Muscle Aches">
+                                <CheckboxIndicator mr="$2">
+                                    <CheckboxIcon />
+                                </CheckboxIndicator>
+                                <CheckboxLabel>Muscle Aches</CheckboxLabel>
+
+                            </Checkbox>
+                            <Checkbox value="Headache">
+                                <CheckboxIndicator mr="$2">
+                                    <CheckboxIcon />
+                                </CheckboxIndicator>
+                                <CheckboxLabel>Headache</CheckboxLabel>
+
+                            </Checkbox>
+
+                            <Checkbox value="Chills">
+                                <CheckboxIndicator mr="$2">
+                                    <CheckboxIcon />
+                                </CheckboxIndicator>
+                                <CheckboxLabel>Chills</CheckboxLabel>
+
+                            </Checkbox>
+                            <Checkbox value="Fatigue">
+                                <CheckboxIndicator mr="$2">
+                                    <CheckboxIcon />
+                                </CheckboxIndicator>
+                                <CheckboxLabel>Fatigue</CheckboxLabel>
+
+                            </Checkbox>
+                        </VStack>
+                    </CheckboxGroup>
                 </View>
             </View>
+
             <View style={styles.footer}>
-                <Button title="Sign In" mode="contained-tonal"
-                 style={styles.button} onPress={() => navigation.navigate('SlideVirtualConsult')}>
-                    Continue
+
+                <Button mode="contained-tonal" width='100%' title="Sign In" style={styles.button} onPress={() => {
+                    values.length > 0 ? navigation.navigate('SlideVirtualConsult') : alert('Please select at least one symptom')
+                }}>
+                    <ButtonText style={styles.buttonText}> Continue</ButtonText>
+
                 </Button>
             </View>
         </SafeAreaView>
@@ -98,12 +141,15 @@ const styles = StyleSheet.create({
         }),
     },
     input: {
-        textAlign: 'center',        
+        textAlign: 'center',
     },
     containerCheck: {
         flex: 1,
         marginHorizontal: 16,
         marginVertical: 32,
+        justifyContent: 'center',
+        alignItems: 'center',
+
     },
     section: {
         flexDirection: 'row',
@@ -134,10 +180,10 @@ const styles = StyleSheet.create({
             },
             default: {
                 width: '90%',
-            },
-        }),
+            }
+        })
     },
-    
+
 });
 
 export default CheckVirtualConsult;

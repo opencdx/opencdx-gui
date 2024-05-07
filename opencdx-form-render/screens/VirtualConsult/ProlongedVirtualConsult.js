@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Platform, SafeAreaView } from 'react-native';
-import { Button, Text } from 'react-native-paper';
-import Checkbox from "react-native-bouncy-checkbox";
+import {
+    Checkbox,
+    CheckboxIndicator,
+    CheckboxIcon,
+    CheckboxLabel,
+    VStack,
+    ButtonText,
+    Button,
+    Text,
+    CheckboxGroup
+} from '@gluestack-ui/themed';
 
 const ProlongedVirtualConsult = ({ navigation }) => {
-    const [isChecked, setChecked] = useState(false);
-    const [isChecked1, setChecked1] = useState(false);
-  
-
+    const [values, setValues] = useState([])
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.body}>
@@ -15,22 +21,39 @@ const ProlongedVirtualConsult = ({ navigation }) => {
                     Have you prolonged, close contact (15 minutes or longer at less than 6 feet) with someone diagonsed positive for COVID-19?
                 </Text>
                 <View style={styles.containerCheck}>
-                    <View style={styles.section}>
-                        <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-                        <Text style={styles.paragraph}>Yes</Text>
-                    </View>
-                    <View style={styles.section}>
-                        <Checkbox style={styles.checkbox} value={isChecked1} onValueChange={setChecked1} />
-                        <Text style={styles.paragraph}>No</Text>
-                    </View>
-                    
+                    <CheckboxGroup
+                        value={values}
+                        onChange={(keys) => {
+                            setValues(keys)
+                        }}
+                    >
+                        <VStack space="lg" w="$40">
+                            <Checkbox value="Yes" >
+                                <CheckboxIndicator mr="$2">
+                                    <CheckboxIcon />
+                                </CheckboxIndicator>
+                                <CheckboxLabel>Yes</CheckboxLabel>
+                            </Checkbox>
+                            <Checkbox value="No">
+                                <CheckboxIndicator mr="$2">
+                                    <CheckboxIcon />
+                                </CheckboxIndicator>
+                                <CheckboxLabel>No</CheckboxLabel>
+                            </Checkbox>
+
+                        </VStack>
+                    </CheckboxGroup>
+
                 </View>
             </View>
             <View style={styles.footer}>
-                <Button title="Sign In" mode="contained-tonal"
-                    style={styles.button} onPress={() => navigation.navigate('ConfirmVirtualConsult')}>
-                    Continue
+                <Button mode="contained-tonal" width='100%' title="Sign In" style={styles.button} onPress={() => {
+                    values.length > 0 ? navigation.navigate('ConfirmVirtualConsult') : alert('Please select at least one value')
+                }}>
+                    <ButtonText style={styles.buttonText}> Continue</ButtonText>
+
                 </Button>
+
             </View>
         </SafeAreaView>
     );

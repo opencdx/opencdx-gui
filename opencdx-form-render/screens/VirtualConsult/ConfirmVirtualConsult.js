@@ -1,22 +1,27 @@
 import React from 'react';
 import { View, StyleSheet, Platform, SafeAreaView } from 'react-native';
-import { Button, Text } from 'react-native-paper';
-
+import {
+    ButtonText,
+    Button,
+    Text
+} from '@gluestack-ui/themed';//
 const ConfirmVirtualConsult = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.body}>
                 <Text style={styles.input} variant='titleMedium'>
-Based on your response, we recommended taking a COVID-19 test
+                    Based on your response, we recommended taking a COVID-19 test
                 </Text>
             </View>
             <View style={styles.footer}>
                 <View style={styles.center}></View>
-                <Button title="Sign In" mode="contained-tonal"
-                    style={styles.button} onPress={() => navigation.navigate('GetTested')}>
-                    Order a Test
+
+                <Button mode="contained-tonal" width='100%' title="Sign In" style={styles.button} onPress={() => {
+                    navigation.navigate('GetTested')
+                }}>
+                    <ButtonText style={styles.buttonText}> Continue</ButtonText>
                 </Button>
-               
+
             </View>
         </SafeAreaView>
     );
