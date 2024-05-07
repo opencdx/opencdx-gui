@@ -233,7 +233,7 @@ const FormBuilder = () => {
                         <Grid item>
                             <Box
                                 sx={{
-                                    display: { xs: 'none', lg: 'block' },
+                                    display: 'flex',
                                     justifyContent: 'space-between',
                                     alignItems: 'center'
                                 }}

@@ -11,9 +11,10 @@ import { Controller } from 'react-hook-form';
 import { useAnfFormStore } from '../../utils/useAnfFormStore';
 import { statementType } from '../../store/constant';
 import { Endpoints } from 'utils/axios/apiEndpoints';
-import { Dropdown } from 'primereact/dropdown';
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 
 const ChildWrapper = ({ control, register }) => {
     const { formData } = useAnfFormStore();
@@ -27,7 +28,6 @@ const ChildWrapper = ({ control, register }) => {
 
     const theme = useTheme();
     const handleStatementTypeChange = (value) => setHideOptions(value !== statementType.USER_QUESTION);
-    // const [selectedRule, setSelectedRule] = useState(null);
 
     useEffect(() => {
         const fetchRules = async () => {
@@ -36,18 +36,12 @@ const ChildWrapper = ({ control, register }) => {
                 workspaceId: 'workspaceId'
             })
                 .then((response) => {
-                    console.log(formData);
                     const rules = response.data.ruleSets.map((rule) => {
-                        return {
-                            name: rule.ruleId
-                        };
+                        return  rule.ruleId
                     });
                     setRuleSets(rules);
                     const ruleQuestion = formData.item.map((rule) => {
-                        return {
-                            name: rule.text,
-                            code: rule.linkId
-                        };
+                        return  rule.linkId
                     });
                     setResponseRule(ruleQuestion);
                 })
@@ -92,19 +86,15 @@ const ChildWrapper = ({ control, register }) => {
                             name={`item.ruleId`}
                             {...register(`item.ruleId`)}
                             control={control}
-                            defaultValue={formData.ruleId ? formData.ruleId[0] : ''}
                             render={({ field }) => (
-                                <Dropdown
-                                    id={field.name}
-                                    value={field.value}
-                                    onChange={(e) => {
-                                        field.onChange(e.value || '');
+                                <Autocomplete
+                                    onChange={(_,data) => {
+                                        field.onChange(data || '')
                                     }}
+                                    defaultValue={formData.ruleId ? formData.ruleId : ruleSets[0]}
+                                    id="controllable-states-demo"
                                     options={ruleSets}
-                                    optionLabel="name"
-                                    showClear
-                                    placeholder="Select a Rule"
-                                    className="w-full md:w-14rem"
+                                    renderInput={(params) => <TextField {...params} {...field}  />}
                                 />
                             )}
                         />
@@ -121,18 +111,17 @@ const ChildWrapper = ({ control, register }) => {
                             name={`item.ruleQuestionId`}
                             {...register(`item.ruleQuestionId`)}
                             control={control}
-                            defaultValue={formData.ruleQuestionId ? formData.ruleQuestionId[0] : ''}
                             render={({ field }) => (
-                                <Dropdown
-                                    id={field.name}
-                                    value={field.value}
-                                    onChange={(e) => field.onChange(e.value || '')}
+                                <Autocomplete
+                                    onChange={(_,data) => {
+                                        field.onChange(data || '')
+                                    }}
+                                    defaultValue={formData.ruleQuestionId ? formData.ruleQuestionId : responseRule[0]}
+                                    id="controllable-states-demo"
                                     options={responseRule}
-                                    optionLabel="name"
-                                    showClear
-                                    placeholder="Select a Rule"
-                                    className="w-full md:w-14rem"
+                                    renderInput={(params) => <TextField {...params} {...field}  />}
                                 />
+                                
                             )}
                         />
                     </FormControl>

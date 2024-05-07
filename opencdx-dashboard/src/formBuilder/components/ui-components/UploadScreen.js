@@ -23,7 +23,6 @@ const UploadScreen = () => {
                 }
             })
                 .then((response) => {
-                    console.log(response.data);
                     setUserResponses(response.data.questionnaires);
                 })
                 .catch((err) => err);

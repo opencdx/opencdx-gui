@@ -33,10 +33,8 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
         setShowAlert(true);
         const anf = JSON.parse(localStorage.getItem('anf-form')); // Parse the JSON string to an object
         anf.updated.item = data.item;
-        if (data.item.ruleId) anf.updated.ruleId = [];
-        anf.updated.ruleId.push(data.item.ruleId);
-        if (data.item.ruleQuestionId) anf.updated.ruleQuestionId = [];
-        anf.updated.ruleQuestionId.push(data.item.ruleQuestionId);
+        anf.updated.ruleId = data.item.ruleId
+        anf.updated.ruleQuestionId = [data.item.ruleQuestionId];
         localStorage.setItem('anf-form', JSON.stringify(anf));
 
         anf.updated.item.forEach((element) => {
@@ -106,7 +104,7 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
             const response = await Endpoints.submitQuestionnaire({
                 questionnaire: anf.updated
             });
-            console.log(response.data);
+            console.log(response);
         };
         saveQuestionnare();
 
