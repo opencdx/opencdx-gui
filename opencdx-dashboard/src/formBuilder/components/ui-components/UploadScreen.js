@@ -3,13 +3,11 @@ import { useTheme } from '@mui/material/styles';
 import { Box, Button, Dialog } from '@mui/material';
 import { useEffect } from 'react';
 import { Endpoints } from 'utils/axios/apiEndpoints';
-import { DataGrid } from '@mui/x-data-grid';
 import { Avatar } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
-import FullscreenIcon from '@mui/icons-material/Fullscreen';
-import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
+import FullscreenIcon from '@mui/icons-material/List';
 
-
+import { useAnfFormStore } from '../../utils/useAnfFormStore';
 
 
 const UploadScreen = () => {
@@ -42,19 +40,32 @@ const UploadScreen = () => {
         
     }
 
-    
+    const {  setFormData, setUploadData } = useAnfFormStore();
+
     return (
-        <Box sx={{ ml: 2, mr: 2 }}>
+        <Box >
             <Dialog
                 open={open}
                 onClose={() => setOpen(false)}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
                 fullWidth
+                sx={{ ml: 5, mr: 1 }}
             >
                 <Box >
                     {userResponses.length > 0 && userResponses.map((response, index) => (
-                        <Button key={index} variant="contained" color="primary" sx={{ m: 1 , width: '90%',display: 'flex',flexDirection: 'column'}}>
+                        <Button key={index} variant="contained" color="primary" sx={{ m:1, ml:3  , width: '90%',display: 'flex',flexDirection: 'column'}}
+                            onClick={() => {
+                                setFormData(response);
+                                setUploadData(response);
+                                const data = {
+                                    default: response,
+                                    updated: response
+                                };
+                                localStorage.setItem('anf-form', JSON.stringify(data));
+                                setOpen(false)
+                            }}
+                        >
                             {response.title}
                         </Button>
                     ))
@@ -62,7 +73,7 @@ const UploadScreen = () => {
                 </Box>
             </Dialog>
             <Box sx={{ ml: 2, mr: 2 }}>
-                <Tooltip title={open ? 'Exit Fullscreen' : 'Fullscreen'}>
+                <Tooltip title={ 'List'}>
                     <Avatar
                         variant="rounded"
                         sx={{
@@ -84,7 +95,7 @@ const UploadScreen = () => {
                         onClick={handleToggle}
                         color="inherit"
                     >
-                        {open ? <FullscreenExitIcon /> : <FullscreenIcon />}
+                        <FullscreenIcon />
                     </Avatar>
                 </Tooltip>
             </Box>

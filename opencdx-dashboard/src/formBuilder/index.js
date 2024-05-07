@@ -41,6 +41,8 @@ import { Grid } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import { useAnfFormStore } from './utils/useAnfFormStore';
+import Tooltip from '@mui/material/Tooltip';
+import Avatar from '@mui/material/Avatar';
 
 
 import Slide from '@mui/material/Slide';
@@ -125,6 +127,7 @@ const FormBuilder = () => {
     const { formData, setFormData, uploadData, setUploadData } = useAnfFormStore();
 
     const handleChange = (e) => {
+
         const fileReader = new FileReader();
         fileReader.readAsText(e.target.files[0], 'UTF-8');
         fileReader.onload = (e) => {
@@ -241,13 +244,40 @@ const FormBuilder = () => {
                         ANF Statement
                     </Typography>
                     <>
-                   
-                    <Grid item >
-                        <Box sx={{ display: { xs: 'none', lg: 'block'}, justifyContent: 'space-between' , alignItems: 'center', display: 'flex' }}>
-                            <UplaodScreenSection />
-                            <FullScreenSection />
-                        </Box>
-                    </Grid>
+
+                        <Grid item >
+                            <Box sx={{ display: { xs: 'none', lg: 'block' }, justifyContent: 'space-between', alignItems: 'center', display: 'flex' }}>
+                                <Box sx={{ ml: 2, mr: 2 }}>
+                                    <Tooltip title={'Upload File'}>
+                                        <Button onChange={handleChange} component="label" variant="contained"
+                                            sx={{
+                                                ...theme.typography.commonAvatar,
+                                                ...theme.typography.mediumAvatar,
+                                                width: '100%',
+                                                border: '1px solid',
+                                                borderColor: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.primary.light,
+                                                background: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.primary.light,
+                                                color: theme.palette.primary.dark,
+                                                transition: 'all .2s ease-in-out',
+                                                '&[aria-controls="menu-list-grow"],&:hover': {
+                                                    borderColor: theme.palette.primary.main,
+                                                    background: theme.palette.primary.main,
+                                                    color: theme.palette.primary.light
+                                                }
+                                            }}
+                                            aria-controls={open ? 'menu-list-grow' : undefined}
+                                            aria-haspopup="true"
+                                            startIcon={<CloudUploadIcon sx={{ mr: -1 }}
+                                            />}>
+                                            <VisuallyHiddenInput type="file" />
+                                        </Button>
+
+                                    </Tooltip>
+                                </Box>
+                                <UplaodScreenSection />
+                                <FullScreenSection />
+                            </Box>
+                        </Grid>
                     </>
                 </Toolbar>
             </AppBar>
@@ -264,7 +294,7 @@ const FormBuilder = () => {
                 anchor="left"
                 open={open}
             >
-                <DrawerHeader>
+                {/* <DrawerHeader>
                     <Button onChange={handleChange} component="label" variant="contained" startIcon={<CloudUploadIcon />}>
                         Upload file
                         <VisuallyHiddenInput type="file" />
@@ -272,7 +302,7 @@ const FormBuilder = () => {
                     <IconButton onClick={handleDrawerClose}>
                         {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                     </IconButton>
-                </DrawerHeader>
+                </DrawerHeader> */}
 
                 <Divider />
                 <List>

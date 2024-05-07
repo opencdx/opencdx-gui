@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useFieldArray } from 'react-hook-form';
 import StatementTypes from './StatementTypes';
@@ -11,6 +11,9 @@ import { Controller } from 'react-hook-form';
 import { useAnfFormStore } from '../../utils/useAnfFormStore';
 import { statementType } from '../../store/constant';
 import { Endpoints } from 'utils/axios/apiEndpoints';
+import { Dropdown } from 'primereact/dropdown';
+import 'primereact/resources/primereact.css';
+import 'primereact/resources/themes/lara-light-indigo/theme.css';
 
 const ChildWrapper = ({ control, register }) => {
     const { formData } = useAnfFormStore();
@@ -20,22 +23,39 @@ const ChildWrapper = ({ control, register }) => {
         name: 'item'
     });
     const [ruleSets, setRuleSets] = React.useState([]);
+    const [responseRule, setResponseRule] = React.useState([]);
+
     const theme = useTheme();
     const handleStatementTypeChange = (value) => setHideOptions(value !== statementType.USER_QUESTION);
-
+    // const [selectedRule, setSelectedRule] = useState(null);
+   
     useEffect(() => {
         const fetchRules = async () => {
             Endpoints.rulesetList(
-            {
-                organizationId: "organizationId",
-                workspaceId: "workspaceId"
-            }).then((response) => {
-                setRuleSets(response.data.ruleSets);
-            }).catch(err => err);
+                {
+                    organizationId: "organizationId",
+                    workspaceId: "workspaceId"
+                }).then((response) => {
+                    console.log(formData);
+                    const rules = response.data.ruleSets.map((rule) => {
+                        return {
+                            name: rule.ruleId,
+                        };
+                    })
+                    setRuleSets(rules);
+                    const ruleQuestion = formData.item.map((rule) => {
+                        return {
+                            name: rule.text,
+                            code: rule.linkId
+                        };
+                    }
+                    )
+                    setResponseRule(ruleQuestion);
+                    
+                }).catch(err => err);
         };
         fetchRules();
     }, []);
-
     return (
         <div className="wrapper">
             {fields.map((item, index) => (
@@ -73,23 +93,13 @@ const ChildWrapper = ({ control, register }) => {
                             name={`item.ruleId`}
                             {...register(`item.ruleId`)}
                             control={control}
-                            defaultValue={formData ? formData.ruleId : ''}
+                            defaultValue={formData.ruleId ? formData.ruleId[0] : ''}
                             render={({ field }) => (
-                                <Select
-                                    {...field}
-                                    id={`item.ruleIds`}
-                                    fullWidth
-                                    data-testid="item.rulesets"
-                                    variant="outlined"
-                                    size="small"
-                                    // onClick={(e) => setFormData({ ruleset: e.target.value })}
-                                >
-                                    {ruleSets.map((ruleset) => (
-                                        <MenuItem key={ruleset.ruleId} value={ruleset.ruleId}>
-                                            {ruleset.type} - {ruleset.category} - {ruleset.description} - {ruleset.ruleId}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
+                                <Dropdown id={field.name}  value={field.value} onChange={(e) => {
+                                    field.onChange(e.value||'')
+                                }
+                                    
+                                } options={ruleSets} optionLabel="name" showClear placeholder="Select a Rule" className="w-full md:w-14rem" />
                             )}
                         />
                     </FormControl>
@@ -107,19 +117,7 @@ const ChildWrapper = ({ control, register }) => {
                             control={control}
                             defaultValue={formData.ruleQuestionId ? formData.ruleQuestionId[0] : ''}
                             render={({ field }) => (
-                                <Select
-                                    {...field}
-                                    id={`item.ruleQuestionId`}
-                                    fullWidth
-                                    variant="outlined"
-                                    size="small"
-                                >
-                                    {formData.item.map((item) => (
-                                        <MenuItem key={item.linkId} value={item.linkId}>
-                                            {item.text}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
+                                <Dropdown id={field.name} value={field.value} onChange={(e) => field.onChange(e.value || '')} options={responseRule} optionLabel="name" showClear placeholder="Select a Rule" className="w-full md:w-14rem" />
                             )}
                         />
                     </FormControl>
