@@ -41,8 +41,13 @@ const ChildWrapper = ({ control, register }) => {
                     });
                     setRuleSets(rules);
                     const ruleQuestion = formData.item.map((rule) => {
-                        return  rule.linkId
+                        console.log(rule)
+                        return{
+                            ruleId: rule.linkId,
+                            label: rule.text
+                        }
                     });
+                    console.log(ruleQuestion)
                     setResponseRule(ruleQuestion);
                 })
                 .catch((err) => err);
