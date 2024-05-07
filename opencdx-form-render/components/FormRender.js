@@ -20,9 +20,9 @@ export default function App({ questionnaire, navigation}) {
                         connector.anfStatementConnector &&
                         connector.anfStatementConnector[0] &&
                         connector.anfStatementConnector[0].anfStatement &&
-                        connector.anfStatementConnector[0].anfStatement.circumstanceChoice
+                        connector.anfStatementConnector[0].anfStatement.performanceCircumstance
                     ) {
-                        connector.anfStatementConnector[0].anfStatement.circumstanceChoice.result.resolution = data[field.linkId];
+                        connector.anfStatementConnector[0].anfStatement.performanceCircumstance.result.resolution = data[field.linkId];
 
                     }
                 });

@@ -39,8 +39,8 @@ describe('template spec', () => {
     cy.get('[data-testid="{{REPLACE_3079919224534)}}"]').click();
     cy.get('[data-testid="system-variable-close-btn"]').click();
     cy.wait(1000);
-    cy.get('[name="item.0.item.0.anfStatementConnector[0].anfStatement.circumstanceChoice.result.resolution"]').type('REPLACE_3079919224534');
-    cy.get('[name="item.0.item.0.anfStatementConnector[0].anfStatement.circumstanceChoice.result.resolution"]').invoke('val').should('equal', 'REPLACE_3079919224534');
+    cy.get('[name="item.0.item.0.anfStatementConnector[0].anfStatement.performanceCircumstance.result.resolution"]').type('REPLACE_3079919224534');
+    cy.get('[name="item.0.item.0.anfStatementConnector[0].anfStatement.performanceCircumstance.result.resolution"]').invoke('val').should('equal', 'REPLACE_3079919224534');
     cy.wait(1000);
     cy.get('[data-testid="save-btn"]').click();
     cy.wait(1000);
