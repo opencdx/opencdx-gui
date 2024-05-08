@@ -32,70 +32,14 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
     const onSubmit = (data) => {
         const anf = JSON.parse(localStorage.getItem('anf-form')); 
         anf.updated.item = data.item;
-        if (data.ruleId)
+       
         anf.updated.ruleId = data.ruleId
-        if(data.ruleId=='')
-        anf.updated.ruleId ='';
-        if (data.ruleQuestionId)
-        anf.updated.ruleQuestionId = [data.ruleQuestionId.ruleId];
+        
+        anf.updated.ruleQuestionId = data.ruleQuestionId.ruleId;
 
         localStorage.setItem('anf-form', JSON.stringify(anf));
-
-        anf.updated.item.forEach((element) => {
-            let componentType = element.componentType;
-            let Type = element.anfOperatorType === 'Equal' ? 'ANF_OPERATOR_TYPE_EQUAL' : 'ANF_OPERATOR_TYPE_NOT_EQUAL';
-            let Value = element.operatorValue;
-
-            if (Array.isArray(element.item)) {
-                element.item.forEach((connector) => {
-                    connector.anfStatementConnector[0].anfStatementType = componentType;
-                    connector.anfStatementConnector[0].anfOperatorType = Type;
-                    connector.anfStatementConnector[0].operatorValue = Value;
-                    if (connector.anfStatementConnector[0].anfStatement.authors)
-                        connector.anfStatementConnector[0].anfStatement.authors = [
-                            connector.anfStatementConnector[0].anfStatement.authors,
-                            connector.anfStatementConnector[0].anfStatement.authors
-                        ];
-                    connector.anfStatementConnector[0].anfStatement.time.includeLowerBound =
-                        connector.anfStatementConnector[0].anfStatement.time.includeLowerBound === 'yes' ? true : false;
-                    connector.anfStatementConnector[0].anfStatement.time.includeUpperBound =
-                        connector.anfStatementConnector[0].anfStatement.time.includeUpperBound === 'yes' ? true : false;
-                    if (
-                        connector &&
-                        connector.anfStatementConnector[0] &&
-                        connector.anfStatementConnector[0].anfStatement &&
-                        connector.anfStatementConnector[0].anfStatement.performanceCircumstance
-                    ) {
-                        connector.anfStatementConnector[0].anfStatement.performanceCircumstance.normalRange.includeLowerBound =
-                            connector.anfStatementConnector[0].anfStatement?.performanceCircumstance?.normalRange?.includeLowerBound ===
-                            'yes'
-                                ? true
-                                : false;
-                        connector.anfStatementConnector[0].anfStatement.performanceCircumstance.normalRange.includeUpperBound =
-                            connector.anfStatementConnector[0].anfStatement?.performanceCircumstance.normalRange?.includeUpperBound ===
-                            'yes'
-                                ? true
-                                : false;
-                        connector.anfStatementConnector[0].anfStatement.performanceCircumstance.result.includeLowerBound =
-                            connector.anfStatementConnector[0].anfStatement?.performanceCircumstance?.result?.includeLowerBound === 'yes'
-                                ? true
-                                : false;
-                        connector.anfStatementConnector[0].anfStatement.performanceCircumstance.result.includeUpperBound =
-                            connector.anfStatementConnector[0].anfStatement?.performanceCircumstance?.result?.includeUpperBound === 'yes'
-                                ? true
-                                : false;
-
-                        connector.anfStatementConnector[0].anfStatement.performanceCircumstance.timing.includeLowerBound =
-                            connector.anfStatementConnector[0].anfStatement?.performanceCircumstance?.timing?.includeLowerBound === 'yes'
-                                ? true
-                                : false;
-                        connector.anfStatementConnector[0].anfStatement.performanceCircumstance.timing.includeUpperBound =
-                            connector.anfStatementConnector[0].anfStatement?.performanceCircumstance?.timing?.includeUpperBound === 'yes'
-                                ? true
-                                : false;
-                    }
-                });
-            }
+        let tempData = data;
+        tempData.item.forEach(element => {
             delete element.componentType;
             delete element.anfOperatorType;
             delete element.operatorValue;
@@ -104,18 +48,82 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
             delete element.componentId;
             delete element.answerTextValue;
         });
+
+        // anf.updated.item.forEach((element) => {
+        //     let componentType = element.componentType;
+        //     let Type = element.anfOperatorType === 'Equal' ? 'ANF_OPERATOR_TYPE_EQUAL' : 'ANF_OPERATOR_TYPE_NOT_EQUAL';
+        //     let Value = element.operatorValue;
+
+        //     if (Array.isArray(element.item)) {
+        //         element.item.forEach((connector) => {
+        //             connector.anfStatementConnector[0].anfStatementType = componentType;
+        //             connector.anfStatementConnector[0].anfOperatorType = Type;
+        //             connector.anfStatementConnector[0].operatorValue = Value;
+        //             if (connector.anfStatementConnector[0].anfStatement.authors)
+        //                 connector.anfStatementConnector[0].anfStatement.authors = [
+        //                     connector.anfStatementConnector[0].anfStatement.authors,
+        //                     connector.anfStatementConnector[0].anfStatement.authors
+        //                 ];
+        //             connector.anfStatementConnector[0].anfStatement.time.includeLowerBound =
+        //                 connector.anfStatementConnector[0].anfStatement.time.includeLowerBound === 'yes' ? true : false;
+        //             connector.anfStatementConnector[0].anfStatement.time.includeUpperBound =
+        //                 connector.anfStatementConnector[0].anfStatement.time.includeUpperBound === 'yes' ? true : false;
+        //             if (
+        //                 connector &&
+        //                 connector.anfStatementConnector[0] &&
+        //                 connector.anfStatementConnector[0].anfStatement &&
+        //                 connector.anfStatementConnector[0].anfStatement.performanceCircumstance
+        //             ) {
+        //                 connector.anfStatementConnector[0].anfStatement.performanceCircumstance.normalRange.includeLowerBound =
+        //                     connector.anfStatementConnector[0].anfStatement?.performanceCircumstance?.normalRange?.includeLowerBound ===
+        //                     'yes'
+        //                         ? true
+        //                         : false;
+        //                 connector.anfStatementConnector[0].anfStatement.performanceCircumstance.normalRange.includeUpperBound =
+        //                     connector.anfStatementConnector[0].anfStatement?.performanceCircumstance.normalRange?.includeUpperBound ===
+        //                     'yes'
+        //                         ? true
+        //                         : false;
+        //                 connector.anfStatementConnector[0].anfStatement.performanceCircumstance.result.includeLowerBound =
+        //                     connector.anfStatementConnector[0].anfStatement?.performanceCircumstance?.result?.includeLowerBound === 'yes'
+        //                         ? true
+        //                         : false;
+        //                 connector.anfStatementConnector[0].anfStatement.performanceCircumstance.result.includeUpperBound =
+        //                     connector.anfStatementConnector[0].anfStatement?.performanceCircumstance?.result?.includeUpperBound === 'yes'
+        //                         ? true
+        //                         : false;
+
+        //                 connector.anfStatementConnector[0].anfStatement.performanceCircumstance.timing.includeLowerBound =
+        //                     connector.anfStatementConnector[0].anfStatement?.performanceCircumstance?.timing?.includeLowerBound === 'yes'
+        //                         ? true
+        //                         : false;
+        //                 connector.anfStatementConnector[0].anfStatement.performanceCircumstance.timing.includeUpperBound =
+        //                     connector.anfStatementConnector[0].anfStatement?.performanceCircumstance?.timing?.includeUpperBound === 'yes'
+        //                         ? true
+        //                         : false;
+        //             }
+        //         });
+        //     }
+        //     delete element.componentType;
+        //     delete element.anfOperatorType;
+        //     delete element.operatorValue;
+        //     delete element.markedMainANFStatement;
+        //     delete element.selectedCategories;
+        //     delete element.componentId;
+        //     delete element.answerTextValue;
+        // });
+
+        tempData.ruleQuestionId = [data.ruleQuestionId.ruleId];
+        tempData.ruleId = data.ruleId;
         const saveQuestionnare = async () => {
             const response = await Endpoints.submitQuestionnaire({
-                questionnaire: anf.updated
+                questionnaire: tempData
             });
             if (response.status === 200) {
                 setShowAlert(true);
             }
-
         };
         saveQuestionnare();
-
-        // setFiles({ item: data.test, ruleset: data.test.rulesets });
     };
 
     return (
