@@ -19,13 +19,14 @@ const StatementTypesReport = React.forwardRef((props, ref) => {
         if (showReport && formData) {
             const groupedItems = {};
 
-            formData && formData?.item?.forEach((item) => {
-                const type = item.componentType || 'unassigned';
-                if (!groupedItems[type]) {
-                    groupedItems[type] = [];
-                }
-                groupedItems[type].push(item);
-            });
+            formData &&
+                formData?.item?.forEach((item) => {
+                    const type = item.componentType || 'unassigned';
+                    if (!groupedItems[type]) {
+                        groupedItems[type] = [];
+                    }
+                    groupedItems[type].push(item);
+                });
 
             return (
                 <TableContainer>

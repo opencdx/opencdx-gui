@@ -149,7 +149,6 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                                 }}
                                 placeholder="Enter Resolution"
                                 data-testid="resolution"
-
                             />
                         ) : (
                             <TextField

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import axios from 'utils/axios/apiInterceptors';
+// import axios from 'utils/axios/apiInterceptors';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -90,7 +90,6 @@ const Profile2 = () => {
             //     },
             //     data: {}
             // });
-
             // setUser(response.data.userProfile);
         };
         fetchEmailList();

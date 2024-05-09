@@ -5,12 +5,16 @@ import StatementTypes from './StatementTypes';
 import OptionWrapper from './OptionWrapper';
 import { ComponentID } from '../TabComponents/ComponentID';
 import { AccordianWrapper } from './AccordianWrapper';
-import { Grid, FormControl, Select, MenuItem, Typography } from '@mui/material';
+import { Grid, FormControl, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { Controller } from 'react-hook-form';
 import { useAnfFormStore } from '../../utils/useAnfFormStore';
 import { statementType } from '../../store/constant';
 import { Endpoints } from 'utils/axios/apiEndpoints';
+import 'primereact/resources/primereact.css';
+import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 
 const ChildWrapper = ({ control, register }) => {
     const { formData } = useAnfFormStore();
@@ -20,22 +24,47 @@ const ChildWrapper = ({ control, register }) => {
         name: 'item'
     });
     const [ruleSets, setRuleSets] = React.useState([]);
+    const [responseRule, setResponseRule] = React.useState([]);
+    const [defaultRule, setDefaultRule] = React.useState([]);
+    const [defaultId, setDefaultId] = React.useState('');
+    const [ruleset,setRuleSet]=React.useState([]);
+
     const theme = useTheme();
     const handleStatementTypeChange = (value) => setHideOptions(value !== statementType.USER_QUESTION);
 
     useEffect(() => {
         const fetchRules = async () => {
-            Endpoints.rulesetList(
-            {
-                organizationId: "organizationId",
-                workspaceId: "workspaceId"
-            }).then((response) => {
-                setRuleSets(response.data.ruleSets);
-            }).catch(err => err);
+            Endpoints.rulesetList({
+                organizationId: 'organizationId',
+                workspaceId: 'workspaceId'
+            })
+                .then((response) => {
+                    setRuleSet(response.data.ruleSets);
+                    const rules = response.data.ruleSets.map((rule) => {
+                        return rule.name
+                    });
+                    if(formData.ruleId) {
+                        setDefaultId('Blood Pressure')
+                    }
+                    
+                    setRuleSets(rules);
+                    const ruleQuestion = formData.item.map((rule) => {
+                        return {
+                            ruleId: rule.linkId,
+                            label: rule.text
+                        };
+                    });
+                    if (formData?.ruleQuestionId) {
+                    const ruleQuestionId = Array.isArray(formData?.ruleQuestionId) ? formData.ruleQuestionId[0] : formData.ruleQuestionId;
+                    const selectedRule = Object.hasOwn(ruleQuestionId, 'ruleId') ? ruleQuestionId: ruleQuestion.find((rule) => rule.ruleId === ruleQuestionId);
+                    setDefaultRule(selectedRule);
+                    }
+                    setResponseRule(ruleQuestion);
+                })
+                .catch((err) => err);
         };
         fetchRules();
     }, []);
-
     return (
         <div className="wrapper">
             {fields.map((item, index) => (
@@ -70,26 +99,25 @@ const ChildWrapper = ({ control, register }) => {
                 <Grid item xs={12} sm={9} lg={10}>
                     <FormControl fullWidth>
                         <Controller
-                            name={`item.ruleId`}
-                            {...register(`item.ruleId`)}
+                            name={`ruleId`}
+                            {...register(`ruleId`)}
                             control={control}
-                            defaultValue={formData ? formData.ruleId : ''}
                             render={({ field }) => (
-                                <Select
-                                    {...field}
-                                    id={`item.ruleIds`}
-                                    fullWidth
-                                    data-testid="item.rulesets"
-                                    variant="outlined"
-                                    size="small"
-                                    // onClick={(e) => setFormData({ ruleset: e.target.value })}
-                                >
-                                    {ruleSets.map((ruleset) => (
-                                        <MenuItem key={ruleset.ruleId} value={ruleset.ruleId}>
-                                            {ruleset.type} - {ruleset.category} - {ruleset.description} - {ruleset.ruleId}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
+                                <Autocomplete
+                                    onChange={(_, data) => {
+                                        field.onChange(data || '');
+                                        const anf = JSON.parse(localStorage.getItem('anf-form'));
+                                        const ruleId = ruleset.find(rule => rule.name === data)?.ruleId;
+                                        anf.updated.ruleId = ruleId;
+                                        localStorage.setItem('anf-form', JSON.stringify(anf));
+                                       
+                                        setDefaultId(data);
+                                    }}
+                                    value={defaultId}
+                                    id="controllable-states-demo1"
+                                    options={ruleSets}
+                                    renderInput={(params) => <TextField {...params} {...field} />}
+                                />
                             )}
                         />
                     </FormControl>
@@ -102,24 +130,23 @@ const ChildWrapper = ({ control, register }) => {
                 <Grid item xs={12} sm={9} lg={10} mt={2}>
                     <FormControl fullWidth>
                         <Controller
-                            name={`item.ruleQuestionId`}
-                            {...register(`item.ruleQuestionId`)}
+                            name={`ruleQuestionId`}
+                            {...register(`ruleQuestionId`)}
                             control={control}
-                            defaultValue={formData.ruleQuestionId ? formData.ruleQuestionId[0] : ''}
                             render={({ field }) => (
-                                <Select
-                                    {...field}
-                                    id={`item.ruleQuestionId`}
-                                    fullWidth
-                                    variant="outlined"
-                                    size="small"
-                                >
-                                    {formData.item.map((item) => (
-                                        <MenuItem key={item.linkId} value={item.linkId}>
-                                            {item.text}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
+                                <Autocomplete
+                                    onChange={(_, data) => {
+                                        setDefaultRule(data);
+                                        field.onChange(data || '');
+                                        const anf = JSON.parse(localStorage.getItem('anf-form'));
+                                        anf.updated.ruleQuestionId = data;
+                                        localStorage.setItem('anf-form', JSON.stringify(anf)); 
+                                    }}
+                                    value={defaultRule}
+                                    id="controllable-states-demo"
+                                    options={responseRule}
+                                    renderInput={(params) => <TextField {...params} {...field} />}
+                                />
                             )}
                         />
                     </FormControl>

@@ -1,10 +1,8 @@
-// third-party
 import { FormattedMessage } from 'react-intl';
 
-// assets
 
-import { Login, PersonAdd, AccountCircle, PersonSearch, ManageAccounts } from '@mui/icons-material';
-// ==============================|| SAMPLE PAGE & DOCUMENTATION MENU ITEMS ||============================== //
+import { Login, PersonAdd, AccountCircle, ManageAccounts } from '@mui/icons-material';
+
 const other = {
     id: 'other',
     title: <FormattedMessage id="profile" />,
@@ -27,27 +25,19 @@ const other = {
             url: '/register'
         },
         {
-            id: 'profile',
-            title: <FormattedMessage id="profile" />,
+            id: 'view',
+            title: <FormattedMessage id="view-profile" />,
+            type: 'item',
             icon: AccountCircle,
-            type: 'collapse',
-            children: [
-                {
-                    id: 'view',
-                    title: <FormattedMessage id="view-profile" />,
-                    type: 'item',
-                    icon: PersonSearch,
-                    url: '/user/view-profile'
-                },
+            url: '/user/view-profile'
+        },
 
-                {
-                    id: 'edit',
-                    title: <FormattedMessage id="edit-profile" />,
-                    type: 'item',
-                    icon: ManageAccounts,
-                    url: '/user/edit-profile'
-                }
-            ]
+        {
+            id: 'edit',
+            title: <FormattedMessage id="edit-profile" />,
+            type: 'item',
+            icon: ManageAccounts,
+            url: '/user/edit-profile'
         }
     ]
 };

@@ -109,10 +109,10 @@ export const CircumstanceChoice = React.forwardRef(({ control, register, index, 
                         <InputLabel horizontal>Normal Range</InputLabel>
                     </Grid>
                     {<MeasureComponent {...{ control, register, index, currentIndex }} tab="performanceCircumstance.normalRange" />}
-                    <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important', marginTop: 10 } }}>
+                    {/* <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important', marginTop: 10 } }}>
                         <InputLabel horizontal>Circumstance</InputLabel>
                     </Grid>
-                    {<ParticipantComponent {...{ control, register, index, currentIndex }} tab="performanceCircumstance.circumstance" />}
+                    {<ParticipantComponent {...{ control, register, index, currentIndex }} tab="performanceCircumstance.circumstance" />} */}
 
                     <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important', marginTop: 10 } }}>
                         <InputLabel horizontal>Timing</InputLabel>

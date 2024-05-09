@@ -41,7 +41,12 @@ const QuestionsList = forwardRef((props, ref) => {
                             {/* <td style={{ wordWrap: 'break-word' }}>document.getElementById({item.linkId}).value</td> */}
                             <td>
                                 <Tooltip title={`{{REPLACE_${item.linkId})}}`}>
-                                    <Button data-testid={`{{REPLACE_${item.linkId})}}`} onClick={() => handleCopyToClipboard(item.linkId, index)}>Copy to Clipboard</Button>
+                                    <Button
+                                        data-testid={`{{REPLACE_${item.linkId})}}`}
+                                        onClick={() => handleCopyToClipboard(item.linkId, index)}
+                                    >
+                                        Copy to Clipboard
+                                    </Button>
                                 </Tooltip>
                             </td>
                         </tr>

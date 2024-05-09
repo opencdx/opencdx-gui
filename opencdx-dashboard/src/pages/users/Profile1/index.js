@@ -1,6 +1,4 @@
 import PropTypes from 'prop-types';
-import axios from 'utils/axios/apiInterceptors';
-// material-ui
 import {
     Box,
     Button,
@@ -19,14 +17,11 @@ import {
     TableRow,
     Typography
 } from '@mui/material';
+ß;
 
-// project imports
-// import useAuth from 'utils/hooks/useAuth';
 import Avatar from 'ui-component/extended/Avatar';
 import SubCard from 'ui-component/cards/SubCard';
 import { gridSpacing } from 'utils/store/constant';
-
-// assets
 import { Edit } from '@mui/icons-material';
 
 import PhonelinkRingTwoToneIcon from '@mui/icons-material/PhonelinkRingTwoTone';
@@ -38,7 +33,6 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Endpoints } from 'utils/axios/apiEndpoints';
 
-// progress
 function LinearProgressWithLabel({ value, ...others }) {
     return (
         <Box
@@ -78,7 +72,7 @@ const Profile1 = () => {
     // const { user } = useAuth();
     const [user, setUser] = useState({});
     const navigate = useNavigate();
-   
+
     useEffect(() => {
         const fetchSmsList = async () => {
             const response = await Endpoints.getCurrentUser(
@@ -95,7 +89,7 @@ const Profile1 = () => {
                     }
                 }
             );
-            
+
             setUser(response.data);
             // const fetchUser = async () => {
             //     const response = await Endpoints.getUserProfile(

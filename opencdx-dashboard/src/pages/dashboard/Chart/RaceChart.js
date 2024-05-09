@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import { useState, useEffect, useCallback } from 'react';
 import Chart from 'react-apexcharts';
 import MainCard from 'ui-component/cards/MainCard';
-import axios from 'axios';
 import { Graphql } from 'utils/axios/graphqlEndpoints';
 
 // ==============================|| WIDGET - Race CHART ||============================== //

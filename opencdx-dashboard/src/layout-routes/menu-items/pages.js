@@ -1,12 +1,5 @@
-// third-party
 import { FormattedMessage } from 'react-intl';
-
-// assets
-import { Share, Monitor, DeviceHub, Map } from '@mui/icons-material';
-
-// constant
-
-// ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
+import { Sms, Email, Map, VerifiedUser, Article } from '@mui/icons-material';
 
 const pages = {
     id: 'pages',
@@ -14,27 +7,33 @@ const pages = {
     type: 'group',
     children: [
         {
-            id: 'template',
-            title: <FormattedMessage id="template" />,
-            type: 'collapse',
-            icon: Monitor,
-            children: [
-                {
-                    id: 'email',
-                    title: <FormattedMessage id="email" />,
-                    type: 'item',
-                    icon: DeviceHub,
-                    url: '/pages/email'
-                },
-
-                {
-                    id: 'sms',
-                    title: <FormattedMessage id="sms" />,
-                    type: 'item',
-                    icon: Share,
-                    url: '/pages/sms'
-                }
-            ]
+            id: 'forms-builder',
+            title: <FormattedMessage id="forms-builder" />,
+            type: 'item',
+            icon: Article,
+            target: true,
+            url: '/form-builder'
+        },
+        {
+            id: 'email',
+            title: <FormattedMessage id="email" />,
+            type: 'item',
+            icon: Email,
+            url: '/pages/email',
+        },
+        {
+            id: 'sms',
+            title: <FormattedMessage id="sms" />,
+            type: 'item',
+            icon: Sms,
+            url: '/pages/sms',
+        },
+        {
+            id: 'audit-records',
+            title: <FormattedMessage id="audit-records" />,
+            icon: VerifiedUser,
+            type: 'item',
+            url: '/pages/audit-log'
         },
         {
             id: 'maps',

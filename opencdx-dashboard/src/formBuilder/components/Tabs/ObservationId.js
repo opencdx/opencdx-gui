@@ -36,9 +36,8 @@ export const ObservationId = ({ currentIndex, index, control, getValues, registe
 
             setChipData(newChipData);
 
-            const newSelectedCategories = currentCategories.length > 0
-                ? currentCategories
-                : newChipData.filter((data) => data.selected).map((data) => data.label);
+            const newSelectedCategories =
+                currentCategories.length > 0 ? currentCategories : newChipData.filter((data) => data.selected).map((data) => data.label);
 
             setSelectedCategories(newSelectedCategories);
         }
@@ -76,13 +75,12 @@ export const ObservationId = ({ currentIndex, index, control, getValues, registe
 
     // Function to handle textbox change
     const handleTextboxChange = (event) => {
-
         const { name, value } = event.target;
         const updatedFormData = { ...formData };
         updatedFormData.item[index].item[currentIndex][name] = value;
         setFormData(updatedFormData);
     };
- 
+
     const ObservationAttributes = ({ filteredAttributes }) => (
         <>
             {filteredAttributes.map((attribute, i) => (
