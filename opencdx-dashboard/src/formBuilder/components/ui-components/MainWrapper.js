@@ -40,8 +40,6 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
 
         tempData.ruleId = data?.ruleId || '';
         tempData.ruleQuestionId = data?.ruleQuestionId?.ruleId ? [data.ruleQuestionId.ruleId] : [];
-        anf.updated.ruleId = tempData.ruleId;
-        anf.updated.ruleQuestionId = tempData.ruleQuestionId;
 
         localStorage.setItem('anf-form', JSON.stringify(anf));
         tempData.item = tempData.item.map(({ componentType, anfOperatorType, operatorValue, markedMainANFStatement, selectedCategories, componentId, answerTextValue, ...rest }) => {

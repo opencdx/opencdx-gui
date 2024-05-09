@@ -47,9 +47,11 @@ const ChildWrapper = ({ control, register }) => {
                             label: rule.text
                         };
                     });
-                    const ruleQuestionId = Array.isArray(formData.ruleQuestionId) ? formData.ruleQuestionId[0] : formData.ruleQuestionId;
-                    const selectedRule = ruleQuestion.find((rule) => rule.ruleId === ruleQuestionId);
+                    if (formData?.ruleQuestionId) {
+                    const ruleQuestionId = Array.isArray(formData?.ruleQuestionId) ? formData.ruleQuestionId[0] : formData.ruleQuestionId;
+                    const selectedRule = Object.hasOwn(ruleQuestionId, 'ruleId') ? ruleQuestionId: ruleQuestion.find((rule) => rule.ruleId === ruleQuestionId);
                     setDefaultRule(selectedRule);
+                    }
                     setResponseRule(ruleQuestion);
                 })
                 .catch((err) => err);
@@ -97,6 +99,9 @@ const ChildWrapper = ({ control, register }) => {
                                 <Autocomplete
                                     onChange={(_, data) => {
                                         field.onChange(data || '');
+                                        const anf = JSON.parse(localStorage.getItem('anf-form'));
+                                        anf.updated.ruleId = data;
+                                        localStorage.setItem('anf-form', JSON.stringify(anf));
                                     }}
                                     defaultValue={formData?.ruleId ? formData?.ruleId : ruleSets[0]}
                                     id="controllable-states-demo"
@@ -123,6 +128,9 @@ const ChildWrapper = ({ control, register }) => {
                                     onChange={(_, data) => {
                                         setDefaultRule(data);
                                         field.onChange(data || '');
+                                        const anf = JSON.parse(localStorage.getItem('anf-form'));
+                                        anf.updated.ruleQuestionId = data;
+                                        localStorage.setItem('anf-form', JSON.stringify(anf)); 
                                     }}
                                     value={defaultRule}
                                     id="controllable-states-demo"
