@@ -27,7 +27,7 @@ const Dashboard = () => {
         const fetchUserResponses = async () => {
             Endpoints.userResponses({
                 pagination: {
-                    pageSize: 30,
+                    pageSize: 300,
                     sortAscending: true
                 }
             })

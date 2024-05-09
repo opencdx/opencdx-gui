@@ -25,6 +25,7 @@ const ChildWrapper = ({ control, register }) => {
     });
     const [ruleSets, setRuleSets] = React.useState([]);
     const [responseRule, setResponseRule] = React.useState([]);
+    const [defaultRule, setDefaultRule] = React.useState([]);
 
     const theme = useTheme();
     const handleStatementTypeChange = (value) => setHideOptions(value !== statementType.USER_QUESTION);
@@ -37,15 +38,18 @@ const ChildWrapper = ({ control, register }) => {
             })
                 .then((response) => {
                     const rules = response.data.ruleSets.map((rule) => {
-                        return  rule.ruleId
+                        return rule.ruleId;
                     });
                     setRuleSets(rules);
                     const ruleQuestion = formData.item.map((rule) => {
-                        return{
+                        return {
                             ruleId: rule.linkId,
                             label: rule.text
-                        }
+                        };
                     });
+                    const ruleQuestionId = Array.isArray(formData.ruleQuestionId) ? formData.ruleQuestionId[0] : formData.ruleQuestionId;
+                    const selectedRule = ruleQuestion.find((rule) => rule.ruleId === ruleQuestionId);
+                    setDefaultRule(selectedRule);
                     setResponseRule(ruleQuestion);
                 })
                 .catch((err) => err);
@@ -91,13 +95,13 @@ const ChildWrapper = ({ control, register }) => {
                             control={control}
                             render={({ field }) => (
                                 <Autocomplete
-                                    onChange={(_,data) => {
-                                        field.onChange(data || '')
+                                    onChange={(_, data) => {
+                                        field.onChange(data || '');
                                     }}
                                     defaultValue={formData?.ruleId ? formData?.ruleId : ruleSets[0]}
                                     id="controllable-states-demo"
                                     options={ruleSets}
-                                    renderInput={(params) => <TextField {...params} {...field}  />}
+                                    renderInput={(params) => <TextField {...params} {...field} />}
                                 />
                             )}
                         />
@@ -116,15 +120,15 @@ const ChildWrapper = ({ control, register }) => {
                             control={control}
                             render={({ field }) => (
                                 <Autocomplete
-                                    onChange={(_,data) => {
-                                        field.onChange(data || '')
+                                    onChange={(_, data) => {
+                                        setDefaultRule(data);
+                                        field.onChange(data || '');
                                     }}
-                                    defaultValue={formData.ruleQuestionId ? formData.ruleQuestionId : responseRule[0]}
+                                    value={defaultRule}
                                     id="controllable-states-demo"
                                     options={responseRule}
-                                    renderInput={(params) => <TextField {...params} {...field}  />}
+                                    renderInput={(params) => <TextField {...params} {...field} />}
                                 />
-                                
                             )}
                         />
                     </FormControl>

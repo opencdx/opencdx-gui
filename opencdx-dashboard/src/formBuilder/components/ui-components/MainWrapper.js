@@ -30,91 +30,56 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
     }, [formData, reset]);
 
     const onSubmit = (data) => {
-        const anf = JSON.parse(localStorage.getItem('anf-form')); 
+        const anf = JSON.parse(localStorage.getItem('anf-form'));
         anf.updated.item = data.item;
-       
-        anf.updated.ruleId = data.ruleId
-        
-        anf.updated.ruleQuestionId = data.ruleQuestionId.ruleId;
+        let tempData = data;
+
+        tempData.title = anf.updated.title;
+        tempData.resourceType = anf.updated.resourceType;
+        tempData.status = anf.updated.status;
+
+        tempData.ruleId = data?.ruleId || '';
+        tempData.ruleQuestionId = data?.ruleQuestionId?.ruleId ? [data.ruleQuestionId.ruleId] : [];
+        anf.updated.ruleId = tempData.ruleId;
+        anf.updated.ruleQuestionId = tempData.ruleQuestionId;
 
         localStorage.setItem('anf-form', JSON.stringify(anf));
-        let tempData = data;
-        tempData.item.forEach(element => {
-            delete element.componentType;
-            delete element.anfOperatorType;
-            delete element.operatorValue;
-            delete element.markedMainANFStatement;
-            delete element.selectedCategories;
-            delete element.componentId;
-            delete element.answerTextValue;
+        tempData.item = tempData.item.map(({ componentType, anfOperatorType, operatorValue, markedMainANFStatement, selectedCategories, componentId, answerTextValue, ...rest }) => {
+            const { anfStatement } = rest?.item[0]?.anfStatementConnector[0] || {};
+            console.log('anfStatement', componentType, anfOperatorType, operatorValue, markedMainANFStatement, selectedCategories, componentId, answerTextValue);
+            if (anfStatement) {
+                if (anfStatement.authors && !Array.isArray(anfStatement.authors)) {
+                    anfStatement.authors = [anfStatement.authors];
+                }
+                if (anfStatement.time) {
+                    anfStatement.time.includeLowerBound = anfStatement.time.includeLowerBound === 'yes';
+                    anfStatement.time.includeUpperBound = anfStatement.time.includeUpperBound === 'yes';
+                }
+                if (anfStatement.performanceCircumstance?.normalRange) {
+                    const { normalRange } = anfStatement.performanceCircumstance;
+                    normalRange.includeLowerBound = normalRange.includeLowerBound === 'yes';
+                    normalRange.includeUpperBound = normalRange.includeUpperBound === 'yes';
+                }
+                if (anfStatement.performanceCircumstance?.result) {
+                    const { result } = anfStatement.performanceCircumstance;
+                    result.includeLowerBound = result.includeLowerBound === 'yes';
+                    result.includeUpperBound = result.includeUpperBound === 'yes';
+                }
+                if (anfStatement.performanceCircumstance?.timing) {
+                    const { timing } = anfStatement.performanceCircumstance;
+                    timing.includeLowerBound = timing.includeLowerBound === 'yes';
+                    timing.includeUpperBound = timing.includeUpperBound === 'yes';
+                }
+                if (anfStatement.performanceCircumstance?.participant && !Array.isArray(anfStatement.performanceCircumstance.participant)){
+                    anfStatement.performanceCircumstance.participant=[anfStatement.performanceCircumstance.participant];
+                }
+
+                delete anfStatement.performanceCircumstance?.circumstanceType;
+            }
+
+            return { ...rest };
         });
 
-        // anf.updated.item.forEach((element) => {
-        //     let componentType = element.componentType;
-        //     let Type = element.anfOperatorType === 'Equal' ? 'ANF_OPERATOR_TYPE_EQUAL' : 'ANF_OPERATOR_TYPE_NOT_EQUAL';
-        //     let Value = element.operatorValue;
-
-        //     if (Array.isArray(element.item)) {
-        //         element.item.forEach((connector) => {
-        //             connector.anfStatementConnector[0].anfStatementType = componentType;
-        //             connector.anfStatementConnector[0].anfOperatorType = Type;
-        //             connector.anfStatementConnector[0].operatorValue = Value;
-        //             if (connector.anfStatementConnector[0].anfStatement.authors)
-        //                 connector.anfStatementConnector[0].anfStatement.authors = [
-        //                     connector.anfStatementConnector[0].anfStatement.authors,
-        //                     connector.anfStatementConnector[0].anfStatement.authors
-        //                 ];
-        //             connector.anfStatementConnector[0].anfStatement.time.includeLowerBound =
-        //                 connector.anfStatementConnector[0].anfStatement.time.includeLowerBound === 'yes' ? true : false;
-        //             connector.anfStatementConnector[0].anfStatement.time.includeUpperBound =
-        //                 connector.anfStatementConnector[0].anfStatement.time.includeUpperBound === 'yes' ? true : false;
-        //             if (
-        //                 connector &&
-        //                 connector.anfStatementConnector[0] &&
-        //                 connector.anfStatementConnector[0].anfStatement &&
-        //                 connector.anfStatementConnector[0].anfStatement.performanceCircumstance
-        //             ) {
-        //                 connector.anfStatementConnector[0].anfStatement.performanceCircumstance.normalRange.includeLowerBound =
-        //                     connector.anfStatementConnector[0].anfStatement?.performanceCircumstance?.normalRange?.includeLowerBound ===
-        //                     'yes'
-        //                         ? true
-        //                         : false;
-        //                 connector.anfStatementConnector[0].anfStatement.performanceCircumstance.normalRange.includeUpperBound =
-        //                     connector.anfStatementConnector[0].anfStatement?.performanceCircumstance.normalRange?.includeUpperBound ===
-        //                     'yes'
-        //                         ? true
-        //                         : false;
-        //                 connector.anfStatementConnector[0].anfStatement.performanceCircumstance.result.includeLowerBound =
-        //                     connector.anfStatementConnector[0].anfStatement?.performanceCircumstance?.result?.includeLowerBound === 'yes'
-        //                         ? true
-        //                         : false;
-        //                 connector.anfStatementConnector[0].anfStatement.performanceCircumstance.result.includeUpperBound =
-        //                     connector.anfStatementConnector[0].anfStatement?.performanceCircumstance?.result?.includeUpperBound === 'yes'
-        //                         ? true
-        //                         : false;
-
-        //                 connector.anfStatementConnector[0].anfStatement.performanceCircumstance.timing.includeLowerBound =
-        //                     connector.anfStatementConnector[0].anfStatement?.performanceCircumstance?.timing?.includeLowerBound === 'yes'
-        //                         ? true
-        //                         : false;
-        //                 connector.anfStatementConnector[0].anfStatement.performanceCircumstance.timing.includeUpperBound =
-        //                     connector.anfStatementConnector[0].anfStatement?.performanceCircumstance?.timing?.includeUpperBound === 'yes'
-        //                         ? true
-        //                         : false;
-        //             }
-        //         });
-        //     }
-        //     delete element.componentType;
-        //     delete element.anfOperatorType;
-        //     delete element.operatorValue;
-        //     delete element.markedMainANFStatement;
-        //     delete element.selectedCategories;
-        //     delete element.componentId;
-        //     delete element.answerTextValue;
-        // });
-
-        tempData.ruleQuestionId = [data.ruleQuestionId.ruleId];
-        tempData.ruleId = data.ruleId;
         const saveQuestionnare = async () => {
             const response = await Endpoints.submitQuestionnaire({
                 questionnaire: tempData

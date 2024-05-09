@@ -10,7 +10,6 @@ import { useNavigate } from 'react-router-dom';
 const ErrorPage = () => {
     const navigate = useNavigate();
 
-
     const handleButtonClick = () => {
         navigate('/dashboard'); // Replace '/dashboard' with the actual path to the DashboardPage
     };

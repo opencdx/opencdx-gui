@@ -167,7 +167,7 @@ const User = ({navigation}) => {
                 const response = await Endpoints.questionnaireList(
                     {
                         pagination: {
-                            pageSize: 30,
+                            pageSize: 300,
                             sortAscending: true,
                         },
                     }

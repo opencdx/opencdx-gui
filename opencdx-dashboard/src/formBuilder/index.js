@@ -158,7 +158,7 @@ const FormBuilder = () => {
         const fetchUserResponses = async () => {
             Endpoints.getQuestionnaireList({
                 pagination: {
-                    pageSize: 30,
+                    pageSize: 300,
                     sortAscending: true
                 }
             })
