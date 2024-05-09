@@ -26,6 +26,8 @@ const ChildWrapper = ({ control, register }) => {
     const [ruleSets, setRuleSets] = React.useState([]);
     const [responseRule, setResponseRule] = React.useState([]);
     const [defaultRule, setDefaultRule] = React.useState([]);
+    const [defaultId, setDefaultId] = React.useState('');
+    const [ruleset,setRuleSet]=React.useState([]);
 
     const theme = useTheme();
     const handleStatementTypeChange = (value) => setHideOptions(value !== statementType.USER_QUESTION);
@@ -37,9 +39,14 @@ const ChildWrapper = ({ control, register }) => {
                 workspaceId: 'workspaceId'
             })
                 .then((response) => {
+                    setRuleSet(response.data.ruleSets);
                     const rules = response.data.ruleSets.map((rule) => {
-                        return rule.ruleId;
+                        return rule.name
                     });
+                    if(formData.ruleId) {
+                        setDefaultId('Blood Pressure')
+                    }
+                    
                     setRuleSets(rules);
                     const ruleQuestion = formData.item.map((rule) => {
                         return {
@@ -100,11 +107,14 @@ const ChildWrapper = ({ control, register }) => {
                                     onChange={(_, data) => {
                                         field.onChange(data || '');
                                         const anf = JSON.parse(localStorage.getItem('anf-form'));
-                                        anf.updated.ruleId = data;
+                                        const ruleId = ruleset.find(rule => rule.name === data)?.ruleId;
+                                        anf.updated.ruleId = ruleId;
                                         localStorage.setItem('anf-form', JSON.stringify(anf));
+                                       
+                                        setDefaultId(data);
                                     }}
-                                    defaultValue={formData?.ruleId ? formData?.ruleId : ruleSets[0]}
-                                    id="controllable-states-demo"
+                                    value={defaultId}
+                                    id="controllable-states-demo1"
                                     options={ruleSets}
                                     renderInput={(params) => <TextField {...params} {...field} />}
                                 />

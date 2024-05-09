@@ -37,9 +37,10 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
         tempData.title = anf.updated.title;
         tempData.resourceType = anf.updated.resourceType;
         tempData.status = anf.updated.status;
+        tempData.description = anf.updated.description;
 
-        tempData.ruleId = data?.ruleId || '';
-        tempData.ruleQuestionId = data?.ruleQuestionId?.ruleId ? [data.ruleQuestionId.ruleId] : [];
+        tempData.ruleId = anf.updated.ruleId || '';
+        tempData.ruleQuestionId = anf.updated.ruleQuestionId?.ruleId ?[anf.updated.ruleQuestionId.ruleId]:[];
 
         localStorage.setItem('anf-form', JSON.stringify(anf));
         tempData.item = tempData.item.map(({ componentType, anfOperatorType, operatorValue, markedMainANFStatement, selectedCategories, componentId, answerTextValue, ...rest }) => {
