@@ -11,6 +11,31 @@
   "purpose": "To capture user symptoms ",
   "item": [
     {
+      "type": "string",
+      "linkId": "7659172265877",
+      "text": "COVID Symptom",
+      "enableWhen": [
+        {
+          "question": "7778752422567",
+          "operator": "=",
+          "answerCoding": {
+            "display": "Yes"
+          }
+        },
+        {
+          "question": "4320936850630",
+          "operator": "=",
+          "answerCoding": {
+            "display": "Male"
+          }
+        }
+      ],
+      "enableBehavior": "all",
+      "required": true,
+      "repeats": true,
+      "readOnly": true
+    },
+    {
       "type": "choice",
       "extension": [
         {
