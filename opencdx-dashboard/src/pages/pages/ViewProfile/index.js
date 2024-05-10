@@ -17,7 +17,7 @@ import {
     TableRow,
     Typography
 } from '@mui/material';
-ß;
+
 
 import Avatar from 'ui-component/extended/Avatar';
 import SubCard from 'ui-component/cards/SubCard';
@@ -32,6 +32,8 @@ import Avatar3 from 'utils/assets/images/users/avatar-1.png';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Endpoints } from 'utils/axios/apiEndpoints';
+import { openSnackbar } from 'utils/store/slices/snackbar';
+import { useDispatch } from 'utils/store';
 
 function LinearProgressWithLabel({ value, ...others }) {
     return (
@@ -72,43 +74,42 @@ const Profile1 = () => {
     // const { user } = useAuth();
     const [user, setUser] = useState({});
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
 
     useEffect(() => {
         const fetchSmsList = async () => {
-            const response = await Endpoints.getCurrentUser(
-                {
-                    pagination: {
-                        pageSize: 30,
-                        sortAscending: true
+            try {
+                const response = await Endpoints.getCurrentUser(
+                    {
+                        pagination: {
+                            pageSize: 30,
+                            sortAscending: true
+                        }
+                    },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${localStorage.getItem('serviceToken')}`
+                        }
                     }
-                },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${localStorage.getItem('serviceToken')}`
-                    }
-                }
-            );
+                );
 
-            setUser(response.data);
-            // const fetchUser = async () => {
-            //     const response = await Endpoints.getUserProfile(
-            //         {
-            //             pagination: {
-            //                 pageSize: 30,
-            //                 sortAscending: true
-            //             }
-            //         },
-            //         {
-            //             headers: {
-            //                 'Content-Type': 'application/json',
-            //                 Authorization: `Bearer ${localStorage.getItem('serviceToken')}`
-            //             }
-            //         }
-            //     );
-            //     setUser(response.data);
-            // };
-            // fetchUser();
+                setUser(response.data);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+                dispatch(
+                    openSnackbar({
+                        open: true,
+                        message: 'Something went wrong.',
+                        variant: 'error',
+                        alert: {
+                            color: 'success'
+                        },
+                        close: false
+                    })
+                );
+            }
         };
         fetchSmsList();
     }, []);

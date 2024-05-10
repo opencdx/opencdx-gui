@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import { MeasureComponent } from '../TabComponents/MeasureComponent';
 import { ParticipantComponent } from '../TabComponents/ParticipantComponent';
 import { FormControl, Grid, MenuItem, Select, TextField } from '@mui/material';
-import { MainCard } from '../ui-components/MainCard';
-import { InputLabel } from '../ui-components/InputLabel';
+import { MainCard } from '../ui-component/MainCard';
+import { InputLabel } from '../ui-component/InputLabel';
 import { Controller } from 'react-hook-form';
 
 import { systemVariables, statementType } from '../../store/constant';
-import { SystemVariables } from '../ui-components/SystemVariables';
+import { SystemVariables } from '../SystemVariables';
 import { useAnfFormStore } from '../../utils/useAnfFormStore';
 
 export const CircumstanceChoice = React.forwardRef(({ control, register, index, currentIndex, getValues }, ref) => {

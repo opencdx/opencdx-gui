@@ -38,7 +38,7 @@ const JWTLogin = ({ ...others }) => {
     return (
         <Formik
             initialValues={{
-                userName: 'admin@opencdx.com',
+                userName: 'admin@opencdx.org',
                 password: 'password',
                 submit: null
             }}
@@ -71,7 +71,7 @@ const JWTLogin = ({ ...others }) => {
                         <OutlinedInput
                             id="outlined-adornment-email-login"
                             type="email"
-                            value={values.userName}
+                            defaultValue={values.userName}
                             name="email"
                             onBlur={handleBlur}
                             onChange={handleChange}

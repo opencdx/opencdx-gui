@@ -60,7 +60,7 @@ const Snackbar = () => {
                 <MuiSnackbar
                     anchorOrigin={anchorOrigin}
                     open={open}
-                    autoHideDuration={6000}
+                    autoHideDuration={3000}
                     onClose={handleClose}
                     message={message}
                     TransitionComponent={animation[transition]}
@@ -83,12 +83,82 @@ const Snackbar = () => {
                     TransitionComponent={animation[transition]}
                     anchorOrigin={anchorOrigin}
                     open={open}
-                    autoHideDuration={6000}
+                    autoHideDuration={3000}
                     onClose={handleClose}
                 >
                     <Alert
                         variant={alert.variant}
-                        color={alert.color}
+                        color={'warning'}
+                        action={
+                            <>
+                                {actionButton !== false && (
+                                    <Button size="small" onClick={handleClose} sx={{ color: 'background.paper' }}>
+                                        UNDO
+                                    </Button>
+                                )}
+                                {close !== false && (
+                                    <IconButton sx={{ color: 'background.paper' }} size="small" aria-label="close" onClick={handleClose}>
+                                        <CloseIcon fontSize="small" />
+                                    </IconButton>
+                                )}
+                            </>
+                        }
+                        sx={{
+                            ...(alert.variant === 'outlined' && {
+                                bgcolor: 'background.paper'
+                            })
+                        }}
+                    >
+                        {message}
+                    </Alert>
+                </MuiSnackbar>
+            )}
+            {variant === 'info' && (
+                <MuiSnackbar
+                    TransitionComponent={animation[transition]}
+                    anchorOrigin={anchorOrigin}
+                    open={open}
+                    autoHideDuration={3000}
+                    onClose={handleClose}
+                >
+                    <Alert
+                        variant={alert.variant}
+                        color={'info'}
+                        action={
+                            <>
+                                {actionButton !== false && (
+                                    <Button size="small" onClick={handleClose} sx={{ color: 'background.paper' }}>
+                                        UNDO
+                                    </Button>
+                                )}
+                                {close !== false && (
+                                    <IconButton sx={{ color: 'background.paper' }} size="small" aria-label="close" onClick={handleClose}>
+                                        <CloseIcon fontSize="small" />
+                                    </IconButton>
+                                )}
+                            </>
+                        }
+                        sx={{
+                            ...(alert.variant === 'outlined' && {
+                                bgcolor: 'background.paper'
+                            })
+                        }}
+                    >
+                        {message}
+                    </Alert>
+                </MuiSnackbar>
+            )}
+            {variant === 'error' && (
+                <MuiSnackbar
+                    TransitionComponent={animation[transition]}
+                    anchorOrigin={anchorOrigin}
+                    open={open}
+                    autoHideDuration={3000}
+                    onClose={handleClose}
+                >
+                    <Alert
+                        variant={alert.variant}
+                        color={'error'}
                         action={
                             <>
                                 {actionButton !== false && (

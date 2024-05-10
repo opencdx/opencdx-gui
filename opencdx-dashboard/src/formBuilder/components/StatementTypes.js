@@ -2,10 +2,10 @@ import React, { useCallback, forwardRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormControl, FormControlLabel, Grid, Radio, RadioGroup, Button, Typography, Checkbox } from '@mui/material';
 import { Controller } from 'react-hook-form';
-import { SubCard } from './SubCard';
+import { SubCard } from './ui-component/SubCard';
 import IconRestore from '@mui/icons-material/Restore';
-import { useAnfFormStore } from '../../utils/useAnfFormStore';
-import { statementType } from '../../store/constant';
+import { useAnfFormStore } from '../utils/useAnfFormStore';
+import { statementType } from '../store/constant';
 const StatementTypes = forwardRef(({ register, index, control, item, handleStatementTypeChange }, ref) => {
     const { formData, setFormData } = useAnfFormStore();
     const [selectedOption, setSelectedOption] = React.useState('');

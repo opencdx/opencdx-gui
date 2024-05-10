@@ -1,11 +1,11 @@
 import React from 'react';
 import { Grid, Checkbox } from '@mui/material';
-import { MainCard } from './MainCard';
+import { MainCard } from './ui-component/MainCard';
 
 import { Table, TableBody, TableCell, TableRow, FormControlLabel, TableContainer } from '@mui/material';
 
-import { capitalizeANFTitle } from '../../utils/StringManulpations';
-import { useAnfFormStore } from '../../utils/useAnfFormStore';
+import { capitalizeANFTitle } from '../utils/StringManulpations';
+import { useAnfFormStore } from '../utils/useAnfFormStore';
 
 const StatementTypesReport = React.forwardRef((props, ref) => {
     const { formData } = useAnfFormStore();

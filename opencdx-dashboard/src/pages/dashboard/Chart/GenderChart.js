@@ -3,11 +3,13 @@ import { useState, useEffect, useCallback } from 'react';
 import Chart from 'react-apexcharts';
 import MainCard from 'ui-component/cards/MainCard';
 import { Graphql } from 'utils/axios/graphqlEndpoints';
-
+import { openSnackbar } from 'utils/store/slices/snackbar';
+import { useDispatch } from 'utils/store';
 // ==============================|| WIDGET - Gender CHART ||============================== //
 
 const GenderChart = () => {
     const [gender, setGender] = useState([0, 0]);
+    const dispatch = useDispatch();
 
     const fetchData = useCallback(async () => {
         try {
@@ -23,7 +25,18 @@ const GenderChart = () => {
 
             setGender([maleCount, femaleCount]);
         } catch (error) {
-            console.error(error);
+            console.log(error)
+            dispatch(
+                openSnackbar({
+                    open: true,
+                    message: 'Something went wrong',
+                    variant: 'error',
+                    alert: {
+                        color: 'error'
+                    },
+                    close: false
+                })
+            );
         }
     }, []);
 

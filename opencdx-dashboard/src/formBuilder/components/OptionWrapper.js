@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { TextField, Button, FormControl, Typography, Grid, MenuItem, Select } from '@mui/material';
 import { Controller } from 'react-hook-form';
 import { useFieldArray } from 'react-hook-form';
-import { AccordianWrapper } from './AccordianWrapper';
-import { CustomTabs } from './CustomTabs';
+import { AccordianWrapper } from './ui-component/AccordianWrapper';
+import { CustomTabs } from './ui-component/CustomTabs';
 
 const OptionWrapper = React.forwardRef(({ control, register, index, item }, ref) => {
     const [showValueField, setShowValueField] = React.useState(false);

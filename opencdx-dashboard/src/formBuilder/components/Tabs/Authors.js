@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ParticipantComponent } from '../TabComponents/ParticipantComponent';
-import { SystemVariables } from '../ui-components/SystemVariables';
+import { SystemVariables } from '../SystemVariables';
 
 const Authors = React.forwardRef(({ control, register, index, currentIndex, getValues }, ref) => {
     return (

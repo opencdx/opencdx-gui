@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import { createContext, useEffect, useReducer } from 'react';
+import { openSnackbar } from 'utils/store/slices/snackbar';
+import { useDispatch } from 'utils/store';
 
 // third-party
 import { Chance } from 'chance';
@@ -23,17 +25,6 @@ const initialState = {
     user: null
 };
 
-// const verifyToken = (serviceToken) => {
-//     if (!serviceToken) {
-//         return false;
-//     }
-//     const decoded = jwtDecode(serviceToken);
-//     /**
-//      * Property 'exp' does not exist on type '<T = unknown>(token, options?: JwtDecodeOptions | undefined) => T'.
-//      */
-//     return decoded.exp > Date.now() / 1000;
-// };
-
 const setSession = (serviceToken) => {
     if (serviceToken) {
         localStorage.setItem('serviceToken', serviceToken);
@@ -49,12 +40,13 @@ const JWTContext = createContext(null);
 
 export const JWTProvider = ({ children }) => {
     const [state, dispatch] = useReducer(accountReducer, initialState);
+    const dispatchSnack = useDispatch();
 
     useEffect(() => {
         const init = async () => {
             try {
                 const serviceToken = window.localStorage.getItem('serviceToken');
-                if (serviceToken && verifyToken(serviceToken)) {
+                if (serviceToken) {
                     setSession(serviceToken);
                     dispatch({
                         type: LOGIN,
@@ -81,17 +73,44 @@ export const JWTProvider = ({ children }) => {
         init();
     }, []);
 
-    const login = async () => {
-        const response = await Endpoints.login({ userName: 'admin@opencdx.org', password: 'password' });
-        const { token, user } = response.data;
-        setSession(token);
-        dispatch({
-            type: LOGIN,
-            payload: {
-                isLoggedIn: true,
-                user
-            }
-        });
+    const login = async (userName, password) => {
+        try {
+            const response = await Endpoints.login({ userName, password });
+
+            dispatchSnack(
+                openSnackbar({
+                    open: true,
+                    message: 'Successfully logged in.',
+                    variant: 'alert',
+                    alert: {
+                        color: 'success'
+                    },
+                    close: false
+                })
+            );
+            const { token, user } = response.data;
+            setSession(token);
+            dispatch({
+                type: LOGIN,
+                payload: {
+                    isLoggedIn: true,
+                    user
+                }
+            });
+        } catch (error) {
+            console.error(error);
+            dispatchSnack(
+                openSnackbar({
+                    open: true,
+                    message: 'Something went wrong.',
+                    variant: 'error',
+                    alert: {
+                        color: 'success'
+                    },
+                    close: false
+                })
+            );
+        }
     };
 
     const register = async (email, password, firstName, lastName) => {

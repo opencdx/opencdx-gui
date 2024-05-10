@@ -7,28 +7,48 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { gridSpacing } from 'utils/store/constant';
 import { Endpoints } from 'utils/axios/apiEndpoints';
+import { openSnackbar } from 'utils/store/slices/snackbar';
+import { useDispatch } from 'utils/store';
 // ==============================|| Admin PAGE ||============================== //
 
 const Email = () => {
     const [text, setText] = useState('');
+    const dispatch = useDispatch();
+
     const [emailTemplates, setEmailTemplates] = useState([]);
     useEffect(() => {
         const fetchEmailList = async () => {
-            const response = await Endpoints.getEmailList(
-                {
-                    pagination: {
-                        pageSize: 30,
-                        sortAscending: true
+            try {
+                const response = await Endpoints.getEmailList(
+                    {
+                        pagination: {
+                            pageSize: 30,
+                            sortAscending: true
+                        }
+                    },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${localStorage.getItem('serviceToken')}`
+                        }
                     }
-                },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${localStorage.getItem('serviceToken')}`
-                    }
-                }
-            );
-            setEmailTemplates(response?.data);
+                );
+                setEmailTemplates(response?.data);
+            } catch (error) {
+                console.error('Error fetching email list:', error);
+                dispatch(
+                    openSnackbar({
+                        open: true,
+                        message: 'Something went wrong.',
+                        variant: 'error',
+                        alert: {
+                            color: 'success'
+                        },
+                        close: false
+                    })
+                );
+                // Handle the error here
+            }
         };
         fetchEmailList();
     }, []);

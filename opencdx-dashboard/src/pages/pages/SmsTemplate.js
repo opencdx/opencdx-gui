@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { Grid, Stack, TextField, MenuItem } from '@mui/material';
 import MainCard from 'ui-component/cards/MainCard';
 import { useTheme } from '@mui/material/styles';
-
+import { openSnackbar } from 'utils/store/slices/snackbar';
+import { useDispatch } from 'utils/store';
 // third party
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -11,26 +12,43 @@ import { Endpoints } from 'utils/axios/apiEndpoints';
 
 // ==============================|| Admin PAGE ||============================== //
 
-const Sms = () => {
+const SmsTemplate = () => {
     const [text, setText] = useState('');
+    const dispatch = useDispatch();
+
     const [SmsTemplates, setSmsTemplates] = useState([]);
     useEffect(() => {
         const fetchSmsList = async () => {
-            const response = await Endpoints.getSmsList(
-                {
-                    pagination: {
-                        pageSize: 30,
-                        sortAscending: true
+            try {
+                const response = await Endpoints.getSmsList(
+                    {
+                        pagination: {
+                            pageSize: 30,
+                            sortAscending: true
+                        }
+                    },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${localStorage.getItem('serviceToken')}`
+                        }
                     }
-                },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${localStorage.getItem('serviceToken')}`
-                    }
-                }
-            );
-            setSmsTemplates(response.data);
+                );
+                setSmsTemplates(response.data);
+            } catch (error) {
+                console.error('Error fetching SMS list:', error);
+                dispatch(
+                    openSnackbar({
+                        open: true,
+                        message: 'Something went wrong.',
+                        variant: 'error',
+                        alert: {
+                            color: 'success'
+                        },
+                        close: false
+                    })
+                );
+            }
         };
         fetchSmsList();
     }, []);
@@ -156,4 +174,4 @@ const Sms = () => {
     );
 };
 
-export default Sms;
+export default SmsTemplate;

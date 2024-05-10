@@ -47,7 +47,7 @@ const DataCard = ({ primary, secondary, iconPrimary, color }) => {
 
 DataCard.propTypes = {
     primary: PropTypes.string,
-    secondary: PropTypes.string,
+    secondary: PropTypes.any,
     iconPrimary: PropTypes.object,
     color: PropTypes.string
 };

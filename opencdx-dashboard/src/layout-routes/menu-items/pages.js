@@ -19,14 +19,14 @@ const pages = {
             title: <FormattedMessage id="email" />,
             type: 'item',
             icon: Email,
-            url: '/pages/email',
+            url: '/pages/email'
         },
         {
             id: 'sms',
             title: <FormattedMessage id="sms" />,
             type: 'item',
             icon: Sms,
-            url: '/pages/sms',
+            url: '/pages/sms'
         },
         {
             id: 'audit-records',

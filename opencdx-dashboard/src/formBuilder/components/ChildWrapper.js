@@ -3,21 +3,23 @@ import PropTypes from 'prop-types';
 import { useFieldArray } from 'react-hook-form';
 import StatementTypes from './StatementTypes';
 import OptionWrapper from './OptionWrapper';
-import { ComponentID } from '../TabComponents/ComponentID';
-import { AccordianWrapper } from './AccordianWrapper';
+import { ComponentID } from './TabComponents/ComponentID';
+import { AccordianWrapper } from './ui-component/AccordianWrapper';
 import { Grid, FormControl, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { Controller } from 'react-hook-form';
-import { useAnfFormStore } from '../../utils/useAnfFormStore';
-import { statementType } from '../../store/constant';
+import { useAnfFormStore } from '../utils/useAnfFormStore';
+import { statementType } from '../store/constant';
 import { Endpoints } from 'utils/axios/apiEndpoints';
-import 'primereact/resources/primereact.css';
-import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import { openSnackbar } from 'utils/store/slices/snackbar';
+import { useDispatch } from 'utils/store';
 
 const ChildWrapper = ({ control, register }) => {
     const { formData } = useAnfFormStore();
+    const dispatch = useDispatch();
+
     const [hideOptions, setHideOptions] = React.useState(true);
     const { fields, remove } = useFieldArray({
         control,
@@ -27,7 +29,7 @@ const ChildWrapper = ({ control, register }) => {
     const [responseRule, setResponseRule] = React.useState([]);
     const [defaultRule, setDefaultRule] = React.useState([]);
     const [defaultId, setDefaultId] = React.useState('');
-    const [ruleset,setRuleSet]=React.useState([]);
+    const [ruleset, setRuleSet] = React.useState([]);
 
     const theme = useTheme();
     const handleStatementTypeChange = (value) => setHideOptions(value !== statementType.USER_QUESTION);
@@ -41,12 +43,12 @@ const ChildWrapper = ({ control, register }) => {
                 .then((response) => {
                     setRuleSet(response.data.ruleSets);
                     const rules = response.data.ruleSets.map((rule) => {
-                        return rule.name
+                        return rule.name;
                     });
-                    if(formData.ruleId) {
-                        setDefaultId('Blood Pressure')
+                    if (formData.ruleId) {
+                        setDefaultId('Blood Pressure');
                     }
-                    
+
                     setRuleSets(rules);
                     const ruleQuestion = formData.item.map((rule) => {
                         return {
@@ -55,13 +57,29 @@ const ChildWrapper = ({ control, register }) => {
                         };
                     });
                     if (formData?.ruleQuestionId) {
-                    const ruleQuestionId = Array.isArray(formData?.ruleQuestionId) ? formData.ruleQuestionId[0] : formData.ruleQuestionId;
-                    const selectedRule = Object.hasOwn(ruleQuestionId, 'ruleId') ? ruleQuestionId: ruleQuestion.find((rule) => rule.ruleId === ruleQuestionId);
-                    setDefaultRule(selectedRule);
+                        const ruleQuestionId = Array.isArray(formData?.ruleQuestionId)
+                            ? formData.ruleQuestionId[0]
+                            : formData.ruleQuestionId;
+                        const selectedRule = Object.hasOwn(ruleQuestionId, 'ruleId')
+                            ? ruleQuestionId
+                            : ruleQuestion.find((rule) => rule.ruleId === ruleQuestionId);
+                        setDefaultRule(selectedRule);
                     }
                     setResponseRule(ruleQuestion);
                 })
-                .catch((err) => err);
+                .catch(() => {
+                    dispatch(
+                        openSnackbar({
+                            open: true,
+                            message: 'Something went wrong.',
+                            variant: 'error',
+                            alert: {
+                                color: 'success'
+                            },
+                            close: false
+                        })
+                    );
+                });
         };
         fetchRules();
     }, []);
@@ -107,10 +125,10 @@ const ChildWrapper = ({ control, register }) => {
                                     onChange={(_, data) => {
                                         field.onChange(data || '');
                                         const anf = JSON.parse(localStorage.getItem('anf-form'));
-                                        const ruleId = ruleset.find(rule => rule.name === data)?.ruleId;
+                                        const ruleId = ruleset.find((rule) => rule.name === data)?.ruleId;
                                         anf.updated.ruleId = ruleId;
                                         localStorage.setItem('anf-form', JSON.stringify(anf));
-                                       
+
                                         setDefaultId(data);
                                     }}
                                     value={defaultId}
@@ -140,7 +158,7 @@ const ChildWrapper = ({ control, register }) => {
                                         field.onChange(data || '');
                                         const anf = JSON.parse(localStorage.getItem('anf-form'));
                                         anf.updated.ruleQuestionId = data;
-                                        localStorage.setItem('anf-form', JSON.stringify(anf)); 
+                                        localStorage.setItem('anf-form', JSON.stringify(anf));
                                     }}
                                     value={defaultRule}
                                     id="controllable-states-demo"

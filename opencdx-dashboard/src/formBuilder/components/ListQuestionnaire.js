@@ -6,11 +6,14 @@ import { Endpoints } from 'utils/axios/apiEndpoints';
 import { Avatar } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import FullscreenIcon from '@mui/icons-material/List';
+import { openSnackbar } from 'utils/store/slices/snackbar';
+import { useDispatch } from 'utils/store';
+import { useAnfFormStore } from '../utils/useAnfFormStore';
 
-import { useAnfFormStore } from '../../utils/useAnfFormStore';
-
-const UploadScreen = () => {
+const ListQuestionnaire = () => {
     const theme = useTheme();
+    const dispatch = useDispatch();
+
     const [open, setOpen] = useState(false);
     const [userResponses, setUserResponses] = useState([]);
 
@@ -25,7 +28,19 @@ const UploadScreen = () => {
                 .then((response) => {
                     setUserResponses(response.data.questionnaires);
                 })
-                .catch((err) => err);
+                .catch(() => {
+                    dispatch(
+                        openSnackbar({
+                            open: true,
+                            message: 'Something went wrong.',
+                            variant: 'error',
+                            alert: {
+                                color: 'success'
+                            },
+                            close: false
+                        })
+                    );
+                });
         };
         fetchUserResponses();
     }, []);
@@ -101,4 +116,4 @@ const UploadScreen = () => {
     );
 };
 
-export default UploadScreen;
+export default ListQuestionnaire;

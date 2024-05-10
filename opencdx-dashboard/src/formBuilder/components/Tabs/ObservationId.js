@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { FormControl, FormControlLabel, Grid, MenuItem, Select, InputLabel, Input, Checkbox, Button, Chip, TextField } from '@mui/material';
 
 import { Controller } from 'react-hook-form';
-import { SystemVariables } from '../ui-components/SystemVariables';
+import { SystemVariables } from '../SystemVariables';
 
-import { MainCard } from '../ui-components/MainCard';
+import { MainCard } from '../ui-component/MainCard';
 import RestoreIcon from '@mui/icons-material/Restore';
 import Typography from '@mui/material/Typography';
 
