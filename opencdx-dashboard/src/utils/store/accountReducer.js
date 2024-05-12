@@ -1,7 +1,4 @@
-// action - state management
 import { LOGIN, LOGOUT, REGISTER } from './actions';
-
-// ==============================|| ACCOUNT REDUCER ||============================== //
 
 const initialState = {
     isLoggedIn: false,

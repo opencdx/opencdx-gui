@@ -1,16 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import { Card, CardContent, CardHeader, Divider, Typography } from '@mui/material';
 
-// constant
 const headerSX = {
     '& .MuiCardHeader-action': { mr: 0 }
 };
-
-// ==============================|| CUSTOM MAIN CARD ||============================== //
 
 const MainCard = React.forwardRef(
     (

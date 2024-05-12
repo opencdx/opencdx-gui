@@ -1,10 +1,5 @@
-// material-ui
 import { Grid, TextField } from '@mui/material';
-
-// project imports
 import { gridSpacing } from 'utils/store/constant';
-
-// ==============================|| PROFILE 2 - USER PROFILE ||============================== //
 
 const PharmacyDetails = () => (
     <Grid container spacing={gridSpacing}>

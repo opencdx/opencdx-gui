@@ -80,15 +80,12 @@ export const ParticipantComponent = React.forwardRef(({ register, index, current
                         </Grid>
                     </Grid>
                     <Divider />
-
-                    {/* ... other grid items ... */}
                 </Grid>
             </MainCard>
         </Grid>
     );
 });
 
-// Helper function to render text fields
 const renderTextField = (register, label, name, placeholder, value, onChange) => (
     <>
         <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important' } }}>

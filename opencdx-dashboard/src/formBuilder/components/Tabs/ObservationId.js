@@ -41,9 +41,8 @@ export const ObservationId = ({ currentIndex, index, control, getValues, registe
 
             setSelectedCategories(newSelectedCategories);
         }
-    }, []); // Run once after component mounts
-
-    // Function to handle chip click
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     const handleChipClick = (data) => () => {
         setFormData((prevFormData) => {
             const currentCategories = prevFormData.item[index]?.selectedCategories || [];
@@ -73,7 +72,6 @@ export const ObservationId = ({ currentIndex, index, control, getValues, registe
         });
     };
 
-    // Function to handle textbox change
     const handleTextboxChange = (event) => {
         const { name, value } = event.target;
         const updatedFormData = { ...formData };
@@ -99,7 +97,7 @@ export const ObservationId = ({ currentIndex, index, control, getValues, registe
                                     placeholder={attribute.label}
                                     value={formData.item[index]?.item[currentIndex][attribute.label + i] || ''}
                                     onChange={handleTextboxChange}
-                                    name={`${attribute.label}${i}`} // Ensure name attribute is unique
+                                    name={`${attribute.label}${i}`}
                                 />
                             ) : (
                                 <Input />
@@ -109,14 +107,7 @@ export const ObservationId = ({ currentIndex, index, control, getValues, registe
                     <Grid item xs={12} sm={2} lg={2}>
                         <FormControl fullWidth>
                             <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        key={`${index}-${i}`} // Updated key for uniqueness
-                                        name={attribute.label}
-                                        color="primary"
-                                        value={attribute.label}
-                                    />
-                                }
+                                control={<Checkbox key={`${index}-${i}`} name={attribute.label} color="primary" value={attribute.label} />}
                                 label="Add to Topic"
                             />
                         </FormControl>

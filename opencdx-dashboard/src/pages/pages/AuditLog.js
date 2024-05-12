@@ -56,7 +56,7 @@ export default function AuditLog() {
     return (
         <MainCard title="Audit Log">
             <Box sx={{ height: '100%', width: '100%' }}>
-                <DataGrid auditEventList={auditEventList} />
+                <DataGrid auditEventList={auditEventList} sx={{ height: '100%', width: '100%' }} />
             </Box>
         </MainCard>
     );

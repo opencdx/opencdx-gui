@@ -1,10 +1,5 @@
-// material-ui
 import { CardContent, Grid, Skeleton, Stack } from '@mui/material';
-
-// project import
 import MainCard from '../MainCard';
-
-// ===========================|| SKELETON TOTAL GROWTH BAR CHART ||=========================== //
 
 const ANFStatementPlaceholder = () => (
     <MainCard content={false} boxShadow>

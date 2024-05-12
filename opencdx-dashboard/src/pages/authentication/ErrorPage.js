@@ -2,16 +2,13 @@ import React from 'react';
 import { Grid, Typography, Button } from '@mui/material';
 import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
 import { gridSpacing } from 'utils/store/constant';
-// import lottie from 'lottie-web';
 import { useNavigate } from 'react-router-dom';
-
-// ==============================|| ERROR PAGE ||============================== //
 
 const ErrorPage = () => {
     const navigate = useNavigate();
 
     const handleButtonClick = () => {
-        navigate('/dashboard'); // Replace '/dashboard' with the actual path to the DashboardPage
+        navigate('/dashboard');
     };
 
     return (

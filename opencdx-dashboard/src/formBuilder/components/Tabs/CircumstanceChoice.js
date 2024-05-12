@@ -130,7 +130,7 @@ export const CircumstanceChoice = React.forwardRef(({ control, register, index, 
 
 CircumstanceChoice.propTypes = {
     register: PropTypes.func,
-    control: PropTypes.func,
+    control: PropTypes.object,
     index: PropTypes.number,
     currentIndex: PropTypes.number,
     getValues: PropTypes.func

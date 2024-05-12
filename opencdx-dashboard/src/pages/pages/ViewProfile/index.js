@@ -18,7 +18,6 @@ import {
     Typography
 } from '@mui/material';
 
-
 import Avatar from 'ui-component/extended/Avatar';
 import SubCard from 'ui-component/cards/SubCard';
 import { gridSpacing } from 'utils/store/constant';
@@ -61,21 +60,14 @@ function LinearProgressWithLabel({ value, ...others }) {
 LinearProgressWithLabel.propTypes = {
     value: PropTypes.number
 };
-
-// personal details table
-/** names Don&apos;t look right */
 function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
 }
 
-// ==============================|| Profile 1 - Profile1 ||============================== //
-
-const Profile1 = () => {
-    // const { user } = useAuth();
+const ViewProfile = () => {
     const [user, setUser] = useState({});
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
 
     useEffect(() => {
         const fetchSmsList = async () => {
@@ -112,7 +104,7 @@ const Profile1 = () => {
             }
         };
         fetchSmsList();
-    }, []);
+    }, [dispatch]);
 
     const {
         userId,
@@ -590,7 +582,7 @@ const Profile1 = () => {
                                         stroke={1.5}
                                         size="20px"
                                         onClick={() => {
-                                            navigate('/user/edit-profile'); // Replace '/edit-profile' with the desired URL of the edit-profile page
+                                            navigate('/user/edit-profile');
                                         }}
                                     />
                                 </Button>
@@ -858,4 +850,4 @@ const Profile1 = () => {
     );
 };
 
-export default Profile1;
+export default ViewProfile;

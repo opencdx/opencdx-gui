@@ -1,11 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import { Divider, FormControl, InputAdornment, MenuItem, TextField } from '@mui/material';
-
-// ==============================|| FORM CONTROL SELECT ||============================== //
 
 const FormControlSelect = ({ captionLabel, currencies, formState, iconPrimary, iconSecondary, selected, textPrimary, textSecondary }) => {
     const theme = useTheme();

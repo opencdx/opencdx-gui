@@ -1,6 +1,5 @@
 import { RouterProvider } from 'react-router-dom';
 
-// routing
 import router from 'layout-routes/routes';
 import Locales from 'ui-component/Locales';
 import NavigationScroll from 'layout-routes/layout/NavigationScroll';

@@ -1,15 +1,12 @@
 import PropTypes from 'prop-types';
 import { memo } from 'react';
 
-// material-ui
 import { styled, useTheme } from '@mui/material/styles';
 import { Avatar, Card, CardContent, Grid, LinearProgress, List, ListItem, ListItemAvatar, Typography } from '@mui/material';
 import { linearProgressClasses } from '@mui/material/LinearProgress';
 
-// assets
 import TableChartOutlinedIcon from '@mui/icons-material/TableChartOutlined';
 
-// styles
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 10,
     borderRadius: 30,
@@ -38,8 +35,6 @@ const CardStyle = styled(Card)(({ theme }) => ({
         right: '-96px'
     }
 }));
-
-// ==============================|| PROGRESS BAR WITH LABEL ||============================== //
 
 function LinearProgressWithLabel({ value, ...others }) {
     const theme = useTheme();
@@ -71,8 +66,6 @@ function LinearProgressWithLabel({ value, ...others }) {
 LinearProgressWithLabel.propTypes = {
     value: PropTypes.number
 };
-
-// ==============================|| SIDEBAR - MENU CARD ||============================== //
 
 const MenuCard = () => {
     const theme = useTheme();

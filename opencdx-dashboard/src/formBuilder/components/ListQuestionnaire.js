@@ -43,7 +43,7 @@ const ListQuestionnaire = () => {
                 });
         };
         fetchUserResponses();
-    }, []);
+    }, [dispatch]);
 
     const handleToggle = () => {
         setOpen((prevOpen) => !prevOpen);

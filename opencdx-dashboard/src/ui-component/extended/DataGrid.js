@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Typography, Paper, Box, Accordion, AccordionSummary, AccordionDetails, Divider } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-import './Transition.css'; // Create a CSS file with your transition styles
+import './Transition.css';
 
 const columns = [
     { field: 'created', headerName: 'Created', flex: 1 },
@@ -13,7 +14,6 @@ const columns = [
     { field: 'creator', headerName: 'Creator', flex: 1 },
     { field: 'modifier', headerName: 'Modifier', flex: 1 },
     { field: 'modified', headerName: 'Modified', flex: 1 }
-    // Add more columns for additional information
 ];
 
 const sections = [
@@ -21,7 +21,6 @@ const sections = [
     { label: 'Audit Entity Information', fields: ['patientIdentifier_', 'userIdentifier_'] },
     { label: 'Audit Source Information', fields: ['configuration_', 'systemInfo_'] },
     { label: 'Data Object Information', fields: ['data_', 'resource_', 'sensitivity_'] }
-    // Add more sections as needed
 ];
 
 const AuditEventTable = ({ auditEventList }) => {
@@ -32,12 +31,11 @@ const AuditEventTable = ({ auditEventList }) => {
     };
 
     return (
-        <Box display="flex">
-            <Box flex={1}>
+        <Box display="flex" sx={{ width: '100%' }}>
+            <Box flex={1} sx={{ overflow: 'hidden', width: '90%' }}>
                 <DataGrid
                     showCellVerticalBorder
                     showColumnVerticalBorder
-                    scrollbarSize={20}
                     rows={auditEventList}
                     columns={columns}
                     checkboxSelection={false}
@@ -183,6 +181,9 @@ const AuditEventTable = ({ auditEventList }) => {
             </Paper>
         </Box>
     );
+};
+AuditEventTable.propTypes = {
+    auditEventList: PropTypes.array
 };
 
 export default AuditEventTable;

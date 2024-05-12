@@ -1,8 +1,7 @@
 import React from 'react';
-import { Grid, Checkbox } from '@mui/material';
 import { MainCard } from './ui-component/MainCard';
 
-import { Table, TableBody, TableCell, TableRow, FormControlLabel, TableContainer } from '@mui/material';
+import { Grid, Table, TableBody, TableCell, TableRow, FormControlLabel, TableContainer, Switch } from '@mui/material';
 
 import { capitalizeANFTitle } from '../utils/StringManulpations';
 import { useAnfFormStore } from '../utils/useAnfFormStore';
@@ -62,7 +61,14 @@ const StatementTypesReport = React.forwardRef((props, ref) => {
                 <Grid container spacing={2} alignItems="center">
                     <Grid item xs={12} sm={3} lg={3}>
                         <FormControlLabel
-                            control={<Checkbox checked={showReport} onChange={handleCheckboxChange} color="primary" id="show-report" />}
+                            control={
+                                <Switch
+                                    checked={showReport}
+                                    onChange={handleCheckboxChange}
+                                    inputProps={{ 'aria-label': 'controlled' }}
+                                    id="show-report"
+                                />
+                            }
                             label={'Show Report'}
                             sx={{ color: 'primary.main', fontWeight: 600 }}
                         />

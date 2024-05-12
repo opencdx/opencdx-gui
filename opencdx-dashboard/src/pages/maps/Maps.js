@@ -1,8 +1,6 @@
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import { Grid } from '@mui/material';
 
-// project-import
 import MainCard from 'ui-component/cards/MainCard';
 
 import ClustersMap from './clusters-map';
@@ -21,8 +19,6 @@ const mapConfiguration = {
     mapboxAccessToken: process.env.REACT_APP_MAPBOX_ACCESS_TOKEN,
     minZoom: 1
 };
-
-// ==============================|| MAP ||============================== //
 
 const Map = () => {
     const theme = useTheme();

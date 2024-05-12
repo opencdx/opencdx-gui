@@ -1,24 +1,16 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import { Box, Button, FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
-
-// third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 
-// project imports
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import useAuth from 'utils/hooks/useAuth';
 import useScriptRef from 'utils/hooks/useScriptRef';
 
-// assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
-// ===============================|| JWT LOGIN ||=============================== //
 
 const JWTLogin = ({ ...others }) => {
     const theme = useTheme();

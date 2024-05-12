@@ -1,12 +1,8 @@
 import { useRef, memo } from 'react';
 
-// third-party
 import { Map, Layer, Source } from 'react-map-gl';
 
-// project-import
 import { clusterCountLayer, clusterLayer, unclusteredPointLayer } from './layers';
-
-// ==============================|| MAP - CLUSTERS ||============================== //
 
 const MapClusters = ({ ...other }) => {
     const mapRef = useRef(null);

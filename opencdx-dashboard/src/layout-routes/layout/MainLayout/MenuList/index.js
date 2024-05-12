@@ -1,10 +1,8 @@
 import { memo } from 'react';
 
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import { Box, Divider, List, Typography, useMediaQuery } from '@mui/material';
 
-// project imports
 import NavItem from './NavItem';
 import menuItem from 'layout-routes/menu-items';
 import NavGroup from './NavGroup';
@@ -14,15 +12,12 @@ import { useSelector } from 'utils/store';
 import LAYOUT_CONST from 'utils/constant';
 import { HORIZONTAL_MAX_ITEM } from 'config';
 
-// ==============================|| SIDEBAR MENU LIST ||============================== //
-
 const MenuList = () => {
     const theme = useTheme();
     const { layout } = useConfig();
     const { drawerOpen } = useSelector((state) => state.menu);
     const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
 
-    // last menu-item to show in horizontal menu bar
     const lastItem = layout === LAYOUT_CONST.HORIZONTAL_LAYOUT && !matchDownMd ? HORIZONTAL_MAX_ITEM : null;
 
     let lastItemIndex = menuItem.items.length - 1;

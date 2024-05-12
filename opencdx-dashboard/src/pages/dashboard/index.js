@@ -22,7 +22,6 @@ const Dashboard = () => {
     const theme = useTheme();
     const dispatch = useDispatch();
 
-
     const [userResponses, setUserResponses] = useState([]);
     const [users, setUsers] = useState([]);
     const [graphqlData, setGraphqlData] = useState([]);
@@ -106,7 +105,7 @@ const Dashboard = () => {
         fetchUserResponses();
         fetchUsers();
         fetchGraphqlData();
-    }, []);
+    }, [dispatch]);
 
     return (
         <Grid container spacing={gridSpacing} alignItems="center">

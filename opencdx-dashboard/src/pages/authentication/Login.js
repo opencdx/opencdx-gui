@@ -1,18 +1,10 @@
 import { Link } from 'react-router-dom';
-
-// material-ui
 import { Divider, Grid, Typography } from '@mui/material';
-
-// project imports
 import AuthWrapper1 from './AuthWrapper';
 import AuthCardWrapper from './AuthCardWrapper';
 import AuthLogin from './auth-forms/AuthLogin';
 import Logo from 'ui-component/Logo';
 import useAuth from 'utils/hooks/useAuth';
-
-// assets
-
-// ================================|| AUTH3 - LOGIN ||================================ //
 
 const Login = () => {
     const { isLoggedIn } = useAuth();

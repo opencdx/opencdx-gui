@@ -111,6 +111,7 @@ const StatementTypes = forwardRef(({ register, index, control, item, handleState
             default:
                 return null;
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         selectedOption,
         item?.markedMainANFStatement,

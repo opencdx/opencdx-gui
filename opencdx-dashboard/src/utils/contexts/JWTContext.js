@@ -2,23 +2,15 @@ import PropTypes from 'prop-types';
 import { createContext, useEffect, useReducer } from 'react';
 import { openSnackbar } from 'utils/store/slices/snackbar';
 import { useDispatch } from 'utils/store';
-
-// third-party
 import { Chance } from 'chance';
-// import jwtDecode from 'jwt-decode';
-
-// reducer - state management
 import { LOGIN, LOGOUT } from 'utils/store/actions';
 import accountReducer from 'utils/store/accountReducer';
-
-// project imports
 import Loader from 'ui-component/Loader';
 import axios from 'utils/axios/apiInterceptors';
 import { Endpoints } from 'utils/axios/apiEndpoints';
 
 const chance = new Chance();
 
-// constant
 const initialState = {
     isLoggedIn: false,
     isInitialized: false,
@@ -35,7 +27,6 @@ const setSession = (serviceToken) => {
     }
 };
 
-// ==============================|| JWT CONTEXT & PROVIDER ||============================== //
 const JWTContext = createContext(null);
 
 export const JWTProvider = ({ children }) => {
@@ -146,9 +137,7 @@ export const JWTProvider = ({ children }) => {
         dispatch({ type: LOGOUT });
     };
 
-    const resetPassword = async (email) => {
-        console.log(email);
-    };
+    const resetPassword = async () => {};
 
     const updateProfile = () => {};
 

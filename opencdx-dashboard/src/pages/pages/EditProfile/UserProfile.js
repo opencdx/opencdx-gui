@@ -1,15 +1,8 @@
-// material-ui
 import { Grid, Stack, TextField, Typography } from '@mui/material';
-
-// project imports
 import Avatar from 'ui-component/extended/Avatar';
 import { gridSpacing } from 'utils/store/constant';
-
-// assets
 import Avatar1 from 'utils/assets/images/users/avatar-1.png';
 import ErrorTwoToneIcon from '@mui/icons-material/ErrorTwoTone';
-
-// ==============================|| PROFILE 2 - USER PROFILE ||============================== //
 
 const UserProfile = () => (
     <Grid container spacing={gridSpacing}>

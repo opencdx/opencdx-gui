@@ -1,13 +1,9 @@
 import { useState, useEffect, useMemo, memo } from 'react';
 
-// third-party
 import Map, { Source, Layer } from 'react-map-gl';
 
-// project-import
 import ControlPanel from './control-panel';
 import heatmapLayer from './map-style';
-
-// ==============================|| MAPBOX - HEATMAP ||============================== //
 
 const Heatmap = ({ ...other }) => {
     const [allDays, useAllDays] = useState(true);

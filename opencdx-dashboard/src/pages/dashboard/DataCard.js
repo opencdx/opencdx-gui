@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
 
-// material-ui
 import { styled } from '@mui/material/styles';
 import { Card, CardContent, Grid, Typography } from '@mui/material';
 
-// styles
 const IconWrapper = styled('div')({
     position: 'absolute',
     left: '-17px',
@@ -17,8 +15,6 @@ const IconWrapper = styled('div')({
         opacity: '0.35'
     }
 });
-
-// =============================|| USER NUM CARD ||============================= //
 
 const DataCard = ({ primary, secondary, iconPrimary, color }) => {
     const IconPrimary = iconPrimary;

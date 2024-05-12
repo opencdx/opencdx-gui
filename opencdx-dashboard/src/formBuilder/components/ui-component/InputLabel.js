@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 
-// material-ui
 import { experimentalStyled as styled } from '@mui/material/styles';
 import { InputLabel as MuiInputLabel } from '@mui/material';
 

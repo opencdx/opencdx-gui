@@ -2,14 +2,12 @@ import { useState, useEffect } from 'react';
 import { Grid, Stack, TextField, MenuItem } from '@mui/material';
 import MainCard from 'ui-component/cards/MainCard';
 import { useTheme } from '@mui/material/styles';
-// third party
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { gridSpacing } from 'utils/store/constant';
 import { Endpoints } from 'utils/axios/apiEndpoints';
 import { openSnackbar } from 'utils/store/slices/snackbar';
 import { useDispatch } from 'utils/store';
-// ==============================|| Admin PAGE ||============================== //
 
 const Email = () => {
     const [text, setText] = useState('');
@@ -47,11 +45,10 @@ const Email = () => {
                         close: false
                     })
                 );
-                // Handle the error here
             }
         };
         fetchEmailList();
-    }, []);
+    }, [dispatch]);
 
     const [template, setTemplate] = useState(1);
 

@@ -1,12 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-// import axios from 'utils/axios/apiInterceptors';
-
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import { Button, CardActions, CardContent, Divider, Grid, Tab, Tabs, Typography } from '@mui/material';
 
-// project imports
 import UserProfile from './UserProfile';
 import useConfig from 'utils/hooks/useConfig';
 import MainCard from 'ui-component/cards/MainCard';
@@ -22,7 +18,6 @@ import KnownAllegeries from './Knownallergies';
 import PharmacyDetails from './PharmacyDetails';
 import VaccinationAdministed from './VaccinationAdministed';
 
-// tabs
 function TabPanel({ children, value, index, ...other }) {
     return (
         <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
@@ -44,7 +39,6 @@ function a11yProps(index) {
     };
 }
 
-// tabs option
 const tabsOption = [
     {
         label: 'Personal Details'
@@ -75,23 +69,12 @@ const tabsOption = [
     }
 ];
 
-// ==============================|| PROFILE 2 ||============================== //
-
 const Profile2 = () => {
     const theme = useTheme();
     const [setUser] = useState({});
 
     useEffect(() => {
-        const fetchEmailList = async () => {
-            // const response = await axios.get('/iam/profile/5f63a53ddcc67c7a1c3d93e8', {
-            //     headers: {
-            //         Accept: 'application/json', // Specify expected format
-            //         Authorization: `Bearer ${localStorage.getItem('serviceToken')}`
-            //     },
-            //     data: {}
-            // });
-            // setUser(response.data.userProfile);
-        };
+        const fetchEmailList = async () => {};
         fetchEmailList();
     }, [setUser]);
 

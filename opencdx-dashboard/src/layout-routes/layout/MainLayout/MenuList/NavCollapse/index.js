@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-// material-ui
 import { styled, useTheme } from '@mui/material/styles';
 import {
     Box,
@@ -18,7 +17,6 @@ import {
     useMediaQuery
 } from '@mui/material';
 
-// project imports
 import NavItem from '../NavItem';
 import Transitions from 'ui-component/extended/Transitions';
 
@@ -26,14 +24,12 @@ import { useSelector } from 'utils/store';
 import LAYOUT_CONST from 'utils/constant';
 import useConfig from 'utils/hooks/useConfig';
 
-// assets
 import IconChevronDown from '@mui/icons-material/KeyboardArrowDownRounded';
 import IconChevronRight from '@mui/icons-material/KeyboardArrowRightRounded';
 import IconChevronUp from '@mui/icons-material/KeyboardArrowUpRounded';
 
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
-// mini-menu - wrapper
 const PopperStyledMini = styled(Popper)(({ theme }) => ({
     overflow: 'visible',
     zIndex: 1202,
@@ -48,7 +44,6 @@ const PopperStyledMini = styled(Popper)(({ theme }) => ({
     }
 }));
 
-// horizontal-menu - wrapper
 const PopperStyled = styled(Popper)(({ theme }) => ({
     overflow: 'visible',
     zIndex: 1202,
@@ -84,8 +79,6 @@ const PopperStyled = styled(Popper)(({ theme }) => ({
         bottom: 15
     }
 }));
-
-// ==============================|| SIDEBAR MENU LIST COLLAPSE ITEMS ||============================== //
 
 const NavCollapse = ({ menu, level, parentId }) => {
     const theme = useTheme();
@@ -130,7 +123,6 @@ const NavCollapse = ({ menu, level, parentId }) => {
         });
     };
 
-    // menu collapse for sub-levels
     useEffect(() => {
         setOpen(false);
         setSelected(null);
@@ -156,7 +148,6 @@ const NavCollapse = ({ menu, level, parentId }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pathname, menu.children]);
 
-    // menu collapse & item
     const menus = menu.children?.map((item) => {
         switch (item.type) {
             case 'collapse':

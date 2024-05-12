@@ -1,10 +1,6 @@
-// material-ui
 import { Grid, TextField, MenuItem } from '@mui/material';
-
-// project imports
 import { gridSpacing } from 'utils/store/constant';
 
-// ==============================|| PROFILE 2 - USER PROFILE ||============================== //
 const degree = [
     'High School Diploma',
     'Associate Degree',

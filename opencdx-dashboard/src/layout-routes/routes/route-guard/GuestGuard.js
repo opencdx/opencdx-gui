@@ -2,11 +2,8 @@ import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// project imports
 import useAuth from 'utils/hooks/useAuth';
 import { DASHBOARD_PATH } from 'config';
-
-// ==============================|| GUEST GUARD ||============================== //
 
 /**
  * Guest guard for routes having no auth required

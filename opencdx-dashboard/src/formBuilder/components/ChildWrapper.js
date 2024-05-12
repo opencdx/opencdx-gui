@@ -82,7 +82,8 @@ const ChildWrapper = ({ control, register }) => {
                 });
         };
         fetchRules();
-    }, []);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dispatch]);
     return (
         <div className="wrapper">
             {fields.map((item, index) => (

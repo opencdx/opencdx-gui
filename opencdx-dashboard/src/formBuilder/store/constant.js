@@ -1,8 +1,6 @@
-// theme constant
 export const gridSpacing = 3;
 export const drawerWidth = 260;
 export const appDrawerWidth = 320;
-// Define the enum
 export const statementType = {
     MAIN: 'ANF_STATEMENT_TYPE_MAIN',
     ASSOCIATED: 'ANF_STATEMENT_TYPE_ASSOCIATED',
@@ -22,7 +20,6 @@ export const categories = [
 ];
 
 export const observationAttributes = [
-    // ANF Topic Attributes
     { observationCategory: 'ANF Topic', label: 'method', options: { 1: 'Code Option 1', 2: 'Code Option 2', 3: 'Code Option 3' } },
     {
         observationCategory: 'ANF Topic',
@@ -39,22 +36,15 @@ export const observationAttributes = [
         label: 'device',
         options: { 1: 'Code Option 1', 2: 'Code Option 2', 3: 'Code Option 3' }
     },
-    // General Attributes
     { observationCategory: 'General', label: 'identifier', options: { 1: 'Code Option 1', 2: 'Code Option 2', 3: 'Code Option 3' } },
     { observationCategory: 'General', label: 'code', options: { 1: 'Code Option 1', 2: 'Code Option 2', 3: 'Code Option 3' } },
     { observationCategory: 'General', label: 'subject', options: { 1: 'Code Option 1', 2: 'Code Option 2', 3: 'Code Option 3' } },
     { observationCategory: 'General', label: 'focus', options: { 1: 'Code Option 1', 2: 'Code Option 2', 3: 'Code Option 3' } },
     { observationCategory: 'General', label: 'encounter', options: { 1: 'Code Option 1', 2: 'Code Option 2', 3: 'Code Option 3' } },
-
-    // Timing Attributes
     { observationCategory: 'Timing', label: 'effective', options: { 1: 'Code Option 1', 2: 'Code Option 2', 3: 'Code Option 3' } },
     { observationCategory: 'Timing', label: 'issued', options: { 1: 'Code Option 1', 2: 'Code Option 2', 3: 'Code Option 3' } },
-
-    // Context Attributes
     { observationCategory: 'Context', label: 'performer', options: { 1: 'Code Option 1', 2: 'Code Option 2', 3: 'Code Option 3' } },
     { observationCategory: 'Context', label: 'encounter', options: { 1: 'Code Option 1', 2: 'Code Option 2', 3: 'Code Option 3' } },
-
-    // Value and Interpretation Attributes
     {
         observationCategory: 'Value and Interpretation',
         label: 'value',
@@ -70,8 +60,6 @@ export const observationAttributes = [
         label: 'interpretation',
         options: { 1: 'Code Option 1', 2: 'Code Option 2', 3: 'Code Option 3' }
     },
-
-    // Additional Information Attributes
     {
         observationCategory: 'Additional Information',
         label: 'note',
@@ -102,8 +90,6 @@ export const observationAttributes = [
         label: 'device',
         options: { 1: 'Code Option 1', 2: 'Code Option 2', 3: 'Code Option 3' }
     },
-
-    // Reference Range Attributes
     {
         observationCategory: 'Reference Range',
         label: 'referenceRange',
@@ -144,8 +130,6 @@ export const observationAttributes = [
         label: 'referenceRange.text',
         options: { 1: 'Code Option 1', 2: 'Code Option 2', 3: 'Code Option 3' }
     },
-
-    // Relationship Attributes
     { observationCategory: 'Relationship', label: 'hasMember', options: { 1: 'Code Option 1', 2: 'Code Option 2', 3: 'Code Option 3' } },
     { observationCategory: 'Relationship', label: 'derivedFrom', options: { 1: 'Code Option 1', 2: 'Code Option 2', 3: 'Code Option 3' } },
     { observationCategory: 'Relationship', label: 'component', options: { 1: 'Code Option 1', 2: 'Code Option 2', 3: 'Code Option 3' } },

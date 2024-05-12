@@ -2,10 +2,7 @@ import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// project imports
 import useAuth from 'utils/hooks/useAuth';
-
-// ==============================|| AUTH GUARD ||============================== //
 
 /**
  * Authentication guard for routes

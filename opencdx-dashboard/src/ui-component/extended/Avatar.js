@@ -1,10 +1,6 @@
 import PropTypes from 'prop-types';
-
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import MuiAvatar from '@mui/material/Avatar';
-
-// ==============================|| AVATAR ||============================== //
 
 const Avatar = ({ color, outline, size, sx, ...others }) => {
     const theme = useTheme();

@@ -1,20 +1,12 @@
 import * as React from 'react';
-
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import { AppBar, Box, Container, useScrollTrigger } from '@mui/material';
 
-// project imports
 import MenuList from './MenuList';
 import useConfig from 'utils/hooks/useConfig';
 
-// ==============================|| HORIZONTAL MENU LIST ||============================== //
-
 function ElevationScroll({ children, window }) {
     const theme = useTheme();
-    // Note that you normally won't need to set the window ref as useScrollTrigger
-    // will default to window.
-    // This is only being set here because the demo is in an iframe.
     const trigger = useScrollTrigger({
         disableHysteresis: true,
         threshold: 0,
@@ -28,11 +20,8 @@ function ElevationScroll({ children, window }) {
     });
 }
 
-// ==============================|| HORIZONTAL MENU LIST ||============================== //
-
 const CustomAppBar = () => {
     const theme = useTheme();
-
     const { container } = useConfig();
 
     return (

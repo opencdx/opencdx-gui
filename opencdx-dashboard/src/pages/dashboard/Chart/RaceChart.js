@@ -5,7 +5,6 @@ import MainCard from 'ui-component/cards/MainCard';
 import { Graphql } from 'utils/axios/graphqlEndpoints';
 import { openSnackbar } from 'utils/store/slices/snackbar';
 import { useDispatch } from 'utils/store';
-// ==============================|| WIDGET - Race CHART ||============================== //
 
 const RaceChart = () => {
     const [race, setRace] = useState([0, 0, 0, 0, 0, 0]);
@@ -42,7 +41,7 @@ const RaceChart = () => {
                 })
             );
         }
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         fetchData();

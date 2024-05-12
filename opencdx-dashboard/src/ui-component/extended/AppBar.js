@@ -3,7 +3,6 @@ import { cloneElement, useState } from 'react';
 
 import { Link as RouterLink } from 'react-router-dom';
 
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import {
     AppBar as MuiAppBar,
@@ -22,16 +21,10 @@ import {
     Typography,
     useScrollTrigger
 } from '@mui/material';
-
-// project imports
 import Logo from 'ui-component/Logo';
-
-// assets
 import { IconDashboard, IconHome2 } from '@mui/icons-material';
-
 import MenuIcon from '@mui/icons-material/Menu';
 
-// elevation scroll
 function ElevationScroll({ children, window }) {
     const theme = useTheme();
     const trigger = useScrollTrigger({
@@ -53,8 +46,6 @@ ElevationScroll.propTypes = {
     children: PropTypes.node,
     window: PropTypes.object
 };
-
-// ==============================|| MINIMAL LAYOUT APP BAR ||============================== //
 
 const AppBar = ({ ...others }) => {
     const [drawerToggle, setDrawerToggle] = useState(false);

@@ -4,13 +4,10 @@ import MainCard from 'ui-component/cards/MainCard';
 import { useTheme } from '@mui/material/styles';
 import { openSnackbar } from 'utils/store/slices/snackbar';
 import { useDispatch } from 'utils/store';
-// third party
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { gridSpacing } from 'utils/store/constant';
 import { Endpoints } from 'utils/axios/apiEndpoints';
-
-// ==============================|| Admin PAGE ||============================== //
 
 const SmsTemplate = () => {
     const [text, setText] = useState('');
@@ -51,7 +48,7 @@ const SmsTemplate = () => {
             }
         };
         fetchSmsList();
-    }, []);
+    }, [dispatch]);
 
     const [emailParams, setEmailParams] = useState({
         encounter_id: '',

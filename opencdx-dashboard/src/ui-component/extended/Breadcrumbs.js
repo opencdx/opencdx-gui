@@ -2,15 +2,12 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import { Box, Card, Divider, Grid, Typography } from '@mui/material';
 import MuiBreadcrumbs from '@mui/material/Breadcrumbs';
 
-// project imports
 import { gridSpacing } from 'utils/store/constant';
 
-// assets
 import { Calculate } from '@mui/icons-material';
 
 import AccountTreeTwoToneIcon from '@mui/icons-material/AccountTreeTwoTone';
@@ -25,8 +22,6 @@ const linkSX = {
     alignItems: 'center'
 };
 
-// ==============================|| BREADCRUMBS ||============================== //
-
 const Breadcrumbs = ({ card, divider, icon, icons, maxItems, navigation, rightAlign, separator, title, titleBottom, ...others }) => {
     const theme = useTheme();
 
@@ -40,8 +35,6 @@ const Breadcrumbs = ({ card, divider, icon, icons, maxItems, navigation, rightAl
 
     const [main, setMain] = useState();
     const [item, setItem] = useState();
-
-    // set active item state
     const getCollapse = (menu) => {
         if (menu.children) {
             menu.children.filter((collapse) => {
@@ -71,8 +64,6 @@ const Breadcrumbs = ({ card, divider, icon, icons, maxItems, navigation, rightAl
             return false;
         });
     });
-
-    // item separator
     const SeparatorIcon = separator;
     const separatorIcon = separator ? <SeparatorIcon stroke={1.5} size="16px" /> : <Calculate stroke={1.5} size="16px" />;
 
@@ -83,7 +74,6 @@ const Breadcrumbs = ({ card, divider, icon, icons, maxItems, navigation, rightAl
     let CollapseIcon;
     let ItemIcon;
 
-    // collapse item
     if (main && main.type === 'collapse') {
         CollapseIcon = main.icon ? main.icon : AccountTreeTwoToneIcon;
         mainContent = (
@@ -93,8 +83,6 @@ const Breadcrumbs = ({ card, divider, icon, icons, maxItems, navigation, rightAl
             </Typography>
         );
     }
-
-    // items
     if ((item && item.type === 'item') || (item?.type === 'group' && item?.url)) {
         itemTitle = item.title;
 
@@ -115,7 +103,6 @@ const Breadcrumbs = ({ card, divider, icon, icons, maxItems, navigation, rightAl
             </Typography>
         );
 
-        // main
         if (item.breadcrumbs !== false) {
             breadcrumbContent = (
                 <Card

@@ -1,10 +1,7 @@
-// material-ui
 import { Grid, TextField, MenuItem } from '@mui/material';
 
-// project imports
 import { gridSpacing } from 'utils/store/constant';
 
-// ==============================|| PROFILE 2 - USER PROFILE ||============================== //
 const known_allergies_in_usa = [
     'Peanuts',
     'Tree Nuts (e.g., almonds, walnuts)',

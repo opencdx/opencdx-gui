@@ -21,11 +21,7 @@ import {
     IconButton
 } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
-import { useEffect } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
-
-import { Endpoints } from 'utils/axios/apiEndpoints';
-
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -40,8 +36,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import { useAnfFormStore } from './utils/useAnfFormStore';
 import Tooltip from '@mui/material/Tooltip';
-import { openSnackbar } from 'utils/store/slices/snackbar';
-import { useDispatch } from 'utils/store';
 import './custom.css';
 
 /* end - anf statement type */
@@ -95,7 +89,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end'
 }));
@@ -114,7 +107,6 @@ const VisuallyHiddenInput = styled('input')({
 
 const FormBuilder = () => {
     const theme = useTheme();
-    const dispatch = useDispatch();
     const [open, setOpen] = React.useState(true);
     const [openDialog, setOpenDialog] = React.useState(false);
     const [openAnfDialog, setOpenAnfDialog] = React.useState(false);
@@ -156,33 +148,6 @@ const FormBuilder = () => {
     const handleDrawerOpen = () => {
         setOpen(true);
     };
-    useEffect(() => {
-        const fetchUserResponses = async () => {
-            Endpoints.getQuestionnaireList({
-                pagination: {
-                    pageSize: 300,
-                    sortAscending: true
-                }
-            })
-                .then((response) => {
-                    setUserResponses(response.data);
-                })
-                .catch(() => {
-                    dispatch(
-                        openSnackbar({
-                            open: true,
-                            message: 'Something went wrong.',
-                            variant: 'error',
-                            alert: {
-                                color: 'success'
-                            },
-                            close: false
-                        })
-                    );
-                });
-        };
-        fetchUserResponses();
-    }, []);
 
     const handleDownload = (uploadData, fileName) => {
         const data = JSON.stringify(uploadData);
@@ -245,7 +210,6 @@ const FormBuilder = () => {
                     </Typography>
                     <>
                         <Grid item>
-                            
                             <Box
                                 sx={{
                                     display: 'flex',
@@ -330,8 +294,6 @@ const FormBuilder = () => {
             <Main open={open}>
                 <DrawerHeader />
                 <Box component="main" sx={{ flexGrow: 1, bgcolor: 'background.default' }}>
-                   
-
                     <DialogWrapper open={openDialog} handleClose={handleClose} title="Preview JSON" handleDownload={handlePreviewDownload}>
                         <JsonView data={uploadData} shouldExpandNode={allExpanded} style={defaultStyles} />
                     </DialogWrapper>
