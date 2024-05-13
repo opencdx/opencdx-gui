@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
 
         ...Platform.select({
             web: {
-                maxWidth: 500,
+                width: 500,
                 margin: 'auto',
                 justifyContent: 'center',
             },
