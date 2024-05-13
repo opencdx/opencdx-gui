@@ -7,6 +7,7 @@ import { Button, ButtonText, FormControlLabel, FormControlLabelText, Heading } f
 import { useForm, FormProvider } from 'react-hook-form';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Endpoints } from '../utils/axios/apiEndpoints';
+import { CheckboxComp } from './CheckboxComp';
 
 export default function App({ questionnaire, navigation}) {
     const { ...methods } = useForm({ mode: 'onChange' });
@@ -145,7 +146,7 @@ export default function App({ questionnaire, navigation}) {
                                 case "choice":
                                     inputComponent = (
                                         <>
-                                            <SelectInputComp
+                                            <CheckboxComp
                                                 key={index}
                                                 name={field.linkId}
                                                 label={field.text}
@@ -164,7 +165,7 @@ export default function App({ questionnaire, navigation}) {
 
                             return (
                                 <View key={index}>
-                                    <FormControlLabel>
+                                    <FormControlLabel style={styles.question}>
                                         <FormControlLabelText>{field.text}</FormControlLabelText>
                                     </FormControlLabel>
                                     {inputComponent}
@@ -242,6 +243,9 @@ const styles = StyleSheet.create({
                 justifyContent: 'space-between',
             }
         })
+    },
+    question: {
+        paddingBottom: 6
     },
 
 });
