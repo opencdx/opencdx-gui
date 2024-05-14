@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormControl, Grid, MenuItem, Select } from '@mui/material';
-import { MainCard } from '../ui-components/MainCard';
+import { MainCard } from '../ui-component/MainCard';
 
 export const PractitionerComponent = React.forwardRef((props, ref) => {
     return (

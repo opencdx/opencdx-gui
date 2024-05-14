@@ -1,8 +1,6 @@
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import { Avatar, Box, useMediaQuery } from '@mui/material';
 
-// project imports
 import LAYOUT_CONST from 'utils/constant';
 import useConfig from 'utils/hooks/useConfig';
 import LogoSection from '../LogoSection';
@@ -11,10 +9,6 @@ import FullScreenSection from './FullScreenSection';
 import { useDispatch, useSelector } from 'utils/store';
 import { openDrawer } from 'utils/store/slices/menu';
 import IconMenu2 from '@mui/icons-material/Menu';
-
-// assets
-
-// ==============================|| MAIN NAVBAR / HEADER ||============================== //
 
 const Header = () => {
     const theme = useTheme();
@@ -27,7 +21,6 @@ const Header = () => {
 
     return (
         <>
-            {/* logo & toggler button */}
             <Box
                 sx={{
                     width: 228,
@@ -64,11 +57,9 @@ const Header = () => {
                 ) : null}
             </Box>
 
-            {/* header search */}
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ flexGrow: 1 }} />
 
-            {/* full sceen toggler */}
             <Box sx={{ display: { xs: 'none', lg: 'block' } }}>
                 <FullScreenSection />
             </Box>

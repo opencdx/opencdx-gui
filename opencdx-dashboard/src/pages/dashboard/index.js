@@ -1,4 +1,6 @@
 import { React, useState, useEffect } from 'react';
+import { openSnackbar } from 'utils/store/slices/snackbar';
+import { useDispatch } from 'utils/store';
 import { Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
@@ -18,6 +20,7 @@ import { Graphql } from 'utils/axios/graphqlEndpoints';
 
 const Dashboard = () => {
     const theme = useTheme();
+    const dispatch = useDispatch();
 
     const [userResponses, setUserResponses] = useState([]);
     const [users, setUsers] = useState([]);
@@ -34,7 +37,19 @@ const Dashboard = () => {
                 .then((response) => {
                     setUserResponses(response.data);
                 })
-                .catch((err) => err);
+                .catch(() => {
+                    dispatch(
+                        openSnackbar({
+                            open: true,
+                            message: 'Something went wrong',
+                            variant: 'error',
+                            alert: {
+                                color: 'error'
+                            },
+                            close: false
+                        })
+                    );
+                });
         };
         const fetchUsers = async () => {
             Endpoints.userList({
@@ -46,7 +61,19 @@ const Dashboard = () => {
                 .then((response) => {
                     setUsers(response.data);
                 })
-                .catch((err) => err);
+                .catch(() => {
+                    dispatch(
+                        openSnackbar({
+                            open: true,
+                            message: 'Something went wrong',
+                            variant: 'error',
+                            alert: {
+                                color: 'error'
+                            },
+                            close: false
+                        })
+                    );
+                });
         };
         const fetchGraphqlData = async () => {
             Graphql.post({
@@ -61,12 +88,24 @@ const Dashboard = () => {
                 .then((response) => {
                     setGraphqlData(response.data);
                 })
-                .catch((err) => err);
+                .catch(() => {
+                    dispatch(
+                        openSnackbar({
+                            open: true,
+                            message: 'Something went wrong',
+                            variant: 'error',
+                            alert: {
+                                color: 'error'
+                            },
+                            close: false
+                        })
+                    );
+                });
         };
         fetchUserResponses();
         fetchUsers();
         fetchGraphqlData();
-    }, []);
+    }, [dispatch]);
 
     return (
         <Grid container spacing={gridSpacing} alignItems="center">
@@ -121,6 +160,9 @@ const Dashboard = () => {
                     color={theme.palette.orange.main}
                     iconPrimary={AccountBalanceWalletTwoToneIcon}
                 />
+            </Grid>
+            <Grid item xs={12} lg={6}>
+                <GenderChart />
             </Grid>
             <Grid item xs={12} lg={6}>
                 <GenderChart />

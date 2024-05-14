@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import { Fragment, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-// material-ui
 import { styled, useTheme } from '@mui/material/styles';
 import {
     Box,
@@ -18,10 +17,8 @@ import {
     useMediaQuery
 } from '@mui/material';
 
-// third-party
 import { FormattedMessage } from 'react-intl';
 
-// project imports
 import LAYOUT_CONST from 'utils/constant';
 import NavCollapse from '../NavCollapse';
 import NavItem from '../NavItem';
@@ -54,8 +51,6 @@ const PopperStyled = styled(Popper)(({ theme }) => ({
         borderColor: `${theme.palette.background.paper}  transparent transparent ${theme.palette.background.paper}`
     }
 }));
-
-// ==============================|| SIDEBAR MENU LIST GROUP ||============================== //
 
 const NavGroup = ({ item, lastItem, remItems, lastItemId }) => {
     const theme = useTheme();

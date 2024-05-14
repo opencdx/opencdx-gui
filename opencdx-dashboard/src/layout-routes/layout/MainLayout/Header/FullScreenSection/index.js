@@ -1,12 +1,9 @@
 import { useCallback, useState } from 'react';
 
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import { Avatar, Box, Tooltip } from '@mui/material';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
-
-// ==============================|| HEADER CONTENT - FULLSCREEN ||============================== //
 
 const FullScreen = () => {
     const theme = useTheme();

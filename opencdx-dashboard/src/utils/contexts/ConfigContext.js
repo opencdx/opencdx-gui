@@ -1,11 +1,9 @@
 import PropTypes from 'prop-types';
 import { createContext } from 'react';
 
-// project import
 import defaultConfig from 'config';
 import useLocalStorage from 'utils/hooks/useLocalStorage';
 
-// initial state
 const initialState = {
     ...defaultConfig,
     onChangeLayout: () => {},
@@ -19,8 +17,6 @@ const initialState = {
     onChangeOutlinedField: () => {},
     onReset: () => {}
 };
-
-// ==============================|| CONFIG CONTEXT & PROVIDER ||============================== //
 
 const ConfigContext = createContext(initialState);
 

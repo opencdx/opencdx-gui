@@ -1,6 +1,5 @@
 import { FormattedMessage } from 'react-intl';
 
-
 import { Login, PersonAdd, AccountCircle, ManageAccounts } from '@mui/icons-material';
 
 const other = {

@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, InputLabel } from '@mui/material';
 
-import { MainCard } from '../ui-components/MainCard';
+import { MainCard } from '../ui-component/MainCard';
 import { Controller } from 'react-hook-form';
 import { FormControl, MenuItem, Select } from '@mui/material';
-import { SystemVariables } from '../ui-components/SystemVariables';
+import { SystemVariables } from '../SystemVariables';
 
 const Type = React.forwardRef(({ index, currentIndex, control, getValues }, ref) => {
     return (

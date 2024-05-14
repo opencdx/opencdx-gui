@@ -2,20 +2,15 @@ import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import { Avatar, ButtonBase, Chip, ListItemButton, ListItemIcon, ListItemText, Typography, useMediaQuery } from '@mui/material';
 
-// project imports
 import LAYOUT_CONST from 'utils/constant';
 import useConfig from 'utils/hooks/useConfig';
 import { useDispatch, useSelector } from 'utils/store';
 import { activeID, activeItem, openDrawer } from 'utils/store/slices/menu';
 
-// assets
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-
-// ==============================|| SIDEBAR MENU LIST ITEMS ||============================== //
 
 const NavItem = ({ item, level, parentId, isParents = false }) => {
     const theme = useTheme();

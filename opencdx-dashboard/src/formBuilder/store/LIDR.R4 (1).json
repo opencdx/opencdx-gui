@@ -1,0 +1,175 @@
+{
+  "resourceType": "Questionnaire LIDR",
+  "title": "LIDR",
+  "status": "draft",
+  "item": [
+    {
+      "type": "choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "drop-down",
+                "display": "Drop down"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "8061462366643",
+      "code": [
+        {
+          "system": "lidr-result-conformances",
+          "code": "ac475ee0-8f34-49e7-b0ba-28f5b4cb2a44"
+        }
+      ],
+      "text": "What was the test kit device used?",
+      "answerOption": [
+        {
+          "valueCoding": {
+            "display": "Test 1"
+          }
+        },
+        {
+          "valueCoding": {
+            "display": "Test 2"
+          }
+        },
+        {
+          "valueCoding": {
+            "display": "Test 3"
+          }
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "drop-down",
+                "display": "Drop down"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "1773018523777",
+      "code": [
+        {
+          "system": "lidr-allowed-results",
+          "code": "ac475ee0-8f34-49e7-b0ba-28f5b4cb2a44"
+        }
+      ],
+      "text": "What was the result of the test 1?",
+      "enableWhen": [
+        {
+          "question": "8061462366643",
+          "operator": "=",
+          "answerCoding": {
+            "display": "Test 1"
+          }
+        }
+      ],
+      "answerOption": [
+        {
+          "valueCoding": {
+            "display": "Choice 1"
+          }
+        },
+        {
+          "valueCoding": {
+            "display": "Choice 2"
+          }
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "drop-down",
+                "display": "Drop down"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "7708449731754",
+      "text": "What was the result of the test 2?",
+      "enableWhen": [
+        {
+          "question": "8061462366643",
+          "operator": "=",
+          "answerCoding": {
+            "display": "Test 2"
+          }
+        }
+      ],
+      "answerOption": [
+        {
+          "valueCoding": {
+            "display": "Choice 3"
+          }
+        },
+        {
+          "valueCoding": {
+            "display": "Choice 4"
+          }
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "drop-down",
+                "display": "Drop down"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "3433880349128",
+      "text": "What was the result of the test 3?",
+      "enableWhen": [
+        {
+          "question": "8061462366643",
+          "operator": "=",
+          "answerCoding": {
+            "display": "Test 3"
+          }
+        }
+      ],
+      "answerOption": [
+        {
+          "valueCoding": {
+            "display": "Choice 5"
+          }
+        },
+        {
+          "valueCoding": {
+            "display": "Choice 6"
+          }
+        }
+      ]
+    }
+  ]
+}

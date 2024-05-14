@@ -16,7 +16,6 @@ import { drawerWidth } from 'utils/store/constant';
 import { useDispatch, useSelector } from 'utils/store';
 import { openDrawer } from 'utils/store/slices/menu';
 
-
 const Sidebar = () => {
     const theme = useTheme();
     const matchUpMd = useMediaQuery(theme.breakpoints.up('md'));

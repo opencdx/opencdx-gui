@@ -1,5 +1,3 @@
-// ==============================|| CLUSTERS - LAYER ||============================== //
-
 export const clusterLayer = {
     id: 'clusters',
     type: 'circle',

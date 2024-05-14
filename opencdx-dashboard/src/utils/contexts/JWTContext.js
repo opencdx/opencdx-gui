@@ -1,38 +1,21 @@
 import PropTypes from 'prop-types';
 import { createContext, useEffect, useReducer } from 'react';
-
-// third-party
+import { openSnackbar } from 'utils/store/slices/snackbar';
+import { useDispatch } from 'utils/store';
 import { Chance } from 'chance';
-// import jwtDecode from 'jwt-decode';
-
-// reducer - state management
 import { LOGIN, LOGOUT } from 'utils/store/actions';
 import accountReducer from 'utils/store/accountReducer';
-
-// project imports
 import Loader from 'ui-component/Loader';
 import axios from 'utils/axios/apiInterceptors';
 import { Endpoints } from 'utils/axios/apiEndpoints';
 
 const chance = new Chance();
 
-// constant
 const initialState = {
     isLoggedIn: false,
     isInitialized: false,
     user: null
 };
-
-// const verifyToken = (serviceToken) => {
-//     if (!serviceToken) {
-//         return false;
-//     }
-//     const decoded = jwtDecode(serviceToken);
-//     /**
-//      * Property 'exp' does not exist on type '<T = unknown>(token, options?: JwtDecodeOptions | undefined) => T'.
-//      */
-//     return decoded.exp > Date.now() / 1000;
-// };
 
 const setSession = (serviceToken) => {
     if (serviceToken) {
@@ -44,17 +27,17 @@ const setSession = (serviceToken) => {
     }
 };
 
-// ==============================|| JWT CONTEXT & PROVIDER ||============================== //
 const JWTContext = createContext(null);
 
 export const JWTProvider = ({ children }) => {
     const [state, dispatch] = useReducer(accountReducer, initialState);
+    const dispatchSnack = useDispatch();
 
     useEffect(() => {
         const init = async () => {
             try {
                 const serviceToken = window.localStorage.getItem('serviceToken');
-                if (serviceToken && verifyToken(serviceToken)) {
+                if (serviceToken) {
                     setSession(serviceToken);
                     dispatch({
                         type: LOGIN,
@@ -81,17 +64,44 @@ export const JWTProvider = ({ children }) => {
         init();
     }, []);
 
-    const login = async () => {
-        const response = await Endpoints.login({ userName: 'admin@opencdx.org', password: 'password' });
-        const { token, user } = response.data;
-        setSession(token);
-        dispatch({
-            type: LOGIN,
-            payload: {
-                isLoggedIn: true,
-                user
-            }
-        });
+    const login = async (userName, password) => {
+        try {
+            const response = await Endpoints.login({ userName, password });
+
+            dispatchSnack(
+                openSnackbar({
+                    open: true,
+                    message: 'Successfully logged in.',
+                    variant: 'alert',
+                    alert: {
+                        color: 'success'
+                    },
+                    close: false
+                })
+            );
+            const { token, user } = response.data;
+            setSession(token);
+            dispatch({
+                type: LOGIN,
+                payload: {
+                    isLoggedIn: true,
+                    user
+                }
+            });
+        } catch (error) {
+            console.error(error);
+            dispatchSnack(
+                openSnackbar({
+                    open: true,
+                    message: 'Something went wrong.',
+                    variant: 'error',
+                    alert: {
+                        color: 'success'
+                    },
+                    close: false
+                })
+            );
+        }
     };
 
     const register = async (email, password, firstName, lastName) => {
@@ -127,9 +137,7 @@ export const JWTProvider = ({ children }) => {
         dispatch({ type: LOGOUT });
     };
 
-    const resetPassword = async (email) => {
-        console.log(email);
-    };
+    const resetPassword = async () => {};
 
     const updateProfile = () => {};
 

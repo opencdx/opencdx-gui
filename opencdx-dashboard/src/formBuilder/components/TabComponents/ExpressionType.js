@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, TextField } from '@mui/material';
 
-import { MainCard } from '../ui-components/MainCard';
-import { InputLabel } from '../ui-components/InputLabel';
+import { MainCard } from '../ui-component/MainCard';
+import { InputLabel } from '../ui-component/InputLabel';
 import { systemVariables, statementType } from '../../store/constant';
 import { useAnfFormStore } from '../../utils/useAnfFormStore';
 

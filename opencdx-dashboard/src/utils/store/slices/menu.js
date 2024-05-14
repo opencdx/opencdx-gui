@@ -1,10 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-// project imports
 import { dispatch } from '../index';
 import axios from 'utils/axios/apiInterceptors';
 
-// initial state
 const initialState = {
     selectedItem: ['dashboard'],
     selectedID: null,
@@ -12,8 +9,6 @@ const initialState = {
     error: null,
     menu: {}
 };
-
-// ==============================|| SLICE - MENU ||============================== //
 
 const menu = createSlice({
     name: 'menu',
@@ -31,12 +26,10 @@ const menu = createSlice({
             state.drawerOpen = action.payload;
         },
 
-        // has error
         hasError(state, action) {
             state.error = action.payload;
         },
 
-        // get dashboard menu
         getMenuSuccess(state, action) {
             state.menu = action.payload;
         }

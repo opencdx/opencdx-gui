@@ -2,16 +2,15 @@ import { lazy } from 'react';
 
 import MainLayout from 'layout-routes/layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
-import AuditLog from 'pages/AuditLog';
+import AuditLog from 'pages/pages/AuditLog';
 
 const DashboardPage = Loadable(lazy(() => import('pages/dashboard')));
 const Maps = Loadable(lazy(() => import('pages/maps/Maps')));
 
-const Profile = Loadable(lazy(() => import('pages/profile/GeneralProfile')));
-const Email = Loadable(lazy(() => import('pages/template/Email')));
-const Sms = Loadable(lazy(() => import('pages/template/Sms')));
-const AppUserAccountProfile1 = Loadable(lazy(() => import('pages/users/Profile1')));
-const AppUserAccountProfile2 = Loadable(lazy(() => import('pages/users/Profile2')));
+const EmailTemplate = Loadable(lazy(() => import('pages/pages/EmailTemplate')));
+const SmsTemplate = Loadable(lazy(() => import('pages/pages/SmsTemplate')));
+const AppUserAccountProfile1 = Loadable(lazy(() => import('pages/pages/ViewProfile')));
+const AppUserAccountProfile2 = Loadable(lazy(() => import('pages/pages/EditProfile')));
 
 const MainRoutes = {
     path: '/',
@@ -37,15 +36,11 @@ const MainRoutes = {
 
         {
             path: '/pages/email',
-            element: <Email />
+            element: <EmailTemplate />
         },
         {
             path: '/pages/sms',
-            element: <Sms />
-        },
-        {
-            path: '/pages/profile',
-            element: <Profile />
+            element: <SmsTemplate />
         },
         {
             path: '/user/view-profile',

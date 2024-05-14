@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'utils/store';
 import { useNavigate } from 'react-router-dom';
 
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import {
     Box,
@@ -17,22 +16,16 @@ import {
     TextField,
     useMediaQuery
 } from '@mui/material';
-
-// third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 
-// project imports
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import useAuth from 'utils/hooks/useAuth';
 import useScriptRef from 'utils/hooks/useScriptRef';
 import { openSnackbar } from 'utils/store/slices/snackbar';
 
-// assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
-// ===========================|| FIREBASE - REGISTER ||=========================== //
 
 const JWTRegister = ({ ...others }) => {
     const theme = useTheme();

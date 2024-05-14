@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { MeasureComponent } from '../TabComponents/MeasureComponent';
-import { SystemVariables } from '../ui-components/SystemVariables';
+import { SystemVariables } from '../SystemVariables';
 
 const Time = React.forwardRef(({ control, register, index, currentIndex, getValues }, ref) => {
     return (

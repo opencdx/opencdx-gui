@@ -3,11 +3,12 @@ import { useState, useEffect, useCallback } from 'react';
 import Chart from 'react-apexcharts';
 import MainCard from 'ui-component/cards/MainCard';
 import { Graphql } from 'utils/axios/graphqlEndpoints';
-
-// ==============================|| WIDGET - Race CHART ||============================== //
+import { openSnackbar } from 'utils/store/slices/snackbar';
+import { useDispatch } from 'utils/store';
 
 const RaceChart = () => {
     const [race, setRace] = useState([0, 0, 0, 0, 0, 0]);
+    const dispatch = useDispatch();
 
     const fetchData = useCallback(async () => {
         try {
@@ -28,8 +29,19 @@ const RaceChart = () => {
             setRace([blackCount, whiteCount, hispanicCount, asianCount]);
         } catch (error) {
             console.error(error);
+            dispatch(
+                openSnackbar({
+                    open: true,
+                    message: 'Something went wrong',
+                    variant: 'error',
+                    alert: {
+                        color: 'error'
+                    },
+                    close: false
+                })
+            );
         }
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         fetchData();

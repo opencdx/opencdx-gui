@@ -1,11 +1,9 @@
 import { useEffect, useMemo } from 'react';
 import { Outlet } from 'react-router-dom';
 
-// material-ui
 import { styled, useTheme } from '@mui/material/styles';
 import { AppBar, Box, Container, CssBaseline, Toolbar, useMediaQuery } from '@mui/material';
 
-// project imports
 import Header from './Header';
 import Sidebar from './Sidebar';
 import HorizontalBar from './HorizontalBar';
@@ -19,9 +17,6 @@ import { openDrawer } from 'utils/store/slices/menu';
 import { useDispatch, useSelector } from 'utils/store';
 import IconChevronRight from '@mui/icons-material/ChevronRight';
 
-// assets
-
-// styles
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open, layout }) => ({
     ...theme.typography.mainContent,
     borderBottomLeftRadius: 0,
@@ -67,8 +62,6 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({
         })
     }
 }));
-
-// ==============================|| MAIN LAYOUT ||============================== //
 
 const MainLayout = () => {
     const theme = useTheme();
@@ -117,21 +110,15 @@ const MainLayout = () => {
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            {/* header */}
             <AppBar enableColorOnDark position="fixed" color="inherit" elevation={0} sx={{ bgcolor: theme.palette.background.default }}>
                 {header}
             </AppBar>
 
-            {/* horizontal menu-list bar */}
             {layout === LAYOUT_CONST.HORIZONTAL_LAYOUT && !matchDownMd && <HorizontalBar />}
-
-            {/* drawer */}
             {(layout === LAYOUT_CONST.VERTICAL_LAYOUT || matchDownMd) && <Sidebar />}
 
-            {/* main content */}
             <Main theme={theme} open={drawerOpen} layout={layout}>
                 <Container maxWidth={container ? 'lg' : false} {...(!container && { sx: { px: { xs: 0 } } })}>
-                    {/* breadcrumb */}
                     <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign />
                     <Outlet />
                 </Container>

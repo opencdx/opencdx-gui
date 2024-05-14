@@ -21,26 +21,21 @@ import {
     IconButton
 } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
-import { useEffect } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
-
-import { Endpoints } from 'utils/axios/apiEndpoints';
-
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import CloseIcon from '@mui/icons-material/Close';
 
 /* start - anf statement type */
-import StatementTypesReport from './components/ui-components/StatementTypesReport';
-import MainWrapper from './components/ui-components/MainWrapper';
-import FullScreenSection from './components/ui-components/FullScreen';
-import UplaodScreenSection from './components/ui-components/UploadScreen';
+import StatementTypesReport from './components/StatementTypesReport';
+import MainWrapper from './components/MainWrapper';
+import FullScreenSection from './components/ui-component/FullScreen';
+import ListQuestionnaire from './components/ListQuestionnaire';
 
 import { Grid } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import { useAnfFormStore } from './utils/useAnfFormStore';
 import Tooltip from '@mui/material/Tooltip';
-
 import './custom.css';
 
 /* end - anf statement type */
@@ -94,7 +89,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end'
 }));
@@ -154,21 +148,6 @@ const FormBuilder = () => {
     const handleDrawerOpen = () => {
         setOpen(true);
     };
-    useEffect(() => {
-        const fetchUserResponses = async () => {
-            Endpoints.getQuestionnaireList({
-                pagination: {
-                    pageSize: 300,
-                    sortAscending: true
-                }
-            })
-                .then((response) => {
-                    setUserResponses(response.data);
-                })
-                .catch((err) => err);
-        };
-        fetchUserResponses();
-    }, []);
 
     const handleDownload = (uploadData, fileName) => {
         const data = JSON.stringify(uploadData);
@@ -238,6 +217,16 @@ const FormBuilder = () => {
                                     alignItems: 'center'
                                 }}
                             >
+                                {uploadData && uploadData.item && (
+                                    <Button sx={{ m: 1 }} variant="contained" id="user-form-json" onClick={handleClickOpen}>
+                                        User Form JSON
+                                    </Button>
+                                )}
+                                {formData && formData.item && (
+                                    <Button sx={{ m: 1 }} variant="contained" id="anf-statement-json" onClick={handleClickOpenAnfDialog}>
+                                        ANF Statement JSON
+                                    </Button>
+                                )}
                                 <Box sx={{ ml: 2, mr: 2 }}>
                                     <Tooltip title={'Upload File'}>
                                         <Button
@@ -269,7 +258,7 @@ const FormBuilder = () => {
                                         </Button>
                                     </Tooltip>
                                 </Box>
-                                <UplaodScreenSection />
+                                <ListQuestionnaire />
                                 <FullScreenSection />
                             </Box>
                         </Grid>
@@ -305,17 +294,6 @@ const FormBuilder = () => {
             <Main open={open}>
                 <DrawerHeader />
                 <Box component="main" sx={{ flexGrow: 1, bgcolor: 'background.default' }}>
-                    {uploadData && uploadData.item && (
-                        <Button sx={{ m: 1 }} variant="contained" id="user-form-json" onClick={handleClickOpen}>
-                            User Form JSON
-                        </Button>
-                    )}
-                    {formData && formData.item && (
-                        <Button sx={{ m: 1 }} variant="contained" id="anf-statement-json" onClick={handleClickOpenAnfDialog}>
-                            ANF Statement JSON
-                        </Button>
-                    )}
-
                     <DialogWrapper open={openDialog} handleClose={handleClose} title="Preview JSON" handleDownload={handlePreviewDownload}>
                         <JsonView data={uploadData} shouldExpandNode={allExpanded} style={defaultStyles} />
                     </DialogWrapper>

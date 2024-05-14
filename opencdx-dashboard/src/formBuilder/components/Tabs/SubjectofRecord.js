@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SystemVariables } from '../ui-components/SystemVariables';
+import { SystemVariables } from '../SystemVariables';
 import { ParticipantComponent } from '../TabComponents/ParticipantComponent';
 
 const SubjectofRecord = React.forwardRef(({ register, index, getValues, currentIndex }, ref) => {

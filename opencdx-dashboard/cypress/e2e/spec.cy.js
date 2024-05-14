@@ -1,6 +1,6 @@
 describe('template spec', () => {
   it('passes', () => {
-    cy.viewport(1250, 900) // Set viewport to 550px x 750px
+    cy.viewport(1250, 900)
 
     cy.visit('http://localhost:3000/');
     cy.wait(1000);
@@ -23,8 +23,6 @@ describe('template spec', () => {
     cy.get('[data-testid="1. Upper Range (SYSTOLIC) - 3079919224534accordion-header"]').eq(0).click();
     cy.get('[data-testid="1. Upper Range (SYSTOLIC) - 3079919224534accordion-content"]').should('be.visible');
     cy.wait(1000);
-
-    // Select radio button by value
     cy.get('input[type="radio"][value="ANF_STATEMENT_TYPE_MAIN"]').check();
     cy.get('input[type="radio"][value="ANF_STATEMENT_TYPE_MAIN"]').should('be.checked');
     cy.wait(1000);

@@ -1,9 +1,5 @@
 import { useContext } from 'react';
-
-// auth provider
 import AuthContext from 'utils/contexts/JWTContext';
-
-// ==============================|| AUTH HOOKS ||============================== //
 
 const useAuth = () => {
     const context = useContext(AuthContext);

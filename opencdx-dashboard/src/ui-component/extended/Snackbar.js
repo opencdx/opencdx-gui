@@ -1,14 +1,11 @@
-// material-ui
 import { Alert, Button, Fade, Grow, IconButton, Slide } from '@mui/material';
 import MuiSnackbar from '@mui/material/Snackbar';
 
-// assets
 import CloseIcon from '@mui/icons-material/Close';
 
 import { useDispatch, useSelector } from 'utils/store';
 import { closeSnackbar } from 'utils/store/slices/snackbar';
 
-// animation function
 function TransitionSlideLeft(props) {
     return <Slide {...props} direction="left" />;
 }
@@ -29,7 +26,6 @@ function GrowTransition(props) {
     return <Grow {...props} />;
 }
 
-// animation options
 const animation = {
     SlideLeft: TransitionSlideLeft,
     SlideUp: TransitionSlideUp,
@@ -38,8 +34,6 @@ const animation = {
     Grow: GrowTransition,
     Fade
 };
-
-// ==============================|| SNACKBAR ||============================== //
 
 const Snackbar = () => {
     const dispatch = useDispatch();
@@ -55,12 +49,11 @@ const Snackbar = () => {
 
     return (
         <>
-            {/* default snackbar */}
             {variant === 'default' && (
                 <MuiSnackbar
                     anchorOrigin={anchorOrigin}
                     open={open}
-                    autoHideDuration={6000}
+                    autoHideDuration={3000}
                     onClose={handleClose}
                     message={message}
                     TransitionComponent={animation[transition]}
@@ -77,18 +70,87 @@ const Snackbar = () => {
                 />
             )}
 
-            {/* alert snackbar */}
             {variant === 'alert' && (
                 <MuiSnackbar
                     TransitionComponent={animation[transition]}
                     anchorOrigin={anchorOrigin}
                     open={open}
-                    autoHideDuration={6000}
+                    autoHideDuration={3000}
                     onClose={handleClose}
                 >
                     <Alert
                         variant={alert.variant}
-                        color={alert.color}
+                        color={'warning'}
+                        action={
+                            <>
+                                {actionButton !== false && (
+                                    <Button size="small" onClick={handleClose} sx={{ color: 'background.paper' }}>
+                                        UNDO
+                                    </Button>
+                                )}
+                                {close !== false && (
+                                    <IconButton sx={{ color: 'background.paper' }} size="small" aria-label="close" onClick={handleClose}>
+                                        <CloseIcon fontSize="small" />
+                                    </IconButton>
+                                )}
+                            </>
+                        }
+                        sx={{
+                            ...(alert.variant === 'outlined' && {
+                                bgcolor: 'background.paper'
+                            })
+                        }}
+                    >
+                        {message}
+                    </Alert>
+                </MuiSnackbar>
+            )}
+            {variant === 'info' && (
+                <MuiSnackbar
+                    TransitionComponent={animation[transition]}
+                    anchorOrigin={anchorOrigin}
+                    open={open}
+                    autoHideDuration={3000}
+                    onClose={handleClose}
+                >
+                    <Alert
+                        variant={alert.variant}
+                        color={'info'}
+                        action={
+                            <>
+                                {actionButton !== false && (
+                                    <Button size="small" onClick={handleClose} sx={{ color: 'background.paper' }}>
+                                        UNDO
+                                    </Button>
+                                )}
+                                {close !== false && (
+                                    <IconButton sx={{ color: 'background.paper' }} size="small" aria-label="close" onClick={handleClose}>
+                                        <CloseIcon fontSize="small" />
+                                    </IconButton>
+                                )}
+                            </>
+                        }
+                        sx={{
+                            ...(alert.variant === 'outlined' && {
+                                bgcolor: 'background.paper'
+                            })
+                        }}
+                    >
+                        {message}
+                    </Alert>
+                </MuiSnackbar>
+            )}
+            {variant === 'error' && (
+                <MuiSnackbar
+                    TransitionComponent={animation[transition]}
+                    anchorOrigin={anchorOrigin}
+                    open={open}
+                    autoHideDuration={3000}
+                    onClose={handleClose}
+                >
+                    <Alert
+                        variant={alert.variant}
+                        color={'error'}
                         action={
                             <>
                                 {actionButton !== false && (

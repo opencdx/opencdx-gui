@@ -1,17 +1,11 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
-
-// assets
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-// ==============================|| ACCORDION ||============================== //
 
 const Accordion = ({ data, defaultExpandedId = null, expandIcon, square, toggle }) => {
     const theme = useTheme();
