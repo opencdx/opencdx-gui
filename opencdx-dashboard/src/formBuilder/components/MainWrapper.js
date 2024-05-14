@@ -48,7 +48,7 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
         tempData.ruleQuestionId = anf.updated.ruleQuestionId?.ruleId ? [anf.updated.ruleQuestionId.ruleId] : [];
         localStorage.setItem('anf-form', JSON.stringify(anf));
         /* eslint-disable */
-        tempData.item = tempData.item.map( ({ componentType, anfOperatorType, operatorValue, markedMainANFStatement, selectedCategories, componentId, answerTextValue, ...rest }) => {
+        tempData.item = tempData.item.map( ({ componentType, anfOperatorType, operatorValue, markedMainANFStatement, selectedCategories, componentId, answerTextValue,items, ...rest }) => {
         /* eslint-enable */
                 const { anfStatement } = rest?.item[0]?.anfStatementConnector[0] || {};
                 if (anfStatement) {

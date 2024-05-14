@@ -53,8 +53,8 @@
         "zustand": "^4.5.1"
     },
     "scripts": {
-        "start": "env-cmd -f .env.development react-scripts start",
-        "local": "env-cmd -f .env.local react-scripts start",
+        "start": " NODE_ENV=development REACT_APP_API_DEV=https://ec2-3-13-148-183.us-east-2.compute.amazonaws.com:8080 react-scripts start",
+        "local": "NODE_ENV=local REACT_APP_API_DEV=https://localhost:8080/ react-scripts start",
         "build": "react-scripts build",
         "lint": "eslint --ext .js,.jsx ./src",
         "lintFix": "eslint --fix --ext .js,.jsx ./src",
