@@ -23,7 +23,8 @@ const ListQuestionnaire = () => {
                 pagination: {
                     pageSize: 300,
                     sortAscending: true
-                }
+                },
+                updateAnswers: true
             })
                 .then((response) => {
                     setUserResponses(response.data.questionnaires);

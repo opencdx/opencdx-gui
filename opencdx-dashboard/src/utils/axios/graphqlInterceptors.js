@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const axiosServices = axios.create({ baseURL: process.env.REACT_APP_API_DEV });
+const axiosServices = axios.create({ baseURL: process.env.REACT_APP_GRAPHQL_HOST + process.env.REACT_APP_GRAPHQL_PORT });
 
 axiosServices.interceptors.request.use(
     (config) => {

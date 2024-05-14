@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiInterceptors = axios.create({
-    baseURL: process.env.REACT_APP_API_DEV
+    baseURL: process.env.REACT_APP_API_HOST + process.env.REACT_APP_API_PORT
 });
 apiInterceptors.interceptors.request.use(
     (config) => {
