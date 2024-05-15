@@ -2,25 +2,33 @@ import PropTypes from 'prop-types';
 import { useState, useEffect, useCallback } from 'react';
 import Chart from 'react-apexcharts';
 import MainCard from 'ui-component/cards/MainCard';
+import { Graphql } from 'utils/axios/graphqlEndpoints';
 import { openSnackbar } from 'utils/store/slices/snackbar';
 import { useDispatch } from 'utils/store';
-import { Graphql } from 'utils/axios/graphqlEndpoints';
 
 const GenderChart = () => {
-    const [gender, setGender] = useState([0, 0]);
+    const [getManufacturers, setGetManufacturers] = useState([0, 0]);
     const dispatch = useDispatch();
-
     const fetchData = useCallback(async () => {
         try {
             const response = await Graphql.post({
                 query: `{
-                    male: getGenderCount(gender: "GENDER_MALE")
-                    female: getGenderCount(gender: "GENDER_FEMALE")
-                  }`
+                   getManufacturers: getManufacturers {
+                    id
+                    name
+                    website
+                    }
+                }`
             });
-            let maleCount = response.data.data?.male;
-            let femaleCount = response.data.data?.female;
-            setGender([maleCount, femaleCount]);
+
+            const aconDiagnosticsCount = response.data.data.getManufacturers.filter((manufacturer) =>
+                manufacturer.name.startsWith('ACON')
+            ).length;
+            const abbottLabsCount = response.data.data.getManufacturers.filter((manufacturer) =>
+                manufacturer.name.startsWith('Abbott')
+            ).length;
+
+            setGetManufacturers([aconDiagnosticsCount, abbottLabsCount]);
         } catch (error) {
             console.error(error);
             dispatch(
@@ -43,15 +51,15 @@ const GenderChart = () => {
 
     const chartData = {
         height: 228,
-        type: 'donut',
+        type: 'pie',
         options: {
             chart: {
-                id: 'gender-chart'
+                id: 'getManufacturers-chart'
             },
             dataLabels: {
                 enabled: false
             },
-            labels: ['Male', 'Female'],
+            labels: ['ACON Diagnostics', 'Abbott Laboratories'],
             legend: {
                 show: true,
                 position: 'bottom',
@@ -65,18 +73,18 @@ const GenderChart = () => {
                 }
             }
         },
-        series: gender
+        series: getManufacturers
     };
 
     return (
-        <MainCard title="Gender ">
+        <MainCard title="Manufactures">
             <Chart {...chartData} />
         </MainCard>
     );
 };
 
 GenderChart.propTypes = {
-    gender: PropTypes.array
+    getManufacturers: PropTypes.array
 };
 
 export default GenderChart;

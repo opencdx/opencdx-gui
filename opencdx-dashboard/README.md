@@ -5,9 +5,14 @@
 1. [Node.js](https://nodejs.org/en/download/) installed
 2. Enable yarn (`corepack enable`)
 
-### Running locally
-1. Run `yarn install`
-2. Run `yarn start`
+### Running locally with dev services
+1. Run `npm install`
+2. Run `npm start`
+3. The dashboard login page should automatically open
+
+### Running locally with local services
+1. Run `npm install`
+2. Run `npm run local`
 3. The dashboard login page should automatically open
 
 ### Run Cypress tests 
