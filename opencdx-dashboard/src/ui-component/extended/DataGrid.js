@@ -8,12 +8,12 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import './Transition.css';
 
 const columns = [
-    { field: 'created', headerName: 'Created', flex: 1 },
-    { field: 'eventType', headerName: 'Event Type', flex: 1 },
-    { field: 'purposeOfUse', headerName: 'Purpose of Use', flex: 1 },
-    { field: 'creator', headerName: 'Creator', flex: 1 },
-    { field: 'modifier', headerName: 'Modifier', flex: 1 },
-    { field: 'modified', headerName: 'Modified', flex: 1 }
+    { field: 'created', headerName: 'Created' },
+    { field: 'eventType', headerName: 'Event Type' , width: 200},
+    { field: 'purposeOfUse', headerName: 'Purpose of Use' , width: 200},
+    { field: 'creator', headerName: 'Creator' },
+    { field: 'modifier', headerName: 'Modifier' },
+    { field: 'modified', headerName: 'Modified' }
 ];
 
 const sections = [
@@ -32,7 +32,7 @@ const AuditEventTable = ({ auditEventList }) => {
 
     return (
         <Box display="flex" sx={{ width: '100%' }}>
-            <Box flex={1} sx={{ overflow: 'hidden', width: '90%' }}>
+            <Box flex={1} sx={{ overflow: 'hidden', width: '100%' }}>
                 <DataGrid
                     showCellVerticalBorder
                     showColumnVerticalBorder
@@ -51,7 +51,8 @@ const AuditEventTable = ({ auditEventList }) => {
                         '& .MuiDataGrid-row:hover': {
                             backgroundColor: 'primary.light'
                         },
-                        height: '100%'
+                        height: '100%',
+                        width: '100%'
                     }}
                     initialState={{
                         pagination: {

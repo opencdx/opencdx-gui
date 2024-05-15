@@ -46,11 +46,9 @@ const DeviceChart = () => {
                     deviceStatus
                     associatedSoftwareVersion
                     }
-                    
                 }`
             });
             setDevice(response.data.data.getDevices);
-            console.log(response.data.data.getDevices);
         } catch (error) {
             console.error(error);
             dispatch(
@@ -92,22 +90,17 @@ const DeviceChart = () => {
                             <TableCell align="right">Storage Requirements</TableCell>
                             <TableCell align="right">Approval Status</TableCell>
                             <TableCell align="right">URL</TableCell>
-                            <TableCell align="right">Notes</TableCell>
-                            <TableCell align="right">Safety</TableCell>
-                            <TableCell align="right">User Instructions</TableCell>
-                            <TableCell align="right">Limitations</TableCell>
                             <TableCell align="right">Warranty Info</TableCell>
                             <TableCell align="right">Intended Use Age</TableCell>
                             <TableCell align="right">FDA Authorized</TableCell>
                             <TableCell align="right">Device Status</TableCell>
                             <TableCell align="right">Associated Software Version</TableCell>
-
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {device.map((row) => (
                             <TableRow
-                                key={row.name}
+                                key={row.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                <TableCell component="th" scope="row">
@@ -125,10 +118,6 @@ const DeviceChart = () => {
                                 <TableCell align="right">{row.storageRequirements}</TableCell>
                                 <TableCell align="right">{row.approvalStatus}</TableCell>
                                 <TableCell align="right">{row.url}</TableCell>
-                                <TableCell align="right">{row.notes}</TableCell>
-                                <TableCell align="right">{row.safety}</TableCell>
-                                <TableCell align="right">{row.userInstructions}</TableCell>
-                                <TableCell align="right">{row.limitations}</TableCell>
                                 <TableCell align="right">{row.warrantyInfo}</TableCell>
                                 <TableCell align="right">{row.intendedUseAge}</TableCell>
                                 <TableCell align="right">{row.fdaAuthorized}</TableCell>

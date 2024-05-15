@@ -40,17 +40,22 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
         const anf = JSON.parse(localStorage.getItem('anf-form'));
         anf.updated.item = data.item;
         let tempData = data;
+        delete tempData.id
         tempData.title = anf.updated.title;
         tempData.resourceType = anf.updated.resourceType;
         tempData.status = anf.updated.status;
         tempData.description = anf.updated.description;
         tempData.ruleId = anf.updated.ruleId || '';
         tempData.ruleQuestionId = anf.updated.ruleQuestionId?.ruleId ? [anf.updated.ruleQuestionId.ruleId] : [];
-        localStorage.setItem('anf-form', JSON.stringify(anf));
         /* eslint-disable */
         tempData.item = tempData.item.map( ({ componentType, anfOperatorType, operatorValue, markedMainANFStatement, selectedCategories, componentId, answerTextValue,items, ...rest }) => {
         /* eslint-enable */
                 const { anfStatement } = rest?.item[0]?.anfStatementConnector[0] || {};
+                delete rest.item[0].hasFocus1;
+                delete rest.item[0].usingDevice3;
+                delete rest.item[0].method0
+                delete rest.item[0].procedureSiteDirect2
+           
                 if (anfStatement) {
                     if (anfStatement.authors && !Array.isArray(anfStatement.authors)) {
                         anfStatement.authors = [anfStatement.authors];
@@ -80,6 +85,7 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
                     ) {
                         anfStatement.performanceCircumstance.participant = [anfStatement.performanceCircumstance.participant];
                     }
+                    delete anfStatement.topic;
                     delete anfStatement.performanceCircumstance?.circumstanceType;
                 }
                 return { ...rest };
@@ -87,9 +93,19 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
         );
 
         try {
-            const response = await Endpoints.submitQuestionnaire({
-                questionnaire: tempData
-            });
+            // let response;
+            // if (anf.isExisting) {
+            //     response = await Endpoints.updateQuestionnaire({
+            //         questionnaire: tempData
+            //     });
+            // } else {
+            //     response = await Endpoints.submitQuestionnaire({
+            //         questionnaire: tempData
+            //     });
+            // }
+             const response = await Endpoints.submitQuestionnaire({
+                    questionnaire: tempData
+                });
             response &&
                 dispatchSnack(
                     openSnackbar({
@@ -102,6 +118,9 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
                         close: false
                     })
                 );
+
+            anf.isExisting = true;
+            localStorage.setItem('anf-form', JSON.stringify(anf));
         } catch (error) {
             dispatchSnack(
                 openSnackbar({
@@ -114,6 +133,7 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
                     close: false
                 })
             );
+
             console.error(error);
         } finally {
             setIsLoading(false);

@@ -31,7 +31,7 @@ export const ObservationId = ({ currentIndex, index, control, getValues, registe
             const newChipData = categories.map((data, index) => ({
                 key: index,
                 label: data.label,
-                selected: currentCategories.includes(data.label)
+                selected: data.label =='ANF Topic' || currentCategories.includes(data.label)
             }));
 
             setChipData(newChipData);
@@ -140,9 +140,9 @@ export const ObservationId = ({ currentIndex, index, control, getValues, registe
                             <Controller
                                 name={`item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.topic`}
                                 control={control}
-                                defaultValue={'OBSERVATION_PROCEDURE'}
+                                value={'OBSERVATION_PROCEDURE'}
                                 render={({ field }) => (
-                                    <Select {...field} id={`item.${index}.item.${currentIndex}.type`}>
+                                    <Select {...field} id={`item.${index}.item.${currentIndex}.type`} fullWidth value={'OBSERVATION_PROCEDURE'}>
                                         <MenuItem value={'OBSERVATION_PROCEDURE'}>Observation procedure</MenuItem>
                                     </Select>
                                 )}
@@ -157,7 +157,7 @@ export const ObservationId = ({ currentIndex, index, control, getValues, registe
                                 flexWrap: 'wrap',
                                 listStyle: 'none',
                                 backgroundColor: '#f8fafc',
-                                p: 0.5,
+                                p: 0,
                                 m: 0
                             }}
                             component="ul"
