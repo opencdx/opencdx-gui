@@ -12,6 +12,7 @@ import {
 import { useForm, FormProvider } from "react-hook-form";
 import { Endpoints } from "../utils/axios/apiEndpoints";
 import { CheckboxComp } from "./CheckboxComp";
+import { SelectInputComp } from "./SelectInputComp";
 
 export default function App({ questionnaire, navigation }) {
   const { ...methods } = useForm({ mode: "onChange" });
@@ -189,10 +190,29 @@ export default function App({ questionnaire, navigation }) {
                     </>
                   );
                   break;
-                case "choice":
+                case "open-choice":
                   inputComponent = (
                     <>
                       <CheckboxComp
+                        key={index}
+                        show={show}
+                        name={field.linkId}
+                        label={field.text}
+                        rules={{ required: "This field is required!" }}
+                        setFormError={setError}
+                        type="select"
+                        answerOption={field.answerOption}
+                        onCheckboxChange={(selectedKeys) => setSelectedValue(selectedKeys)} // Pass callback
+
+                      />
+                      <View style={styles.divider} />
+                    </>
+                  );
+                  break;
+                case "choice":
+                  inputComponent = (
+                    <>
+                      <SelectInputComp
                         key={index}
                         show={show}
                         name={field.linkId}
