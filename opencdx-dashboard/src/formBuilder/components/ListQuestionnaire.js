@@ -60,7 +60,7 @@ const ListQuestionnaire = () => {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
                 fullWidth
-                title='List Questionnaire'
+                title="List Questionnaire"
                 sx={{ ml: 5, mr: 1 }}
             >
                 <Box>

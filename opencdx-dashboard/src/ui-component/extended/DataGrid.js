@@ -9,8 +9,8 @@ import './Transition.css';
 
 const columns = [
     { field: 'created', headerName: 'Created' },
-    { field: 'eventType', headerName: 'Event Type' , width: 200},
-    { field: 'purposeOfUse', headerName: 'Purpose of Use' , width: 200},
+    { field: 'eventType', headerName: 'Event Type', width: 200 },
+    { field: 'purposeOfUse', headerName: 'Purpose of Use', width: 200 },
     { field: 'creator', headerName: 'Creator' },
     { field: 'modifier', headerName: 'Modifier' },
     { field: 'modified', headerName: 'Modified' }

@@ -89,7 +89,7 @@ const ListScreen = ({ navigation }) => {
                 {renderLinearGradientButton(
                     'Take a specific questionnaire',
                     '',
-                    () => navigation.navigate('User')
+                    () => navigation.navigate('User',{title:'Questionnaires List'})
                 )}
             </SafeAreaView>
         </View>

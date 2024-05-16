@@ -12,12 +12,6 @@ const TestKit = ({ navigation }) => {
                 </Text>
             </View>
             <View style={styles.footer}>
-                <View style={styles.center}>
-                    <Text variant='titleMedium'
- style={styles.signup}>
-                        Contact Support
-                    </Text>
-                </View>
                 <Button mode="contained-tonal" width='100%' title="Sign In" style={styles.button} onPress={() => navigation.navigate('List')}>
 Scan Code                </Button>
                

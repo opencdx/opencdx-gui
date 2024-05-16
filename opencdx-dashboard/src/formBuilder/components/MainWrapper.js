@@ -40,7 +40,7 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
         const anf = JSON.parse(localStorage.getItem('anf-form'));
         anf.updated.item = data.item;
         let tempData = data;
-        delete tempData.id
+        delete tempData.id;
         tempData.title = anf.updated.title;
         tempData.resourceType = anf.updated.resourceType;
         tempData.status = anf.updated.status;
@@ -53,9 +53,9 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
                 const { anfStatement } = rest?.item[0]?.anfStatementConnector[0] || {};
                 delete rest.item[0].hasFocus1;
                 delete rest.item[0].usingDevice3;
-                delete rest.item[0].method0
-                delete rest.item[0].procedureSiteDirect2
-           
+                delete rest.item[0].method0;
+                delete rest.item[0].procedureSiteDirect2;
+
                 if (anfStatement) {
                     if (anfStatement.authors && !Array.isArray(anfStatement.authors)) {
                         anfStatement.authors = [anfStatement.authors];
@@ -103,9 +103,9 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
             //         questionnaire: tempData
             //     });
             // }
-             const response = await Endpoints.submitQuestionnaire({
-                    questionnaire: tempData
-                });
+            const response = await Endpoints.submitQuestionnaire({
+                questionnaire: tempData
+            });
             response &&
                 dispatchSnack(
                     openSnackbar({

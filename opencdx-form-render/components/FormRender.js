@@ -18,11 +18,13 @@ export default function App({ questionnaire, navigation }) {
   const { ...methods } = useForm({ mode: "onChange" });
   const [question, setQuestion] = useState([]);
   const [selectedValue, setSelectedValue] = useState([]);
+  const [defaultIndex, setDefaultIndex] = useState(1);
   useEffect(() => {
       const question = questionnaire?.item[0]?.answerOption?.map((item) => {
         return item.valueCoding.display;
       });
       setQuestion(question);
+      questionnaire?.item[0]?.type === "open-choice" && setDefaultIndex(0);
     
   }, [questionnaire]);
  
@@ -68,18 +70,29 @@ export default function App({ questionnaire, navigation }) {
 
     const handleSave = async () => {
       const data = JSON.stringify(userQuestionnaireData);
-      try {
-        const response = await Endpoints.submitUserQuestionnaire(data);
-        navigation.navigate("Success");
-      } catch (error) {
-        alert(error);
-      }
+      console.log(data);
+      navigation.navigate("Success");
+
+      // try {
+      //   const response = await Endpoints.submitUserQuestionnaire(data);
+      //   navigation.navigate("Success");
+      // } catch (error) {
+      //   alert(error);
+      // }
     };
     handleSave();
   };
 
   const [formError, setError] = useState(false);
-
+  const compareArrays = (question, selectedValue) => {
+    const matchingIndices = question.reduce((acc, element, index) => {
+      if (selectedValue.includes(element)) {
+        acc.push(index + defaultIndex);
+      }
+      return acc;
+    }, []);
+    return matchingIndices;
+  };
   return (
     <View style={styles.container}>
       {formError ? (
@@ -94,7 +107,11 @@ export default function App({ questionnaire, navigation }) {
             <Text style={styles.heading}>{questionnaire?.title}</Text>
             {questionnaire?.item?.map((field, index) => {
               let inputComponent;
-              let show = field.type !== "open-choice" || !field.enableWhen || question.findIndex(value => value === selectedValue) + 1 === index;
+              const matchingIndices = compareArrays(question, selectedValue);
+              let show = true;
+              if (field?.enableWhen && field?.enableWhen.length > 0) {
+                show = field.type !== "open-choice" || !field.enableWhen || matchingIndices.includes(index);
+              }
               switch (field.type) {
                 case "integer":
                   inputComponent = (
@@ -179,6 +196,7 @@ export default function App({ questionnaire, navigation }) {
                         setFormError={setError}
                         type="select"
                         answerOption={field.answerOption}
+                        onCheckboxChange={(selectedValue) => setSelectedValue(selectedValue)}
                       />
                       <View style={styles.divider} />
                     </>

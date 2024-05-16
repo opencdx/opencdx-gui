@@ -42,10 +42,8 @@ const Scan = ({ navigation }) => {
                     paddingVertical: 10,
                     paddingHorizontal: 16,
                 }}>
-
                 <AnimatedCard navigation={navigation} link='Camera' src={require('../assets/scan.json')} title='Scan QR Code'  />
-                <Text variant='titleMedium' style={styles.text} onPress={pickImage}>
-                    Or          </Text>
+                <Text variant='titleMedium' style={styles.text} onPress={pickImage}>Or</Text>
                     
                 {image && <Image source={{ uri: image }} style={styles.image} />}
                 <AnimatedCard navigation={navigation} link='UploadScreen' src={require('../assets/upload.json')} title='Upload Image' />
@@ -74,7 +72,7 @@ display:'flex',
 textAlign:'center',
 alignItems:'center',
 alignContent:'center',
-
+justifyContent:'center',
 },
     surface: {
         margin: 10,

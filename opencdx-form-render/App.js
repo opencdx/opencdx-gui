@@ -63,7 +63,7 @@ const App = () => {
           />
           <Stack.Screen name="User" component={User}
             options={{
-              headerShown: false,
+              title: 'Home',
               cardStyle: {
                 backgroundColor: '#FFFFFF'
               }
@@ -71,7 +71,7 @@ const App = () => {
           />
           <Stack.Screen name="ListQuestion" component={ListQuestion}
             options={{
-              headerShown: false,
+              title: 'List Questionnaire',
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               }
@@ -79,7 +79,7 @@ const App = () => {
            />
            <Stack.Screen name="Success" component={SuccessScreen}
             options={{
-              headerShown: false,
+              headerTitle: 'Back',
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               }
@@ -87,7 +87,7 @@ const App = () => {
             />
              <Stack.Screen name="TestList" component={TestListScreen}
             options={{
-              headerShown: false,
+              headerTitle: 'Home',
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               }
@@ -95,7 +95,7 @@ const App = () => {
             />
           <Stack.Screen name="Camera" component={CameraScreen}
             options={{
-              headerShown: false,
+              headerTitle: 'Back',
               cardStyle: {
                 backgroundColor: '#FFFFFF'
               }
@@ -103,7 +103,7 @@ const App = () => {
           />
           <Stack.Screen name="UploadScreen" component={UploadScreen}
             options={{
-              headerShown: false,
+              headerTitle: 'Home',
               cardStyle: {
                 backgroundColor: '#FFFFFF'
               }
@@ -112,7 +112,7 @@ const App = () => {
           
             <Stack.Screen name="TestDetails" component={TestDetailsScreen}
             options={{
-              headerShown: false,
+              headerTitle: 'Home',
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               }
@@ -120,7 +120,7 @@ const App = () => {
             />
             <Stack.Screen name="Cart" component={CartScreen}
             options={{
-              headerShown: false,
+              headerTitle: 'Back',
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               }
@@ -128,7 +128,7 @@ const App = () => {
             />
             <Stack.Screen name="OrderPlaced" component={OrderPlacedScreen}
             options={{
-              headerShown: false,
+              headerTitle: 'Back',
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               }
@@ -136,7 +136,7 @@ const App = () => {
             />
             <Stack.Screen name="PaymentMethod" component={PaymentMethodScreen}
             options={{
-              headerShown: false,
+              headerTitle: 'Back',
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               }
@@ -144,7 +144,7 @@ const App = () => {
             />
             <Stack.Screen name="Insurance" component={InsuranceScreen}
             options={{
-              headerShown: false,
+              headerTitle: 'Back',
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               }
@@ -152,7 +152,7 @@ const App = () => {
             />
             <Stack.Screen name="Address" component={AddressSection}
             options={{
-              headerShown: false,
+              headerTitle: 'Back',
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               }
@@ -163,7 +163,7 @@ const App = () => {
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               },
-              headerTitle: 'Virtual Consult',
+              headerTitle: 'Home',
             }}
             />
           <Stack.Screen name="CheckVirtualConsult" component={CheckVirtualConsult}
@@ -171,7 +171,7 @@ const App = () => {
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               },
-              headerTitle: 'Virtual Consult',
+              headerTitle: 'Back',
             }}
             />
           <Stack.Screen name="DoctorVirtualConsult" component={DoctorVirtualConsult}
@@ -179,7 +179,7 @@ const App = () => {
               cardStyle: {
                 backgroundColor: '#FFFFFF'
               },
-              headerTitle: 'Virtual Consult',
+              headerTitle: 'Back',
             }}
           />
           <Stack.Screen name="HowSlideVirtualConsult" component={HowSlideVirtualConsult}
@@ -187,7 +187,7 @@ const App = () => {
               cardStyle: {
                 backgroundColor: '#FFFFFF'
               },
-              headerTitle: 'Virtual Consult',
+              headerTitle: 'Back',
             }}
           />
           <Stack.Screen name="ProlongedVirtualConsult" component={ProlongedVirtualConsult}
@@ -195,7 +195,7 @@ const App = () => {
               cardStyle: {
                 backgroundColor: '#FFFFFF'
               },
-              headerTitle: 'Virtual Consult',
+              headerTitle: 'Back',
             }}
           />
           
@@ -204,7 +204,7 @@ const App = () => {
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               },
-              headerTitle: 'Virtual Consult',
+              headerTitle: 'Back',
             }}
             />
           <Stack.Screen name="PriorVirtualConsult" component={PriorVirtualConsult}
@@ -212,7 +212,7 @@ const App = () => {
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               },
-              headerTitle: 'Virtual Consult',
+              headerTitle: 'Back',
             }}
             />
 
@@ -221,7 +221,7 @@ const App = () => {
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               },
-              headerTitle: 'Virtual Consult',
+              headerTitle: 'Back',
             }}
             />
           <Stack.Screen name="GetTested" component={GetTested}
@@ -229,7 +229,7 @@ const App = () => {
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               },
-              headerTitle: 'Get Tested',
+              headerTitle: 'Home',
             }}
             />
           <Stack.Screen name="Scan" component={Scan}
@@ -237,7 +237,7 @@ const App = () => {
               cardStyle: {
                 backgroundColor: '#FFFFFF'
               },
-              headerTitle: 'Scan',
+              headerTitle: 'Home',
             }}
           />
           <Stack.Screen name="ScheduleAppointment" component={ScheduleAppointment}
@@ -245,7 +245,7 @@ const App = () => {
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               },
-              headerTitle: 'Schedule Appointment',
+              headerTitle: 'Home',
             }}
             />
           <Stack.Screen name="TestKit" component={TestKit}
@@ -253,7 +253,7 @@ const App = () => {
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               },
-              headerTitle: 'Register Test',
+              headerTitle: 'Home',
             }}
             />
           <Stack.Screen name="TestHistory" component={TestHistory}
@@ -261,7 +261,7 @@ const App = () => {
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               },
-              headerTitle: 'Test History',
+              headerTitle: 'Home',
             }}
             />
             <Stack.Screen name="TestRecord" component={TestRecord}
@@ -269,7 +269,7 @@ const App = () => {
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               },
-              headerTitle: 'Test Record',
+              headerTitle: 'Home',
             }}
             />
           <Stack.Screen name="VaccineHistory" component={VaccineHistory}
@@ -277,11 +277,9 @@ const App = () => {
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               },
-              headerTitle: 'Vaccine History',
+              headerTitle: 'Home',
             }}
             />
-
-
         </Stack.Navigator>
       </NavigationContainer>
     </GluestackUIProvider>
