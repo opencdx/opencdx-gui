@@ -1,8 +1,8 @@
 {
-    "id": "6644e6c1c6d5fc7d42dabf40",
-    "resourceType": "Questionnaire LIDR",
-    "title": "LIDR",
-    "status": "draft",
+    "id": "664530f3eb95e809f854923e",
+    "resourceType": "Questionnaire",
+    "title": "Reporting At-Home Test Kit Results",
+    "status": "active",
     "description": "",
     "item": [
         {
@@ -12,8 +12,8 @@
             "enableWhen": [],
             "code": [
                 {
-                    "system": "lidr-result-conformances",
-                    "code": "ac475ee0-8f34-49e7-b0ba-28f5b4cb2a44"
+                    "system": "lidr-devices",
+                    "code": "e0ac20ad-ce6f-3ee4-8c71-51b070aa5737"
                 }
             ],
             "item": [
@@ -73,8 +73,38 @@
                         "id": "",
                         "system": "",
                         "version": "",
-                        "code": "",
-                        "display": "SARS-CoV-2 (COVID-19) N gene [Presence] in Respiratory specimen by NAA with probe detection"
+                        "code": "c26b9bd7-2261-4232-99e6-b62b0ccc9fe0",
+                        "display": "BD Respiratory Viral Panel for BD MAX System"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "b7e5b410-7176-438f-9366-30ac5ec909c6",
+                        "display": "BD SARS-CoV-2/Flu for BD MAX System"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "cd3d70d8-d432-4bb6-ae10-e8334c03e6a6",
+                        "display": "Cue Mpox (Monkeypox) Molecular Test"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "c6817374-da58-4ee8-bfb8-bca87ed3797f",
+                        "display": "Lucira COVID-19 & Flu Home Test"
                     },
                     "extension": []
                 }
@@ -84,9 +114,9 @@
             "answer": []
         },
         {
-            "type": "choice",
-            "linkId": "1773018523777",
-            "text": "What was the result of the test 1?",
+            "type": "open-choice",
+            "linkId": "9024451926719",
+            "text": "What was the result of the test?",
             "enableWhen": [
                 {
                     "question": "8061462366643",
@@ -96,67 +126,89 @@
                         "system": "",
                         "version": "",
                         "code": "",
-                        "display": "Test 1"
+                        "display": "BD Respiratory Viral Panel for BD MAX System"
                     }
                 }
             ],
             "code": [
                 {
                     "system": "lidr-allowed-results",
-                    "code": "ac475ee0-8f34-49e7-b0ba-28f5b4cb2a44"
+                    "code": "c26b9bd7-2261-4232-99e6-b62b0ccc9fe0"
                 }
             ],
-            "item": [
+            "item": [],
+            "extension": [],
+            "answerOption": [
                 {
-                    "enableWhen": [],
-                    "code": [],
-                    "item": [],
-                    "extension": [],
-                    "answerOption": [],
-                    "initial": [],
-                    "anfStatementConnector": [
-                        {
-                            "anfStatement": {
-                                "id": "",
-                                "time": {
-                                    "upperBound": "",
-                                    "lowerBound": "",
-                                    "includeUpperBound": false,
-                                    "includeLowerBound": false,
-                                    "semantic": "",
-                                    "resolution": ""
-                                },
-                                "authors": [],
-                                "subjectOfInformation": "",
-                                "associatedStatement": [],
-                                "topic": "",
-                                "type": "",
-                                "status": "STATUS_UNSPECIFIED"
-                            },
-                            "anfStatementType": "ANF_STATEMENT_TYPE_UNSPECIFIED",
-                            "anfOperatorType": "ANF_OPERATOR_TYPE_UNSPECIFIED",
-                            "operatorValue": ""
-                        }
-                    ],
-                    "answer": []
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Specimen unsatisfactory for evaluation (finding)"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Detected (qualifier value)"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Invalid result (qualifier value)"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Not detected (qualifier value)"
+                    },
+                    "extension": []
                 }
             ],
-            "extension": [
+            "initial": [],
+            "anfStatementConnector": [],
+            "answer": []
+        },
+        {
+            "type": "open-choice",
+            "linkId": "3104159711530",
+            "text": "What was the result of the test?",
+            "enableWhen": [
                 {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                    "valueCodeableConcept": {
-                        "coding": [
-                            {
-                                "id": "",
-                                "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                "version": "",
-                                "code": "drop-down",
-                                "display": "Drop down"
-                            }
-                        ]
+                    "question": "8061462366643",
+                    "operator": "=",
+                    "answerCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "BD SARS-CoV-2/Flu for BD MAX System"
                     }
                 }
             ],
+            "code": [
+                {
+                    "system": "lidr-allowed-results",
+                    "code": "b7e5b410-7176-438f-9366-30ac5ec909c6"
+                }
+            ],
+            "item": [],
+            "extension": [],
             "answerOption": [
                 {
                     "valueCoding": {
@@ -174,7 +226,7 @@
                         "system": "",
                         "version": "",
                         "code": "",
-                        "display": "Invalid result (qualifier value)"
+                        "display": "Specimen unsatisfactory for evaluation (finding)"
                     },
                     "extension": []
                 },
@@ -204,19 +256,19 @@
                         "system": "",
                         "version": "",
                         "code": "",
+                        "display": "Invalid result (qualifier value)"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
                         "display": "Not detected (qualifier value)"
                     },
                     "extension": []
-                },
-                {
-                    "valueCoding": {
-                        "id": "",
-                        "system": "",
-                        "version": "",
-                        "code": "",
-                        "display": "Specimen unsatisfactory for evaluation (finding)"
-                    },
-                    "extension": []
                 }
             ],
             "initial": [],
@@ -224,9 +276,9 @@
             "answer": []
         },
         {
-            "type": "choice",
-            "linkId": "7708449731754",
-            "text": "What was the result of the test 2?",
+            "type": "open-choice",
+            "linkId": "1771872053302",
+            "text": "What was the result of the test?",
             "enableWhen": [
                 {
                     "question": "8061462366643",
@@ -236,62 +288,18 @@
                         "system": "",
                         "version": "",
                         "code": "",
-                        "display": "Test 2"
+                        "display": "Cue Mpox (Monkeypox) Molecular Test"
                     }
                 }
             ],
-            "code": [],
-            "item": [
+            "code": [
                 {
-                    "enableWhen": [],
-                    "code": [],
-                    "item": [],
-                    "extension": [],
-                    "answerOption": [],
-                    "initial": [],
-                    "anfStatementConnector": [
-                        {
-                            "anfStatement": {
-                                "id": "",
-                                "time": {
-                                    "upperBound": "",
-                                    "lowerBound": "",
-                                    "includeUpperBound": false,
-                                    "includeLowerBound": false,
-                                    "semantic": "",
-                                    "resolution": ""
-                                },
-                                "authors": [],
-                                "subjectOfInformation": "",
-                                "associatedStatement": [],
-                                "topic": "",
-                                "type": "",
-                                "status": "STATUS_UNSPECIFIED"
-                            },
-                            "anfStatementType": "ANF_STATEMENT_TYPE_UNSPECIFIED",
-                            "anfOperatorType": "ANF_OPERATOR_TYPE_UNSPECIFIED",
-                            "operatorValue": ""
-                        }
-                    ],
-                    "answer": []
+                    "system": "lidr-allowed-results",
+                    "code": "cd3d70d8-d432-4bb6-ae10-e8334c03e6a6"
                 }
             ],
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                    "valueCodeableConcept": {
-                        "coding": [
-                            {
-                                "id": "",
-                                "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                "version": "",
-                                "code": "drop-down",
-                                "display": "Drop down"
-                            }
-                        ]
-                    }
-                }
-            ],
+            "item": [],
+            "extension": [],
             "answerOption": [
                 {
                     "valueCoding": {
@@ -299,7 +307,7 @@
                         "system": "",
                         "version": "",
                         "code": "",
-                        "display": "Choice 3"
+                        "display": "Positive (qualifier value)"
                     },
                     "extension": []
                 },
@@ -309,7 +317,7 @@
                         "system": "",
                         "version": "",
                         "code": "",
-                        "display": "Choice 4"
+                        "display": "True negative (qualifier value)"
                     },
                     "extension": []
                 }
@@ -319,9 +327,9 @@
             "answer": []
         },
         {
-            "type": "choice",
-            "linkId": "3433880349128",
-            "text": "What was the result of the test 3?",
+            "type": "open-choice",
+            "linkId": "3423134626533",
+            "text": "What was the result of the test?",
             "enableWhen": [
                 {
                     "question": "8061462366643",
@@ -331,62 +339,18 @@
                         "system": "",
                         "version": "",
                         "code": "",
-                        "display": "Test 3"
+                        "display": "Lucira COVID-19 & Flu Home Test"
                     }
                 }
             ],
-            "code": [],
-            "item": [
+            "code": [
                 {
-                    "enableWhen": [],
-                    "code": [],
-                    "item": [],
-                    "extension": [],
-                    "answerOption": [],
-                    "initial": [],
-                    "anfStatementConnector": [
-                        {
-                            "anfStatement": {
-                                "id": "",
-                                "time": {
-                                    "upperBound": "",
-                                    "lowerBound": "",
-                                    "includeUpperBound": false,
-                                    "includeLowerBound": false,
-                                    "semantic": "",
-                                    "resolution": ""
-                                },
-                                "authors": [],
-                                "subjectOfInformation": "",
-                                "associatedStatement": [],
-                                "topic": "",
-                                "type": "",
-                                "status": "STATUS_UNSPECIFIED"
-                            },
-                            "anfStatementType": "ANF_STATEMENT_TYPE_UNSPECIFIED",
-                            "anfOperatorType": "ANF_OPERATOR_TYPE_UNSPECIFIED",
-                            "operatorValue": ""
-                        }
-                    ],
-                    "answer": []
+                    "system": "lidr-allowed-results",
+                    "code": "c6817374-da58-4ee8-bfb8-bca87ed3797f"
                 }
             ],
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                    "valueCodeableConcept": {
-                        "coding": [
-                            {
-                                "id": "",
-                                "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                "version": "",
-                                "code": "drop-down",
-                                "display": "Drop down"
-                            }
-                        ]
-                    }
-                }
-            ],
+            "item": [],
+            "extension": [],
             "answerOption": [
                 {
                     "valueCoding": {
@@ -394,7 +358,7 @@
                         "system": "",
                         "version": "",
                         "code": "",
-                        "display": "Choice 5"
+                        "display": "Detected (qualifier value)"
                     },
                     "extension": []
                 },
@@ -404,7 +368,7 @@
                         "system": "",
                         "version": "",
                         "code": "",
-                        "display": "Choice 6"
+                        "display": "Not detected (qualifier value)"
                     },
                     "extension": []
                 }
@@ -413,5 +377,11 @@
             "anfStatementConnector": [],
             "answer": []
         }
-    ]
+    ],
+    "ruleId": "",
+    "ruleQuestionId": [],
+    "created": "2024-05-15T22:02:27.189Z",
+    "modified": "2024-05-15T22:02:27.189Z",
+    "creator": "5f63a53ddcc67c7a1c3d93e8",
+    "modifier": "5f63a53ddcc67c7a1c3d93e8"
 }

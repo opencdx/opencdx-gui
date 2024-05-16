@@ -20,7 +20,7 @@ const StartVirtualConsult = ({ navigation }) => {
             <View style={styles.footer}>
                 <Button mode="contained-tonal" width='100%' title="Sign In" style={styles.button} onPress={() => navigation.navigate('CheckVirtualConsult')}>
 
-                    <ButtonText style={styles.buttonText}> START VIRTUAL CONSULT</ButtonText>
+                    <ButtonText style={styles.buttonText}> Take Question</ButtonText>
 
                 </Button>
             </View>

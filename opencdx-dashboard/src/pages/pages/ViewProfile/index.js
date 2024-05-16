@@ -93,7 +93,7 @@ const ViewProfile = () => {
                 dispatch(
                     openSnackbar({
                         open: true,
-                        message: 'Something went wrong.',
+                        message: 'Something went wrong while fetching user data',
                         variant: 'error',
                         alert: {
                             color: 'success'

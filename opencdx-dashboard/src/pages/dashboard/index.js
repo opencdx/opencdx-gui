@@ -13,6 +13,8 @@ import AccountBalanceWalletTwoToneIcon from '@mui/icons-material/AccountBalanceW
 import DataCard from './DataCard';
 import GenderChart from './Chart/GenderChart';
 import RaceChart from './Chart/RaceChart';
+import DeviceChart from './Chart/DeviceChart';
+import ManufactureChart from './Chart/ManufacturersChart';
 import { gridSpacing } from 'utils/store/constant';
 
 import { Endpoints } from 'utils/axios/apiEndpoints';
@@ -165,10 +167,13 @@ const Dashboard = () => {
                 <GenderChart />
             </Grid>
             <Grid item xs={12} lg={6}>
-                <GenderChart />
+                <ManufactureChart />
             </Grid>
             <Grid item xs={12} lg={12}>
                 <RaceChart />
+            </Grid>
+            <Grid item xs={12} lg={12}>
+                <DeviceChart />
             </Grid>
         </Grid>
     );

@@ -13,8 +13,6 @@ import { useController, useFormContext } from 'react-hook-form';
 
 
 const ControlledInput = (props) => {
-  const formContext = useFormContext();
-  const { formState } = formContext;
   const [values, setValues] = useState()
 
   const {
@@ -34,6 +32,7 @@ const ControlledInput = (props) => {
         value={values}
         onChange={(keys) => {
           setValues(keys)
+          props.onCheckboxChange(keys); // Call parent's callback
         }}
         >
           <VStack space="2xl">
