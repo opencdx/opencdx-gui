@@ -60,18 +60,21 @@ const ChildWrapper = ({ control, register }) => {
                         const ruleQuestionId = Array.isArray(formData?.ruleQuestionId)
                             ? formData.ruleQuestionId[0]
                             : formData.ruleQuestionId;
-                        const selectedRule = Object.hasOwn(ruleQuestionId, 'ruleId')
-                            ? ruleQuestionId
-                            : ruleQuestion.find((rule) => rule.ruleId === ruleQuestionId);
-                        setDefaultRule(selectedRule);
+                         if (ruleQuestionId) {
+                            const selectedRule = Object.hasOwn(ruleQuestionId, 'ruleId')
+                                ? ruleQuestionId
+                                : ruleQuestion.find((rule) => rule.ruleId === ruleQuestionId);
+                            setDefaultRule(selectedRule);
+                        }   
                     }
                     setResponseRule(ruleQuestion);
                 })
-                .catch(() => {
+                .catch((error) => {
+                    console.error('Error fetching Ruleset :', error);
                     dispatch(
                         openSnackbar({
                             open: true,
-                            message: 'Something went wrong.',
+                            message: 'Something went wrong while fetching RuleSet',
                             variant: 'error',
                             alert: {
                                 color: 'success'

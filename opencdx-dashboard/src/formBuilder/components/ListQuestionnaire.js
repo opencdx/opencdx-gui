@@ -33,7 +33,7 @@ const ListQuestionnaire = () => {
                     dispatch(
                         openSnackbar({
                             open: true,
-                            message: 'Something went wrong.',
+                            message: 'Something went wrong while fetching list questionnaire',
                             variant: 'error',
                             alert: {
                                 color: 'success'

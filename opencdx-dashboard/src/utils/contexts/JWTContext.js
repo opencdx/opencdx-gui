@@ -93,7 +93,7 @@ export const JWTProvider = ({ children }) => {
             dispatchSnack(
                 openSnackbar({
                     open: true,
-                    message: 'Something went wrong.',
+                    message: 'Something went wrong while logging in.',
                     variant: 'error',
                     alert: {
                         color: 'success'

@@ -37,7 +37,7 @@ const Email = () => {
                 dispatch(
                     openSnackbar({
                         open: true,
-                        message: 'Something went wrong.',
+                        message: 'Something went wrong while fetching email list',
                         variant: 'error',
                         alert: {
                             color: 'success'

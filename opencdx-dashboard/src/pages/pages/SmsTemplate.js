@@ -37,7 +37,7 @@ const SmsTemplate = () => {
                 dispatch(
                     openSnackbar({
                         open: true,
-                        message: 'Something went wrong.',
+                        message: 'Something went wrong while fetching SMS list',
                         variant: 'error',
                         alert: {
                             color: 'success'
