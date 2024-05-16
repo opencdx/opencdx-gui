@@ -19,12 +19,11 @@ export default function App({ questionnaire, navigation }) {
   const [question, setQuestion] = useState([]);
   const [selectedValue, setSelectedValue] = useState([]);
   useEffect(() => {
-    if (questionnaire.title === "LIDR") {
-      const question = questionnaire.item[0].answerOption.map((item) => {
+      const question = questionnaire?.item[0]?.answerOption?.map((item) => {
         return item.valueCoding.display;
       });
       setQuestion(question);
-    }
+    
   }, [questionnaire]);
  
   const onSubmit = (data) => {
@@ -95,28 +94,7 @@ export default function App({ questionnaire, navigation }) {
             <Text style={styles.heading}>{questionnaire?.title}</Text>
             {questionnaire?.item?.map((field, index) => {
               let inputComponent;
-              let show = true;
-             
-              const outputArray = selectedValue.flatMap((item) => {
-                return question.includes(item);
-              });
-
-              const anyTrue = outputArray.some((value) => value === false);
-
-              if (questionnaire.title === "LIDR" && field.enableWhen) {
-                show = false;
-                if (
-                    selectedValue &&
-                    selectedValue.includes(
-                    field.enableWhen[0].answerCoding.display
-                  )
-                ) {
-                  show = true;
-                } else {
-                  show = false;
-                }
-              }
-              anyTrue && (show = true);
+              let show = field.type !== "open-choice" || !field.enableWhen || question.findIndex(value => value === selectedValue) + 1 === index;
               switch (field.type) {
                 case "integer":
                   inputComponent = (
@@ -195,15 +173,12 @@ export default function App({ questionnaire, navigation }) {
                     <>
                       <CheckboxComp
                         key={index}
-                        show={show}
                         name={field.linkId}
                         label={field.text}
                         rules={{ required: "This field is required!" }}
                         setFormError={setError}
                         type="select"
                         answerOption={field.answerOption}
-                        onCheckboxChange={(selectedKeys) => setSelectedValue(selectedKeys)} // Pass callback
-
                       />
                       <View style={styles.divider} />
                     </>
@@ -221,8 +196,7 @@ export default function App({ questionnaire, navigation }) {
                         setFormError={setError}
                         type="select"
                         answerOption={field.answerOption}
-                        onCheckboxChange={(selectedKeys) => setSelectedValue(selectedKeys)} // Pass callback
-
+                        onSelectChange={(selectedValue) => setSelectedValue(selectedValue)}
                       />
                       <View style={styles.divider} />
                     </>

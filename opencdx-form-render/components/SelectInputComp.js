@@ -36,9 +36,12 @@ const ControlledInput = (props) => {
       <View>
         <Select style={styles.margin}
 
-          onValueChange={field.onChange}
-          onChange={field.onChange}
-          value={field.value}
+          onValueChange={(selectedValue) => {
+            field.onChange(selectedValue)
+            props.onSelectChange(selectedValue)
+          }}
+            onChange={field.onChange}
+            value={field.value}
 
         >
           <SelectTrigger variant="outline" size="md">
