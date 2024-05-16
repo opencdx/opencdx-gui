@@ -31,7 +31,7 @@ export const ObservationId = ({ currentIndex, index, control, getValues, registe
             const newChipData = categories.map((data, index) => ({
                 key: index,
                 label: data.label,
-                selected: data.label =='ANF Topic' || currentCategories.includes(data.label)
+                selected: data.label == 'ANF Topic' || currentCategories.includes(data.label)
             }));
 
             setChipData(newChipData);
@@ -142,7 +142,12 @@ export const ObservationId = ({ currentIndex, index, control, getValues, registe
                                 control={control}
                                 value={'OBSERVATION_PROCEDURE'}
                                 render={({ field }) => (
-                                    <Select {...field} id={`item.${index}.item.${currentIndex}.type`} fullWidth value={'OBSERVATION_PROCEDURE'}>
+                                    <Select
+                                        {...field}
+                                        id={`item.${index}.item.${currentIndex}.type`}
+                                        fullWidth
+                                        value={'OBSERVATION_PROCEDURE'}
+                                    >
                                         <MenuItem value={'OBSERVATION_PROCEDURE'}>Observation procedure</MenuItem>
                                     </Select>
                                 )}

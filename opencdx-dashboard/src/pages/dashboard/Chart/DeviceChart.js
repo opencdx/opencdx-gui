@@ -13,7 +13,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 const DeviceChart = () => {
     const [device, setDevice] = useState([]);
-   
+
     const dispatch = useDispatch();
 
     const fetchData = useCallback(async () => {
@@ -69,8 +69,6 @@ const DeviceChart = () => {
         fetchData();
     }, [fetchData]);
 
-    
-
     return (
         <MainCard title="Device List">
             <TableContainer component={Paper}>
@@ -82,7 +80,7 @@ const DeviceChart = () => {
                             <TableCell align="right">Manufacturer ID</TableCell>
                             <TableCell align="right">Vendor ID</TableCell>
                             <TableCell align="right">Vendor Country ID</TableCell>
-                            <TableCell align="right" >Batch Number</TableCell>
+                            <TableCell align="right">Batch Number</TableCell>
                             <TableCell align="right">Serial Number</TableCell>
                             <TableCell align="right">Test Type ID</TableCell>
                             <TableCell align="right">Test Sensitivity</TableCell>
@@ -99,11 +97,8 @@ const DeviceChart = () => {
                     </TableHead>
                     <TableBody>
                         {device.map((row) => (
-                            <TableRow
-                                key={row.id}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                               <TableCell component="th" scope="row">
+                            <TableRow key={row.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                <TableCell component="th" scope="row">
                                     {row.deviceType}
                                 </TableCell>
                                 <TableCell align="right">{row.model}</TableCell>
@@ -122,8 +117,7 @@ const DeviceChart = () => {
                                 <TableCell align="right">{row.intendedUseAge}</TableCell>
                                 <TableCell align="right">{row.fdaAuthorized}</TableCell>
                                 <TableCell align="right">{row.deviceStatus}</TableCell>
-                                <TableCell align="right">{row.associatedSoftwareVersion}</TableCell>   
-                                
+                                <TableCell align="right">{row.associatedSoftwareVersion}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

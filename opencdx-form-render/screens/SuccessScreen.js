@@ -17,7 +17,7 @@ const SuccessScreen = ({ navigation }) => {
                 action="primary"
                 isDisabled={false}
             >
-                <ButtonText>Go Home</ButtonText>
+                <ButtonText>Home</ButtonText>
             </Button>
 
         </View>

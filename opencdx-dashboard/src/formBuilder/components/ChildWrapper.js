@@ -60,12 +60,12 @@ const ChildWrapper = ({ control, register }) => {
                         const ruleQuestionId = Array.isArray(formData?.ruleQuestionId)
                             ? formData.ruleQuestionId[0]
                             : formData.ruleQuestionId;
-                         if (ruleQuestionId) {
+                        if (ruleQuestionId) {
                             const selectedRule = Object.hasOwn(ruleQuestionId, 'ruleId')
                                 ? ruleQuestionId
                                 : ruleQuestion.find((rule) => rule.ruleId === ruleQuestionId);
                             setDefaultRule(selectedRule);
-                        }   
+                        }
                     }
                     setResponseRule(ruleQuestion);
                 })
