@@ -186,21 +186,38 @@ export default function App({ questionnaire, navigation }) {
                   );
                   break;
                 case "open-choice":
-                  inputComponent = (
-                    <>
-                      <CheckboxComp
-                        key={index}
-                        name={field.linkId}
-                        label={field.text}
-                        rules={{ required: "This field is required!" }}
-                        setFormError={setError}
-                        type="select"
-                        answerOption={field.answerOption}
-                        onCheckboxChange={(selectedValue) => setSelectedValue(selectedValue)}
-                      />
-                      <View style={styles.divider} />
-                    </>
-                  );
+                  if (!(field?.enableWhen && field.enableWhen.length > 0)) {
+                    inputComponent = (
+                      <>
+                        <CheckboxComp
+                          key={index}
+                          name={field.linkId}
+                          label={field.text}
+                          rules={{ required: "This field is required!" }}
+                          setFormError={setError}
+                          type="select"
+                          answerOption={field.answerOption}
+                          onCheckboxChange={(selectedValue) => setSelectedValue(selectedValue)}
+                        />
+                        <View style={styles.divider} />
+                      </>
+                    );
+                  } else {
+                    inputComponent = (
+                      <>
+                        <CheckboxComp
+                          key={index}
+                          name={field.linkId}
+                          label={field.text}
+                          rules={{ required: "This field is required!" }}
+                          setFormError={setError}
+                          type="select"
+                          answerOption={field.answerOption}
+                        />
+                        <View style={styles.divider} />
+                      </>
+                    );
+                  }
                   break;
                 case "choice":
                   inputComponent = (
