@@ -32,6 +32,7 @@ const ControlledInput = (props) => {
         value={values}
         onChange={(keys) => {
           setValues(keys)
+          if (props.onCheckboxChange)
           props.onCheckboxChange(keys); // Call parent's callback
         }}
         >
