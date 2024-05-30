@@ -1,32 +1,34 @@
-# OpenCDx Dashboard
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Build & Deployment Procedures
-### Prerequisites
-1. [Node.js](https://nodejs.org/en/download/) installed
-2. Enable yarn (`corepack enable`)
+## Getting Started
 
-### Running locally with dev services
-1. Run `npm install`
-2. Run `npm start`
-3. The dashboard login page should automatically open
+First, run the development server:
 
-### Running locally with local services
-1. Run `npm install`
-2. Run `npm run local`
-3. The dashboard login page should automatically open
+```bash
+npm run dev
+# or
+yarn dev
+```
 
-### Run Cypress tests 
-`yarn run cypress open`
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Using the form builder
-The form builder uses a form created using the [NLM Form Builder](https://lhcformbuilder.nlm.nih.gov/) as the base. Save a copy of the JSON from the NLM Form Builder that can be used to import into the OpenCDx form builder to configure the ANF statements.
+You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-Current supported question types are integer, string, text, boolean, and choice.
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
-After signing in to the OpenCDx dashboard, the form builder can be found by clicking on the Form Designer menu item on the left of the OpenCDx dashboard or by going to https://localhost:3000/form-builder. The form builder is viewable without the OpenCDx backend services running (IAM, questionnaire) but are needed in order to save the questionnaire.
+The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-Click upload file on the top left and select the JSON of the questionnaire created from the NLM Form Builder. The list of questions will be displayed and can then be individually configured by expanding the question. The various ANF configurations will be displayed and can be further expanded for additional settings. By default, certain fields will be autopopulated.
+## Learn More
 
-Once finished, click save to persist the questionnaire. The updated JSON can also be viewed by clicking ANF Statement JSON on the top of the page.
+To learn more about Next.js, take a look at the following resources:
 
-Sample questionnaire JSONs can be found under the `src/formBuilder/store` directory.
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
