@@ -6,9 +6,12 @@ import { useFieldArray } from 'react-hook-form';
 import { AccordianWrapper } from './ui-component/AccordianWrapper';
 import { CustomTabs } from './ui-component/CustomTabs';
 
+const ANF_OPERATOR_TYPE_EQUAL = 'ANF_OPERATOR_TYPE_EQUAL';
+const ANF_OPERATOR_TYPE_NOT_EQUAL = 'ANF_OPERATOR_TYPE_NOT_EQUAL';
+
 const OptionWrapper = React.forwardRef(({ control, register, index, item }, ref) => {
     const [showValueField, setShowValueField] = React.useState(false);
-    const { fields, append, remove, getValues } = useFieldArray({
+    const { append, getValues } = useFieldArray({
         control,
         name: `item.${index}.items`
     });
@@ -27,11 +30,15 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item }, ref)
             case 'integer':
                 return ['Any value', 'Value', 'Not Answered'];
             case 'logical':
-                return ['Equal', 'Not Equal'];
+                return [
+                    { value: ANF_OPERATOR_TYPE_EQUAL, label: 'Equal' },
+                    { value: ANF_OPERATOR_TYPE_NOT_EQUAL, label: 'Not Equal' }
+                ];
             default:
                 return ['Not Answered'];
         }
     };
+
     return (
         <Grid item xs={12} lg={12} sx={{ pt: 2 }} ref={ref}>
             <Grid container spacing={2} alignItems="center" sx={{ pl: 2 }}>
@@ -40,13 +47,13 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item }, ref)
                     <FormControl fullWidth sx={{ pt: 2 }}>
                         <Controller
                             fullWidth
-                            {...register(`item.${index}.anfOperatorType`)}
+                            {...register(`item.${index}.item.${0}.anfStatementConnector.${0}.anfOperatorType`)}
                             control={control}
                             render={({ field }) => (
-                                <Select {...field} id={`item.${index}.item.${0}.operatorValue`}>
+                                <Select {...field} id={`item.${index}.item.${0}.anfStatementConnector.${0}.operatorValue`}>
                                     {getOptions('logical').map((option, index) => (
-                                        <MenuItem key={index} value={option}>
-                                            {option}
+                                        <MenuItem key={index} value={option.value || option}>
+                                            {option.label || option}
                                         </MenuItem>
                                     ))}
                                 </Select>
@@ -60,7 +67,7 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item }, ref)
                     <FormControl fullWidth sx={{ pt: 2 }}>
                         <Controller
                             fullWidth
-                            {...register(`item.${index}.operatorValue`)}
+                            {...register(`item.${index}.item.${0}.anfStatementConnector.${0}.operatorValue`)}
                             control={control}
                             render={({ field }) => (
                                 <Select
@@ -90,16 +97,16 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item }, ref)
                     <Grid item xs={12} sm={3} lg={4} sx={{ pt: 2 }}>
                         <Typography variant="subtitle1">Value</Typography>
 
-                        <FormControl fullWidth>
+                        <FormControl fullWidth sx={{ pt: 2 }}>
                             <Controller
                                 fullWidth
-                                {...register(`item.${index}.item.${0}.answerTextValue`)}
+                                {...register(`item.${index}.item.answerTextValue`)}
                                 control={control}
                                 defaultValue=""
                                 render={({ field: { onChange, value } }) => (
                                     <TextField
                                         fullWidth
-                                        id={`item.${index}.item.${0}.answerTextValue`}
+                                        id={`item.${index}.item.answerTextValue`}
                                         key={index}
                                         type="number"
                                         InputProps={{
@@ -126,7 +133,7 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item }, ref)
             </Grid>
             {/* * Dynamic Fields * */}
 
-            {fields.map(({ id }, i) => (
+            {/* {fields.map(({ id }, i) => (
                 <div style={{ display: 'flex', flexDirection: 'column' }} key={id}>
                     <Grid container sx={{ pl: 2 }}>
                         <Grid item xs={12} sm={3} lg={4} sx={{ pt: 2, pr: 2 }}>
@@ -187,7 +194,7 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item }, ref)
                         </Button>
                     </Grid>
                 </div>
-            ))}
+            ))} */}
             {item.type !== 'integer' && (
                 <Grid sx={{ pt: 2, textAlign: 'right' }}>
                     <Button disableElevation variant="contained" color="primary" size="small" type="button" onClick={() => append({})}>

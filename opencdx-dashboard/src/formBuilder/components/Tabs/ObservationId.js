@@ -25,20 +25,19 @@ export const ObservationId = ({ currentIndex, index, control, getValues, registe
     const { formData, setFormData } = useAnfFormStore();
 
     useEffect(() => {
-        if (formData && formData.item) {
+        if (formData && formData?.item && formData.item[index]) {
             const currentCategories = formData.item[index]?.selectedCategories || [];
 
             const newChipData = categories.map((data, index) => ({
                 key: index,
                 label: data.label,
-                selected: data.label == 'ANF Topic' || currentCategories.includes(data.label)
+                selected: data.label === 'ANF Topic' || currentCategories.includes(data.label)
             }));
 
             setChipData(newChipData);
 
             const newSelectedCategories =
                 currentCategories.length > 0 ? currentCategories : newChipData.filter((data) => data.selected).map((data) => data.label);
-
             setSelectedCategories(newSelectedCategories);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -96,8 +95,8 @@ export const ObservationId = ({ currentIndex, index, control, getValues, registe
                                     fullWidth
                                     placeholder={attribute.label}
                                     value={formData.item[index]?.item[currentIndex][attribute.label + i] || ''}
-                                    onChange={handleTextboxChange}
                                     name={`${attribute.label}${i}`}
+                                    onChange={handleTextboxChange}
                                 />
                             ) : (
                                 <Input />

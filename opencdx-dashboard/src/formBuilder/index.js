@@ -110,20 +110,19 @@ const FormBuilder = () => {
     const [open, setOpen] = React.useState(true);
     const [openDialog, setOpenDialog] = React.useState(false);
     const [openAnfDialog, setOpenAnfDialog] = React.useState(false);
-    const { formData, setFormData, uploadData, setUploadData } = useAnfFormStore();
+    const { formData, setFormData, uploadData, setUploadData, setAnfData } = useAnfFormStore();
 
     const handleChange = (e) => {
+        setFormData({});
+        setUploadData({});
+        setAnfData({});
         const fileReader = new FileReader();
         fileReader.readAsText(e.target.files[0], 'UTF-8');
         fileReader.onload = (e) => {
             const formData = JSON.parse(e.target.result);
             setFormData(formData);
             setUploadData(formData);
-            const data = {
-                default: formData,
-                updated: formData
-            };
-            localStorage.setItem('anf-form', JSON.stringify(data));
+            setAnfData(formData);
         };
     };
 
@@ -258,7 +257,6 @@ const FormBuilder = () => {
                                         </Button>
                                     </Tooltip>
                                 </Box>
-                                <ListQuestionnaire />
                                 <FullScreenSection />
                             </Box>
                         </Grid>
@@ -306,6 +304,7 @@ const FormBuilder = () => {
                         <JsonView data={formData} shouldExpandNode={allExpanded} style={defaultStyles} />
                     </DialogWrapper>
                     <StatementTypesReport />
+                    <ListQuestionnaire />
 
                     {formData && formData.item && <MainWrapper uploadedFile={formData} />}
                 </Box>
