@@ -70,14 +70,6 @@ export const ObservationId = ({ currentIndex, index, control, getValues, registe
             return updatedCategories;
         });
     };
-
-    const handleTextboxChange = (event) => {
-        const { name, value } = event.target;
-        const updatedFormData = { ...formData };
-        updatedFormData.item[index].item[currentIndex][name] = value;
-        setFormData(updatedFormData);
-    };
-
     const ObservationAttributes = ({ filteredAttributes }) => (
         <>
             {filteredAttributes.map((attribute, i) => (
@@ -90,13 +82,28 @@ export const ObservationId = ({ currentIndex, index, control, getValues, registe
                     <Grid item xs={12} sm={4} lg={5}>
                         <FormControl fullWidth>
                             {typeof attribute === 'object' && attribute.options ? (
-                                <TextField
-                                    {...register(`item.${index}.item.${currentIndex}.${attribute.label}${i}`)}
+                                <Controller
                                     fullWidth
-                                    placeholder={attribute.label}
-                                    value={formData.item[index]?.item[currentIndex][attribute.label + i] || ''}
-                                    name={`${attribute.label}${i}`}
-                                    onChange={handleTextboxChange}
+                                    {...register(
+                                        `item.${index}.item.${0}.anfStatementConnector.${0}.anfStatement.topic.observationProcedure.${attribute.label}`
+                                    )}
+                                    control={control}
+                                    defaultValue={
+                                        JSON.parse(formData.item[index].item[currentIndex].anfStatementConnector[0].anfStatement.topic)
+                                            .observationProcedure[attribute.label]
+                                    }
+                                    render={({ field: { onChange, value } }) => (
+                                        <TextField
+                                            fullWidth
+                                            key={index}
+                                            value={value}
+                                            onChange={({ target: { value } }) => {
+                                                onChange(value);
+                                            }}
+                                            name={`${attribute.label}`}
+                                            placeholder={attribute.label}
+                                        />
+                                    )}
                                 />
                             ) : (
                                 <Input />

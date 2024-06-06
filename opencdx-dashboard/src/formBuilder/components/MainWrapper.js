@@ -38,7 +38,6 @@ const MainWrapper = ({ uploadedFile }) => {
     const onSubmit = async (data) => {
         setIsLoading(true);
         const anf = anfData;
-        // const anf = JSON.parse(localStorage.getItem('anf-form'));
         anf.item = data.item;
         let tempData = data;
         tempData.title = anfData.title;
@@ -52,18 +51,6 @@ const MainWrapper = ({ uploadedFile }) => {
         tempData.item = tempData.item.map(({ componentType, operatorValue, componentTypeAssociated, markedMainANFStatement, selectedCategories, componentId, answerTextValue, items, ...rest }) => {
         /* eslint-enable */
                 let { anfStatement } = rest?.item[0]?.anfStatementConnector[0] || {};
-                const topicValue = {
-                    observationProcedure: {
-                        method: rest.item[0].method0,
-                        hasFocus: rest.item[0].hasFocus1,
-                        procedureSiteDirect: rest.item[0].procedureSiteDirect2,
-                        usingDevice: rest.item[0].usingDevice3
-                    }
-                };
-                delete rest.item[0].hasFocus1;
-                delete rest.item[0].usingDevice3;
-                delete rest.item[0].method0;
-                delete rest.item[0].procedureSiteDirect2;
 
                 if (anfStatement) {
                     if (anfStatement.authors && !Array.isArray(anfStatement.authors)) {
@@ -94,11 +81,11 @@ const MainWrapper = ({ uploadedFile }) => {
                     ) {
                         anfStatement.performanceCircumstance.participant = [anfStatement.performanceCircumstance.participant];
                     }
-                    delete anfStatement.topic;
                     delete anfStatement.performanceCircumstance?.circumstanceType;
                 }
-
-                rest.item[0].anfStatementConnector[0].anfStatement.topic = JSON.stringify(topicValue);
+                rest.item[0].anfStatementConnector[0].anfStatement.topic = JSON.stringify(
+                    rest.item[0].anfStatementConnector[0].anfStatement.topic
+                );
                 rest.item[0].anfStatementConnector[0].anfStatementType = componentType;
                 return { ...rest };
             }
