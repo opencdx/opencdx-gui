@@ -17,7 +17,7 @@ import { openSnackbar } from 'utils/store/slices/snackbar';
 import { useDispatch } from 'utils/store';
 
 const ChildWrapper = ({ control, register }) => {
-    const { formData } = useAnfFormStore();
+    const { formData, setAnfData, anfData } = useAnfFormStore();
     const dispatch = useDispatch();
 
     const [hideOptions, setHideOptions] = React.useState(true);
@@ -45,12 +45,12 @@ const ChildWrapper = ({ control, register }) => {
                     const rules = response.data.ruleSets.map((rule) => {
                         return rule.name;
                     });
-                    if (formData.ruleId) {
+                    if (formData?.ruleId) {
                         setDefaultId('Blood Pressure');
                     }
 
                     setRuleSets(rules);
-                    const ruleQuestion = formData.item.map((rule) => {
+                    const ruleQuestion = formData?.item.map((rule) => {
                         return {
                             ruleId: rule.linkId,
                             label: rule.text
@@ -58,8 +58,8 @@ const ChildWrapper = ({ control, register }) => {
                     });
                     if (formData?.ruleQuestionId) {
                         const ruleQuestionId = Array.isArray(formData?.ruleQuestionId)
-                            ? formData.ruleQuestionId[0]
-                            : formData.ruleQuestionId;
+                            ? formData?.ruleQuestionId[0]
+                            : formData?.ruleQuestionId;
                         if (ruleQuestionId) {
                             const selectedRule = Object.hasOwn(ruleQuestionId, 'ruleId')
                                 ? ruleQuestionId
@@ -85,12 +85,11 @@ const ChildWrapper = ({ control, register }) => {
                 });
         };
         fetchRules();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dispatch]);
+    }, []);
     return (
         <div className="wrapper">
             {fields.map((item, index) => (
-                <AccordianWrapper key={index} title={`${index + 1}. ${item.text} - ${item.linkId}`} remove={() => remove(index)}>
+                <AccordianWrapper key={index} title={`${index + 1}. ${item?.text} - ${item?.linkId}`} remove={() => remove(index)}>
                     <ComponentID {...{ control, register, index }} />
                     <StatementTypes {...{ control, register, index, item }} handleStatementTypeChange={handleStatementTypeChange} />
                     {hideOptions && <OptionWrapper {...{ control, register, index, item }} />}
@@ -128,11 +127,10 @@ const ChildWrapper = ({ control, register }) => {
                                 <Autocomplete
                                     onChange={(_, data) => {
                                         field.onChange(data || '');
-                                        const anf = JSON.parse(localStorage.getItem('anf-form'));
+                                        const anf = anfData;
                                         const ruleId = ruleset.find((rule) => rule.name === data)?.ruleId;
-                                        anf.updated.ruleId = ruleId;
-                                        localStorage.setItem('anf-form', JSON.stringify(anf));
-
+                                        anf.ruleId = ruleId;
+                                        setAnfData(anf);
                                         setDefaultId(data);
                                     }}
                                     value={defaultId}
@@ -155,16 +153,17 @@ const ChildWrapper = ({ control, register }) => {
                             name={`ruleQuestionId`}
                             {...register(`ruleQuestionId`)}
                             control={control}
-                            render={({ field }) => (
+                            render={({ field, key }) => (
                                 <Autocomplete
                                     onChange={(_, data) => {
                                         setDefaultRule(data);
                                         field.onChange(data || '');
-                                        const anf = JSON.parse(localStorage.getItem('anf-form'));
-                                        anf.updated.ruleQuestionId = data;
-                                        localStorage.setItem('anf-form', JSON.stringify(anf));
+                                        const anf = anfData;
+                                        anf.ruleQuestionId = data;
+                                        setAnfData(anf);
                                     }}
                                     value={defaultRule}
+                                    key={key}
                                     id="controllable-states-demo"
                                     options={responseRule}
                                     renderInput={(params) => <TextField {...params} {...field} />}

@@ -22,8 +22,13 @@ const StatementTypes = forwardRef(({ register, index, control, item, handleState
     useEffect(() => {
         setSelectedMainOption(item?.componentTypeMain);
         setSelectedAssociatedOption(item?.componentTypeAssociated);
-        setSelectedOption(item?.componentType);
+        // setSelectedOption(item?.item[0]?.anfStatementConnector[0]?.anfStatementType);
     }, [item]);
+    useEffect(() => {
+        if (item?.item && item.item[0]?.anfStatementConnector) {
+            setSelectedOption(item.item[0].anfStatementConnector[0].anfStatementType);
+        }
+    }, []);
 
     const handleChangeMainOption = useCallback(
         (event, index) => {
@@ -156,7 +161,7 @@ const StatementTypes = forwardRef(({ register, index, control, item, handleState
                     <Grid item xs={12} lg={12} sx={{ height: 'auto', overflow: 'auto' }}>
                         <Controller
                             control={control}
-                            {...register(`item.${index}.anfStatementType`)}
+                            {...register(`item.${index}.item.${0}.anfStatementConnector.${0}.anfStatementType`)}
                             render={({ field }) => (
                                 <RadioGroup
                                     row

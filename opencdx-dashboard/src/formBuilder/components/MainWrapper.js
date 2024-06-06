@@ -1,4 +1,4 @@
-import React, { useEffect, forwardRef, Suspense, useState } from 'react';
+import React, { useEffect, Suspense, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import Button from '@mui/material/Button';
@@ -11,9 +11,9 @@ const ChildWrapperSuspense = React.lazy(() => import('./ChildWrapper'));
 
 import ANFStatementPlaceholder from 'ui-component/cards/Skeleton/ANFStatementPlaceholder';
 
-const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
+const MainWrapper = ({ uploadedFile }) => {
     const dispatchSnack = useDispatch();
-    const { formData } = useAnfFormStore();
+    const { formData, setAnfData, anfData } = useAnfFormStore();
     const defaultValues = {
         item: uploadedFile.item
     };
@@ -31,30 +31,26 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
 
     useEffect(() => {
         reset({
-            item: formData.item
+            item: formData?.item
         });
     }, [formData, reset]);
 
     const onSubmit = async (data) => {
         setIsLoading(true);
-        const anf = JSON.parse(localStorage.getItem('anf-form'));
-        anf.updated.item = data.item;
+        const anf = anfData;
+        anf.item = data.item;
         let tempData = data;
-        delete tempData.id;
-        tempData.title = anf.updated.title;
-        tempData.resourceType = anf.updated.resourceType;
-        tempData.status = anf.updated.status;
-        tempData.description = anf.updated.description;
-        tempData.ruleId = anf.updated.ruleId || '';
-        tempData.ruleQuestionId = anf.updated.ruleQuestionId?.ruleId ? [anf.updated.ruleQuestionId.ruleId] : [];
+        tempData.title = anfData.title;
+        tempData.resourceType = anfData.resourceType;
+        tempData.status = anfData.status;
+        tempData.description = anfData.description;
+        tempData.ruleId = anfData.ruleId || '';
+        tempData.ruleQuestionId = anfData.ruleQuestionId?.ruleId ? [anfData.ruleQuestionId.ruleId] : anf.ruleQuestionId;
         /* eslint-disable */
-        tempData.item = tempData.item.map( ({ componentType, anfOperatorType, operatorValue, markedMainANFStatement, selectedCategories, componentId, answerTextValue,items, ...rest }) => {
+        console.log('tempData', tempData);
+        tempData.item = tempData.item.map(({ componentType, operatorValue, componentTypeAssociated, markedMainANFStatement, selectedCategories, componentId, answerTextValue, items, ...rest }) => {
         /* eslint-enable */
-                const { anfStatement } = rest?.item[0]?.anfStatementConnector[0] || {};
-                delete rest.item[0].hasFocus1;
-                delete rest.item[0].usingDevice3;
-                delete rest.item[0].method0;
-                delete rest.item[0].procedureSiteDirect2;
+                let { anfStatement } = rest?.item[0]?.anfStatementConnector[0] || {};
 
                 if (anfStatement) {
                     if (anfStatement.authors && !Array.isArray(anfStatement.authors)) {
@@ -85,42 +81,46 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
                     ) {
                         anfStatement.performanceCircumstance.participant = [anfStatement.performanceCircumstance.participant];
                     }
-                    delete anfStatement.topic;
                     delete anfStatement.performanceCircumstance?.circumstanceType;
                 }
+                rest.item[0].anfStatementConnector[0].anfStatement.topic = JSON.stringify(
+                    rest.item[0].anfStatementConnector[0].anfStatement.topic
+                );
+                rest.item[0].anfStatementConnector[0].anfStatementType = componentType;
                 return { ...rest };
             }
         );
 
         try {
-            // let response;
-            // if (anf.isExisting) {
-            //     response = await Endpoints.updateQuestionnaire({
-            //         questionnaire: tempData
-            //     });
-            // } else {
-            //     response = await Endpoints.submitQuestionnaire({
-            //         questionnaire: tempData
-            //     });
-            // }
-            const response = await Endpoints.submitQuestionnaire({
-                questionnaire: tempData
-            });
-            response &&
-                dispatchSnack(
-                    openSnackbar({
-                        open: true,
-                        message: 'Successfully saved',
-                        variant: 'alert',
-                        alert: {
-                            color: 'success'
-                        },
-                        close: false
-                    })
-                );
+            let response;
 
-            anf.isExisting = true;
-            localStorage.setItem('anf-form', JSON.stringify(anf));
+            if (anfData && anfData?.id) {
+                tempData.id = anfData.id;
+                response = await Endpoints.updateQuestionnaire({
+                    questionnaire: tempData
+                });
+                setAnfData(response.data);
+            } else {
+                response = await Endpoints.submitQuestionnaire({
+                    questionnaire: tempData
+                });
+                setAnfData(response.data);
+            }
+            // setAnfData(anf);
+            window.location.reload();
+            // response &&
+            //     dispatchSnack(
+            //         openSnackbar({
+            //             open: true,
+            //             message: 'Successfully saved',
+            //             variant: 'alert',
+            //             alert: {
+            //                 color: 'success'
+            //             },
+            //             close: false
+            //         })
+            //     );
+            // localStorage.setItem('anf-form', JSON.stringify(anf));
         } catch (error) {
             dispatchSnack(
                 openSnackbar({
@@ -141,7 +141,7 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
     };
 
     return (
-        <div ref={ref}>
+        <>
             {isLoading ? (
                 <ANFStatementPlaceholder />
             ) : (
@@ -156,9 +156,9 @@ const MainWrapper = forwardRef(({ uploadedFile }, ref) => {
                     </form>
                 </Suspense>
             )}
-        </div>
+        </>
     );
-});
+};
 
 MainWrapper.propTypes = {
     uploadedFile: PropTypes.object
