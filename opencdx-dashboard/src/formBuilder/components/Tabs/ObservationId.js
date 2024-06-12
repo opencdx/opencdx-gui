@@ -88,10 +88,6 @@ export const ObservationId = ({ currentIndex, index, control, getValues, registe
                                         `item.${index}.item.${0}.anfStatementConnector.${0}.anfStatement.topic.observationProcedure.${attribute.label}`
                                     )}
                                     control={control}
-                                    defaultValue={
-                                        JSON.parse(formData.item[index].item[currentIndex].anfStatementConnector[0].anfStatement.topic)
-                                            .observationProcedure[attribute.label]
-                                    }
                                     render={({ field: { onChange, value } }) => (
                                         <TextField
                                             fullWidth
