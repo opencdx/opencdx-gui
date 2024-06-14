@@ -11,43 +11,14 @@
   "purpose": "To capture user symptoms ",
   "item": [
     {
-      "type": "string",
-      "linkId": "7659172265877",
-      "text": "COVID Symptom",
-      "enableWhen": [
-        {
-          "question": "7778752422567",
-          "operator": "=",
-          "answerCoding": {
-            "display": "Yes"
-          }
-        },
-        {
-          "question": "4320936850630",
-          "operator": "=",
-          "answerCoding": {
-            "display": "Male"
-          }
-        }
-      ],
-      "enableBehavior": "all",
-      "required": true,
-      "repeats": true,
-      "readOnly": true
-    },
-    {
-      "type": "choice",
+      "type": "integer",
       "extension": [
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-          "valueCodeableConcept": {
-            "coding": [
-              {
-                "system": "http://hl7.org/fhir/questionnaire-item-control",
-                "code": "drop-down",
-                "display": "Drop down"
-              }
-            ]
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+          "valueCoding": {
+            "system": "http://unitsofmeasure.org",
+            "code": "a",
+            "display": "year"
           }
         }
       ],
@@ -55,29 +26,7 @@
       "text": "Information - Age",
       "required": true,
       "repeats": false,
-      "readOnly": false,
-      "answerOption": [
-        {
-          "valueCoding": {
-            "display": "Infant (0-12 months)"
-          }
-        },
-        {
-          "valueCoding": {
-            "display": "Child (1-10 years)"
-          }
-        },
-        {
-          "valueCoding": {
-            "display": "Adult (11-65 years)"
-          }
-        },
-        {
-          "valueCoding": {
-            "display": "Adult over 65 years"
-          }
-        }
-      ]
+      "readOnly": false
     },
     {
       "type": "choice",
@@ -365,13 +314,21 @@
         {
           "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
           "valueDecimal": 106
+        },
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+          "valueCoding": {
+            "system": "http://unitsofmeasure.org",
+            "code": "[degF]",
+            "display": "degrees Fahrenheit"
+          }
         }
       ],
       "linkId": "8356752766495",
       "code": [
         {
           "system": "TINKAR",
-          "code": "TIN-505"
+          "code": "CONCEPT-TINKAR-TMP"
         }
       ],
       "text": "General Symptoms - Temperature",
