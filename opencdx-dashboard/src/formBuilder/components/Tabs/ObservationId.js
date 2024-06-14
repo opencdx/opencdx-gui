@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
 import PropTypes from 'prop-types';
-import { FormControl, FormControlLabel, Grid, MenuItem, Select, InputLabel, Input, Checkbox, Button, Chip, TextField } from '@mui/material';
+import { FormControl, Grid, MenuItem, Select, InputLabel, Input, Chip, TextField } from '@mui/material';
 
 import { Controller } from 'react-hook-form';
 import { SystemVariables } from '../SystemVariables';
 
 import { MainCard } from '../ui-component/MainCard';
-import RestoreIcon from '@mui/icons-material/Restore';
 import Typography from '@mui/material/Typography';
 
 import { styled } from '@mui/material/styles';
@@ -79,7 +78,7 @@ export const ObservationId = ({ currentIndex, index, control, getValues, registe
                             <Typography variant="h5">Observation.{typeof attribute === 'object' ? attribute.label : attribute}</Typography>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={12} sm={4} lg={5}>
+                    <Grid item xs={12} sm={8} lg={8}>
                         <FormControl fullWidth>
                             {typeof attribute === 'object' && attribute.options ? (
                                 <Controller
@@ -88,6 +87,14 @@ export const ObservationId = ({ currentIndex, index, control, getValues, registe
                                         `item.${index}.item.${0}.anfStatementConnector.${0}.anfStatement.topic.observationProcedure.${attribute.label}`
                                     )}
                                     control={control}
+                                    defaultValue={
+                                        formData?.item?.[index]?.item?.[currentIndex]?.anfStatementConnector?.[0]?.anfStatement?.topic
+                                            ?.observationProcedure?.[attribute.label]
+                                            ? JSON.parse(
+                                                  formData.item[index].item[currentIndex].anfStatementConnector[0].anfStatement.topic
+                                              ).observationProcedure[attribute.label]
+                                            : null
+                                    } // Handle potential missing property
                                     render={({ field: { onChange, value } }) => (
                                         <TextField
                                             fullWidth
@@ -105,20 +112,6 @@ export const ObservationId = ({ currentIndex, index, control, getValues, registe
                                 <Input />
                             )}
                         </FormControl>
-                    </Grid>
-                    <Grid item xs={12} sm={2} lg={2}>
-                        <FormControl fullWidth>
-                            <FormControlLabel
-                                control={<Checkbox key={`${index}-${i}`} name={attribute.label} color="primary" value={attribute.label} />}
-                                label="Add to Topic"
-                            />
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12} sm={1} lg={1}>
-                        <Button aria-label="Reset" label="Reset" variant="contained" size="small">
-                            <RestoreIcon stroke={1.5} size="20px" />
-                            Reset
-                        </Button>
                     </Grid>
                 </Grid>
             ))}

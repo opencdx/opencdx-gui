@@ -11,8 +11,8 @@ import ANFStatementPlaceholder from 'ui-component/cards/Skeleton/ANFStatementPla
 
 const ListQuestionnaire = () => {
     const dispatch = useDispatch();
+    const { setFormData, setUploadData, setAnfData, isListOpen, setIsListOpen } = useAnfFormStore();
 
-    const [open, setOpen] = useState(true);
     const [userResponses, setUserResponses] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -28,7 +28,9 @@ const ListQuestionnaire = () => {
             })
                 .then((response) => {
                     setLoading(false);
-                    setUserResponses(response.data.questionnaires);
+                    const data = response.data.questionnaires;
+                    data.sort((a, b) => new Date(b.modified) - new Date(a.modified));
+                    setUserResponses(data);
                 })
                 .catch(() => {
                     setLoading(false);
@@ -48,21 +50,20 @@ const ListQuestionnaire = () => {
         fetchUserResponses();
     }, []);
     const handleToggle = () => {
-        setOpen((prevOpen) => !prevOpen);
+        setIsListOpen((prevOpen) => !prevOpen);
     };
 
-    const { setFormData, setUploadData, setAnfData } = useAnfFormStore();
     const convertDate = (date) => {
         return new Date(date).toLocaleDateString();
     };
 
     return (
-        <Box>
-            <Box sx={{ ml: 2, mr: 2 }}>
+        <>
+            <Box>
                 <Button
                     variant="outlined"
                     color="primary"
-                    aria-controls={open ? 'menu-list-grow' : undefined}
+                    aria-controls={isListOpen ? 'menu-list-grow' : undefined}
                     aria-haspopup="true"
                     onClick={handleToggle}
                 >
@@ -82,7 +83,7 @@ const ListQuestionnaire = () => {
                     </Typography>
                 </Button>
             </Box>
-            {open && (
+            {isListOpen && (
                 <Box sx={{ ml: 2, mr: 2, mt: 2 }}>
                     {loading ? (
                         <ANFStatementPlaceholder />
@@ -123,7 +124,7 @@ const ListQuestionnaire = () => {
                                                                     setFormData(response);
                                                                     setUploadData(response);
                                                                     setAnfData(response);
-                                                                    setOpen(false);
+                                                                    setIsListOpen(false);
                                                                 }}
                                                             >
                                                                 {'View / Update'}
@@ -139,7 +140,7 @@ const ListQuestionnaire = () => {
                     )}
                 </Box>
             )}
-        </Box>
+        </>
     );
 };
 

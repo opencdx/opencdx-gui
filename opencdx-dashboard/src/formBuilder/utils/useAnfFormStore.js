@@ -19,7 +19,9 @@ const useAnfFormStore = create((set) => {
             set((state) => ({
                 anfData: { ...state.anfData, ...data }
             }));
-        }
+        },
+        isListOpen: true,
+        setIsListOpen: (isOpen) => set(() => ({ isListOpen: isOpen }))
     };
 });
 
