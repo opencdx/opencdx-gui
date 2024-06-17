@@ -95,6 +95,15 @@ export const ObservationId = ({ currentIndex, index, control, getValues, registe
                                               ).observationProcedure[attribute.label]
                                             : null
                                     } // Handle potential missing property
+                                    value= {
+                                        formData?.item?.[index]?.item?.[currentIndex]?.anfStatementConnector?.[0]?.anfStatement?.topic
+                                        ?.observationProcedure?.[attribute.label]
+                                    ? JSON.parse(
+                                        formData.item[index].item[currentIndex].anfStatementConnector[0].anfStatement.topic
+                                    ).observationProcedure[attribute.label]
+                                    : null
+                                    } // Handle potential missing property
+
                                     render={({ field: { onChange, value } }) => (
                                         <TextField
                                             fullWidth
