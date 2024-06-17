@@ -70,8 +70,6 @@ export default function App({ questionnaire, navigation }) {
 
     const handleSave = async () => {
       const data = JSON.stringify(userQuestionnaireData);
-      console.log(data);
-      navigation.navigate("Success");
 
       try {
         const response = await Endpoints.submitUserQuestionnaire(data);

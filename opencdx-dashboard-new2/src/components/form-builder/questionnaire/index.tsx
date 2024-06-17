@@ -44,7 +44,7 @@ const QuestionnaireWrapper = () => {
                         <AccordionItem
                           key={idx}
                           aria-label={item.linkId}
-                          title={item.text}
+                          title={idx+1+'. '+item.text}
                         >
                           <QuestionnaireItemWrapper item={item} />
                         </AccordionItem>

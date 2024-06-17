@@ -23,27 +23,7 @@ const useAnfFormStore = create((set) => {
         },
     };
 });
-// const useAnfFormStore = create(persist(
-//     create((set) => ({
-//         formData: {},
-//         setFormData: (data: any) => {
-//             set((state: { formData: any; }) => ({
-//                 formData: { ...state.formData, ...data }
-//             }));
-//         },
-//         currentQuestionnaire: {} as Questionnaire,
-//         setCurrentQuestionnaire: (data: Questionnaire) => {
-//             set((state: { currentQuestionnaire: Questionnaire; }) => ({
-//                 ...state,
-//                 currentQuestionnaire: data
-//             }));
-//         },
-//     })),
-//     {
-//         name: 'questionnaire-store',
-//         storage: createJSONStorage(() => sessionStorage
-//         ),}
-// ));
+
 
 export default useAnfFormStore;
 export { useAnfFormStore };
