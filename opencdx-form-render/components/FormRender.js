@@ -73,12 +73,12 @@ export default function App({ questionnaire, navigation }) {
       console.log(data);
       navigation.navigate("Success");
 
-      // try {
-      //   const response = await Endpoints.submitUserQuestionnaire(data);
-      //   navigation.navigate("Success");
-      // } catch (error) {
-      //   alert(error);
-      // }
+      try {
+        const response = await Endpoints.submitUserQuestionnaire(data);
+        navigation.navigate("Success");
+      } catch (error) {
+        alert(error);
+      }
     };
     handleSave();
   };
