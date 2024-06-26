@@ -1,0 +1,387 @@
+{
+    "id": "664530f3eb95e809f854923e",
+    "resourceType": "Questionnaire",
+    "title": "Reporting At-Home Test Kit Results",
+    "status": "active",
+    "description": "",
+    "item": [
+        {
+            "type": "choice",
+            "linkId": "8061462366643",
+            "text": "What was the test kit device used?",
+            "enableWhen": [],
+            "code": [
+                {
+                    "system": "lidr-devices",
+                    "code": "e0ac20ad-ce6f-3ee4-8c71-51b070aa5737"
+                }
+            ],
+            "item": [
+                {
+                    "enableWhen": [],
+                    "code": [],
+                    "item": [],
+                    "extension": [],
+                    "answerOption": [],
+                    "initial": [],
+                    "anfStatementConnector": [
+                        {
+                            "anfStatement": {
+                                "id": "",
+                                "time": {
+                                    "upperBound": "",
+                                    "lowerBound": "",
+                                    "includeUpperBound": false,
+                                    "includeLowerBound": false,
+                                    "semantic": "",
+                                    "resolution": ""
+                                },
+                                "authors": [],
+                                "subjectOfInformation": "",
+                                "associatedStatement": [],
+                                "topic": "",
+                                "type": "",
+                                "status": "STATUS_UNSPECIFIED"
+                            },
+                            "anfStatementType": "ANF_STATEMENT_TYPE_UNSPECIFIED",
+                            "anfOperatorType": "ANF_OPERATOR_TYPE_UNSPECIFIED",
+                            "operatorValue": ""
+                        }
+                    ],
+                    "answer": []
+                }
+            ],
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "id": "",
+                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                "version": "",
+                                "code": "drop-down",
+                                "display": "Drop down"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "c26b9bd7-2261-4232-99e6-b62b0ccc9fe0",
+                        "display": "BD Respiratory Viral Panel for BD MAX System"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "b7e5b410-7176-438f-9366-30ac5ec909c6",
+                        "display": "BD SARS-CoV-2/Flu for BD MAX System"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "cd3d70d8-d432-4bb6-ae10-e8334c03e6a6",
+                        "display": "Cue Mpox (Monkeypox) Molecular Test"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "c6817374-da58-4ee8-bfb8-bca87ed3797f",
+                        "display": "Lucira COVID-19 & Flu Home Test"
+                    },
+                    "extension": []
+                }
+            ],
+            "initial": [],
+            "anfStatementConnector": [],
+            "answer": []
+        },
+        {
+            "type": "open-choice",
+            "linkId": "9024451926719",
+            "text": "What was the result of the test?",
+            "enableWhen": [
+                {
+                    "question": "8061462366643",
+                    "operator": "=",
+                    "answerCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "BD Respiratory Viral Panel for BD MAX System"
+                    }
+                }
+            ],
+            "code": [
+                {
+                    "system": "lidr-allowed-results",
+                    "code": "c26b9bd7-2261-4232-99e6-b62b0ccc9fe0"
+                }
+            ],
+            "item": [],
+            "extension": [],
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Specimen unsatisfactory for evaluation (finding)"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Detected (qualifier value)"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Invalid result (qualifier value)"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Not detected (qualifier value)"
+                    },
+                    "extension": []
+                }
+            ],
+            "initial": [],
+            "anfStatementConnector": [],
+            "answer": []
+        },
+        {
+            "type": "open-choice",
+            "linkId": "3104159711530",
+            "text": "What was the result of the test?",
+            "enableWhen": [
+                {
+                    "question": "8061462366643",
+                    "operator": "=",
+                    "answerCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "BD SARS-CoV-2/Flu for BD MAX System"
+                    }
+                }
+            ],
+            "code": [
+                {
+                    "system": "lidr-allowed-results",
+                    "code": "b7e5b410-7176-438f-9366-30ac5ec909c6"
+                }
+            ],
+            "item": [],
+            "extension": [],
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Indeterminate (qualifier value)"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Specimen unsatisfactory for evaluation (finding)"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Detected (qualifier value)"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Test not done (qualifier value)"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Invalid result (qualifier value)"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Not detected (qualifier value)"
+                    },
+                    "extension": []
+                }
+            ],
+            "initial": [],
+            "anfStatementConnector": [],
+            "answer": []
+        },
+        {
+            "type": "open-choice",
+            "linkId": "1771872053302",
+            "text": "What was the result of the test?",
+            "enableWhen": [
+                {
+                    "question": "8061462366643",
+                    "operator": "=",
+                    "answerCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Cue Mpox (Monkeypox) Molecular Test"
+                    }
+                }
+            ],
+            "code": [
+                {
+                    "system": "lidr-allowed-results",
+                    "code": "cd3d70d8-d432-4bb6-ae10-e8334c03e6a6"
+                }
+            ],
+            "item": [],
+            "extension": [],
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Positive (qualifier value)"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "True negative (qualifier value)"
+                    },
+                    "extension": []
+                }
+            ],
+            "initial": [],
+            "anfStatementConnector": [],
+            "answer": []
+        },
+        {
+            "type": "open-choice",
+            "linkId": "3423134626533",
+            "text": "What was the result of the test?",
+            "enableWhen": [
+                {
+                    "question": "8061462366643",
+                    "operator": "=",
+                    "answerCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Lucira COVID-19 & Flu Home Test"
+                    }
+                }
+            ],
+            "code": [
+                {
+                    "system": "lidr-allowed-results",
+                    "code": "c6817374-da58-4ee8-bfb8-bca87ed3797f"
+                }
+            ],
+            "item": [],
+            "extension": [],
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Detected (qualifier value)"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Not detected (qualifier value)"
+                    },
+                    "extension": []
+                }
+            ],
+            "initial": [],
+            "anfStatementConnector": [],
+            "answer": []
+        }
+    ],
+    "ruleId": "",
+    "ruleQuestionId": [],
+    "created": "2024-05-15T22:02:27.189Z",
+    "modified": "2024-05-15T22:02:27.189Z",
+    "creator": "5f63a53ddcc67c7a1c3d93e8",
+    "modifier": "5f63a53ddcc67c7a1c3d93e8"
+}
