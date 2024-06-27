@@ -1,0 +1,196 @@
+{
+  "resourceType": "Questionnaire",
+  "version": "1.0",
+  "title": "Person Under Investigation",
+  "status": "draft",
+  "description": "A form for reporting COVID-19 cases, including patient information, symptoms, exposure history, and test results",
+  "purpose": "To track and manage the spread of COVID-19 by collecting comprehensive case data for public health analysis and response",
+  "item": [
+    {
+      "item": [
+        {
+          "type": "string",
+          "linkId": "8092209266961",
+          "text": "Reporting Jurisdiction"
+        },
+        {
+          "type": "choice",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ]
+              }
+            }
+          ],
+          "linkId": "3010610339059",
+          "text": "Reporting Health Department",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "display": "State Health Department"
+              }
+            },
+            {
+              "valueCoding": {
+                "display": "Local Health Department"
+              }
+            },
+            {
+              "valueCoding": {
+                "display": "Territorial Health Department"
+              }
+            },
+            {
+              "valueCoding": {
+                "display": "Tribal Health Department"
+              }
+            }
+          ]
+        },
+        {
+          "type": "string",
+          "linkId": "6997618128160",
+          "text": "Case state/local ID"
+        },
+        {
+          "type": "string",
+          "linkId": "101941631919",
+          "text": "CDC 2019-nCoV ID"
+        },
+        {
+          "type": "string",
+          "linkId": "3934736439180",
+          "text": "Contact ID"
+        },
+        {
+          "type": "string",
+          "linkId": "4834595214864",
+          "text": "NNDSS loc. rec. ID/Case ID"
+        }
+      ],
+      "type": "group",
+      "linkId": "7289807308000",
+      "text": "Location Details"
+    },
+    {
+      "type": "display",
+      "linkId": "7093074055527",
+      "text": "Patient Identifier Information"
+    },
+    {
+      "type": "display",
+      "linkId": "7509123356566",
+      "text": "Case Classification and Identification"
+    },
+    {
+      "type": "display",
+      "linkId": "2931781383849",
+      "text": "Hospitalization, ICU, and Death Information"
+    },
+    {
+      "type": "group",
+      "linkId": "1240917827347",
+      "text": "Case Demographics",
+      "item": [
+        {
+          "type": "integer",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+              "valueCoding": {
+                "system": "http://unitsofmeasure.org",
+                "code": "[in_i]",
+                "display": "inch"
+              }
+            }
+          ],
+          "linkId": "6086037378381",
+          "text": "Height"
+        },
+        {
+          "type": "decimal",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+              "valueCoding": {
+                "system": "http://unitsofmeasure.org",
+                "code": "[lb_av]",
+                "display": "pound"
+              }
+            }
+          ],
+          "linkId": "446754111304",
+          "text": "Weight"
+        }
+      ]
+    },
+    {
+      "type": "display",
+      "linkId": "5637059805086",
+      "text": "Healthcare Worker Information"
+    },
+    {
+      "type": "display",
+      "linkId": "2967536966978",
+      "text": "Exposure Information"
+    },
+    {
+      "item": [
+        {
+          "item": [
+            {
+              "type": "decimal",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+                  "valueCoding": {
+                    "system": "http://unitsofmeasure.org",
+                    "code": "[degF]",
+                    "display": "degrees Fahrenheit"
+                  }
+                }
+              ],
+              "linkId": "2873754464275",
+              "text": "Fever"
+            },
+            {
+              "type": "integer",
+              "linkId": "8154490208894",
+              "text": "Diarrhea (in 24 hours)"
+            }
+          ],
+          "type": "group",
+          "linkId": "6011896076236",
+          "text": "Symptoms"
+        },
+        {
+          "type": "group",
+          "linkId": "1290004753376",
+          "text": "Medical Conditions",
+          "item": [
+            {
+              "type": "decimal",
+              "linkId": "3480464648200",
+              "text": "Severe obesity"
+            }
+          ]
+        }
+      ],
+      "type": "group",
+      "linkId": "9971100509075",
+      "text": "Clinical Course, Symptoms, Past Medical History, and Social History"
+    },
+    {
+      "type": "display",
+      "linkId": "600015755684",
+      "text": "Specimens for COVID-19 Testing"
+    }
+  ]
+}
