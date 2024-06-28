@@ -2,7 +2,7 @@ import React from 'react';
 
 
 
-import { AnfStatementConnectorAnfOperatorTypeEnum, QuestionnaireItem } from '@/config/interface';
+import { AnfStatementConnectorAnfOperatorTypeEnum, QuestionnaireItem } from '@/generated-api-ts/questionnaire/api';
 import { Card } from '@nextui-org/react';
 import { Select, SelectItem, SelectSection } from '@nextui-org/select';
 

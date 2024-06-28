@@ -2,7 +2,7 @@ import React from 'react';
 
 
 
-import { Code, QuestionnaireItem } from '@/config/interface';
+import { Code, QuestionnaireItem } from '@/generated-api-ts/questionnaire/api';
 import { generateUUID } from '@/lib/utils';
 import { Input } from '@nextui-org/input';
 import { Card } from '@nextui-org/react';

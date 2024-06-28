@@ -7,8 +7,9 @@
     "lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "cy": "cypress open"
-
+    "cy": "cypress open",
+    "generated-iam-api": "npx @openapitools/openapi-generator-cli generate -i ./src/store/iam_api.json  -g typescript-axios -o ./src/generated-api-ts/iam",
+    "generated-questionnaire-api": "npx @openapitools/openapi-generator-cli generate -i ./src/store/questionnaire_api.json -g typescript-axios -o ./src/generated-api-ts/questionnaire"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
