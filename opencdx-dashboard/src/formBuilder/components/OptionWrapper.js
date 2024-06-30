@@ -8,6 +8,7 @@ import { CustomTabs } from './ui-component/CustomTabs';
 
 const ANF_OPERATOR_TYPE_EQUAL = 'ANF_OPERATOR_TYPE_EQUAL';
 const ANF_OPERATOR_TYPE_NOT_EQUAL = 'ANF_OPERATOR_TYPE_NOT_EQUAL';
+const ANF_OPERATOR_TYPE_UNSPECIFIED = 'ANF_OPERATOR_TYPE_UNSPECIFIED';
 
 const OptionWrapper = React.forwardRef(({ control, register, index, item }, ref) => {
     const [showValueField, setShowValueField] = React.useState(false);
@@ -32,7 +33,8 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item }, ref)
             case 'logical':
                 return [
                     { value: ANF_OPERATOR_TYPE_EQUAL, label: 'Equal' },
-                    { value: ANF_OPERATOR_TYPE_NOT_EQUAL, label: 'Not Equal' }
+                    { value: ANF_OPERATOR_TYPE_NOT_EQUAL, label: 'Not Equal' },
+                    { value: ANF_OPERATOR_TYPE_UNSPECIFIED, label: 'Unspecified' }
                 ];
             default:
                 return ['Not Answered'];

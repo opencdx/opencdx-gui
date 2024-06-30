@@ -110,7 +110,7 @@ const FormBuilder = () => {
     const [open, setOpen] = React.useState(true);
     const [openDialog, setOpenDialog] = React.useState(false);
     const [openAnfDialog, setOpenAnfDialog] = React.useState(false);
-    const { formData, setFormData, uploadData, setUploadData, setAnfData } = useAnfFormStore();
+    const { formData, setFormData, uploadData, setUploadData, setAnfData, setIsListOpen } = useAnfFormStore();
 
     const handleChange = (e) => {
         setFormData({});
@@ -120,9 +120,11 @@ const FormBuilder = () => {
         fileReader.readAsText(e.target.files[0], 'UTF-8');
         fileReader.onload = (e) => {
             const formData = JSON.parse(e.target.result);
+            delete formData.id;
             setFormData(formData);
             setUploadData(formData);
             setAnfData(formData);
+            setIsListOpen(false);
         };
     };
 
