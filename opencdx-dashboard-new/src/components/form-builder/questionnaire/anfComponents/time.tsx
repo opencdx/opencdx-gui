@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { QuestionnaireItem } from '@/config/interface';
+import { QuestionnaireItem } from '@/generated-api-ts/questionnaire/api';
 import { Input } from '@nextui-org/input';
 import { Card, Radio, RadioGroup } from '@nextui-org/react';
 

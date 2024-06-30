@@ -2,7 +2,7 @@ import React from 'react';
 
 import {
   QuestionnaireItem
-} from '@/config/interface';
+} from '@/generated-api-ts/questionnaire/api';
 import { ComponentIDWrapper } from './componentID';
 import { ComponentTypeWrapper } from './componentType';
 import { OperatorWrapper } from './operator';

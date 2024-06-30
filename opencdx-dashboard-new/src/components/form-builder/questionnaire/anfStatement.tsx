@@ -2,7 +2,7 @@ import React from 'react';
 
 
 
-import { QuestionnaireItem } from '@/config/interface';
+import { QuestionnaireItem } from '@/generated-api-ts/questionnaire/api'
 import { Accordion, AccordionItem, Card, CardBody, CardHeader, Tab, Tabs } from '@nextui-org/react';
 
 
@@ -13,7 +13,7 @@ import { TimeWrapper } from './anfComponents/time';
 const ANFStatementWrapper = ({ item }: { item: QuestionnaireItem }) => {
   let tabs = [
     {
-      id: 'photos',
+      id: 'time',
       label: 'Time',
       content: <TimeWrapper item={item} />,
     },
