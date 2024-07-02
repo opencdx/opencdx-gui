@@ -12,7 +12,7 @@ import { ANFStatementWrapper } from './anfStatement';
 const QuestionnaireItemWrapper = ({ item }: { item: QuestionnaireItem }) => {
   return (
     <>
-     <ComponentIDWrapper item={item} />
+     {/* <ComponentIDWrapper item={item} /> */}
      <ComponentTypeWrapper item={item}  />
      <OperatorWrapper item={item}  />
      <ANFStatementWrapper item={item}  />
