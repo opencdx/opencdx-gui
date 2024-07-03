@@ -1,15 +1,26 @@
 'use client';
+
 import React, { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
-import { Endpoints } from '@/axios/apiEndpoints';
-import { Input } from '@nextui-org/Input';
-import { Button } from '@/components/ui/Button';
+
 import { Link } from '@nextui-org/link';
-import { Card, CardBody, CardFooter, CardHeader, Divider, Image } from '@nextui-org/react';
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Divider,
+  Image,
+} from '@nextui-org/react';
 import { toast, ToastContainer } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
-import { EyeIcon, EyeOffIcon } from 'lucide-react'
+
+import { Endpoints } from '@/axios/apiEndpoints';
+import { Button } from 'hello-world-gui/src/components/ui/Button';
+import { Input } from 'hello-world-gui/src/components/ui/Input';
+import { EyeIcon, EyeOffIcon } from 'lucide-react';
 
 export default function Login() {
   const router = useRouter();
@@ -26,18 +37,13 @@ export default function Login() {
       const response = await Endpoints.login({ userName, password });
 
       const data = response.data;
+
       if (data.token) {
         localStorage.setItem('serviceToken', data.token);
-        toast.success('Login Success !', {
-          position: 'top-center',
-          autoClose: 2000,
-          onClose: () => {
-            router.push('/form-builder');
-          },
-        });
+        router.push('/dashboard');
       } else {
         toast.error(data.message || 'Login failed', {
-          position: 'top-center',
+          position: 'top-right',
           autoClose: 2000,
         });
       }
@@ -52,41 +58,50 @@ export default function Login() {
   return (
     <div className="flex justify-center items-center h-screen min-h-[calc(100vh - 68px)]">
       <form
-        onSubmit={handleSubmit}
         className="flex justify-center items-center"
+        onSubmit={handleSubmit}
       >
-        <Card className="w-[450px] max-w-full p-4">
+        <Card
+          aria-label="login form"
+          className="w-[450px] max-w-full p-4"
+          tabIndex={0}
+        >
           <CardHeader className="flex justify-center">
-            <div tabIndex={0} aria-label='open'>
+            <div aria-label="open">
               <Image
                 alt="opencdx logo s"
+                aria-label="Login Logo"
                 height={40}
                 radius="sm"
-                aria-label='Login Logo'
                 src="/opencdx.png"
+                tabIndex={0}
                 width={100}
               />
             </div>
           </CardHeader>
           <CardBody className="grid gap-4">
-
             <Input
+              required
+              defaultValue=""
               id="email"
               label="Email address/ Username"
               type="userName"
-              required
-              defaultValue=""
+              isRequired
             />
 
             <Input
               id="password"
               label="Password"
-              required
               defaultValue=""
-              type={isVisible ? "text" : "password"}
-
+              isRequired
+              type={isVisible ? 'text' : 'password'}
               endContent={
-                <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
+                <button
+                  aria-label="toggle password visibility"
+                  className="focus:outline-none"
+                  type="button"
+                  onClick={toggleVisibility}
+                >
                   {isVisible ? (
                     <EyeIcon className="text-2xl text-default-400 pointer-events-none" />
                   ) : (
@@ -95,19 +110,18 @@ export default function Login() {
                 </button>
               }
             />
-
           </CardBody>
           <CardFooter>
-            <Button type="submit" className="w-full" color="primary">
+            <Button className="w-full" color="primary" type="submit">
               Sign in
             </Button>
           </CardFooter>
           <Divider />
           <CardFooter className="flex justify-center">
             <Link
+              className="text-center"
               color="foreground"
               onClick={() => router.push('/register')}
-              className="text-center"
             >
               Don&apos;t have an account?
             </Link>

@@ -2,11 +2,12 @@ import '@/styles/globals.css';
 
 import { Metadata, Viewport } from 'next';
 
-import SideNav from '@/components/form-builder/builder-side-nav';
+import { Navbar } from '@/components/navbar';
+import SideNav from '@/components/side-nav';
 import { siteConfig } from '@/config/site';
+import { Divider } from '@nextui-org/react';
 
-import Header from '../../../components/form-builder/header';
-import { Providers } from '@/app/providers';
+import { Providers } from '../../providers';
 
 export const metadata: Metadata = {
   title: {
@@ -32,13 +33,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Providers themeProps={{ attribute: 'class', defaultTheme: 'light' }}>
-      <Header />
+    <Providers
+      themeProps={{ attribute: 'class', defaultTheme: 'light', children }}
+    >
+      <Navbar />
+      <Divider />
       <div className="flex">
-        <div className="w-full">
-          <div className="sm:h-[calc(99vh-60px)]">
-            <div className="w-full flex justify-center mx-auto h-[calc(100vh - 120px)] overflow-y-auto relative">
-              <div className="w-full">{children}</div>
+        <SideNav />
+        <div className="w-full overflow-x-auto">
+          <div className="sm:h-[calc(99vh-60px)] overflow-auto ">
+            <div className="w-full flex justify-center mx-auto   overflow-auto h-[calc(100vh - 120px)] overflow-y-auto relative">
+              <div className="w-full md:max-w-6xl">{children}</div>
             </div>
           </div>
         </div>

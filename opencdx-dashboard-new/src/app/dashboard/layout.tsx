@@ -3,7 +3,7 @@ import '@/styles/globals.css';
 import { Metadata, Viewport } from 'next';
 
 import { Navbar } from '@/components/navbar';
-import TreeView from '@/components/tree-view';
+import  SideNav  from '@/components/side-nav';
 import { siteConfig } from '@/config/site';
 import { Divider } from '@nextui-org/react';
 
@@ -39,8 +39,7 @@ export default function RootLayout({
       <Navbar />
       <Divider />
       <div className="flex">
-        {/* <SideNav /> */}
-        <TreeView />
+        <SideNav />
         <div className="w-full overflow-x-auto">
           <div className="sm:h-[calc(99vh-60px)] overflow-auto ">
             <div className="w-full flex justify-center mx-auto   overflow-auto h-[calc(100vh - 120px)] overflow-y-auto relative">

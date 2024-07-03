@@ -2,9 +2,9 @@
 
 import React from 'react';
 
-import { Button } from '@/components/ui/Button';
-import { CheckboxGroup } from "@/components/ui/Checkbox";
-import { Checkbox } from "@/components/ui/Checkbox";
+import { Button } from 'hello-world-gui/src/components/ui/Button';
+import { CheckboxGroup } from "hello-world-gui/src/components/ui/Checkbox";
+import { Checkbox } from "hello-world-gui/src/components/ui/Checkbox";
 
 import { Accordion, AccordionItem, Divider, Radio, RadioGroup, Select, SelectItem, Switch } from '@nextui-org/react'; 
 
