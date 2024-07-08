@@ -8,12 +8,13 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "cy": "cypress open",
-    "generated-iam-api": "npx @openapitools/openapi-generator-cli generate -i ./src/store/iam_api.json  -g typescript-axios -o ./src/generated-api-ts/iam",
-    "generated-questionnaire-api": "npx @openapitools/openapi-generator-cli generate -i ./src/store/questionnaire_api.json -g typescript-axios -o ./src/generated-api-ts/questionnaire"
+    "generated-iam-api": "npx @openapitools/openapi-generator-cli generate -i ./src/lib/iam_api.json  -g typescript-axios -o ./src/generated-api-ts/iam",
+    "generated-questionnaire-api": "npx @openapitools/openapi-generator-cli generate -i ./src/lib/questionnaire_api.json -g typescript-axios -o ./src/generated-api-ts/questionnaire"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@hookform/resolvers": "^3.7.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
     "@mui/material": "^5.15.20",
     "@nextui-org/breadcrumbs": "^2.0.10",
@@ -67,6 +68,7 @@
     "primereact": "^10.6.6",
     "react": "18.3.1",
     "react-dom": "18.3.1",
+    "react-hook-form": "^7.52.1",
     "react-json-view-lite": "^1.4.0",
     "react-toastify": "^10.0.5",
     "tailwind-merge": "^2.3.0",
@@ -74,6 +76,7 @@
     "tailwindcss": "3.4.3",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.0.4",
+    "zod": "^3.23.8",
     "zustand": "^4.5.2"
   },
   "devDependencies": {

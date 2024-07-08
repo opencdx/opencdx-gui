@@ -2,33 +2,34 @@
 
 import React, { useEffect, useState } from 'react';
 
-
-
 import { useRouter } from 'next/navigation';
-
-
 
 import { Endpoints } from '@/axios/apiEndpoints';
 import { useAnfFormStore } from '@/lib/useAnfFormStore';
-import { Button } from '@nextui-org/button';
-import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@nextui-org/react';
-import { Download, Eye, FilePenLine, LayoutGrid, LayoutList, Trash2 } from 'lucide-react';
+import Button from '@mui/material/Button';
+import { Button as NButton } from '@nextui-org/button';
+import {
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from '@nextui-org/react';
+import {
+  Download,
+  Eye,
+  FilePenLine,
+  LayoutGrid,
+  LayoutList,
+  Trash2,
+  UploadIcon,
+} from 'lucide-react';
 import { allExpanded, defaultStyles, JsonView } from 'react-json-view-lite';
-
-
-
-
-
 
 import 'react-json-view-lite/dist/index.css';
 
-
-
 import { toast } from 'react-toastify';
-
-
-
-
 
 export default function ListQuestionnaire() {
   const [isGrid, setIsGrid] = useState(true);
@@ -86,6 +87,21 @@ export default function ListQuestionnaire() {
     //@ts-ignore
     return new Date(date).toLocaleDateString();
   };
+  const handleChange = (e: any) => {
+    const fileReader = new FileReader();
+    fileReader.readAsText(e.target.files[0], 'UTF-8');
+    fileReader.onload = (e) => {
+      const formData = e.target?.result
+        ? JSON.parse(e.target.result as string)
+        : null;
+      delete formData.id;
+      setFormData(formData);
+      localStorage.setItem('questionnaire-store', JSON.stringify(formData));
+      const newQuestionnaire = 'new-questionnaire';
+
+      router.push(`/edit-questionnaire/${newQuestionnaire}`);
+    };
+  };
   const handleDownload = () => {
     const data = JSON.stringify(json);
     const blob = new Blob([data], { type: 'application/json' });
@@ -96,42 +112,62 @@ export default function ListQuestionnaire() {
     link.click();
     URL.revokeObjectURL(url);
   };
+
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg sm:overflow-hidden dark:bg-gray-900 shadow-md border border-gray-200 dark:border-gray-700 rounded-lg dark:text-white dark:border-gray-700 mt-4">
-      <div
-        className="flex items-center mb-2 justify-end px-3 py-2"
-        id="view-toggle"
-        role="group"
-        aria-labelledby="view-toggle-label"
-        aria-orientation="horizontal"
-        aria-label="View Toggle"
-      >
-        <Button
-          id="grid-view-btn"
-          className={`focus:outline-none px-4 py-2 rounded-md text-sm font-medium ${
-            isGrid
-              ? 'text-gray-700 bg-white hover:bg-gray-100'
-              : 'text-gray-500'
-          } dark:text-gray-400 dark:bg-gray-700`}
-          onClick={handleViewToggle}
-          startContent={<LayoutGrid size={16} />}
+      <div className="flex items-center justify-between px-3 py-2">
+        <div
+          className="flex items-center mb-2 justify-start px-3 py-2"
+          id="upload"
+          role="group"
+          aria-labelledby="view-toggle-label"
+          aria-orientation="horizontal"
+          aria-label="View Toggle"
         >
-          Grid
-        </Button>
-        <Button
-          id="list-view-btn"
-          className={`focus:outline-none mx-2 px-4 py-2 rounded-md text-sm font-medium ${
-            !isGrid
-              ? 'text-gray-700 bg-white hover:bg-gray-100'
-              : 'text-gray-500'
-          } dark:text-gray-400 dark:bg-gray-700`}
-          onClick={handleViewToggle}
-          startContent={<LayoutList size={16} />}
+          <Button
+            onChange={handleChange}
+            component="label"
+            variant="contained"
+            color="primary"
+            startIcon={<UploadIcon />}
+          >
+            <input type="file" hidden />
+          </Button>
+        </div>
+        <div
+          className="flex items-center mb-2 justify-end px-3 py-2"
+          id="view-toggle"
+          role="group"
+          aria-labelledby="view-toggle-label"
+          aria-orientation="horizontal"
+          aria-label="View Toggle"
         >
-          List
-        </Button>
+          <NButton
+            id="grid-view-btn"
+            className={`focus:outline-none px-4 py-2 rounded-md text-sm font-medium ${
+              isGrid
+                ? 'text-gray-700 bg-white hover:bg-gray-100'
+                : 'text-gray-500'
+            } dark:text-gray-400 dark:bg-gray-700`}
+            onClick={handleViewToggle}
+            startContent={<LayoutGrid size={16} />}
+          >
+            Grid
+          </NButton>
+          <NButton
+            id="list-view-btn"
+            className={`focus:outline-none mx-2 px-4 py-2 rounded-md text-sm font-medium ${
+              !isGrid
+                ? 'text-gray-700 bg-white hover:bg-gray-100'
+                : 'text-gray-500'
+            } dark:text-gray-400 dark:bg-gray-700`}
+            onClick={handleViewToggle}
+            startContent={<LayoutList size={16} />}
+          >
+            List
+          </NButton>
+        </div>
       </div>
-
       {!isGrid ? (
         <div
           id="user-grid"
@@ -195,7 +231,7 @@ export default function ListQuestionnaire() {
                   </div>
                 </div>
                 <div className="flex items-center justify-between mt-4">
-                  <Button
+                  <NButton
                     onPress={() => {
                       setJson(questionnaire);
                       onOpen();
@@ -203,22 +239,22 @@ export default function ListQuestionnaire() {
                     className="py-2"
                   >
                     View
-                  </Button>
-                  <Button
+                  </NButton>
+                  <NButton
                     onPress={() => {
                       setFormData(questionnaire);
-                            localStorage.setItem(
-                              'questionnaire-store',
-                              JSON.stringify(questionnaire),
-                            );
+                      localStorage.setItem(
+                        'questionnaire-store',
+                        JSON.stringify(questionnaire),
+                      );
 
                       router.push(`/edit-questionnaire/${questionnaire.id}`);
                     }}
                     className="py-2"
                   >
                     Edit
-                  </Button>
-                  <Button
+                  </NButton>
+                  <NButton
                     onPress={() => {
                       setJson(questionnaire);
                       handleDownload();
@@ -226,8 +262,8 @@ export default function ListQuestionnaire() {
                     className="py-2"
                   >
                     Download
-                  </Button>
-                  <Button
+                  </NButton>
+                  <NButton
                     onPress={() => {
                       const params = {
                         id: questionnaire.id,
@@ -252,7 +288,7 @@ export default function ListQuestionnaire() {
                     className="py-2"
                   >
                     Delete
-                  </Button>
+                  </NButton>
                 </div>
               </div>
             ),
@@ -345,7 +381,7 @@ export default function ListQuestionnaire() {
                     </div>
                   </td>
                   <td className=" text-sm font-medium px-6 py-4 whitespace-nowrap space-x-2">
-                    <Button
+                    <NButton
                       isIconOnly
                       onPress={() => {
                         setJson(questionnaire);
@@ -353,8 +389,8 @@ export default function ListQuestionnaire() {
                       }}
                     >
                       <Eye size={16} />
-                    </Button>
-                    <Button
+                    </NButton>
+                    <NButton
                       isIconOnly
                       onPress={() => {
                         setFormData(questionnaire);
@@ -366,8 +402,8 @@ export default function ListQuestionnaire() {
                       }}
                     >
                       <FilePenLine size={16} />
-                    </Button>
-                    <Button
+                    </NButton>
+                    <NButton
                       isIconOnly
                       onPress={() => {
                         setJson(questionnaire);
@@ -375,8 +411,8 @@ export default function ListQuestionnaire() {
                       }}
                     >
                       <Download size={16} />
-                    </Button>
-                    <Button
+                    </NButton>
+                    <NButton
                       isIconOnly
                       onPress={() => {
                         const params = {
@@ -401,7 +437,7 @@ export default function ListQuestionnaire() {
                       }}
                     >
                       <Trash2 size={16} />
-                    </Button>
+                    </NButton>
                   </td>
                 </tr>
               ),
@@ -425,9 +461,9 @@ export default function ListQuestionnaire() {
                 />
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
+                <NButton color="danger" variant="light" onPress={onClose}>
                   Close
-                </Button>
+                </NButton>
               </ModalFooter>
             </>
           )}

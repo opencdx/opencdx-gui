@@ -12,7 +12,7 @@ import ANFStatementPlaceholder from 'ui-component/cards/Skeleton/ANFStatementPla
 const ListQuestionnaire = () => {
     const dispatch = useDispatch();
 
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const [userResponses, setUserResponses] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -123,7 +123,7 @@ const ListQuestionnaire = () => {
                                                                     setFormData(response);
                                                                     setUploadData(response);
                                                                     setAnfData(response);
-                                                                    setOpen(false);
+                                                                    // setOpen(false);
                                                                 }}
                                                             >
                                                                 {'View / Update'}

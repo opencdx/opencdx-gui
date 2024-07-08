@@ -50,7 +50,7 @@ const MainWrapper = ({ uploadedFile }) => {
         console.log('tempData', tempData);
         tempData.item = tempData.item.map(({ componentType, operatorValue, componentTypeAssociated, markedMainANFStatement, selectedCategories, componentId, answerTextValue, items, ...rest }) => {
         /* eslint-enable */
-                let { anfStatement } = rest?.item[0]?.anfStatementConnector[0] || {};
+                let { anfStatement } = rest?.anfStatementConnector[0] || {};
 
                 if (anfStatement) {
                     if (anfStatement.authors && !Array.isArray(anfStatement.authors)) {
@@ -83,10 +83,10 @@ const MainWrapper = ({ uploadedFile }) => {
                     }
                     delete anfStatement.performanceCircumstance?.circumstanceType;
                 }
-                rest.item[0].anfStatementConnector[0].anfStatement.topic = JSON.stringify(
-                    rest.item[0].anfStatementConnector[0].anfStatement.topic
+                rest.anfStatementConnector[0].anfStatement.topic = JSON.stringify(
+                    rest.anfStatementConnector[0].anfStatement.topic
                 );
-                rest.item[0].anfStatementConnector[0].anfStatementType = componentType;
+                rest.anfStatementConnector[0].anfStatementType = componentType;
                 return { ...rest };
             }
         );
@@ -106,21 +106,8 @@ const MainWrapper = ({ uploadedFile }) => {
                 });
                 setAnfData(response.data);
             }
-            // setAnfData(anf);
             window.location.reload();
-            // response &&
-            //     dispatchSnack(
-            //         openSnackbar({
-            //             open: true,
-            //             message: 'Successfully saved',
-            //             variant: 'alert',
-            //             alert: {
-            //                 color: 'success'
-            //             },
-            //             close: false
-            //         })
-            //     );
-            // localStorage.setItem('anf-form', JSON.stringify(anf));
+          
         } catch (error) {
             dispatchSnack(
                 openSnackbar({

@@ -52,7 +52,7 @@ export const ParticipantComponent = React.forwardRef(({ register, index, current
                             {renderTextField(
                                 register,
                                 'ID',
-                                `item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.${tab}.id`,
+                                `item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.id`,
                                 'Enter ID Value',
                                 state.id,
                                 (e) => setState({ ...state, id: e.target.value })
@@ -62,7 +62,7 @@ export const ParticipantComponent = React.forwardRef(({ register, index, current
                             {renderTextField(
                                 register,
                                 'Practitioner',
-                                `item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.${tab}.practitionerValue`,
+                                `item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.practitionerValue`,
                                 'Enter Practitioner Value',
                                 state.practitionerValue,
                                 (e) => setState({ ...state, practitionerValue: e.target.value })
@@ -72,7 +72,7 @@ export const ParticipantComponent = React.forwardRef(({ register, index, current
                             {renderTextField(
                                 register,
                                 'Code',
-                                `item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.${tab}.code`,
+                                `item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.code`,
                                 'Enter Code Value',
                                 state.code,
                                 (e) => setState({ ...state, code: e.target.value })

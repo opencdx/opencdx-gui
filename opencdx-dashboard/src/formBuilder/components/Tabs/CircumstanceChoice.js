@@ -27,7 +27,7 @@ export const CircumstanceChoice = React.forwardRef(({ control, register, index, 
                     <Grid item xs={12} sm={9} lg={8}>
                         <FormControl fullWidth>
                             <Controller
-                                name={`item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.performanceCircumstance.circumstanceType`}
+                                name={`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.performanceCircumstance.circumstanceType`}
                                 control={control}
                                 defaultValue={'PERFORMANCE_CIRCUMSTANCE'}
                                 render={({ field }) => (
@@ -63,7 +63,7 @@ export const CircumstanceChoice = React.forwardRef(({ control, register, index, 
                                     render={({ field }) => (
                                         <Select
                                             {...field}
-                                            id={`item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.performanceCircumstance.status`}
+                                            id={`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.performanceCircumstance.status`}
                                         >
                                             <MenuItem value={10}>On Hold</MenuItem>
                                             <MenuItem value={20}>Completed</MenuItem>
@@ -88,7 +88,7 @@ export const CircumstanceChoice = React.forwardRef(({ control, register, index, 
                             {componentType ? (
                                 <TextField
                                     {...register(
-                                        `item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.performanceCircumstance.healthRisk`
+                                        `item.${index}.anfStatementConnector.${currentIndex}.anfStatement.performanceCircumstance.healthRisk`
                                     )}
                                     fullWidth
                                     placeholder="Enter Health Risk Information"
@@ -97,7 +97,7 @@ export const CircumstanceChoice = React.forwardRef(({ control, register, index, 
                             ) : (
                                 <TextField
                                     {...register(
-                                        `item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.performanceCircumstance.healthRisk`
+                                        `item.${index}.anfStatementConnector.${currentIndex}.anfStatement.performanceCircumstance.healthRisk`
                                     )}
                                     fullWidth
                                     placeholder="Enter Health Risk Information"

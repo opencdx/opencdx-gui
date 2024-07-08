@@ -26,7 +26,7 @@ export default function EditQuestionareePage({
       >
         Back
       </Button>
-      <EditQuestionnaire  />
+      <EditQuestionnaire id={id} />
     </div>
   );
 }
