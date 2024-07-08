@@ -1,6 +1,6 @@
 'use client';
 import { Fragment } from 'react';
-import { NavItems } from '@/configs';
+import { NavItems } from '@/config/site';
 import { Accordion, AccordionItem } from '@nextui-org/react';
 import { Maximize, Minimize } from 'lucide-react';
 

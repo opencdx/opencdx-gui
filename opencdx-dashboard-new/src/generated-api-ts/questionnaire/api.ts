@@ -695,6 +695,12 @@ export interface Questionnaire {
      * @memberof Questionnaire
      */
     'modifier'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Questionnaire
+     */
+    'version'?: string;
 }
 
 export const QuestionnaireStatusEnum = {

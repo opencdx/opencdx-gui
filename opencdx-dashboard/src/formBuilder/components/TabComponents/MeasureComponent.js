@@ -36,7 +36,7 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                                 {componentType ? (
                                     <TextField
                                         {...register(
-                                            `item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.${tab}.lowerBound`
+                                            `item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.lowerBound`
                                         )}
                                         fullWidth
                                         type="text"
@@ -49,7 +49,7 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                                 ) : (
                                     <TextField
                                         {...register(
-                                            `item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.${tab}.lowerBound`
+                                            `item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.lowerBound`
                                         )}
                                         fullWidth
                                         type="text"
@@ -68,7 +68,7 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                                     <Controller
                                         control={control}
                                         {...register(
-                                            `item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.${tab}.includeLowerBound`
+                                            `item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.includeLowerBound`
                                         )}
                                         render={({ field }) =>
                                             componentType ? (
@@ -113,7 +113,7 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                                 {componentType ? (
                                     <TextField
                                         {...register(
-                                            `item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.${tab}.semantic`
+                                            `item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.semantic`
                                         )}
                                         fullWidth
                                         value={semanticState}
@@ -125,7 +125,7 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                                 ) : (
                                     <TextField
                                         {...register(
-                                            `item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.${tab}.semantic`
+                                            `item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.semantic`
                                         )}
                                         fullWidth
                                         placeholder="Enter Semantic Value"
@@ -141,7 +141,7 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                     <Grid item xs={12} sm={8} lg={8}>
                         {componentType ? (
                             <TextField
-                                {...register(`item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.${tab}.resolution`)}
+                                {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.resolution`)}
                                 fullWidth
                                 value={resolutionState}
                                 onChange={(e) => {
@@ -152,7 +152,7 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                             />
                         ) : (
                             <TextField
-                                {...register(`item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.${tab}.resolution`)}
+                                {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.resolution`)}
                                 fullWidth
                                 type="text"
                                 InputProps={{
@@ -170,7 +170,7 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                         {componentType ? (
                             <TextField
                                 type={'text'}
-                                {...register(`item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.${tab}.upperBound`)}
+                                {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.upperBound`)}
                                 fullWidth
                                 value={upperBoundState}
                                 onChange={(e) => {
@@ -180,7 +180,7 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                             />
                         ) : (
                             <TextField
-                                {...register(`item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.${tab}.upperBound`)}
+                                {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.upperBound`)}
                                 fullWidth
                                 InputProps={{
                                     inputProps: { min: 0 }
@@ -198,7 +198,7 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                             <Controller
                                 control={control}
                                 {...register(
-                                    `item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.${tab}.includeUpperBound`
+                                    `item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.includeUpperBound`
                                 )}
                                 render={({ field }) =>
                                     componentType ? (

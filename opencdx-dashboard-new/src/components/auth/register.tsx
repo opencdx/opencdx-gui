@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { Endpoints } from '@/axios/apiEndpoints';
-import { Input } from 'hello-world-gui/src/components/ui/Input';
 import { Link } from '@nextui-org/link';
 import {
   Button,
@@ -16,6 +15,7 @@ import {
   Divider,
   Image,
 } from '@nextui-org/react';
+import { Input } from 'hello-world-gui/src/components/ui/Input';
 
 export default function Register() {
   const router = useRouter();
@@ -87,7 +87,7 @@ export default function Register() {
                   required
                   defaultValue=""
                   id="userName"
-                  label="Email address/ Username"
+                  label="Email address"
                   type="email"
                   isRequired
                 />

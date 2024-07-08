@@ -10,14 +10,14 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from 'hello-world-gui/src/components/ui/tooltip';
-import { NavItems } from '@/configs';
+import { NavItems } from '@/config/site';
 import { cn } from '@/lib/utils';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function SideNav() {
   const navItems = NavItems();
 
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
 
  
   // Toggle the sidebar state

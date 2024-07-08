@@ -2,11 +2,21 @@
 
 import React from 'react';
 
+import {
+  Accordion,
+  AccordionItem,
+  Divider,
+  Radio,
+  RadioGroup,
+  Select,
+  SelectItem,
+  Switch,
+} from '@nextui-org/react';
 import { Button } from 'hello-world-gui/src/components/ui/Button';
-import { CheckboxGroup } from "hello-world-gui/src/components/ui/Checkbox";
-import { Checkbox } from "hello-world-gui/src/components/ui/Checkbox";
-
-import { Accordion, AccordionItem, Divider, Radio, RadioGroup, Select, SelectItem, Switch } from '@nextui-org/react'; 
+import {
+  Checkbox,
+  CheckboxGroup,
+} from 'hello-world-gui/src/components/ui/Checkbox';
 
 export const cities = [
   { key: 'sydney', label: 'Sydney' },

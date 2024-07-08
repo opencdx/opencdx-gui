@@ -63,22 +63,19 @@ export default function App({ questionnaire, navigation }) {
 
     const userQuestionnaireData = {
       userQuestionnaireData: {
-        patientId: "6622c6c330275c13ca7b8ff3",
+        patientId: "66880f05f409fa6671aae664",
         questionnaireData: [questionnaire],
       },
     };
 
     const handleSave = async () => {
       const data = JSON.stringify(userQuestionnaireData);
-      console.log(data);
-      navigation.navigate("Success");
-
-      // try {
-      //   const response = await Endpoints.submitUserQuestionnaire(data);
-      //   navigation.navigate("Success");
-      // } catch (error) {
-      //   alert(error);
-      // }
+      try {
+        const response = await Endpoints.submitUserQuestionnaire(data);
+        navigation.navigate("Success");
+      } catch (error) {
+        alert(error);
+      }
     };
     handleSave();
   };

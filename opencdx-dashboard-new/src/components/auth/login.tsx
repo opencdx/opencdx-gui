@@ -40,7 +40,7 @@ export default function Login() {
 
       if (data.token) {
         localStorage.setItem('serviceToken', data.token);
-        router.push('/dashboard');
+        router.push('/form-builder');
       } else {
         toast.error(data.message || 'Login failed', {
           position: 'top-right',
@@ -82,9 +82,9 @@ export default function Login() {
           <CardBody className="grid gap-4">
             <Input
               required
-              defaultValue=""
+              defaultValue="admin@opencdx.org"
               id="email"
-              label="Email address/ Username"
+              label="Email address"
               type="userName"
               isRequired
             />
@@ -92,7 +92,7 @@ export default function Login() {
             <Input
               id="password"
               label="Password"
-              defaultValue=""
+              defaultValue="password"
               isRequired
               type={isVisible ? 'text' : 'password'}
               endContent={

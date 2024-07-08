@@ -10,10 +10,9 @@ import { Providers } from './providers';
 
 export const metadata: Metadata = {
   title: {
-    default: siteConfig.name,
-    template: `%s - ${siteConfig.name}`,
+    default: 'OpenCDX',
+    template: `%s - Dashboard - OpenCDX`,
   },
-  description: siteConfig.description,
   icons: {
     icon: '/open-logo.png',
   },
