@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { AnfStatementConnectorAnfStatementTypeEnum } from '@/generated-api-ts/questionnaire/api';
-import { FormControl, FormControlLabel, Grid } from '@mui/material';
 import { Card, cn, Radio, RadioGroup } from '@nextui-org/react';
 import { Controller, useFormContext } from 'react-hook-form';
 
@@ -24,17 +23,20 @@ export const CustomRadio = (props: any) => {
   );
 };
 const ComponentTypeWrapper = ({
-  anfStatementType,
   questionnaireItemId,
   anfStatementConnectorId,
+  currentComponentType,
+  onValueChange,
+
 }: {
-  anfStatementType: AnfStatementConnectorAnfStatementTypeEnum;
   questionnaireItemId: number;
   anfStatementConnectorId: number;
+  currentComponentType: string;
+  onValueChange: (value: AnfStatementConnectorAnfStatementTypeEnum) => void;
 }) => {
   const { register, control } = useFormContext();
 
-  const { name, ref, ...rest } = register(
+  const { name, ref } = register(
     `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatementType`,
   );
 
@@ -52,7 +54,7 @@ const ComponentTypeWrapper = ({
               label="Component Type"
               onChange={(e) => {
                 field.onChange(e.target.value);
-                console.log('e.target.value', e.target.value);
+                onValueChange(e.target.value as AnfStatementConnectorAnfStatementTypeEnum);
               }}
             >
               <CustomRadio

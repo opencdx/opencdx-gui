@@ -7,7 +7,6 @@ import {
   Questionnaire,
   QuestionnaireItem,
 } from '@/generated-api-ts/questionnaire/api';
-import { useAnfFormStore } from '@/lib/useAnfFormStore';
 import {
   Accordion,
   AccordionItem,
@@ -16,16 +15,9 @@ import {
   CardBody,
 } from '@nextui-org/react';
 import {
-  ErrorOption,
-  FieldError,
-  FieldValues,
   FormProvider,
-  FormState,
-  SubmitErrorHandler,
-  SubmitHandler,
   useFieldArray,
   useForm,
-  useFormContext,
 } from 'react-hook-form';
 import { toast, ToastContainer } from 'react-toastify';
 
@@ -33,18 +25,16 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { QuestionnaireItemWrapper } from './questionnaireItem';
 
-const QuestionnaireWrapper = (id: string) => {
-  const idval = id?.id?.id;
-  // const { formData } = useAnfFormStore();
+const QuestionnaireWrapper = () => {
   const { control, register, handleSubmit, getValues } = useForm<Questionnaire>(
     {
       defaultValues: async () => {
-        return JSON.parse(localStorage.getItem('questionnaire-store'));
+        return JSON.parse(localStorage.getItem('questionnaire-store') as string);
       },
     },
   );
 
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+  const { fields } = useFieldArray(
     {
       control,
       name: 'item',
@@ -86,7 +76,6 @@ const QuestionnaireWrapper = (id: string) => {
           register={register}
           control={control}
           getValues={getValues}
-          append={append}
         >
           <form onSubmit={handleSubmit(onSubmit)}>
             <Card className="mb-4 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700">

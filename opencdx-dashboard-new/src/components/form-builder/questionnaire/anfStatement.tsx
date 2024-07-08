@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { ANFStatement } from '@/generated-api-ts/questionnaire/api';
+import {
+  ANFStatement,
+  QuestionnaireItem,
+} from '@/generated-api-ts/questionnaire/api';
 import {
   Accordion,
   AccordionItem,
@@ -20,21 +23,19 @@ import {
 import { Code, Monitor } from 'lucide-react';
 
 import { AuthorsWrapper } from './anfComponents/authors';
-import { NarrativeCircumstanceWrapper } from './anfComponents/narrative-circumstance';
 import { PerformanceCircumstanceWrapper } from './anfComponents/performance-circumstance';
-import { RequestCircumstanceWrapper } from './anfComponents/request-circumstance';
 import { SubjectOfInformationWrapper } from './anfComponents/subject-of-information';
 import { SubjectOfRecordWrapper } from './anfComponents/subject-of-record';
 import { TimeWrapper } from './anfComponents/time';
 import { TopicWrapper } from './anfComponents/topic';
 import { TypeWrapper } from './anfComponents/type';
-// import { useAnfFormStore } from '@/lib/useAnfFormStore';
-
 
 const TestResultsTable: React.FC = () => {
-  const formData = JSON.parse(localStorage.getItem('questionnaire-store'))
+  const formData = JSON.parse(
+    localStorage.getItem('questionnaire-store') as string,
+  );
   return (
-    <div style={{ height: '300px', overflow: 'auto', width:'auto' }}>
+    <div style={{ height: '300px', overflow: 'auto', width: 'auto' }}>
       <table className="w-full table-auto mb-4 text-left">
         <thead className="border-b border-gray-200">
           <tr className="text-left">
@@ -43,7 +44,7 @@ const TestResultsTable: React.FC = () => {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">
-          {formData?.item.map((item, index) => (
+          {formData?.item.map((item: QuestionnaireItem, index: number) => (
             <tr key={index} className="border-b border-gray-200">
               <td className="py-4">{item.text}</td>
               <td className="py-4">
@@ -62,10 +63,12 @@ const ANFStatementWrapper = ({
   anfStatement,
   questionnaireItemId,
   anfStatementConnectorId,
+  currentComponentType,
 }: {
   anfStatement: ANFStatement;
   questionnaireItemId: number;
   anfStatementConnectorId: number;
+  currentComponentType: string;
 }) => {
   let tabs = [
     {
@@ -73,9 +76,9 @@ const ANFStatementWrapper = ({
       label: 'Time',
       content: (
         <TimeWrapper
-          item={anfStatement.time}
           anfStatementConnectorId={anfStatementConnectorId}
           questionnaireItemId={questionnaireItemId}
+          currentComponentType={currentComponentType}
         />
       ),
     },
@@ -84,7 +87,6 @@ const ANFStatementWrapper = ({
       label: 'Subject of Record',
       content: (
         <SubjectOfRecordWrapper
-          item={anfStatement.subjectOfRecord}
           anfStatementConnectorId={anfStatementConnectorId}
           questionnaireItemId={questionnaireItemId}
         />
@@ -95,7 +97,6 @@ const ANFStatementWrapper = ({
       label: 'Authors',
       content: (
         <AuthorsWrapper
-          item={anfStatement.authors}
           anfStatementConnectorId={anfStatementConnectorId}
           questionnaireItemId={questionnaireItemId}
         />
@@ -106,7 +107,6 @@ const ANFStatementWrapper = ({
       label: 'Subject of Information',
       content: (
         <SubjectOfInformationWrapper
-          item={anfStatement.subjectOfInformation}
           anfStatementConnectorId={anfStatementConnectorId}
           questionnaireItemId={questionnaireItemId}
         />
@@ -117,7 +117,6 @@ const ANFStatementWrapper = ({
       label: 'Topic',
       content: (
         <TopicWrapper
-          item={anfStatement.topic}
           anfStatementConnectorId={anfStatementConnectorId}
           questionnaireItemId={questionnaireItemId}
         />
@@ -128,7 +127,6 @@ const ANFStatementWrapper = ({
       label: 'Type',
       content: (
         <TypeWrapper
-          item={anfStatement.type}
           anfStatementConnectorId={anfStatementConnectorId}
           questionnaireItemId={questionnaireItemId}
         />
@@ -139,22 +137,11 @@ const ANFStatementWrapper = ({
       label: 'Circumstance Choice',
       content: (
         <PerformanceCircumstanceWrapper
-          item={anfStatement}
           anfStatementConnectorId={anfStatementConnectorId}
           questionnaireItemId={questionnaireItemId}
         />
       ),
     },
-    // {
-    //   id: 'requestCircumstance',
-    //   label: 'Request Circumstance',
-    //   content: <RequestCircumstanceWrapper item={anfStatement} anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} />,
-    // },
-    // {
-    //   id: 'narrativeCircumstance',
-    //   label: 'Narrative Circumstance',
-    //   content: <NarrativeCircumstanceWrapper item={anfStatement} anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} />,
-    // },
   ];
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -163,7 +150,6 @@ const ANFStatementWrapper = ({
       <Accordion variant="splitted">
         <AccordionItem title={'Anf Statement'}>
           <div className="flex justify-end">
-           
             <Button
               color="warning"
               variant="solid"
@@ -188,7 +174,7 @@ const ANFStatementWrapper = ({
               {(onClose) => (
                 <>
                   <ModalHeader className="flex flex-col gap-1">
-                  System Variables
+                    System Variables
                   </ModalHeader>
                   <ModalBody className="flex flex-col w-full">
                     <TestResultsTable />

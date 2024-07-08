@@ -83,9 +83,9 @@ const MainWrapper = ({ uploadedFile }) => {
                     }
                     delete anfStatement.performanceCircumstance?.circumstanceType;
                 }
-                rest.anfStatementConnector[0].anfStatement.topic = JSON.stringify(
-                    rest.anfStatementConnector[0].anfStatement.topic
-                );
+                // rest.anfStatementConnector[0].anfStatement.topic = JSON.stringify(
+                //     rest.anfStatementConnector[0].anfStatement.topic
+                // );
                 rest.anfStatementConnector[0].anfStatementType = componentType;
                 return { ...rest };
             }

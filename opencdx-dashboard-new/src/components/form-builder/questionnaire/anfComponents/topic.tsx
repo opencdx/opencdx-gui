@@ -1,15 +1,13 @@
 import React from 'react';
 
 import { Input } from '@nextui-org/input';
-import { Card, Radio, RadioGroup } from '@nextui-org/react';
+import { Card } from '@nextui-org/react';
 import { useFormContext } from 'react-hook-form';
 
 const TopicWrapper = ({
-  topic,
   anfStatementConnectorId,
   questionnaireItemId,
 }: {
-  topic: string;
   anfStatementConnectorId: number;
   questionnaireItemId: number;
 }) => {
