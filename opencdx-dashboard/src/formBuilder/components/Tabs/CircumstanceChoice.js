@@ -22,25 +22,10 @@ export const CircumstanceChoice = React.forwardRef(({ control, register, index, 
             <MainCard>
                 <Grid container spacing={2} alignItems="center">
                     <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important' } }}>
-                        <InputLabel horizontal>Circumstance Type</InputLabel>
+                        <InputLabel horizontal>Circumstance Type </InputLabel>
                     </Grid>
                     <Grid item xs={12} sm={9} lg={8}>
-                        <FormControl fullWidth>
-                            <Controller
-                                name={`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.performanceCircumstance.circumstanceType`}
-                                control={control}
-                                defaultValue={'PERFORMANCE_CIRCUMSTANCE'}
-                                render={({ field }) => (
-                                    <Select {...field}>
-                                        <MenuItem value={'PERFORMANCE_CIRCUMSTANCE'} defaultValue={10}>
-                                            Performance Circumstance
-                                        </MenuItem>
-                                        <MenuItem value={'REQUEST_CIRCUMSTANCE'}>Request Circumstance</MenuItem>
-                                        <MenuItem value={'NARRATIVE_CIRCUMSTANCE'}>Narrative Circumstance</MenuItem>
-                                    </Select>
-                                )}
-                            />
-                        </FormControl>
+                        <TextField fullWidth type="text" value="Performance Circumstance" />
                     </Grid>
                     <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important' } }}>
                         <InputLabel horizontal>Status</InputLabel>

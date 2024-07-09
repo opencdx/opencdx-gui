@@ -5,12 +5,12 @@ import { Controller } from 'react-hook-form';
 import { AccordianWrapper } from './ui-component/AccordianWrapper';
 import { CustomTabs } from './ui-component/CustomTabs';
 import { Button } from '@mui/material';
-
+import TextField from '@mui/material/TextField';
 
 const ANF_OPERATOR_TYPE_EQUAL = 'ANF_OPERATOR_TYPE_EQUAL';
 const ANF_OPERATOR_TYPE_NOT_EQUAL = 'ANF_OPERATOR_TYPE_NOT_EQUAL';
 
-const OptionWrapper = React.forwardRef(({ control, register, index, item, getValues}, ref) => {
+const OptionWrapper = React.forwardRef(({ control, register, index, item, getValues }, ref) => {
     // eslint-disable-next-line no-unused-vars
     const [showValueField, setShowValueField] = React.useState(false);
     const [anfStatementConnector, setAnfStatementConnector] = React.useState(item?.anfStatementConnector);
@@ -19,14 +19,13 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item, getVal
         const newConnector = {
             anfStatementType: '',
             anfOperatorType: '',
-            anfStatement: {},
+            anfStatement: {}
         };
 
         if (!anfStatementConnector) {
             setAnfStatementConnector([newConnector]);
             return;
-            
-        }else{
+        } else {
             setAnfStatementConnector([...anfStatementConnector, newConnector]);
         }
     };
@@ -54,7 +53,6 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item, getVal
 
     return (
         <Grid item xs={12} lg={12} sx={{ pt: 2 }} ref={ref}>
-            
             {anfStatementConnector && anfStatementConnector?.length > 0 ? (
                 anfStatementConnector.map((connector, i) => (
                     <div style={{ display: 'flex', flexDirection: 'column' }} key={i}>
@@ -109,6 +107,36 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item, getVal
                                     />
                                 </FormControl>
                             </Grid>
+                            {showValueField && (
+                                <Grid item xs={12} sm={3} lg={4} sx={{ pt: 2, pl: 2 }}>
+                                    <Typography variant="subtitle1">Value</Typography>
+
+                                    <FormControl fullWidth sx={{ pt: 2 }}>
+                                        <Controller
+                                            fullWidth
+                                            {...register(`item.${index}.anfStatementConnector.${i}.answerTextValue`)}
+                                            control={control}
+                                            defaultValue=""
+                                            render={({ field: { onChange, value } }) => (
+                                                <TextField
+                                                    fullWidth
+                                                    id={`item.${index}.item.answerTextValue`}
+                                                    key={index}
+                                                    type="number"
+                                                    InputProps={{
+                                                        inputProps: { min: 0 }
+                                                    }}
+                                                    value={value}
+                                                    onChange={({ target: { value } }) => {
+                                                        onChange(value);
+                                                    }}
+                                                    placeholder="Enter Answer"
+                                                />
+                                            )}
+                                        />
+                                    </FormControl>
+                                </Grid>
+                            )}
                         </Grid>
                         <Grid style={{ display: 'flex', alignItems: 'baseline' }}>
                             <Grid item xs={12} lg={4} sx={{ pt: 2, pr: 2 }}>
@@ -123,17 +151,23 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item, getVal
                     </div>
                 ))
             ) : (
-                <>
-                   
-                </>
+                <></>
             )}
-            {item.type !== 'integer' && (
+            {/* {item.type !== 'integer' && ( */}
+            {
                 <Grid sx={{ pt: 2, textAlign: 'right' }}>
-                    <Button disableElevation variant="contained" color="primary" size="small" type="button" onClick={() => handleAddButtonClick()}>
+                    <Button
+                        disableElevation
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        type="button"
+                        onClick={() => handleAddButtonClick()}
+                    >
                         + Add ANF Statement
                     </Button>
                 </Grid>
-            )}
+            }
         </Grid>
     );
 });

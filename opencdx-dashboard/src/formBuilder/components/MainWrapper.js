@@ -47,46 +47,73 @@ const MainWrapper = ({ uploadedFile }) => {
         tempData.ruleId = anfData.ruleId || '';
         tempData.ruleQuestionId = anfData.ruleQuestionId?.ruleId ? [anfData.ruleQuestionId.ruleId] : anf.ruleQuestionId;
         /* eslint-disable */
-        console.log('tempData', tempData);
-        tempData.item = tempData.item.map(({ componentType, operatorValue, componentTypeAssociated, markedMainANFStatement, selectedCategories, componentId, answerTextValue, items, ...rest }) => {
-        /* eslint-enable */
-                let { anfStatement } = rest?.anfStatementConnector[0] || {};
+        tempData.item = tempData.item.map(
+            (
+                {
+                    componentType,
+                    operatorValue,
+                    componentTypeAssociated,
+                    markedMainANFStatement,
+                    selectedCategories,
+                    componentId,
+                    answerTextValue,
+                    items,
+                    ...rest
+                },
+                i
+            ) => {
+                /* eslint-enable */
+                // let { anfStatement } = rest?.anfStatementConnector[0] || {};
+                rest.anfStatementConnector = rest.anfStatementConnector.map((connector, ival) => {
+                    let { anfStatement, anfOperatorType, operatorValue, answerTextValue } = connector;
+                    if (anfStatement) {
+                        if (componentType && componentType !== '') {
+                            connector.anfStatementType = componentType;
+                        } else {
+                            connector.anfStatementType = formData.item[i].anfStatementConnector[ival].anfStatementType;
+                        }
 
-                if (anfStatement) {
-                    if (anfStatement.authors && !Array.isArray(anfStatement.authors)) {
-                        anfStatement.authors = [anfStatement.authors];
+                        if (anfOperatorType === '') {
+                            connector.anfOperatorType = 'ANF_OPERATOR_TYPE_UNSPECIFIED';
+                        }
+                        if (operatorValue === 'Value') {
+                            connector.operatorValue = answerTextValue;
+                        }
+                        if (anfStatement.authors && !Array.isArray(anfStatement.authors)) {
+                            anfStatement.authors = [anfStatement.authors];
+                        }
+                        if (anfStatement.time) {
+                            anfStatement.time.includeLowerBound = anfStatement.time.includeLowerBound === 'yes';
+                            anfStatement.time.includeUpperBound = anfStatement.time.includeUpperBound === 'yes';
+                        }
+                        if (anfStatement.performanceCircumstance?.normalRange) {
+                            const { normalRange } = anfStatement.performanceCircumstance;
+                            normalRange.includeLowerBound = normalRange.includeLowerBound === 'yes';
+                            normalRange.includeUpperBound = normalRange.includeUpperBound === 'yes';
+                        }
+                        if (anfStatement.performanceCircumstance?.result) {
+                            const { result } = anfStatement.performanceCircumstance;
+                            result.includeLowerBound = result.includeLowerBound === 'yes';
+                            result.includeUpperBound = result.includeUpperBound === 'yes';
+                        }
+                        if (anfStatement.performanceCircumstance?.timing) {
+                            const { timing } = anfStatement.performanceCircumstance;
+                            timing.includeLowerBound = timing.includeLowerBound === 'yes';
+                            timing.includeUpperBound = timing.includeUpperBound === 'yes';
+                        }
+                        if (
+                            anfStatement.performanceCircumstance?.participant &&
+                            !Array.isArray(anfStatement.performanceCircumstance.participant)
+                        ) {
+                            anfStatement.performanceCircumstance.participant = [anfStatement.performanceCircumstance.participant];
+                        }
+                        delete connector.answerTextValue;
+                        delete anfStatement.performanceCircumstance?.circumstanceType;
                     }
-                    if (anfStatement.time) {
-                        anfStatement.time.includeLowerBound = anfStatement.time.includeLowerBound === 'yes';
-                        anfStatement.time.includeUpperBound = anfStatement.time.includeUpperBound === 'yes';
-                    }
-                    if (anfStatement.performanceCircumstance?.normalRange) {
-                        const { normalRange } = anfStatement.performanceCircumstance;
-                        normalRange.includeLowerBound = normalRange.includeLowerBound === 'yes';
-                        normalRange.includeUpperBound = normalRange.includeUpperBound === 'yes';
-                    }
-                    if (anfStatement.performanceCircumstance?.result) {
-                        const { result } = anfStatement.performanceCircumstance;
-                        result.includeLowerBound = result.includeLowerBound === 'yes';
-                        result.includeUpperBound = result.includeUpperBound === 'yes';
-                    }
-                    if (anfStatement.performanceCircumstance?.timing) {
-                        const { timing } = anfStatement.performanceCircumstance;
-                        timing.includeLowerBound = timing.includeLowerBound === 'yes';
-                        timing.includeUpperBound = timing.includeUpperBound === 'yes';
-                    }
-                    if (
-                        anfStatement.performanceCircumstance?.participant &&
-                        !Array.isArray(anfStatement.performanceCircumstance.participant)
-                    ) {
-                        anfStatement.performanceCircumstance.participant = [anfStatement.performanceCircumstance.participant];
-                    }
-                    delete anfStatement.performanceCircumstance?.circumstanceType;
-                }
-                // rest.anfStatementConnector[0].anfStatement.topic = JSON.stringify(
-                //     rest.anfStatementConnector[0].anfStatement.topic
-                // );
-                rest.anfStatementConnector[0].anfStatementType = componentType;
+
+                    return connector;
+                });
+
                 return { ...rest };
             }
         );
@@ -107,7 +134,6 @@ const MainWrapper = ({ uploadedFile }) => {
                 setAnfData(response.data);
             }
             window.location.reload();
-          
         } catch (error) {
             dispatchSnack(
                 openSnackbar({

@@ -8,14 +8,14 @@ import { SystemVariables } from '../SystemVariables';
 
 import { MainCard } from '../ui-component/MainCard';
 
-export const ObservationId = ({ currentIndex, index, control, getValues, register }) => {
+export const ObservationId = ({ currentIndex, index, control, getValues }) => {
     return (
         <Grid item xs={12} lg={12}>
             <SystemVariables index={index} currentIndex={currentIndex} tab="observation" getValues={getValues} />
             <MainCard>
                 <Grid item xs={12} sm={12} lg={12} sx={{ paddingBottom: 2 }}>
                     <InputLabel style={{ fontWeight: 'bold' }} horizontal>
-                        Observation Type
+                        Topic
                     </InputLabel>
                 </Grid>
                 <Grid container spacing={2} alignItems="center">
@@ -25,15 +25,7 @@ export const ObservationId = ({ currentIndex, index, control, getValues, registe
                                 name={`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.topic`}
                                 control={control}
                                 value={'OBSERVATION_PROCEDURE'}
-                                render={({ field }) => (
-                                    <TextField
-                                        {...field}
-                                        {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.type`)}
-                                        
-                                        fullWidth
-                                        placeholder="Enter Subject Of Information"
-                                    />
-                                )}
+                                render={({ field }) => <TextField {...field} fullWidth placeholder="Enter Subject Of Information" />}
                             />
                         </FormControl>
                     </Grid>
