@@ -24,7 +24,7 @@ const OperatorWrapper = ({
   anfStatementConnectorId: number;
 }) => {
   const { register, control } = useFormContext();
-  const { name, ref } = register(
+  const { name } = register(
     `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfOperatorType`,
   );
   

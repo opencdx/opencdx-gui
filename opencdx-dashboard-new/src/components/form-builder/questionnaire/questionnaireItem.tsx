@@ -24,7 +24,7 @@ const QuestionnaireItemWrapper = ({
   const [anfStatementConnectorLength, setAnfStatementConnectorLength] =
     React.useState(item?.anfStatementConnector?.length);
 
-    const [currentComponentType, setCurrentComponentType] = useState('s');
+    const [currentComponentType, setCurrentComponentType] = useState('');
     const handlecurrentComponentTypeChange = (value: React.SetStateAction<string>) => {
       setCurrentComponentType(value);
     }

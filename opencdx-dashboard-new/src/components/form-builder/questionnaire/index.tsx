@@ -26,7 +26,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { QuestionnaireItemWrapper } from './questionnaireItem';
 
 const QuestionnaireWrapper = () => {
-  const { control, register, handleSubmit, getValues } = useForm<Questionnaire>(
+  const { control, register, handleSubmit, getValues, setValue } = useForm<Questionnaire>(
     {
       defaultValues: async () => {
         return JSON.parse(localStorage.getItem('questionnaire-store') as string);
@@ -76,6 +76,7 @@ const QuestionnaireWrapper = () => {
           register={register}
           control={control}
           getValues={getValues}
+          setValue={setValue}
         >
           <form onSubmit={handleSubmit(onSubmit)}>
             <Card className="mb-4 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700">

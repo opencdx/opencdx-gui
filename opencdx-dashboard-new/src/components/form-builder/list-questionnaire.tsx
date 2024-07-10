@@ -37,7 +37,8 @@ export default function ListQuestionnaire() {
   const [json, setJson] = useState({} as any);
   const router = useRouter();
 
-  const { setFormData } = useAnfFormStore();
+  const { setFormData } = useAnfFormStore() as { setFormData: any };
+
 
   const [questionnaires, setQuestionnaires] = useState([] as any);
   useEffect(() => {

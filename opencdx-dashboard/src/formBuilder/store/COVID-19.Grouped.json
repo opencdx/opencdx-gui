@@ -898,11 +898,6 @@
     }
   ],
   "resourceType": "Questionnaire",
-  "meta": {
-    "versionId": "1",
-    "lastUpdated": "2023-10-10T14:52:08.000-04:00",
-    "source": "#4viUlPHK0eWSJ4py"
-  },
   "title": "COVID 19",
   "status": "draft",
   "purpose": "To capture user symptoms "
