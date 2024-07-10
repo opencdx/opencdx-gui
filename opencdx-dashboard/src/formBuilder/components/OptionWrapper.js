@@ -12,8 +12,9 @@ const ANF_OPERATOR_TYPE_NOT_EQUAL = 'ANF_OPERATOR_TYPE_NOT_EQUAL';
 
 const OptionWrapper = React.forwardRef(({ control, register, index, item, getValues, setValue }, ref) => {
     // eslint-disable-next-line no-unused-vars
-    const [showValueField, setShowValueField] = React.useState(false);
     const [anfStatementConnector, setAnfStatementConnector] = React.useState(item?.anfStatementConnector);
+    const [showValueField, setShowValueField] = React.useState(Number.isInteger(parseInt(item?.anfStatementConnector?.[index]?.operatorValue)));
+    const [answerTextValue, setAnswerTextValue] = React.useState(item?.anfStatementConnector?.[index]?.operatorValue);
     useEffect(() => {
         const newConnector = {
             anfStatementType: '',
@@ -25,6 +26,7 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item, getVal
             setAnfStatementConnector([newConnector]);
             return;
         } 
+
     }, []);
 
 
@@ -98,10 +100,12 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item, getVal
                                         fullWidth
                                         {...register(`item.${index}.anfStatementConnector.${i}.operatorValue`)}
                                         control={control}
+                                        defaultValue={ item.type === 'integer' && showValueField ? 'Value' : 'Any value'}
                                         render={({ field }) => (
                                             <Select
                                                 {...field}
                                                 onChange={(e) => {
+                                                    
                                                     field.onChange(e.target.value);
                                                     if (e.target.value === 'Value') {
                                                         setShowValueField(true);
@@ -109,6 +113,9 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item, getVal
                                                         setShowValueField(false);
                                                     }
                                                 }}
+                                                
+                                            
+                                                
                                             >
                                                 {getOptions(item.type).map((option, index) => (
                                                     <MenuItem key={index} value={option}>
@@ -129,7 +136,7 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item, getVal
                                             fullWidth
                                             {...register(`item.${index}.anfStatementConnector.${i}.answerTextValue`)}
                                             control={control}
-                                            defaultValue=""
+                                            defaultValue={answerTextValue}
                                             render={({ field: { onChange, value } }) => (
                                                 <TextField
                                                     fullWidth
@@ -142,6 +149,7 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item, getVal
                                                     value={value}
                                                     onChange={({ target: { value } }) => {
                                                         onChange(value);
+                                                        setAnswerTextValue(value);
                                                     }}
                                                     placeholder="Enter Answer"
                                                 />
