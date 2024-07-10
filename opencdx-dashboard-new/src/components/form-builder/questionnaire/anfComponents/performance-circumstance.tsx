@@ -295,7 +295,7 @@ const PerformanceCircumstanceWrapper = ({
       </Card>
 
 
-      <Card className="mb-4 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700 ">
+      {/* <Card className="mb-4 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700 ">
         <CardHeader className="flex gap-3">
           <h4 className="text-lg font-semibold">Participant</h4>
         </CardHeader>
@@ -337,7 +337,7 @@ const PerformanceCircumstanceWrapper = ({
         />
       </div>
         </CardBody>
-      </Card>
+      </Card> */}
     </Card>
   );
 };

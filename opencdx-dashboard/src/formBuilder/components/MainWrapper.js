@@ -30,9 +30,14 @@ const MainWrapper = ({ uploadedFile }) => {
     } = useForm({ defaultValues });
 
     useEffect(() => {
+        
         reset({
+            ruleId: '',
+            ruleQuestionId: [],
             item: formData?.item
         });
+
+
     }, [formData, reset]);
 
     const onSubmit = async (data) => {

@@ -47,7 +47,7 @@ const ChildWrapper = ({ control, register }) => {
                         return rule.name;
                     });
                     if (formData?.ruleId) {
-                        setDefaultId('Blood Pressure');
+                        setDefaultId(rules[0]);
                     }
 
                     setRuleSets(rules);
@@ -86,7 +86,7 @@ const ChildWrapper = ({ control, register }) => {
                 });
         };
         fetchRules();
-    }, []);
+    }, [formData]);
     return (
         <div className="wrapper">
             {fields.map((item, index) => (

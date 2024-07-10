@@ -119,11 +119,12 @@ const FormBuilder = () => {
         const fileReader = new FileReader();
         fileReader.readAsText(e.target.files[0], 'UTF-8');
         fileReader.onload = (e) => {
-            const formData = JSON.parse(e.target.result);
+            const formData = e.target?.result?JSON.parse(e.target?.result):null;
+            delete formData.id;
             setFormData(formData);
             setUploadData(formData);
             setAnfData(formData);
-        };
+        };  
     };
 
     const handleClickOpen = () => {

@@ -38,11 +38,11 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
     const [upperBoundState, setUpperBound] = useState(systemVariables[tab]?.upperBound);
     const [resolutionState, setResolution] = useState(systemVariables[tab]?.resolution);
     const [semanticState, setSemantic] = useState(systemVariables[tab]?.semantic);
+    // eslint-disable-next-line no-unused-vars
     const [upperBoundOptionsState, setUpperBoundOptions] = useState(initialStateUpperBound);
-
+    // eslint-disable-next-line no-unused-vars
     const [lowerBoundOptionsState, setLowerBoundOptions] = useState(initialStateLowerBound);
-    console.log('lowerBoundOptionsState', lowerBoundOptionsState);
-    console.log('upperBoundOptionsState', upperBoundOptionsState);
+   
 
     return (
         <Grid item xs={12} lg={12} ref={ref}>
