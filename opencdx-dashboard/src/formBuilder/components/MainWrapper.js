@@ -70,7 +70,11 @@ const MainWrapper = ({ uploadedFile }) => {
                         if (componentType && componentType !== '') {
                             connector.anfStatementType = componentType;
                         } else {
-                            if (formData?.item && formData.item[i]?.anfStatementConnector && formData.item[i].anfStatementConnector[ival]?.anfStatementType) {
+                            if (
+                                formData?.item &&
+                                formData.item[i]?.anfStatementConnector &&
+                                formData.item[i].anfStatementConnector[ival]?.anfStatementType
+                            ) {
                                 connector.anfStatementType = formData.item[i].anfStatementConnector[ival].anfStatementType;
                             }
                         }
@@ -84,15 +88,16 @@ const MainWrapper = ({ uploadedFile }) => {
                         if (anfStatement.authors && !Array.isArray(anfStatement.authors)) {
                             anfStatement.authors = [anfStatement.authors];
                         }
-                        // if (anfStatement.time) {
-                            
-                        //     if(anfStatement.time.includeLowerBound === 'yes' || anfStatement.time.includeLowerBound === 'no'){
-                        //         anfStatement.time.includeLowerBound = anfStatement.time.includeLowerBound === 'yes';
-                        //     }
-                        //     if(anfStatement.time.includeUpperBound === 'yes' || anfStatement.time.includeUpperBound === 'no'){
-                        //         anfStatement.time.includeUpperBound = anfStatement.time.includeUpperBound === 'yes';
-                        //     }
-                        // }
+                        
+                        if (anfStatement.time) {
+                            if (anfStatement.time.includeLowerBound === 'true' || anfStatement.time.includeLowerBound === 'false') {
+                                anfStatement.time.includeLowerBound = anfStatement.time.includeLowerBound === 'true';
+                            }
+                            if (anfStatement.time.includeUpperBound === 'true' || anfStatement.time.includeUpperBound === 'false') {
+                                anfStatement.time.includeUpperBound = anfStatement.time.includeUpperBound === 'true';
+                            }
+                        }
+                        
                         if (anfStatement.performanceCircumstance?.normalRange) {
                             const { normalRange } = anfStatement.performanceCircumstance;
                             normalRange.includeLowerBound = normalRange.includeLowerBound === 'yes';
@@ -166,15 +171,15 @@ const MainWrapper = ({ uploadedFile }) => {
                 <ANFStatementPlaceholder />
             ) : (
                 <Suspense fallback={<ANFStatementPlaceholder />}>
-                    <FormProvider {...{ control, register ,getValues, setValue, defaultValues, reset }}>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <ChildWrapperSuspense {...{ control, register, getValues, setValue, defaultValues }} />
-                        <Grid sx={{ pt: 2 }}>
-                            <Button disabled={isSubmitting} color="primary" size="large" type="submit" variant="contained">
-                                {isSubmitting ? 'Saving...' : 'Save'}
-                            </Button>
-                        </Grid>
-                    </form>
+                    <FormProvider {...{ control, register, getValues, setValue, defaultValues, reset }}>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <ChildWrapperSuspense {...{ control, register, getValues, setValue, defaultValues }} />
+                            <Grid sx={{ pt: 2 }}>
+                                <Button disabled={isSubmitting} color="primary" size="large" type="submit" variant="contained">
+                                    {isSubmitting ? 'Saving...' : 'Save'}
+                                </Button>
+                            </Grid>
+                        </form>
                     </FormProvider>
                 </Suspense>
             )}

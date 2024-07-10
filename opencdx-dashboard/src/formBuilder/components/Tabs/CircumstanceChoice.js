@@ -134,7 +134,7 @@ export const CircumstanceChoice = React.forwardRef(({ control, register, index, 
                                     />
                                 ) : (
                                     <TextField
-                                        {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatementperformanceCircumstance.participant.practitionerValue`)}
+                                        {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.performanceCircumstance.participant.practitionerValue`)}
                                         fullWidth
                                         type="text"
                                         InputProps={{
