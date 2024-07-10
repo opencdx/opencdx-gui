@@ -192,7 +192,7 @@ const StatementTypes = forwardRef(({ register, index, control, item, handleState
                                     </Grid>
                                     <Grid item xs={12} sm={2} lg={4} sx={{ pl: 3 }}>
                                         <FormControlLabel
-                                            value="ANF_STATEMENT_TYPE_USER_QUESTION"
+                                            value="ANF_STATEMENT_USER_QUESTION"
                                             control={<Radio />}
                                             label="User Question"
                                         />

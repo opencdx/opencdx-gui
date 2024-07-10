@@ -94,5 +94,6 @@ CustomTabs.propTypes = {
     index: PropTypes.number,
     currentIndex: PropTypes.number,
     item: PropTypes.any,
-    getValues: PropTypes.any
+    getValues: PropTypes.any,
+    setValue: PropTypes.func
 };
