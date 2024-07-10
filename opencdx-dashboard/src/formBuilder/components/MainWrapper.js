@@ -1,6 +1,6 @@
 import React, { useEffect, Suspense, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import Button from '@mui/material/Button';
 import { Grid } from '@mui/material';
 import { useAnfFormStore } from '../utils/useAnfFormStore';
@@ -161,6 +161,7 @@ const MainWrapper = ({ uploadedFile }) => {
                 <ANFStatementPlaceholder />
             ) : (
                 <Suspense fallback={<ANFStatementPlaceholder />}>
+                    <FormProvider {...{ control, register ,getValues, setValue, defaultValues, reset }}>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <ChildWrapperSuspense {...{ control, register, getValues, setValue, defaultValues }} />
                         <Grid sx={{ pt: 2 }}>
@@ -169,6 +170,7 @@ const MainWrapper = ({ uploadedFile }) => {
                             </Button>
                         </Grid>
                     </form>
+                    </FormProvider>
                 </Suspense>
             )}
         </>

@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 
 import { MeasureComponent } from '../TabComponents/MeasureComponent';
 import { ParticipantComponent } from '../TabComponents/ParticipantComponent';
-import { FormControl, Grid, MenuItem, Select, TextField } from '@mui/material';
+import { FormControl, Grid, TextField } from '@mui/material';
 import { MainCard } from '../ui-component/MainCard';
 import { InputLabel } from '../ui-component/InputLabel';
-import { Controller } from 'react-hook-form';
 
 import { systemVariables, statementType } from '../../store/constant';
 import { SystemVariables } from '../SystemVariables';
@@ -31,34 +30,14 @@ export const CircumstanceChoice = React.forwardRef(({ control, register, index, 
                         <InputLabel horizontal>Status</InputLabel>
                     </Grid>
                     <Grid item xs={12} sm={9} lg={8}>
-                        {componentType ? (
-                            <TextField
-                                {...register(
-                                    `item.${index}.item.${currentIndex}..anfStatementConnector[0].anfStatement.performanceCircumstance.status`
-                                )}
-                                fullWidth
-                                placeholder="Enter Type Information"
-                                defaultValue={JSON.stringify(systemVariables['status'])}
-                            />
-                        ) : (
-                            <FormControl fullWidth>
-                                <Controller
-                                    name={`item.${index}.item.${currentIndex}.status`}
-                                    control={control}
-                                    render={({ field }) => (
-                                        <Select
-                                            {...field}
-                                            id={`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.performanceCircumstance.status`}
-                                        >
-                                            <MenuItem value={10}>On Hold</MenuItem>
-                                            <MenuItem value={20}>Completed</MenuItem>
-                                            <MenuItem value={30}>Needed</MenuItem>
-                                            <MenuItem value={40}>Rejected</MenuItem>
-                                        </Select>
-                                    )}
-                                />
-                            </FormControl>
-                        )}
+                        <TextField
+                            {...register(
+                                `item.${index}.item.${currentIndex}..anfStatementConnector[0].anfStatement.performanceCircumstance.status`
+                            )}
+                            fullWidth
+                            placeholder="Enter Type Information"
+                            defaultValue={JSON.stringify(systemVariables['status'])}
+                        />
                     </Grid>
 
                     <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important' } }}>

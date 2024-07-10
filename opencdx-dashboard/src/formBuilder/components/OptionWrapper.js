@@ -10,7 +10,7 @@ import TextField from '@mui/material/TextField';
 const ANF_OPERATOR_TYPE_EQUAL = 'ANF_OPERATOR_TYPE_EQUAL';
 const ANF_OPERATOR_TYPE_NOT_EQUAL = 'ANF_OPERATOR_TYPE_NOT_EQUAL';
 
-const OptionWrapper = React.forwardRef(({ control, register, index, item, getValues }, ref) => {
+const OptionWrapper = React.forwardRef(({ control, register, index, item, getValues, setValue }, ref) => {
     // eslint-disable-next-line no-unused-vars
     const [showValueField, setShowValueField] = React.useState(false);
     const [anfStatementConnector, setAnfStatementConnector] = React.useState(item?.anfStatementConnector);
@@ -154,7 +154,7 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item, getVal
                         <Grid style={{ display: 'flex', alignItems: 'baseline' }}>
                             <Grid item xs={12} lg={4} sx={{ pt: 2, pr: 2 }}>
                                 <AccordianWrapper title="Anf Statement">
-                                    <CustomTabs currentIndex={i} {...{ control, register, index, item, getValues }} />
+                                    <CustomTabs currentIndex={i} {...{ control, register, index, item, getValues, setValue }} />
                                 </AccordianWrapper>
                             </Grid>
                             {/* <Button variant="contained" type="button" onClick={() => remove(index)} size="small">

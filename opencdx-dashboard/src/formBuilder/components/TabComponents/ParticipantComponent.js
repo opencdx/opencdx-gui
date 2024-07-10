@@ -9,9 +9,10 @@ import { useAnfFormStore } from '../../utils/useAnfFormStore';
 
 export const ParticipantComponent = React.forwardRef(({ register, index, currentIndex, tab }, ref) => {
     const { formData } = useAnfFormStore();
-    const componentType = [statementType.MAIN, statementType.ASSOCIATED].includes(formData.item[index]?.componentType);
-
-    const { id, code, practitionerValue } = formData.item[index]?.item?.[currentIndex]?.[tab] || '';
+    const componentType = [statementType.MAIN, statementType.ASSOCIATED].includes(
+        formData.item[index]?.anfStatementConnector?.[currentIndex]?.anfStatementType
+    );
+    const { id, code, practitionerValue } = formData.item[index]?.anfStatementConnector?.[currentIndex]?.anfStatement?.[tab] || '';
     const [state, setState] = React.useState({
         id: '',
         code: '',
@@ -25,6 +26,7 @@ export const ParticipantComponent = React.forwardRef(({ register, index, current
         };
         const tabValue = tabLookup[tab] || tab;
         const systemVariable = systemVariables[tabValue];
+
         if (componentType) {
             setState((prevState) => ({
                 id: id || systemVariable.id || prevState.id,
@@ -47,7 +49,6 @@ export const ParticipantComponent = React.forwardRef(({ register, index, current
                     <Grid item xs={12}>
                         <Grid container spacing={2} alignItems="center">
                             {/* ... other grid items ... */}
-
                             {/* ID */}
                             {renderTextField(
                                 register,
