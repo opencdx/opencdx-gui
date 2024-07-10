@@ -31,17 +31,13 @@ export default function App({ questionnaire, navigation }) {
   const onSubmit = (data) => {
     questionnaire.item.forEach((field, index) => {
       if (field.item) {
-        field.item.forEach((connector) => {
-          if (
-            connector &&
-            connector.anfStatementConnector &&
-            connector.anfStatementConnector[0] &&
-            connector.anfStatementConnector[0].anfStatement &&
-            connector.anfStatementConnector[0].anfStatement
-              .performanceCircumstance
-          ) {
-            connector.anfStatementConnector[0].anfStatement.performanceCircumstance.result.resolution =
-              data[field.linkId];
+        field.item?.forEach((connector) => {
+          if (connector && connector.anfStatementConnector) {
+            connector.anfStatementConnector.forEach((anfStatement) => {
+              if (anfStatement.performanceCircumstance?.result?.resolution) {
+                anfStatement.performanceCircumstance.result.resolution= data[field.linkId];
+              }
+            });
           }
         });
       }
