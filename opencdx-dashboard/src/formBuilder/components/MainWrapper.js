@@ -84,10 +84,15 @@ const MainWrapper = ({ uploadedFile }) => {
                         if (anfStatement.authors && !Array.isArray(anfStatement.authors)) {
                             anfStatement.authors = [anfStatement.authors];
                         }
-                        if (anfStatement.time) {
-                            anfStatement.time.includeLowerBound = anfStatement.time.includeLowerBound === 'yes';
-                            anfStatement.time.includeUpperBound = anfStatement.time.includeUpperBound === 'yes';
-                        }
+                        // if (anfStatement.time) {
+                            
+                        //     if(anfStatement.time.includeLowerBound === 'yes' || anfStatement.time.includeLowerBound === 'no'){
+                        //         anfStatement.time.includeLowerBound = anfStatement.time.includeLowerBound === 'yes';
+                        //     }
+                        //     if(anfStatement.time.includeUpperBound === 'yes' || anfStatement.time.includeUpperBound === 'no'){
+                        //         anfStatement.time.includeUpperBound = anfStatement.time.includeUpperBound === 'yes';
+                        //     }
+                        // }
                         if (anfStatement.performanceCircumstance?.normalRange) {
                             const { normalRange } = anfStatement.performanceCircumstance;
                             normalRange.includeLowerBound = normalRange.includeLowerBound === 'yes';

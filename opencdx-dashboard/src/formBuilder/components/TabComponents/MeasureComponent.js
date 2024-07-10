@@ -17,12 +17,9 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
     const [upperBoundState, setUpperBound] = useState(systemVariables[tab]?.upperBound);
     const [resolutionState, setResolution] = useState(systemVariables[tab]?.resolution);
     const [semanticState, setSemantic] = useState(systemVariables[tab]?.semantic);
-    const [upperBoundOptionsState, setUpperBoundOptions] = useState(
-        componentType ? (systemVariables[tab] ? (systemVariables[tab]?.includeUpperBound ? 'yes' : 'no') : 'not') : 'not'
-    );
+    const [upperBoundOptionsState, setUpperBoundOptions] = useState( systemVariables[tab]?.includeUpperBound     )
     const [lowerBoundOptionsState, setLowerBoundOptions] = useState(
-        componentType ? (systemVariables[tab] ? (systemVariables[tab]?.includeUpperBound ? 'yes' : 'no') : 'not') : 'not'
-    );
+        systemVariables[tab]?.includeUpperBound    );
 
     // useEffect(() => {
     //     const isComponentType =
@@ -87,15 +84,14 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                                                 name="includeLowerBound"
                                                 {...field}
                                                 onChange={(e) => {
-                                                    field.onChange(e.target.value);
-
+                                                    field.onChange(e.target.value); 
                                                     setLowerBoundOptions(e.target.value);
                                                 }}
                                                 value={lowerBoundOptionsState}
                                             >
-                                                <FormControlLabel value={'yes'} control={<Radio />} label="Yes" />
-                                                <FormControlLabel value={'no'} control={<Radio />} label="No" />
-                                                <FormControlLabel value={'not'} control={<Radio />} label="Not Answered" />
+                                                <FormControlLabel value={true} control={<Radio />} label="Yes" />
+                                                <FormControlLabel value={false} control={<Radio />} label="No" />
+                                                <FormControlLabel  control={<Radio />} label="Not Answered" />
                                             </RadioGroup>
                                         )}
                                     />
@@ -202,9 +198,9 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                                         }}
                                         value={upperBoundOptionsState}
                                     >
-                                        <FormControlLabel value={'yes'} control={<Radio />} label="Yes" />
-                                        <FormControlLabel value={'no'} control={<Radio />} label="No" />
-                                        <FormControlLabel value={'not'} control={<Radio />} label="Not Answered" />
+                                       <FormControlLabel value={true} control={<Radio />} label="Yes" />
+                                                <FormControlLabel value={false} control={<Radio />} label="No" />
+                                                <FormControlLabel  control={<Radio />} label="Not Answered" />
                                     </RadioGroup>
                                 )}
                             />
