@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormControl, Typography, Grid, MenuItem, Select } from '@mui/material';
 import { Controller } from 'react-hook-form';
@@ -14,6 +14,19 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item, getVal
     // eslint-disable-next-line no-unused-vars
     const [showValueField, setShowValueField] = React.useState(false);
     const [anfStatementConnector, setAnfStatementConnector] = React.useState(item?.anfStatementConnector);
+    useEffect(() => {
+        const newConnector = {
+            anfStatementType: '',
+            anfOperatorType: '',
+            anfStatement: {}
+        };
+
+        if (!anfStatementConnector) {
+            setAnfStatementConnector([newConnector]);
+            return;
+        } 
+    }, []);
+
 
     const handleAddButtonClick = () => {
         const newConnector = {

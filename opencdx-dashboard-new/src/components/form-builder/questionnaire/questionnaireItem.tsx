@@ -28,6 +28,21 @@ const QuestionnaireItemWrapper = ({
     const handlecurrentComponentTypeChange = (value: React.SetStateAction<string>) => {
       setCurrentComponentType(value);
     }
+    React.useEffect(() => {
+      const newConnector: AnfStatementConnector = {
+        anfStatementType:
+          AnfStatementConnectorAnfStatementTypeEnum.AnfStatementTypeUnspecified,
+        anfOperatorType:
+          AnfStatementConnectorAnfOperatorTypeEnum.AnfOperatorTypeUnspecified,
+        anfStatement: defaultAnfStatement,
+      };
+  
+      if (!item.anfStatementConnector) {
+        item.anfStatementConnector = [];
+      }
+      item.anfStatementConnector.push(newConnector);
+      setAnfStatementConnectorLength(item.anfStatementConnector.length);
+  }, []);
 
   const handleAddButtonClick = () => {
     const newConnector: AnfStatementConnector = {
@@ -88,7 +103,7 @@ const QuestionnaireItemWrapper = ({
           </>
         )}
         <Divider className="my-4 border-neutral-700 " />
-        <div className="flex flex-row justify-center">
+        <div className="flex flex-row justify-end">
           <Button
             variant="solid"
             className="mb-4 p-4  rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700 flex flex-row justify-center"
