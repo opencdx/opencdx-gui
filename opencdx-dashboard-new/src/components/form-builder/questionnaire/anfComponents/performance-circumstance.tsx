@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { PerformanceCircumstance } from '@/generated-api-ts/questionnaire/api';
 import { Input } from '@nextui-org/input';
 import {
   Card,
@@ -21,11 +20,9 @@ export const values = [
 ];
 
 const PerformanceCircumstanceWrapper = ({
-  performanceCircumstance,
   anfStatementConnectorId,
   questionnaireItemId,
 }: {
-  performanceCircumstance: PerformanceCircumstance;
   anfStatementConnectorId: number;
   questionnaireItemId: number;
 }) => {
@@ -38,8 +35,12 @@ const PerformanceCircumstanceWrapper = ({
 
         <Controller
           control={control}
-          name={name}
-          render={({ field, value, name, ref }) => (
+          {
+            ...register(
+              `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.type`,
+            )
+          }
+          render={({ field }) => (
             <Select
               label="Circumstance Type"
               className="mb-4 mt-2 ml-4"

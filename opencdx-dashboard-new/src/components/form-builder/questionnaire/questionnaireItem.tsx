@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState} from 'react';
 
 import {
   AnfStatementConnector,
@@ -22,7 +22,27 @@ const QuestionnaireItemWrapper = ({
 }) => {
   const defaultAnfStatement = {};
   const [anfStatementConnectorLength, setAnfStatementConnectorLength] =
-    React.useState(item.anfStatementConnector.length);
+    React.useState(item?.anfStatementConnector?.length);
+
+    const [currentComponentType, setCurrentComponentType] = useState('');
+    const handlecurrentComponentTypeChange = (value: React.SetStateAction<string>) => {
+      setCurrentComponentType(value);
+    }
+    React.useEffect(() => {
+      const newConnector: AnfStatementConnector = {
+        anfStatementType:
+          AnfStatementConnectorAnfStatementTypeEnum.AnfStatementTypeUnspecified,
+        anfOperatorType:
+          AnfStatementConnectorAnfOperatorTypeEnum.AnfOperatorTypeUnspecified,
+        anfStatement: defaultAnfStatement,
+      };
+  
+      if (!item.anfStatementConnector) {
+        item.anfStatementConnector = [];
+      }
+      item.anfStatementConnector.push(newConnector);
+      setAnfStatementConnectorLength(item.anfStatementConnector.length);
+  }, []);
 
   const handleAddButtonClick = () => {
     const newConnector: AnfStatementConnector = {
@@ -33,11 +53,13 @@ const QuestionnaireItemWrapper = ({
       anfStatement: defaultAnfStatement,
     };
 
+    if (!item.anfStatementConnector) {
+      item.anfStatementConnector = [];
+    }
     item.anfStatementConnector.push(newConnector);
     setAnfStatementConnectorLength(item.anfStatementConnector.length);
   };
   
-
   return (
     <>
       <>
@@ -49,13 +71,13 @@ const QuestionnaireItemWrapper = ({
                 <ComponentTypeWrapper
                   questionnaireItemId={questionnaireItemId}
                   anfStatementConnectorId={id}
-                  anfStatementType={
-                    connector.anfStatementType ||
-                    AnfStatementConnectorAnfStatementTypeEnum.AnfStatementTypeUnspecified
-                  }
+                  currentComponentType={currentComponentType}
+                  onValueChange={handlecurrentComponentTypeChange}
+                 
                 />
                 <OperatorWrapper
                   questionnaireItemId={questionnaireItemId}
+                  item={item}
                   anfStatementConnectorId={id}
                   anfOperatorType={
                     connector.anfOperatorType ??
@@ -66,9 +88,10 @@ const QuestionnaireItemWrapper = ({
                   questionnaireItemId={questionnaireItemId}
                   anfStatementConnectorId={id}
                   anfStatement={connector.anfStatement ?? defaultAnfStatement}
+                  currentComponentType={currentComponentType}
                 />
 
-                {id < item.anfStatementConnector.length - 1 && (
+                {id < (item.anfStatementConnector?.length ?? 0) - 1 && (
                   <Divider className="my-4 border-neutral-700 " />
                 )}
               </React.Fragment>
@@ -76,26 +99,7 @@ const QuestionnaireItemWrapper = ({
           )
         ) : (
           <>
-             <ComponentTypeWrapper
-              questionnaireItemId={questionnaireItemId}
-              anfStatementConnectorId={0}
-              anfStatementType={
-                AnfStatementConnectorAnfStatementTypeEnum.AnfStatementTypeUnspecified
-              }
-            />
-            <OperatorWrapper
-              questionnaireItemId={questionnaireItemId}
-              anfStatementConnectorId={0}
-              anfOperatorType={
-                AnfStatementConnectorAnfOperatorTypeEnum.AnfOperatorTypeUnspecified
-              }
-            />
-
-            <ANFStatementWrapper
-              questionnaireItemId={questionnaireItemId}
-              anfStatementConnectorId={0}
-              anfStatement={defaultAnfStatement}
-            /> 
+            
           </>
         )}
         <Divider className="my-4 border-neutral-700 " />

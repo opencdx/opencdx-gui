@@ -1,12 +1,12 @@
 import React from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { MeasureComponent } from '../TabComponents/MeasureComponent';
-import { ParticipantComponent } from '../TabComponents/ParticipantComponent';
-import { FormControl, Grid, MenuItem, Select, TextField } from '@mui/material';
+// import { ParticipantComponent } from '../TabComponents/ParticipantComponent';
+import { FormControl, Grid, TextField } from '@mui/material';
 import { MainCard } from '../ui-component/MainCard';
 import { InputLabel } from '../ui-component/InputLabel';
-import { Controller } from 'react-hook-form';
 
 import { systemVariables, statementType } from '../../store/constant';
 import { SystemVariables } from '../SystemVariables';
@@ -15,65 +15,33 @@ import { useAnfFormStore } from '../../utils/useAnfFormStore';
 export const CircumstanceChoice = React.forwardRef(({ control, register, index, currentIndex, getValues }, ref) => {
     const { formData } = useAnfFormStore();
     const componentType = [statementType.MAIN, statementType.ASSOCIATED].includes(formData.item[index]?.componentType);
-
+    const [id, setId] = useState(systemVariables['circumstance']?.id);
+    const [practitioner, setPractitioner] = useState(systemVariables['circumstance']?.practitionerValue);
+    const [code, setCode] = useState(systemVariables['circumstance']?.code);
+  
     return (
         <Grid item xs={12} lg={12} ref={ref}>
             <SystemVariables index={index} currentIndex={currentIndex} getValues={getValues} tab="performanceCircumstance" />
             <MainCard>
                 <Grid container spacing={2} alignItems="center">
                     <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important' } }}>
-                        <InputLabel horizontal>Circumstance Type</InputLabel>
+                        <InputLabel horizontal>Circumstance Type </InputLabel>
                     </Grid>
                     <Grid item xs={12} sm={9} lg={8}>
-                        <FormControl fullWidth>
-                            <Controller
-                                name={`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.performanceCircumstance.circumstanceType`}
-                                control={control}
-                                defaultValue={'PERFORMANCE_CIRCUMSTANCE'}
-                                render={({ field }) => (
-                                    <Select {...field}>
-                                        <MenuItem value={'PERFORMANCE_CIRCUMSTANCE'} defaultValue={10}>
-                                            Performance Circumstance
-                                        </MenuItem>
-                                        <MenuItem value={'REQUEST_CIRCUMSTANCE'}>Request Circumstance</MenuItem>
-                                        <MenuItem value={'NARRATIVE_CIRCUMSTANCE'}>Narrative Circumstance</MenuItem>
-                                    </Select>
-                                )}
-                            />
-                        </FormControl>
+                        <TextField fullWidth type="text" value="Performance Circumstance" />
                     </Grid>
                     <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important' } }}>
                         <InputLabel horizontal>Status</InputLabel>
                     </Grid>
                     <Grid item xs={12} sm={9} lg={8}>
-                        {componentType ? (
-                            <TextField
-                                {...register(
-                                    `item.${index}.item.${currentIndex}..anfStatementConnector[0].anfStatement.performanceCircumstance.status`
-                                )}
-                                fullWidth
-                                placeholder="Enter Type Information"
-                                defaultValue={JSON.stringify(systemVariables['status'])}
-                            />
-                        ) : (
-                            <FormControl fullWidth>
-                                <Controller
-                                    name={`item.${index}.item.${currentIndex}.status`}
-                                    control={control}
-                                    render={({ field }) => (
-                                        <Select
-                                            {...field}
-                                            id={`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.performanceCircumstance.status`}
-                                        >
-                                            <MenuItem value={10}>On Hold</MenuItem>
-                                            <MenuItem value={20}>Completed</MenuItem>
-                                            <MenuItem value={30}>Needed</MenuItem>
-                                            <MenuItem value={40}>Rejected</MenuItem>
-                                        </Select>
-                                    )}
-                                />
-                            </FormControl>
-                        )}
+                        <TextField
+                            {...register(
+                                `item.${index}.item.${currentIndex}..anfStatementConnector[0].anfStatement.performanceCircumstance.status`
+                            )}
+                            fullWidth
+                            placeholder="Enter Type Information"
+                            defaultValue={JSON.stringify(systemVariables['status'])}
+                        />
                     </Grid>
 
                     <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important' } }}>
@@ -121,7 +89,92 @@ export const CircumstanceChoice = React.forwardRef(({ control, register, index, 
                     <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important', marginTop: 10 } }}>
                         <InputLabel horizontal>Participant</InputLabel>
                     </Grid>
-                    {<ParticipantComponent {...{ control, register, index, currentIndex }} tab={'performanceCircumstance.participant'} />}
+                    <Grid container spacing={1} alignItems="center">
+                            <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important' } }}>
+                                <InputLabel horizontal>ID</InputLabel>
+                            </Grid>
+                            <Grid item xs={12} sm={9} lg={8}>
+                                {componentType ? (
+                                    <TextField
+                                        {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.performanceCircumstance.participant.id`)}
+                                        fullWidth
+                                        type="text"
+                                        value={id}
+                                        placeholder="Enter ID Value"
+                                        onChange={(e) => {
+                                            setId(e.target.value);
+                                        }}
+                                    />
+                                ) : (
+                                    <TextField
+                                        {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.performanceCircumstance.participant.id`)}
+                                        fullWidth
+                                        type="text"
+                                        InputProps={{
+                                            inputProps: { min: 0 }
+                                        }}
+                                        placeholder="Enter ID Value"
+                                    />
+                                )}
+                            </Grid>
+                            <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important' } }}>
+                                <InputLabel horizontal>practitioner</InputLabel>
+                            </Grid>
+                            <Grid item xs={12} sm={9} lg={8}>
+                                {componentType ? (
+                                    <TextField
+                                        {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.performanceCircumstance.participant.practitionerValue`)}
+                                        fullWidth
+                                        type="text"
+                                        value={practitioner}
+                                        placeholder="Enter Practitioner Value"
+                                        onChange={(e) => {
+                                            setPractitioner(e.target.value);
+                                        }}
+                                    />
+                                ) : (
+                                    <TextField
+                                        {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.performanceCircumstance.participant.practitionerValue`)}
+                                        fullWidth
+                                        type="text"
+                                        InputProps={{
+                                            inputProps: { min: 0 }
+                                        }}
+                                        placeholder="Enter Practitioner Value"
+                                    />
+                                )}
+                            </Grid>
+                            <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important' } }}>
+                                <InputLabel horizontal>Code</InputLabel>
+                            </Grid>
+                            <Grid item xs={12} sm={9} lg={8}>
+                                {componentType ? (
+                                    <TextField
+                                        {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.performanceCircumstance.participant.code`)}
+                                        fullWidth
+                                        type="text"
+                                        value={code}
+                                        placeholder="Enter Code Value"
+                                        onChange={(e) => {
+                                            setCode(e.target.value);
+                                        }}
+                                    />
+                                ) : (
+                                    <TextField
+                                        {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.performanceCircumstance.participant.code`)}
+                                        fullWidth
+                                        type="text"
+                                        InputProps={{
+                                            inputProps: { min: 0 }
+                                        }}
+                                        placeholder="Enter Code Value"
+                                    />
+                                )}
+                            </Grid>
+                            
+                           
+                        </Grid>
+                    {/* {<ParticipantComponent {...{ control, register, index, currentIndex }} tab={'performanceCircumstance.participant'} />} */}
                 </Grid>
             </MainCard>
         </Grid>

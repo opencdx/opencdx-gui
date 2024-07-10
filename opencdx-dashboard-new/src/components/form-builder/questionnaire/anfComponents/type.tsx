@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Input } from '@nextui-org/input';
-import { Card, Radio, RadioGroup } from '@nextui-org/react';
+import { Card } from '@nextui-org/react';
 import { useFormContext } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
 import { Select, SelectItem } from '@nextui-org/react';
@@ -12,16 +11,16 @@ export const values = [
   { key: 'request', label: 'Request' },
 ];
 const TypeWrapper = ({
-  topic,
   anfStatementConnectorId,
   questionnaireItemId,
+  currentComponentType,
 }: {
-  topic: string;
   anfStatementConnectorId: number;
   questionnaireItemId: number;
+  currentComponentType: string;
 }) => {
-  const { register, control, getValues } = useFormContext();
-  const { name, ref, ...rest } = register(
+  const { register, control } = useFormContext();
+  const { name, ref } = register(
     `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.type`,
   );
   return (
@@ -32,7 +31,7 @@ const TypeWrapper = ({
         <Controller
           control={control}
           name={name}
-          render={({ field, value, name, ref }) => (
+          render={({ field }) => (
             <Select
               label="Select an operator"
               className="max-w-xs mb-4 mt-2 mr-4 ml-4"

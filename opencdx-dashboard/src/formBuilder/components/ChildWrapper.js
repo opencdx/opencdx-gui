@@ -21,10 +21,11 @@ const ChildWrapper = ({ control, register }) => {
     const dispatch = useDispatch();
 
     const [hideOptions, setHideOptions] = React.useState(true);
-    const { fields, remove } = useFieldArray({
+    const { fields, remove, append, getValues,setValue} = useFieldArray({
         control,
         name: 'item'
     });
+   
     const [ruleSets, setRuleSets] = React.useState([]);
     const [responseRule, setResponseRule] = React.useState([]);
     const [defaultRule, setDefaultRule] = React.useState([]);
@@ -92,7 +93,7 @@ const ChildWrapper = ({ control, register }) => {
                 <AccordianWrapper key={index} title={`${index + 1}. ${item?.text} - ${item?.linkId}`} remove={() => remove(index)}>
                     <ComponentID {...{ control, register, index }} />
                     <StatementTypes {...{ control, register, index, item }} handleStatementTypeChange={handleStatementTypeChange} />
-                    {hideOptions && <OptionWrapper {...{ control, register, index, item }} />}
+                    {hideOptions && <OptionWrapper {...{ control, register, index, item ,getValues,fields, append, setValue}} />}
                 </AccordianWrapper>
             ))}
 

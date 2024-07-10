@@ -2,17 +2,14 @@
 
 import React from 'react';
 
-import { Practitioner } from '@/generated-api-ts/questionnaire/api';
 import { Input } from '@nextui-org/input';
-import { Card, Radio, RadioGroup } from '@nextui-org/react';
+import { Card } from '@nextui-org/react';
 import { useFormContext } from 'react-hook-form';
 
 const AuthorsWrapper = ({
-  authors,
   anfStatementConnectorId,
   questionnaireItemId,
 }: {
-  authors: Array<Practitioner>;
   anfStatementConnectorId: number;
   questionnaireItemId: number;
 }) => {

@@ -1,17 +1,14 @@
 
 import React from 'react';
 
-import { Participant } from '@/generated-api-ts/questionnaire/api';
 import { Input } from '@nextui-org/input';
-import { Card, Radio, RadioGroup } from '@nextui-org/react';
+import { Card } from '@nextui-org/react';
 import { useFormContext } from 'react-hook-form';
 
 const SubjectOfInformationWrapper = ({
-  subjectOfInformation,
   anfStatementConnectorId,
   questionnaireItemId,
 }: {
-  subjectOfInformation: string;
   anfStatementConnectorId: number;
   questionnaireItemId: number;
 }) => {

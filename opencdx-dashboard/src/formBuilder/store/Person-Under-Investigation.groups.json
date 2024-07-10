@@ -1,7 +1,7 @@
 {
   "resourceType": "Questionnaire",
   "version": "1.0",
-  "title": "Person Under Investigation",
+  "title": "Person Under Investigation Group",
   "status": "draft",
   "description": "A form for reporting COVID-19 cases, including patient information, symptoms, exposure history, and test results",
   "purpose": "To track and manage the spread of COVID-19 by collecting comprehensive case data for public health analysis and response",
