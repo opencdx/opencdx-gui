@@ -70,7 +70,9 @@ const MainWrapper = ({ uploadedFile }) => {
                         if (componentType && componentType !== '') {
                             connector.anfStatementType = componentType;
                         } else {
-                            connector.anfStatementType = formData.item[i].anfStatementConnector[ival].anfStatementType;
+                            if (formData?.item && formData.item[i]?.anfStatementConnector && formData.item[i].anfStatementConnector[ival]?.anfStatementType) {
+                                connector.anfStatementType = formData.item[i].anfStatementConnector[ival].anfStatementType;
+                            }
                         }
 
                         if (anfOperatorType === '') {
