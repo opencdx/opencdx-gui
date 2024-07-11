@@ -12,3 +12,16 @@ services:
       - ../certs:/certs
     ports:
       - "3005:3005"
+
+  form-renderer:
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 60s
+        max_attempts: 5
+        window: 60s
+    image: opencdx/form-render:${version}
+    volumes:
+      - ../certs:/certs
+    ports:
+      - "19006:19006"
