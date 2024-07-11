@@ -7,7 +7,7 @@ const Authors = React.forwardRef(({ control, register, index, currentIndex, getV
     return (
         <>
             <SystemVariables index={index} currentIndex={currentIndex} getValues={getValues} tab="authors" />
-            <ParticipantComponent {...{ control, register, index, currentIndex }} tab="authors" ref={ref} />
+            <ParticipantComponent {...{ control, register, index, currentIndex }} tab="authors[0]" ref={ref} />
         </>
     );
 });

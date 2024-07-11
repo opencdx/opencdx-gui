@@ -39,10 +39,9 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
     const [resolutionState, setResolution] = useState(systemVariables[tab]?.resolution);
     const [semanticState, setSemantic] = useState(systemVariables[tab]?.semantic);
     // eslint-disable-next-line no-unused-vars
-    const [upperBoundOptionsState, setUpperBoundOptions] = useState(initialStateUpperBound);
+    const [upperBoundOptionsState, setUpperBoundOptions] = useState(systemVariables[tab]?.upperBound);
     // eslint-disable-next-line no-unused-vars
-    const [lowerBoundOptionsState, setLowerBoundOptions] = useState(initialStateLowerBound);
-   
+    const [lowerBoundOptionsState, setLowerBoundOptions] = useState(systemVariables[tab]?.lowerBound);
 
     return (
         <Grid item xs={12} lg={12} ref={ref}>
@@ -82,37 +81,56 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                             </Grid>
                             <Grid item xs={12} sm={9} lg={8}>
                                 <FormControl>
-                                    <Controller
-                                        control={control}
-                                        {...register(
-                                            `item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.includeLowerBound`
-                                        )}
-                                        render={({ field }) => (
-                                            <RadioGroup
-                                                row
-                                                aria-label="includeLowerBound"
-                                                name="includeLowerBound"
-                                                {...field}
-                                                onChange={(e) => {
-                                                    const value = e.target.value;
-                                                    setLowerBoundOptions(value);
-                                                    field.onChange(value === 'true' ? true : value === 'false' ? false : null);
-                                                }}
-                                                // value={lowerBoundOptionsState}
-                                                defaultValue={
-                                                    initialStateLowerBound === false
-                                                        ? 'false'
-                                                        : initialStateLowerBound == true
-                                                          ? 'true'
-                                                          : 'not'
-                                                }
-                                            >
-                                                <FormControlLabel value={'true'} control={<Radio />} label="Yes" />
-                                                <FormControlLabel value={'false'} control={<Radio />} label="No" />
-                                                <FormControlLabel value={'not'} control={<Radio />} label="Not Answered" />
-                                            </RadioGroup>
-                                        )}
-                                    />
+                                    {componentType ? (
+                                        <Controller
+                                            control={control}
+                                            {...register(
+                                                `item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.includeLowerBound`
+                                            )}
+                                            render={({ field }) => (
+                                                <RadioGroup
+                                                    row
+                                                    aria-label="includeLowerBound"
+                                                    name="includeLowerBound"
+                                                    {...field}
+                                                    onChange={(e) => {
+                                                        const value = e.target.value;
+                                                        setLowerBoundOptions(value);
+                                                        field.onChange(value === 'true' ? true : value === 'false' ? false : null);
+                                                    }}
+                                                    defaultValue={initialStateLowerBound}
+                                                >
+                                                    <FormControlLabel value={'true'} control={<Radio />} label="Yes" />
+                                                    <FormControlLabel value={'false'} control={<Radio />} label="No" />
+                                                    <FormControlLabel value={'not'} control={<Radio />} label="Not Answered" />
+                                                </RadioGroup>
+                                            )}
+                                        />
+                                    ) : (
+                                        <Controller
+                                            control={control}
+                                            {...register(
+                                                `item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.includeLowerBound`
+                                            )}
+                                            render={({ field }) => (
+                                                <RadioGroup
+                                                    row
+                                                    aria-label="includeLowerBound"
+                                                    name="includeLowerBound"
+                                                    {...field}
+                                                    onChange={(e) => {
+                                                        const value = e.target.value;
+                                                        setLowerBoundOptions(value);
+                                                        field.onChange(value === 'true' ? true : value === 'false' ? false : null);
+                                                    }}
+                                                >
+                                                    <FormControlLabel value={'true'} control={<Radio />} label="Yes" />
+                                                    <FormControlLabel value={'false'} control={<Radio />} label="No" />
+                                                    <FormControlLabel value={'not'} control={<Radio />} label="Not Answered" />
+                                                </RadioGroup>
+                                            )}
+                                        />
+                                    )}
                                 </FormControl>
                             </Grid>
                             <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important' } }}>
@@ -200,31 +218,56 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                     </Grid>
                     <Grid item xs={12} sm={9} lg={6}>
                         <FormControl>
-                            <Controller
-                                control={control}
-                                {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.includeUpperBound`)}
-                                render={({ field }) => (
-                                    <RadioGroup
-                                        row
-                                        aria-label="includeUpperBound"
-                                        name="includeUpperBound"
-                                        {...field}
-                                        onChange={(e) => {
-                                            const value = e.target.value;
-                                            setUpperBoundOptions(value);
-                                            field.onChange(value === 'true' ? true : value === 'false' ? false : null);
-                                        }}
-                                        defaultValue={
-                                            initialStateUpperBound === false ? 'false' : initialStateUpperBound == true ? 'true' : 'not'
-                                        }
-                                        // value={upperBoundOptionsState}
-                                    >
-                                        <FormControlLabel value={'true'} control={<Radio />} label="Yes" />
-                                        <FormControlLabel value={'false'} control={<Radio />} label="No" />
-                                        <FormControlLabel value={'not'} control={<Radio />} label="Not Answered" />
-                                    </RadioGroup>
-                                )}
-                            />
+                            {componentType ? (
+                                <Controller
+                                    control={control}
+                                    {...register(
+                                        `item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.includeUpperBound`
+                                    )}
+                                    render={({ field }) => (
+                                        <RadioGroup
+                                            row
+                                            aria-label="includeUpperBound"
+                                            name="includeUpperBound"
+                                            {...field}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                setUpperBoundOptions(value);
+                                                field.onChange(value === 'true' ? true : value === 'false' ? false : null);
+                                            }}
+                                            defaultValue={initialStateUpperBound}
+                                        >
+                                            <FormControlLabel value={'true'} control={<Radio />} label="Yes" />
+                                            <FormControlLabel value={'false'} control={<Radio />} label="No" />
+                                            <FormControlLabel value={'not'} control={<Radio />} label="Not Answered" />
+                                        </RadioGroup>
+                                    )}
+                                />
+                            ) : (
+                                <Controller
+                                    control={control}
+                                    {...register(
+                                        `item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.includeUpperBound`
+                                    )}
+                                    render={({ field }) => (
+                                        <RadioGroup
+                                            row
+                                            aria-label="includeUpperBound"
+                                            name="includeUpperBound"
+                                            {...field}
+                                            onChange={(e) => {
+                                                const value = e.target.value;
+                                                setUpperBoundOptions(value);
+                                                field.onChange(value === 'true' ? true : value === 'false' ? false : null);
+                                            }}
+                                        >
+                                            <FormControlLabel value={'true'} control={<Radio />} label="Yes" />
+                                            <FormControlLabel value={'false'} control={<Radio />} label="No" />
+                                            <FormControlLabel value={'not'} control={<Radio />} label="Not Answered" />
+                                        </RadioGroup>
+                                    )}
+                                />
+                            )}
                         </FormControl>
                     </Grid>
                 </Grid>

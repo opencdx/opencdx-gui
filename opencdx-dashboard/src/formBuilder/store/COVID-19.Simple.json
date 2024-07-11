@@ -1,7 +1,7 @@
 {
   "resourceType": "Questionnaire",
   
-  "title": "COVID 19 11",
+  "title": "COVID 19 Simple",
   "status": "draft",
   "purpose": "To capture user symptoms ",
   "item": [
