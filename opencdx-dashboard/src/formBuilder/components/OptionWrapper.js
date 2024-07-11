@@ -41,12 +41,20 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item, getVal
     };
     const getOptions = (type) => {
         const choices = [];
+        const groupItem = item?.item;
         switch (type) {
             case 'boolean':
                 return ['Yes', 'No'];
             case 'choice':
                 for (let i = 0; i < item.answerOption?.length; i++) {
                     choices.push(item.answerOption[i].valueCoding.display);
+                }
+                return choices;
+            case 'group':
+                if (groupItem && groupItem.length > 0) {
+                    for (let j = 0; j < groupItem[0].answerOption?.length; j++) {
+                        choices.push(groupItem[0].answerOption[j].valueCoding.display);
+                    }
                 }
                 return choices;
             case 'logical':
@@ -93,7 +101,7 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item, getVal
                                         control={control}
                                         {...register(`item.${index}.anfStatementConnector.${i}.operatorValue`)}
                                         render={({ field }) =>
-                                            item.type === 'boolean' || item.type === 'choice' ? (
+                                            item.type === 'boolean' || item.type === 'choice' ||  item.type === 'group' ? (
                                                 <Select
                                                     {...field}
                                                     defaultSelectedKeys={[field.value]}
