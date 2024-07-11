@@ -120,7 +120,7 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item, getVal
                                                 <TextField
                                                     fullWidth
                                                     placeholder="Enter the Value"
-                                                    type={item.type === 'integer' ? 'number' : 'text'}
+                                                    type={ 'text'}
                                                     {...register(`item.${index}.anfStatementConnector.${i}.operatorValue`)}
                                                 />
                                             )

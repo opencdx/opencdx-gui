@@ -20,14 +20,13 @@ export default function App({ questionnaire, navigation }) {
   const [selectedValue, setSelectedValue] = useState([]);
   const [defaultIndex, setDefaultIndex] = useState(1);
   useEffect(() => {
-      const question = questionnaire?.item[0]?.answerOption?.map((item) => {
-        return item.valueCoding.display;
-      });
-      setQuestion(question);
-      questionnaire?.item[0]?.type === "open-choice" && setDefaultIndex(0);
-    
+    const question = questionnaire?.item[0]?.answerOption?.map((item) => {
+      return item.valueCoding.display;
+    });
+    setQuestion(question);
+    questionnaire?.item[0]?.type === "open-choice" && setDefaultIndex(0);
   }, [questionnaire]);
- 
+
   const onSubmit = (data) => {
     questionnaire.item.forEach((field, index) => {
       if (field.item) {
@@ -35,7 +34,8 @@ export default function App({ questionnaire, navigation }) {
           if (connector && connector.anfStatementConnector) {
             connector.anfStatementConnector.forEach((anfStatement) => {
               if (anfStatement.performanceCircumstance?.result?.resolution) {
-                anfStatement.performanceCircumstance.result.resolution= data[field.linkId];
+                anfStatement.performanceCircumstance.result.resolution =
+                  data[field.linkId];
               }
             });
           }
@@ -68,7 +68,10 @@ export default function App({ questionnaire, navigation }) {
       const data = JSON.stringify(userQuestionnaireData);
       try {
         const response = await Endpoints.submitUserQuestionnaire(data);
-        navigation.navigate("Success");
+        const { success } = response.data;
+        if (success) {
+          navigation.navigate("Success");
+        }
       } catch (error) {
         alert(error);
       }
@@ -103,7 +106,10 @@ export default function App({ questionnaire, navigation }) {
               const matchingIndices = compareArrays(question, selectedValue);
               let show = true;
               if (field?.enableWhen && field?.enableWhen.length > 0) {
-                show = field.type !== "open-choice" || !field.enableWhen || matchingIndices.includes(index);
+                show =
+                  field.type !== "open-choice" ||
+                  !field.enableWhen ||
+                  matchingIndices.includes(index);
               }
               switch (field.type) {
                 case "integer":
@@ -190,7 +196,9 @@ export default function App({ questionnaire, navigation }) {
                           setFormError={setError}
                           type="select"
                           answerOption={field.answerOption}
-                          onCheckboxChange={(selectedValue) => setSelectedValue(selectedValue)}
+                          onCheckboxChange={(selectedValue) =>
+                            setSelectedValue(selectedValue)
+                          }
                         />
                         <View style={styles.divider} />
                       </>
@@ -224,7 +232,9 @@ export default function App({ questionnaire, navigation }) {
                         setFormError={setError}
                         type="select"
                         answerOption={field.answerOption}
-                        onSelectChange={(selectedValue) => setSelectedValue(selectedValue)}
+                        onSelectChange={(selectedValue) =>
+                          setSelectedValue(selectedValue)
+                        }
                       />
                       <View style={styles.divider} />
                     </>
