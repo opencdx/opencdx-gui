@@ -81,16 +81,6 @@ const MainWrapper = ({ uploadedFile }) => {
                         if (anfOperatorType === '') {
                             connector.anfOperatorType = 'ANF_OPERATOR_TYPE_UNSPECIFIED';
                         }
-
-                        if (anfStatement.authors && !Array.isArray(anfStatement.authors)) {
-                            anfStatement.authors = [anfStatement.authors];
-                        }
-                        if (
-                            anfStatement.performanceCircumstance?.participant &&
-                            !Array.isArray(anfStatement.performanceCircumstance.participant)
-                        ) {
-                            anfStatement.performanceCircumstance.participant = [anfStatement.performanceCircumstance.participant];
-                        }
                     }
 
                     return connector;
