@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { MeasureComponent } from '../TabComponents/MeasureComponent';
+import { CircumstanceMeasureComponent } from '../TabComponents/CircumstanceMeasureComponent';
 // import { ParticipantComponent } from '../TabComponents/ParticipantComponent';
 import { FormControl, Grid, TextField } from '@mui/material';
 import { MainCard } from '../ui-component/MainCard';
@@ -47,7 +47,7 @@ export const CircumstanceChoice = React.forwardRef(({ control, register, index, 
                     <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important' } }}>
                         <InputLabel horizontal>Result</InputLabel>
                     </Grid>
-                    {<MeasureComponent {...{ control, register, index, currentIndex }} tab="performanceCircumstance.result" />}
+                    {<CircumstanceMeasureComponent {...{ control, register, index, currentIndex }} tab="performanceCircumstance.result" />}
                     <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important' } }}>
                         <InputLabel horizontal>Health Risks</InputLabel>
                     </Grid>
@@ -76,7 +76,7 @@ export const CircumstanceChoice = React.forwardRef(({ control, register, index, 
                     <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important' } }}>
                         <InputLabel horizontal>Normal Range</InputLabel>
                     </Grid>
-                    {<MeasureComponent {...{ control, register, index, currentIndex }} tab="performanceCircumstance.normalRange" />}
+                    {<CircumstanceMeasureComponent {...{ control, register, index, currentIndex }} tab="performanceCircumstance.normalRange" />}
                     {/* <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important', marginTop: 10 } }}>
                         <InputLabel horizontal>Circumstance</InputLabel>
                     </Grid>
@@ -85,7 +85,7 @@ export const CircumstanceChoice = React.forwardRef(({ control, register, index, 
                     <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important', marginTop: 10 } }}>
                         <InputLabel horizontal>Timing</InputLabel>
                     </Grid>
-                    {<MeasureComponent {...{ control, register, index, currentIndex }} tab="performanceCircumstance.timing" />}
+                    {<CircumstanceMeasureComponent {...{ control, register, index, currentIndex }} tab="performanceCircumstance.timing" />}
                     <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important', marginTop: 10 } }}>
                         <InputLabel horizontal>Participant</InputLabel>
                     </Grid>
