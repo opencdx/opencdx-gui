@@ -94,30 +94,30 @@ const MainWrapper = ({ uploadedFile }) => {
                             anfStatement.authors = [anfStatement.authors];
                         }
                         
-                        if (anfStatement.time) {
-                            if (anfStatement.time.includeLowerBound === 'true' || anfStatement.time.includeLowerBound === 'false') {
-                                anfStatement.time.includeLowerBound = anfStatement.time.includeLowerBound === 'true';
-                            }
-                            if (anfStatement.time.includeUpperBound === 'true' || anfStatement.time.includeUpperBound === 'false') {
-                                anfStatement.time.includeUpperBound = anfStatement.time.includeUpperBound === 'true';
-                            }
-                        }
+                        // if (anfStatement.time) {
+                        //     if (anfStatement.time.includeLowerBound === 'true' || anfStatement.time.includeLowerBound === 'false') {
+                        //         anfStatement.time.includeLowerBound = anfStatement.time.includeLowerBound === 'true';
+                        //     }
+                        //     if (anfStatement.time.includeUpperBound === 'true' || anfStatement.time.includeUpperBound === 'false') {
+                        //         anfStatement.time.includeUpperBound = anfStatement.time.includeUpperBound === 'true';
+                        //     }
+                        // }
                         
-                        if (anfStatement.performanceCircumstance?.normalRange) {
-                            const { normalRange } = anfStatement.performanceCircumstance;
-                            normalRange.includeLowerBound = normalRange.includeLowerBound === 'yes';
-                            normalRange.includeUpperBound = normalRange.includeUpperBound === 'yes';
-                        }
-                        if (anfStatement.performanceCircumstance?.result) {
-                            const { result } = anfStatement.performanceCircumstance;
-                            result.includeLowerBound = result.includeLowerBound === 'yes';
-                            result.includeUpperBound = result.includeUpperBound === 'yes';
-                        }
-                        if (anfStatement.performanceCircumstance?.timing) {
-                            const { timing } = anfStatement.performanceCircumstance;
-                            timing.includeLowerBound = timing.includeLowerBound === 'yes';
-                            timing.includeUpperBound = timing.includeUpperBound === 'yes';
-                        }
+                        // if (anfStatement.performanceCircumstance?.normalRange) {
+                        //     const { normalRange } = anfStatement.performanceCircumstance;
+                        //     normalRange.includeLowerBound = normalRange.includeLowerBound === 'yes';
+                        //     normalRange.includeUpperBound = normalRange.includeUpperBound === 'yes';
+                        // }
+                        // if (anfStatement.performanceCircumstance?.result) {
+                        //     const { result } = anfStatement.performanceCircumstance;
+                        //     result.includeLowerBound = result.includeLowerBound === 'yes';
+                        //     result.includeUpperBound = result.includeUpperBound === 'yes';
+                        // }
+                        // if (anfStatement.performanceCircumstance?.timing) {
+                        //     const { timing } = anfStatement.performanceCircumstance;
+                        //     timing.includeLowerBound = timing.includeLowerBound === 'yes';
+                        //     timing.includeUpperBound = timing.includeUpperBound === 'yes';
+                        // }
                         if (
                             anfStatement.performanceCircumstance?.participant &&
                             !Array.isArray(anfStatement.performanceCircumstance.participant)
