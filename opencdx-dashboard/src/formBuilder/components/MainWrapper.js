@@ -30,14 +30,11 @@ const MainWrapper = ({ uploadedFile }) => {
     } = useForm({ defaultValues });
 
     useEffect(() => {
-        
         reset({
             ruleId: '',
             ruleQuestionId: [],
             item: formData?.item
         });
-
-
     }, [formData, reset]);
 
     const onSubmit = async (data) => {
@@ -61,16 +58,14 @@ const MainWrapper = ({ uploadedFile }) => {
                     markedMainANFStatement,
                     selectedCategories,
                     componentId,
-                    answerTextValue,
                     items,
                     ...rest
                 },
                 i
             ) => {
                 /* eslint-enable */
-                // let { anfStatement } = rest?.anfStatementConnector[0] || {};
                 rest.anfStatementConnector = rest.anfStatementConnector.map((connector, ival) => {
-                    let { anfStatement, anfOperatorType, operatorValue, answerTextValue } = connector;
+                    let { anfStatement, anfOperatorType } = connector;
                     if (anfStatement) {
                         if (componentType && componentType !== '') {
                             connector.anfStatementType = componentType;
@@ -83,40 +78,12 @@ const MainWrapper = ({ uploadedFile }) => {
                                 connector.anfStatementType = formData.item[i].anfStatementConnector[ival].anfStatementType;
                             }
                         }
-
                         if (anfOperatorType === '') {
                             connector.anfOperatorType = 'ANF_OPERATOR_TYPE_UNSPECIFIED';
                         }
-                        if (operatorValue === 'Value') {
-                            connector.operatorValue = answerTextValue;
-                        }
+
                         if (anfStatement.authors && !Array.isArray(anfStatement.authors)) {
                             anfStatement.authors = [anfStatement.authors];
-                        }
-                        
-                        if (anfStatement.time) {
-                            if (anfStatement.time.includeLowerBound === 'true' || anfStatement.time.includeLowerBound === 'false') {
-                                anfStatement.time.includeLowerBound = anfStatement.time.includeLowerBound === 'true';
-                            }
-                            if (anfStatement.time.includeUpperBound === 'true' || anfStatement.time.includeUpperBound === 'false') {
-                                anfStatement.time.includeUpperBound = anfStatement.time.includeUpperBound === 'true';
-                            }
-                        }
-                        
-                        if (anfStatement.performanceCircumstance?.normalRange) {
-                            const { normalRange } = anfStatement.performanceCircumstance;
-                            normalRange.includeLowerBound = normalRange.includeLowerBound === 'yes';
-                            normalRange.includeUpperBound = normalRange.includeUpperBound === 'yes';
-                        }
-                        if (anfStatement.performanceCircumstance?.result) {
-                            const { result } = anfStatement.performanceCircumstance;
-                            result.includeLowerBound = result.includeLowerBound === 'yes';
-                            result.includeUpperBound = result.includeUpperBound === 'yes';
-                        }
-                        if (anfStatement.performanceCircumstance?.timing) {
-                            const { timing } = anfStatement.performanceCircumstance;
-                            timing.includeLowerBound = timing.includeLowerBound === 'yes';
-                            timing.includeUpperBound = timing.includeUpperBound === 'yes';
                         }
                         if (
                             anfStatement.performanceCircumstance?.participant &&
@@ -124,8 +91,6 @@ const MainWrapper = ({ uploadedFile }) => {
                         ) {
                             anfStatement.performanceCircumstance.participant = [anfStatement.performanceCircumstance.participant];
                         }
-                        delete connector.answerTextValue;
-                        delete anfStatement.performanceCircumstance?.circumstanceType;
                     }
 
                     return connector;

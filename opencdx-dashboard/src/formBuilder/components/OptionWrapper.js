@@ -11,10 +11,7 @@ const ANF_OPERATOR_TYPE_EQUAL = 'ANF_OPERATOR_TYPE_EQUAL';
 const ANF_OPERATOR_TYPE_NOT_EQUAL = 'ANF_OPERATOR_TYPE_NOT_EQUAL';
 
 const OptionWrapper = React.forwardRef(({ control, register, index, item, getValues, setValue }, ref) => {
-    // eslint-disable-next-line no-unused-vars
     const [anfStatementConnector, setAnfStatementConnector] = React.useState(item?.anfStatementConnector);
-    const [showValueField, setShowValueField] = React.useState(Number.isInteger(parseInt(item?.anfStatementConnector?.[index]?.operatorValue)));
-    const [answerTextValue, setAnswerTextValue] = React.useState(item?.anfStatementConnector?.[index]?.operatorValue);
     useEffect(() => {
         const newConnector = {
             anfStatementType: '',
@@ -25,10 +22,8 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item, getVal
         if (!anfStatementConnector) {
             setAnfStatementConnector([newConnector]);
             return;
-        } 
-
+        }
     }, []);
-
 
     const handleAddButtonClick = () => {
         const newConnector = {
@@ -54,8 +49,6 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item, getVal
                     choices.push(item.answerOption[i].valueCoding.display);
                 }
                 return choices;
-            case 'integer':
-                return ['Any value', 'Value'];
             case 'logical':
                 return [
                     { value: ANF_OPERATOR_TYPE_EQUAL, label: 'Equal' },
@@ -93,88 +86,53 @@ const OptionWrapper = React.forwardRef(({ control, register, index, item, getVal
                             </Grid>
 
                             <Grid item xs={12} sm={3} lg={4} sx={{ pt: 2 }}>
-                                <Typography variant="subtitle1">Answer</Typography>
+                                <Typography variant="subtitle1">Value</Typography>
 
                                 <FormControl fullWidth sx={{ pt: 2 }}>
                                     <Controller
-                                        fullWidth
-                                        {...register(`item.${index}.anfStatementConnector.${i}.operatorValue`)}
                                         control={control}
-                                        defaultValue={ item.type === 'integer' && showValueField ? 'Value' : 'Any value'}
-                                        render={({ field }) => (
-                                            <Select
-                                                {...field}
-                                                onChange={(e) => {
-                                                    
-                                                    field.onChange(e.target.value);
-                                                    if (e.target.value === 'Value') {
-                                                        setShowValueField(true);
-                                                    } else {
-                                                        setShowValueField(false);
-                                                    }
-                                                }}
-                                                
-                                            
-                                                
-                                            >
-                                                {getOptions(item.type).map((option, index) => (
-                                                    <MenuItem key={index} value={option}>
-                                                        {option}
-                                                    </MenuItem>
-                                                ))}
-                                            </Select>
-                                        )}
+                                        {...register(`item.${index}.anfStatementConnector.${i}.operatorValue`)}
+                                        render={({ field }) =>
+                                            item.type === 'boolean' || item.type === 'choice' ? (
+                                                <Select
+                                                    {...field}
+                                                    defaultSelectedKeys={[field.value]}
+                                                    onChange={(e) => {
+                                                        field.onChange(e.target.value);
+                                                        console.log(e.target.value);
+                                                    }}
+                                                >
+                                                    {getOptions(item.type).map((option, index) => (
+                                                        <MenuItem key={index} value={option}>
+                                                            {option}
+                                                        </MenuItem>
+                                                    ))}
+                                                </Select>
+                                            ) : (
+                                                <TextField
+                                                    fullWidth
+                                                    placeholder="Enter the Value"
+                                                    type={item.type === 'integer' ? 'number' : 'text'}
+                                                    {...register(`item.${index}.anfStatementConnector.${i}.operatorValue`)}
+                                                />
+                                            )
+                                        }
                                     />
                                 </FormControl>
                             </Grid>
-                            {showValueField && (
-                                <Grid item xs={12} sm={3} lg={4} sx={{ pt: 2, pl: 2 }}>
-                                    <Typography variant="subtitle1">Value</Typography>
-
-                                    <FormControl fullWidth sx={{ pt: 2 }}>
-                                        <Controller
-                                            fullWidth
-                                            {...register(`item.${index}.anfStatementConnector.${i}.answerTextValue`)}
-                                            control={control}
-                                            defaultValue={answerTextValue}
-                                            render={({ field: { onChange, value } }) => (
-                                                <TextField
-                                                    fullWidth
-                                                    id={`item.${index}.item.answerTextValue`}
-                                                    key={index}
-                                                    type="number"
-                                                    InputProps={{
-                                                        inputProps: { min: 0 }
-                                                    }}
-                                                    value={value}
-                                                    onChange={({ target: { value } }) => {
-                                                        onChange(value);
-                                                        setAnswerTextValue(value);
-                                                    }}
-                                                    placeholder="Enter Answer"
-                                                />
-                                            )}
-                                        />
-                                    </FormControl>
-                                </Grid>
-                            )}
                         </Grid>
                         <Grid style={{ display: 'flex', alignItems: 'baseline' }}>
                             <Grid item xs={12} lg={4} sx={{ pt: 2, pr: 2 }}>
                                 <AccordianWrapper title="Anf Statement">
                                     <CustomTabs currentIndex={i} {...{ control, register, index, item, getValues, setValue }} />
                                 </AccordianWrapper>
-                            </Grid>
-                            {/* <Button variant="contained" type="button" onClick={() => remove(index)} size="small">
-                                Remove
-                            </Button> */}
+                            </Grid>      
                         </Grid>
                     </div>
                 ))
             ) : (
                 <></>
             )}
-            {/* {item.type !== 'integer' && ( */}
             {
                 <Grid sx={{ pt: 2, textAlign: 'right' }}>
                     <Button
