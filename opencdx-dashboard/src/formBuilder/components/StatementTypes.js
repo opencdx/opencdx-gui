@@ -22,11 +22,12 @@ const StatementTypes = forwardRef(({ register, index, control, item, handleState
     useEffect(() => {
         setSelectedMainOption(item?.componentTypeMain);
         setSelectedAssociatedOption(item?.componentTypeAssociated);
+        
         // setSelectedOption(item?.item[0]?.anfStatementConnector[0]?.anfStatementType);
     }, [item]);
     useEffect(() => {
-        if (item?.item && item.item[0]?.anfStatementConnector) {
-            setSelectedOption(item.item[0].anfStatementConnector[0].anfStatementType);
+        if (item?.anfStatementConnector) {
+            setSelectedOption(item?.anfStatementConnector[index]?.anfStatementType);
         }
     }, []);
 
@@ -161,7 +162,7 @@ const StatementTypes = forwardRef(({ register, index, control, item, handleState
                     <Grid item xs={12} lg={12} sx={{ height: 'auto', overflow: 'auto' }}>
                         <Controller
                             control={control}
-                            {...register(`item.${index}.item.${0}.anfStatementConnector.${0}.anfStatementType`)}
+                            {...register(`item.${index}.anfStatementConnector.${0}.anfStatementType`)}
                             render={({ field }) => (
                                 <RadioGroup
                                     row
@@ -191,7 +192,7 @@ const StatementTypes = forwardRef(({ register, index, control, item, handleState
                                     </Grid>
                                     <Grid item xs={12} sm={2} lg={4} sx={{ pl: 3 }}>
                                         <FormControlLabel
-                                            value="ANF_STATEMENT_TYPE_USER_QUESTION"
+                                            value="ANF_STATEMENT_USER_QUESTION"
                                             control={<Radio />}
                                             label="User Question"
                                         />

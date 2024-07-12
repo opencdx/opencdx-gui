@@ -27,7 +27,6 @@ import CloseIcon from '@mui/icons-material/Close';
 
 /* start - anf statement type */
 import StatementTypesReport from './components/StatementTypesReport';
-import MainWrapper from './components/MainWrapper';
 import FullScreenSection from './components/ui-component/FullScreen';
 import ListQuestionnaire from './components/ListQuestionnaire';
 
@@ -111,6 +110,7 @@ const FormBuilder = () => {
     const [openDialog, setOpenDialog] = React.useState(false);
     const [openAnfDialog, setOpenAnfDialog] = React.useState(false);
     const { formData, setFormData, uploadData, setUploadData, setAnfData } = useAnfFormStore();
+     
 
     const handleChange = (e) => {
         setFormData({});
@@ -119,11 +119,12 @@ const FormBuilder = () => {
         const fileReader = new FileReader();
         fileReader.readAsText(e.target.files[0], 'UTF-8');
         fileReader.onload = (e) => {
-            const formData = JSON.parse(e.target.result);
+            const formData = e.target?.result?JSON.parse(e.target?.result):null;
+            delete formData.id;
             setFormData(formData);
             setUploadData(formData);
             setAnfData(formData);
-        };
+        };  
     };
 
     const handleClickOpen = () => {
@@ -306,7 +307,6 @@ const FormBuilder = () => {
                     <StatementTypesReport />
                     <ListQuestionnaire />
 
-                    {formData && formData.item && <MainWrapper uploadedFile={formData} />}
                 </Box>
             </Main>
         </Box>

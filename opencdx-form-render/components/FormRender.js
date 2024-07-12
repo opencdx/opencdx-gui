@@ -31,17 +31,13 @@ export default function App({ questionnaire, navigation }) {
   const onSubmit = (data) => {
     questionnaire.item.forEach((field, index) => {
       if (field.item) {
-        field.item.forEach((connector) => {
-          if (
-            connector &&
-            connector.anfStatementConnector &&
-            connector.anfStatementConnector[0] &&
-            connector.anfStatementConnector[0].anfStatement &&
-            connector.anfStatementConnector[0].anfStatement
-              .performanceCircumstance
-          ) {
-            connector.anfStatementConnector[0].anfStatement.performanceCircumstance.result.resolution =
-              data[field.linkId];
+        field.item?.forEach((connector) => {
+          if (connector && connector.anfStatementConnector) {
+            connector.anfStatementConnector.forEach((anfStatement) => {
+              if (anfStatement.performanceCircumstance?.result?.resolution) {
+                anfStatement.performanceCircumstance.result.resolution= data[field.linkId];
+              }
+            });
           }
         });
       }
@@ -63,22 +59,19 @@ export default function App({ questionnaire, navigation }) {
 
     const userQuestionnaireData = {
       userQuestionnaireData: {
-        patientId: "6622c6c330275c13ca7b8ff3",
+        patientId: "66880f05f409fa6671aae664",
         questionnaireData: [questionnaire],
       },
     };
 
     const handleSave = async () => {
       const data = JSON.stringify(userQuestionnaireData);
-      console.log(data);
-      navigation.navigate("Success");
-
-      // try {
-      //   const response = await Endpoints.submitUserQuestionnaire(data);
-      //   navigation.navigate("Success");
-      // } catch (error) {
-      //   alert(error);
-      // }
+      try {
+        const response = await Endpoints.submitUserQuestionnaire(data);
+        navigation.navigate("Success");
+      } catch (error) {
+        alert(error);
+      }
     };
     handleSave();
   };

@@ -13,16 +13,36 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
     const componentType =
         [statementType.MAIN, statementType.ASSOCIATED].includes(formData.item[index]?.componentType) &&
         !['timingMeasure', 'rangeMeasure', 'result'].includes(tab);
+    let initialStateLowerBound;
+    if (formData.item?.[index]?.anfStatementConnector?.[currentIndex]?.anfStatement?.[tab]?.includeLowerBound === undefined) {
+        if (componentType) {
+            initialStateLowerBound = systemVariables[tab]?.includeUpperBound;
+        } else {
+            initialStateLowerBound = 'not';
+        }
+    } else {
+        initialStateLowerBound = formData.item[index]?.anfStatementConnector?.[currentIndex]?.anfStatement[tab]?.includeLowerBound;
+    }
+    let initialStateUpperBound;
+    if (formData.item?.[index]?.anfStatementConnector?.[currentIndex]?.anfStatement?.[tab]?.includeUpperBound === undefined) {
+        if (componentType) {
+            initialStateUpperBound = systemVariables[tab]?.includeUpperBound;
+        } else {
+            initialStateUpperBound = 'not';
+        }
+    } else {
+        initialStateUpperBound = formData.item?.[index]?.anfStatementConnector?.[currentIndex]?.anfStatement?.[tab]?.includeUpperBound;
+    }
+
     const [lowerBoundState, setLowerBound] = useState(systemVariables[tab]?.lowerBound);
     const [upperBoundState, setUpperBound] = useState(systemVariables[tab]?.upperBound);
     const [resolutionState, setResolution] = useState(systemVariables[tab]?.resolution);
     const [semanticState, setSemantic] = useState(systemVariables[tab]?.semantic);
-    const [lowerBoundOptionsState, setLowerBoundOptions] = useState(
-        systemVariables[tab] ? (systemVariables[tab]?.includeLowerBound ? 'yes' : 'no') : 'not'
-    );
-    const [upperBoundOptionsState, setUpperBoundOptions] = useState(
-        systemVariables[tab] ? (systemVariables[tab]?.includeUpperBound ? 'yes' : 'no') : 'not'
-    );
+    // eslint-disable-next-line no-unused-vars
+    const [upperBoundOptionsState, setUpperBoundOptions] = useState(systemVariables[tab]?.upperBound);
+    // eslint-disable-next-line no-unused-vars
+    const [lowerBoundOptionsState, setLowerBoundOptions] = useState(systemVariables[tab]?.lowerBound);
+
     return (
         <Grid item xs={12} lg={12} ref={ref}>
             <MainCard border>
@@ -35,9 +55,7 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                             <Grid item xs={12} sm={9} lg={8}>
                                 {componentType ? (
                                     <TextField
-                                        {...register(
-                                            `item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.${tab}.lowerBound`
-                                        )}
+                                        {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.lowerBound`)}
                                         fullWidth
                                         type="text"
                                         value={lowerBoundState}
@@ -48,9 +66,7 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                                     />
                                 ) : (
                                     <TextField
-                                        {...register(
-                                            `item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.${tab}.lowerBound`
-                                        )}
+                                        {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.lowerBound`)}
                                         fullWidth
                                         type="text"
                                         InputProps={{
@@ -65,45 +81,56 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                             </Grid>
                             <Grid item xs={12} sm={9} lg={8}>
                                 <FormControl>
-                                    <Controller
-                                        control={control}
-                                        {...register(
-                                            `item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.${tab}.includeLowerBound`
-                                        )}
-                                        render={({ field }) =>
-                                            componentType ? (
+                                    {componentType ? (
+                                        <Controller
+                                            control={control}
+                                            {...register(
+                                                `item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.includeLowerBound`
+                                            )}
+                                            render={({ field }) => (
                                                 <RadioGroup
                                                     row
                                                     aria-label="includeLowerBound"
                                                     name="includeLowerBound"
                                                     {...field}
                                                     onChange={(e) => {
-                                                        field.onChange(e.target.value);
-                                                        setLowerBoundOptions(e.target.value);
+                                                        const value = e.target.value;
+                                                        setLowerBoundOptions(value);
+                                                        field.onChange(value === 'true' ? true : value === 'false' ? false : null);
                                                     }}
-                                                    value={lowerBoundOptionsState}
+                                                    defaultValue={initialStateLowerBound}
                                                 >
-                                                    <FormControlLabel value={'yes'} control={<Radio />} label="Yes" />
-                                                    <FormControlLabel value={'no'} control={<Radio />} label="No" />
+                                                    <FormControlLabel value={'true'} control={<Radio />} label="Yes" />
+                                                    <FormControlLabel value={'false'} control={<Radio />} label="No" />
                                                     <FormControlLabel value={'not'} control={<Radio />} label="Not Answered" />
                                                 </RadioGroup>
-                                            ) : (
+                                            )}
+                                        />
+                                    ) : (
+                                        <Controller
+                                            control={control}
+                                            {...register(
+                                                `item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.includeLowerBound`
+                                            )}
+                                            render={({ field }) => (
                                                 <RadioGroup
                                                     row
                                                     aria-label="includeLowerBound"
                                                     name="includeLowerBound"
                                                     {...field}
                                                     onChange={(e) => {
-                                                        field.onChange(e.target.value);
+                                                        const value = e.target.value;
+                                                        setLowerBoundOptions(value);
+                                                        field.onChange(value === 'true' ? true : value === 'false' ? false : null);
                                                     }}
                                                 >
-                                                    <FormControlLabel value={'yes'} control={<Radio />} label="Yes" />
-                                                    <FormControlLabel value={'no'} control={<Radio />} label="No" />
+                                                    <FormControlLabel value={'true'} control={<Radio />} label="Yes" />
+                                                    <FormControlLabel value={'false'} control={<Radio />} label="No" />
                                                     <FormControlLabel value={'not'} control={<Radio />} label="Not Answered" />
                                                 </RadioGroup>
-                                            )
-                                        }
-                                    />
+                                            )}
+                                        />
+                                    )}
                                 </FormControl>
                             </Grid>
                             <Grid item xs={12} sm={3} lg={4} sx={{ pt: { xs: 2, sm: '0 !important' } }}>
@@ -112,9 +139,7 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                             <Grid item xs={12} sm={9} lg={8}>
                                 {componentType ? (
                                     <TextField
-                                        {...register(
-                                            `item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.${tab}.semantic`
-                                        )}
+                                        {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.semantic`)}
                                         fullWidth
                                         value={semanticState}
                                         onChange={(e) => {
@@ -124,9 +149,7 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                                     />
                                 ) : (
                                     <TextField
-                                        {...register(
-                                            `item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.${tab}.semantic`
-                                        )}
+                                        {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.semantic`)}
                                         fullWidth
                                         placeholder="Enter Semantic Value"
                                     />
@@ -141,7 +164,7 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                     <Grid item xs={12} sm={8} lg={8}>
                         {componentType ? (
                             <TextField
-                                {...register(`item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.${tab}.resolution`)}
+                                {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.resolution`)}
                                 fullWidth
                                 value={resolutionState}
                                 onChange={(e) => {
@@ -152,7 +175,7 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                             />
                         ) : (
                             <TextField
-                                {...register(`item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.${tab}.resolution`)}
+                                {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.resolution`)}
                                 fullWidth
                                 type="text"
                                 InputProps={{
@@ -170,7 +193,7 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                         {componentType ? (
                             <TextField
                                 type={'text'}
-                                {...register(`item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.${tab}.upperBound`)}
+                                {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.upperBound`)}
                                 fullWidth
                                 value={upperBoundState}
                                 onChange={(e) => {
@@ -180,7 +203,7 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                             />
                         ) : (
                             <TextField
-                                {...register(`item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.${tab}.upperBound`)}
+                                {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.upperBound`)}
                                 fullWidth
                                 InputProps={{
                                     inputProps: { min: 0 }
@@ -195,45 +218,56 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                     </Grid>
                     <Grid item xs={12} sm={9} lg={6}>
                         <FormControl>
-                            <Controller
-                                control={control}
-                                {...register(
-                                    `item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.${tab}.includeUpperBound`
-                                )}
-                                render={({ field }) =>
-                                    componentType ? (
+                            {componentType ? (
+                                <Controller
+                                    control={control}
+                                    {...register(
+                                        `item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.includeUpperBound`
+                                    )}
+                                    render={({ field }) => (
                                         <RadioGroup
                                             row
                                             aria-label="includeUpperBound"
                                             name="includeUpperBound"
                                             {...field}
                                             onChange={(e) => {
-                                                field.onChange(e.target.value);
-                                                setUpperBoundOptions(e.target.value);
+                                                const value = e.target.value;
+                                                setUpperBoundOptions(value);
+                                                field.onChange(value === 'true' ? true : value === 'false' ? false : null);
                                             }}
-                                            value={upperBoundOptionsState}
+                                            defaultValue={initialStateUpperBound}
                                         >
-                                            <FormControlLabel value={'yes'} control={<Radio />} label="Yes" />
-                                            <FormControlLabel value={'no'} control={<Radio />} label="No" />
+                                            <FormControlLabel value={'true'} control={<Radio />} label="Yes" />
+                                            <FormControlLabel value={'false'} control={<Radio />} label="No" />
                                             <FormControlLabel value={'not'} control={<Radio />} label="Not Answered" />
                                         </RadioGroup>
-                                    ) : (
+                                    )}
+                                />
+                            ) : (
+                                <Controller
+                                    control={control}
+                                    {...register(
+                                        `item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.includeUpperBound`
+                                    )}
+                                    render={({ field }) => (
                                         <RadioGroup
                                             row
                                             aria-label="includeUpperBound"
                                             name="includeUpperBound"
                                             {...field}
                                             onChange={(e) => {
-                                                field.onChange(e.target.value);
+                                                const value = e.target.value;
+                                                setUpperBoundOptions(value);
+                                                field.onChange(value === 'true' ? true : value === 'false' ? false : null);
                                             }}
                                         >
-                                            <FormControlLabel value={'yes'} control={<Radio />} label="Yes" />
-                                            <FormControlLabel value={'no'} control={<Radio />} label="No" />
+                                            <FormControlLabel value={'true'} control={<Radio />} label="Yes" />
+                                            <FormControlLabel value={'false'} control={<Radio />} label="No" />
                                             <FormControlLabel value={'not'} control={<Radio />} label="Not Answered" />
                                         </RadioGroup>
-                                    )
-                                }
-                            />
+                                    )}
+                                />
+                            )}
                         </FormControl>
                     </Grid>
                 </Grid>

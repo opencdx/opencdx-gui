@@ -21,7 +21,7 @@ const Type = React.forwardRef(({ index, currentIndex, control, getValues }, ref)
                             <Grid item xs={12} sm={9} lg={6}>
                                 <FormControl fullWidth>
                                     <Controller
-                                        name={`item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.type`}
+                                        name={`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.type`}
                                         control={control}
                                         defaultValue={'PERFORMANCE'}
                                         render={({ field }) => (

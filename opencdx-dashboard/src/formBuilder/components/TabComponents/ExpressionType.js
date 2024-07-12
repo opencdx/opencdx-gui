@@ -22,14 +22,14 @@ export const ExpressionType = React.forwardRef(({ register, index, currentIndex,
                             <Grid item xs={12} sm={9} lg={8}>
                                 {componentType ? (
                                     <TextField
-                                        {...register(`item.${index}.item.${currentIndex}.${tab}.expressionType`)}
+                                        {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.expressionType`)}
                                         fullWidth
                                         placeholder="Enter ExpressionType Value"
                                         value={systemVariables[tab].expressionType}
                                     />
                                 ) : (
                                     <TextField
-                                        {...register(`item.${index}.item.${currentIndex}.${tab}.expressionType`)}
+                                        {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.expressionType`)}
                                         fullWidth
                                         placeholder="Enter ExpressionType Value"
                                     />
@@ -42,14 +42,14 @@ export const ExpressionType = React.forwardRef(({ register, index, currentIndex,
                             <Grid item xs={12} sm={9} lg={8}>
                                 {componentType ? (
                                     <TextField
-                                        {...register(`item.${index}.item.${currentIndex}.${tab}.expressionLanguage`)}
+                                        {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.expressionLanguage`)}
                                         fullWidth
                                         placeholder="Enter ExpressionLanguage Value"
                                         value={systemVariables[tab].expressionLanguage}
                                     />
                                 ) : (
                                     <TextField
-                                        {...register(`item.${index}.item.${currentIndex}.${tab}.expressionLanguage`)}
+                                        {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.expressionLanguage`)}
                                         fullWidth
                                         placeholder="Enter ExpressionLanguage Value"
                                     />
@@ -64,14 +64,14 @@ export const ExpressionType = React.forwardRef(({ register, index, currentIndex,
                     <Grid item xs={12} sm={9} lg={8}>
                         {componentType ? (
                             <TextField
-                                {...register(`item.${index}.item.${currentIndex}.${tab}.expressionValue`)}
+                                {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.expressionValue`)}
                                 fullWidth
                                 placeholder="Enter ExpressionValue Value"
                                 value={systemVariables[tab].expressionValue}
                             />
                         ) : (
                             <TextField
-                                {...register(`item.${index}.item.${currentIndex}.${tab}.expressionValue`)}
+                                {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.expressionValue`)}
                                 fullWidth
                                 placeholder="Enter ExpressionValue Value"
                             />
@@ -83,14 +83,14 @@ export const ExpressionType = React.forwardRef(({ register, index, currentIndex,
                     <Grid item xs={12} sm={9} lg={8}>
                         {componentType ? (
                             <TextField
-                                {...register(`item.${index}.item.${currentIndex}.${tab}.expressionDescription`)}
+                                {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.expressionDescription`)}
                                 fullWidth
                                 placeholder="Enter Expression Description Value"
                                 value={systemVariables[tab].expressionDescription}
                             />
                         ) : (
                             <TextField
-                                {...register(`item.${index}.item.${currentIndex}.${tab}.expressionDescription`)}
+                                {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.expressionDescription`)}
                                 fullWidth
                                 placeholder="Enter expressionDescription Value"
                             />

@@ -12,11 +12,11 @@ import { ObservationId } from '../Tabs/ObservationId';
 import { SubjectofRecord } from '../Tabs/SubjectofRecord';
 import { SubjectOfInformation } from '../Tabs/SubjectOfInformation';
 function CustomTabPanel(props) {
-    const { children, value, index, ...other } = props;
+    const { children, tabState, index, ...other } = props;
 
     return (
-        <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
-            {value === index && (
+        <div role="tabpanel" hidden={tabState !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
+            {tabState === index && (
                 <Box sx={{ p: 3 }}>
                     <Typography>{children}</Typography>
                 </Box>
@@ -28,7 +28,7 @@ function CustomTabPanel(props) {
 CustomTabPanel.propTypes = {
     children: PropTypes.node,
     index: PropTypes.number,
-    value: PropTypes.number
+    tabState: PropTypes.number
 };
 
 function a11yProps(index) {
@@ -38,18 +38,18 @@ function a11yProps(index) {
     };
 }
 
-export const CustomTabs = React.forwardRef(({ control, register, index, currentIndex, item, getValues }, ref) => {
-    const [value, setValue] = React.useState(0);
+export const CustomTabs = React.forwardRef(({ control, register, index, currentIndex, item, getValues, setValue }, ref) => {
+    const [tabState, setTabState] = React.useState(0);
 
     const handleChange = (event, newValue) => {
-        setValue(newValue);
+        setTabState(newValue);
     };
 
     return (
         <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }} ref={ref}>
                 <Tabs
-                    value={value}
+                    value={tabState}
                     variant="scrollable"
                     scrollButtons="auto"
                     aria-label="scrollable auto tabs example"
@@ -64,26 +64,26 @@ export const CustomTabs = React.forwardRef(({ control, register, index, currentI
                     <Tab sx={{ textTransform: 'none' }} label="Circumstance Choice" {...a11yProps(6)} />
                 </Tabs>
             </Box>
-            <CustomTabPanel value={value} index={0}>
-                <Time {...{ control, register, index, currentIndex, item, getValues }} />
+            <CustomTabPanel tabState={tabState} index={0}>
+                <Time {...{ control, register, index, currentIndex, item, getValues, setValue }} />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
-                <SubjectofRecord {...{ control, register, index, currentIndex, item, getValues }} />
+            <CustomTabPanel tabState={tabState} index={1}>
+                <SubjectofRecord {...{ control, register, index, currentIndex, item, getValues, setValue }} />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={2}>
-                <Authors {...{ control, register, index, currentIndex, item, getValues }} />
+            <CustomTabPanel tabState={tabState} index={2}>
+                <Authors {...{ control, register, index, currentIndex, item, getValues, setValue }} />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={3}>
-                <SubjectOfInformation {...{ control, register, index, currentIndex, item, getValues }} />
+            <CustomTabPanel tabState={tabState} index={3}>
+                <SubjectOfInformation {...{ control, register, index, currentIndex, item, getValues, setValue }} />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={4}>
-                <ObservationId {...{ control, register, index, currentIndex, item, getValues }} />
+            <CustomTabPanel tabState={tabState} index={4}>
+                <ObservationId {...{ control, register, index, currentIndex, item, getValues, setValue }} />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={5}>
-                <Type {...{ control, register, index, currentIndex, item, getValues }} />
+            <CustomTabPanel tabState={tabState} index={5}>
+                <Type {...{ control, register, index, currentIndex, item, getValues, setValue }} />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={6}>
-                <CircumstanceChoice {...{ control, register, index, currentIndex, item, getValues }} />
+            <CustomTabPanel tabState={tabState } index={6}>
+                <CircumstanceChoice {...{ control, register, index, currentIndex, item, getValues, setValue }} />
             </CustomTabPanel>
         </Box>
     );
@@ -94,5 +94,6 @@ CustomTabs.propTypes = {
     index: PropTypes.number,
     currentIndex: PropTypes.number,
     item: PropTypes.any,
-    getValues: PropTypes.any
+    getValues: PropTypes.any,
+    setValue: PropTypes.func
 };

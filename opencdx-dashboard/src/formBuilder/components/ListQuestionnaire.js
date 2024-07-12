@@ -8,13 +8,21 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from
 import { useEffect } from 'react';
 import { Suspense } from 'react';
 import ANFStatementPlaceholder from 'ui-component/cards/Skeleton/ANFStatementPlaceholder';
+import MainWrapper from './MainWrapper';
 
 const ListQuestionnaire = () => {
     const dispatch = useDispatch();
+    const { formData } = useAnfFormStore();
 
     const [open, setOpen] = useState(true);
-    const [userResponses, setUserResponses] = useState([]);
+    const [questionnaires, setQuestionnaires] = useState([]);
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        if (formData && formData.item) {
+            setOpen(false);
+        }
+    }, [formData]);
 
     useEffect(() => {
         const fetchUserResponses = async () => {
@@ -28,7 +36,10 @@ const ListQuestionnaire = () => {
             })
                 .then((response) => {
                     setLoading(false);
-                    setUserResponses(response.data.questionnaires);
+                    const data = response.data.questionnaires;
+
+                    data.sort((a, b) => new Date(b.modified).getTime() - new Date(a.modified).getTime());
+                    setQuestionnaires(data);
                 })
                 .catch(() => {
                     setLoading(false);
@@ -82,7 +93,7 @@ const ListQuestionnaire = () => {
                     </Typography>
                 </Button>
             </Box>
-            {open && (
+            {open ? (
                 <Box sx={{ ml: 2, mr: 2, mt: 2 }}>
                     {loading ? (
                         <ANFStatementPlaceholder />
@@ -100,8 +111,8 @@ const ListQuestionnaire = () => {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {userResponses.length > 0 &&
-                                                userResponses.map((response, index) => (
+                                            {questionnaires.length > 0 &&
+                                                questionnaires.map((response, index) => (
                                                     <TableRow key={response.id}>
                                                         <TableCell>{response.title}</TableCell>
                                                         <TableCell>{convertDate(response.modified)}</TableCell>
@@ -138,6 +149,8 @@ const ListQuestionnaire = () => {
                         </Suspense>
                     )}
                 </Box>
+            ) : (
+                formData && formData.item && <MainWrapper uploadedFile={formData} />
             )}
         </Box>
     );

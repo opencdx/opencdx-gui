@@ -18,6 +18,7 @@ export const ComponentID = forwardRef(({ register, index, item }, ref) => {
                                 <FormControl fullWidth>
                                     <TextField
                                         fullWidth
+                                        disabled
                                         placeholder="Generate Component UUID"
                                         defaultValue={item?.componentId ?? generateUUID()}
                                         id={`component-id-${index}`}

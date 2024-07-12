@@ -1,27 +1,27 @@
-import "@/styles/globals.css";
-import { Metadata, Viewport } from "next";
-import clsx from "clsx";
+import '@/styles/globals.css';
 
-import { Providers } from "./providers";
+import { Metadata, Viewport } from 'next';
 
-import { siteConfig } from "@/config/site";
-import { fontSans } from "@/config/fonts";
+import { fontSans } from '@/config/fonts';
+import { siteConfig } from '@/config/site';
+import clsx from 'clsx';
+
+import { Providers } from './providers';
 
 export const metadata: Metadata = {
   title: {
-    default: siteConfig.name,
-    template: `%s - ${siteConfig.name}`,
+    default: 'OpenCDX',
+    template: `%s - Dashboard - OpenCDX`,
   },
-  description: siteConfig.description,
   icons: {
-    icon: "/open-logo.png",
+    icon: '/open-logo.png',
   },
 };
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
+    { media: '(prefers-color-scheme: light)', color: 'white' },
+    { media: '(prefers-color-scheme: dark)', color: 'black' },
   ],
 };
 
@@ -35,15 +35,15 @@ export default function RootLayout({
       <head />
       <body
         className={clsx(
-          "min-h-screen bg-background font-sans antialiased",
+          'min-h-screen bg-background font-sans antialiased',
           fontSans.variable,
         )}
       >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
+        <Providers
+          themeProps={{ attribute: 'class', defaultTheme: 'light', children }}
+        >
           <div className="relative flex flex-col h-screen">
-            <main>
-              {children}
-            </main>
+            <main>{children}</main>
           </div>
         </Providers>
       </body>

@@ -1,63 +1,193 @@
 import React from 'react';
 
+import {
+  ANFStatement,
+  QuestionnaireItem,
+} from '@/generated-api-ts/questionnaire/api';
+import {
+  Accordion,
+  AccordionItem,
+  Button,
+  Card,
+  CardBody,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Snippet,
+  Tab,
+  Tabs,
+  useDisclosure,
+} from '@nextui-org/react';
+import { Code, Monitor } from 'lucide-react';
 
-
-import { QuestionnaireItem } from '@/generated-api-ts/questionnaire/api'
-import { Accordion, AccordionItem, Card, CardBody, CardHeader, Tab, Tabs } from '@nextui-org/react';
-
-
-
+import { AuthorsWrapper } from './anfComponents/authors';
+import { PerformanceCircumstanceWrapper } from './anfComponents/performance-circumstance';
+import { SubjectOfInformationWrapper } from './anfComponents/subject-of-information';
+import { SubjectOfRecordWrapper } from './anfComponents/subject-of-record';
 import { TimeWrapper } from './anfComponents/time';
+import { TopicWrapper } from './anfComponents/topic';
+import { TypeWrapper } from './anfComponents/type';
 
+const TestResultsTable: React.FC = () => {
+  const formData = JSON.parse(
+    localStorage.getItem('questionnaire-store') as string,
+  );
+  return (
+    <div style={{ height: '300px', overflow: 'auto', width: 'auto' }}>
+      <table className="w-full table-auto mb-4 text-left">
+        <thead className="border-b border-gray-200">
+          <tr className="text-left">
+            <th className="w-1/2">Question</th>
+            <th className="w-1/2">Action</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-200">
+          {formData?.item.map((item: QuestionnaireItem, index: number) => (
+            <tr key={index} className="border-b border-gray-200">
+              <td className="py-4">{item.text}</td>
+              <td className="py-4">
+                <Snippet color="primary">{`{{REPLACE_${item.linkId})}}`}</Snippet>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
-const ANFStatementWrapper = ({ item }: { item: QuestionnaireItem }) => {
+export default TestResultsTable;
+const ANFStatementWrapper = ({
+  anfStatement,
+  questionnaireItemId,
+  anfStatementConnectorId,
+  currentComponentType,
+}: {
+  anfStatement: ANFStatement;
+  questionnaireItemId: number;
+  anfStatementConnectorId: number;
+  currentComponentType: string;
+}) => {
   let tabs = [
     {
       id: 'time',
       label: 'Time',
-      content: <TimeWrapper item={item} />,
+      content: (
+        <TimeWrapper
+          anfStatementConnectorId={anfStatementConnectorId}
+          questionnaireItemId={questionnaireItemId}
+          currentComponentType={currentComponentType}
+        />
+      ),
     },
     {
-      id: 'music',
+      id: 'subjectOfRecord',
       label: 'Subject of Record',
-      content:
-        'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+      content: (
+        <SubjectOfRecordWrapper
+          anfStatementConnectorId={anfStatementConnectorId}
+          questionnaireItemId={questionnaireItemId}
+        />
+      ),
     },
     {
-      id: 'videos',
+      id: 'authors',
       label: 'Authors',
-      content:
-        'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      content: (
+        <AuthorsWrapper
+          anfStatementConnectorId={anfStatementConnectorId}
+          questionnaireItemId={questionnaireItemId}
+        />
+      ),
     },
     {
-      id: 'documents',
+      id: 'subjectOfInformation',
       label: 'Subject of Information',
-      content:
-        'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.',
+      content: (
+        <SubjectOfInformationWrapper
+          anfStatementConnectorId={anfStatementConnectorId}
+          questionnaireItemId={questionnaireItemId}
+        />
+      ),
     },
     {
-      id: 'documentss',
+      id: 'topic',
       label: 'Topic',
-      content:
-        'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.',
+      content: (
+        <TopicWrapper
+          anfStatementConnectorId={anfStatementConnectorId}
+          questionnaireItemId={questionnaireItemId}
+        />
+      ),
     },
     {
-      id: 'documentsssssss',
+      id: 'type',
       label: 'Type',
-      content:
-        'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.',
+      content: (
+        <TypeWrapper
+          anfStatementConnectorId={anfStatementConnectorId}
+          questionnaireItemId={questionnaireItemId}
+        />
+      ),
     },
     {
-      id: 'documentssssssss',
+      id: 'performanceCircumstance',
       label: 'Circumstance Choice',
-      content:
-        'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.',
+      content: (
+        <PerformanceCircumstanceWrapper
+          anfStatementConnectorId={anfStatementConnectorId}
+          questionnaireItemId={questionnaireItemId}
+        />
+      ),
     },
   ];
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
   return (
     <>
       <Accordion variant="splitted">
-        <AccordionItem aria-label={item.linkId} title={'Anf Statement'}>
+        <AccordionItem title={'Anf Statement'}>
+          <div className="flex justify-end">
+            <Button
+              color="warning"
+              variant="solid"
+              className="mr-2"
+              startContent={<Monitor />}
+              onPress={onOpen}
+            >
+              System Variables
+            </Button>
+            <Button
+              color="warning"
+              variant="solid"
+              className="mr-2"
+              startContent={<Code />}
+              onPress={onOpen}
+            >
+              Code Lookup
+            </Button>
+          </div>
+          <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="xl">
+            <ModalContent>
+              {(onClose) => (
+                <>
+                  <ModalHeader className="flex flex-col gap-1">
+                    System Variables
+                  </ModalHeader>
+                  <ModalBody className="flex flex-col w-full">
+                    <TestResultsTable />
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="danger" variant="light" onPress={onClose}>
+                      Close
+                    </Button>
+                  </ModalFooter>
+                </>
+              )}
+            </ModalContent>
+          </Modal>
           <div className="flex w-full flex-col">
             <Tabs aria-label="Dynamic tabs" items={tabs}>
               {(item) => (

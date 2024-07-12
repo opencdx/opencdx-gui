@@ -1,9 +1,8 @@
 import React from 'react';
 
-
-
-import { QuestionnaireItem } from '@/generated-api-ts/questionnaire/api';;
+import { AnfStatementConnectorAnfStatementTypeEnum } from '@/generated-api-ts/questionnaire/api';
 import { Card, cn, Radio, RadioGroup } from '@nextui-org/react';
+import { Controller, useFormContext } from 'react-hook-form';
 
 export const CustomRadio = (props: any) => {
   const { children, ...otherProps } = props;
@@ -24,44 +23,67 @@ export const CustomRadio = (props: any) => {
   );
 };
 const ComponentTypeWrapper = ({
-  item,
-}: {
-  item: QuestionnaireItem;
-}) => {
+  questionnaireItemId,
+  anfStatementConnectorId,
+  currentComponentType,
+  onValueChange,
 
- 
+}: {
+  questionnaireItemId: number;
+  anfStatementConnectorId: number;
+  currentComponentType: string;
+  onValueChange: (value: AnfStatementConnectorAnfStatementTypeEnum) => void;
+}) => {
+  const { register, control } = useFormContext();
+
+  const { name, ref } = register(
+    `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatementType`,
+  );
+
   return (
     <>
       <Card className="mb-4 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700">
-        <RadioGroup
-          label="Component Type"
-          orientation="horizontal"
-        >
-          <CustomRadio
-            description="Component marked as Main ANF type"
-            value="ANF_STATEMENT_TYPE_MAIN"
-          >
-            Main ANF Statement
-          </CustomRadio>
-          <CustomRadio
-            description="Select Main Statement for the Associated Statement"
-            value="ANF_STATEMENT_TYPE_ASSOCIATED"
-          >
-            Associated ANF Statement
-          </CustomRadio>
-          <CustomRadio
-            description="User Provided Data"
-            value="ANF_STATEMENT_USER_QUESTION"
-          >
-            User Question
-          </CustomRadio>
-          <CustomRadio
-            description="Component marked as non ANF type."
-            value="ANF_STATEMENT_TYPE_NOT_APPLICABLE"
-          >
-            Not Applicable
-          </CustomRadio>
-        </RadioGroup>
+        <Controller
+          control={control}
+          name={name}
+          render={({ field }) => (
+            <RadioGroup
+              {...field}
+              orientation="horizontal"
+              className="mb-4 "
+              label="Component Type"
+              onChange={(e) => {
+                field.onChange(e.target.value);
+                onValueChange(e.target.value as AnfStatementConnectorAnfStatementTypeEnum);
+              }}
+            >
+              <CustomRadio
+                description="Component marked as Main ANF type"
+                value="ANF_STATEMENT_TYPE_MAIN"
+              >
+                Main ANF Statement
+              </CustomRadio>
+              <CustomRadio
+                description="Select Main Statement for the Associated Statement"
+                value="ANF_STATEMENT_TYPE_ASSOCIATED"
+              >
+                Associated ANF Statement
+              </CustomRadio>
+              <CustomRadio
+                description="User Provided Data"
+                value="ANF_STATEMENT_USER_QUESTION"
+              >
+                User Question
+              </CustomRadio>
+              <CustomRadio
+                description="Component marked as non ANF type."
+                value="ANF_STATEMENT_TYPE_NOT_APPLICABLE"
+              >
+                Not Applicable
+              </CustomRadio>
+            </RadioGroup>
+          )}
+        />
       </Card>
     </>
   );

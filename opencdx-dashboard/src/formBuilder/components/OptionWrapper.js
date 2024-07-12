@@ -1,207 +1,160 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Button, FormControl, Typography, Grid, MenuItem, Select } from '@mui/material';
+import { FormControl, Typography, Grid, MenuItem, Select } from '@mui/material';
 import { Controller } from 'react-hook-form';
-import { useFieldArray } from 'react-hook-form';
 import { AccordianWrapper } from './ui-component/AccordianWrapper';
 import { CustomTabs } from './ui-component/CustomTabs';
+import { Button } from '@mui/material';
+import TextField from '@mui/material/TextField';
 
 const ANF_OPERATOR_TYPE_EQUAL = 'ANF_OPERATOR_TYPE_EQUAL';
 const ANF_OPERATOR_TYPE_NOT_EQUAL = 'ANF_OPERATOR_TYPE_NOT_EQUAL';
 
-const OptionWrapper = React.forwardRef(({ control, register, index, item }, ref) => {
-    const [showValueField, setShowValueField] = React.useState(false);
-    const { append, getValues } = useFieldArray({
-        control,
-        name: `item.${index}.items`
-    });
+const OptionWrapper = React.forwardRef(({ control, register, index, item, getValues, setValue }, ref) => {
+    const [anfStatementConnector, setAnfStatementConnector] = React.useState(item?.anfStatementConnector);
+    useEffect(() => {
+        const newConnector = {
+            anfStatementType: '',
+            anfOperatorType: '',
+            anfStatement: {}
+        };
 
+        if (!anfStatementConnector) {
+            setAnfStatementConnector([newConnector]);
+            return;
+        }
+    }, []);
+
+    const handleAddButtonClick = () => {
+        const newConnector = {
+            anfStatementType: '',
+            anfOperatorType: '',
+            anfStatement: {}
+        };
+
+        if (!anfStatementConnector) {
+            setAnfStatementConnector([newConnector]);
+            return;
+        } else {
+            setAnfStatementConnector([...anfStatementConnector, newConnector]);
+        }
+    };
     const getOptions = (type) => {
         const choices = [];
+        const groupItem = item?.item;
         switch (type) {
             case 'boolean':
-                return ['Yes', 'No', 'Not Answered'];
+                return ['Yes', 'No'];
             case 'choice':
                 for (let i = 0; i < item.answerOption?.length; i++) {
                     choices.push(item.answerOption[i].valueCoding.display);
                 }
-                choices.push('Not Answered');
                 return choices;
-            case 'integer':
-                return ['Any value', 'Value', 'Not Answered'];
+            case 'group':
+                if (groupItem && groupItem.length > 0) {
+                    for (let j = 0; j < groupItem[0].answerOption?.length; j++) {
+                        choices.push(groupItem[0].answerOption[j].valueCoding.display);
+                    }
+                }
+                return choices;
             case 'logical':
                 return [
                     { value: ANF_OPERATOR_TYPE_EQUAL, label: 'Equal' },
                     { value: ANF_OPERATOR_TYPE_NOT_EQUAL, label: 'Not Equal' }
                 ];
             default:
-                return ['Not Answered'];
+                return [];
         }
     };
 
     return (
         <Grid item xs={12} lg={12} sx={{ pt: 2 }} ref={ref}>
-            <Grid container spacing={2} alignItems="center" sx={{ pl: 2 }}>
-                <Grid item xs={12} sm={3} lg={4} sx={{ pt: 2 }}>
-                    <Typography variant="subtitle1">Operator</Typography>
-                    <FormControl fullWidth sx={{ pt: 2 }}>
-                        <Controller
-                            fullWidth
-                            {...register(`item.${index}.item.${0}.anfStatementConnector.${0}.anfOperatorType`)}
-                            control={control}
-                            render={({ field }) => (
-                                <Select {...field} id={`item.${index}.item.${0}.anfStatementConnector.${0}.operatorValue`}>
-                                    {getOptions('logical').map((option, index) => (
-                                        <MenuItem key={index} value={option.value || option}>
-                                            {option.label || option}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            )}
-                        />
-                    </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={3} lg={4} sx={{ pt: 2 }}>
-                    <Typography variant="subtitle1">Answer</Typography>
-
-                    <FormControl fullWidth sx={{ pt: 2 }}>
-                        <Controller
-                            fullWidth
-                            {...register(`item.${index}.item.${0}.anfStatementConnector.${0}.operatorValue`)}
-                            control={control}
-                            render={({ field }) => (
-                                <Select
-                                    {...field}
-                                    onChange={(e) => {
-                                        field.onChange(e.target.value);
-                                        if (e.target.value === 'Value') {
-                                            setShowValueField(true);
-                                        } else {
-                                            setShowValueField(false);
-                                        }
-                                    }}
-                                    id={`item.${index}.item.${0}.answerField`}
-                                >
-                                    {getOptions(item.type).map((option, index) => (
-                                        <MenuItem key={index} value={option}>
-                                            {option}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            )}
-                        />
-                    </FormControl>
-                </Grid>
-
-                {showValueField && (
-                    <Grid item xs={12} sm={3} lg={4} sx={{ pt: 2 }}>
-                        <Typography variant="subtitle1">Value</Typography>
-
-                        <FormControl fullWidth sx={{ pt: 2 }}>
-                            <Controller
-                                fullWidth
-                                {...register(`item.${index}.item.answerTextValue`)}
-                                control={control}
-                                defaultValue=""
-                                render={({ field: { onChange, value } }) => (
-                                    <TextField
+            {anfStatementConnector && anfStatementConnector?.length > 0 ? (
+                anfStatementConnector.map((connector, i) => (
+                    <div style={{ display: 'flex', flexDirection: 'column' }} key={i}>
+                        <Grid container sx={{ pl: 2 }}>
+                            <Grid item xs={12} sm={3} lg={4} sx={{ pt: 2, pr: 2 }}>
+                                <Typography variant="subtitle1">Operator</Typography>
+                                <FormControl fullWidth sx={{ pt: 2 }}>
+                                    <Controller
                                         fullWidth
-                                        id={`item.${index}.item.answerTextValue`}
-                                        key={index}
-                                        type="number"
-                                        InputProps={{
-                                            inputProps: { min: 0 }
-                                        }}
-                                        value={value}
-                                        onChange={({ target: { value } }) => {
-                                            onChange(value);
-                                        }}
-                                        placeholder="Enter Answer"
+                                        {...register(`item.${index}.anfStatementConnector.${i}.anfOperatorType`, { value: '' })}
+                                        control={control}
+                                        render={({ field }) => (
+                                            <Select {...field} id={`item.${index}.item.${0}.anfStatementConnector.${i + 1}.operatorValue`}>
+                                                {getOptions('logical').map((option, index) => (
+                                                    <MenuItem key={index} value={option.value || option}>
+                                                        {option.label || option}
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                        )}
                                     />
-                                )}
-                            />
-                        </FormControl>
-                    </Grid>
-                )}
-            </Grid>
-            <Grid container spacing={1} sx={{ pt: 2 }}>
-                <Grid item xs={12} lg={12}>
-                    <AccordianWrapper title="Anf Statement">
-                        <CustomTabs currentIndex={0} {...{ control, register, index, item, getValues }} />
-                    </AccordianWrapper>
-                </Grid>
-            </Grid>
-            {/* * Dynamic Fields * */}
+                                </FormControl>
+                            </Grid>
 
-            {/* {fields.map(({ id }, i) => (
-                <div style={{ display: 'flex', flexDirection: 'column' }} key={id}>
-                    <Grid container sx={{ pl: 2 }}>
-                        <Grid item xs={12} sm={3} lg={4} sx={{ pt: 2, pr: 2 }}>
-                            <Typography variant="subtitle1">Operator</Typography>
-                            <FormControl fullWidth sx={{ pt: 2 }}>
-                                <Controller
-                                    fullWidth
-                                    {...register(`item.${index}.item.${i + 1}.operatorValue`, { value: '' })}
-                                    control={control}
-                                    render={({ field }) => (
-                                        <Select {...field} id={`item.${index}.item.${i + 1}.operatorValue`}>
-                                            {getOptions('logical').map((option, index) => (
-                                                <MenuItem key={index} value={option}>
-                                                    {option}
-                                                </MenuItem>
-                                            ))}
-                                        </Select>
-                                    )}
-                                />
-                            </FormControl>
-                        </Grid>
+                            <Grid item xs={12} sm={3} lg={4} sx={{ pt: 2 }}>
+                                <Typography variant="subtitle1">Value</Typography>
 
-                        <Grid item xs={12} sm={3} lg={4} sx={{ pt: 2 }}>
-                            <Typography variant="subtitle1">Answer</Typography>
-
-                            <FormControl fullWidth sx={{ pt: 2 }}>
-                                <Controller
-                                    fullWidth
-                                    {...register(`item.${index}.item.${i + 1}.operatorValue`)}
-                                    control={control}
-                                    render={({ field }) => (
-                                        <Select
-                                            {...field}
-                                            onChange={(e) => {
-                                                field.onChange(e.target.value);
-                                            }}
-                                            id={`item.${index}.item.${i + 1}.answerField`}
-                                        >
-                                            {getOptions(item.type).map((option, index) => (
-                                                <MenuItem key={index} value={option}>
-                                                    {option}
-                                                </MenuItem>
-                                            ))}
-                                        </Select>
-                                    )}
-                                />
-                            </FormControl>
+                                <FormControl fullWidth sx={{ pt: 2 }}>
+                                    <Controller
+                                        control={control}
+                                        {...register(`item.${index}.anfStatementConnector.${i}.operatorValue`)}
+                                        render={({ field }) =>
+                                            item.type === 'boolean' || item.type === 'choice' ||  item.type === 'group' ? (
+                                                <Select
+                                                    {...field}
+                                                    defaultSelectedKeys={[field.value]}
+                                                    onChange={(e) => {
+                                                        field.onChange(e.target.value);
+                                                        console.log(e.target.value);
+                                                    }}
+                                                >
+                                                    {getOptions(item.type).map((option, index) => (
+                                                        <MenuItem key={index} value={option}>
+                                                            {option}
+                                                        </MenuItem>
+                                                    ))}
+                                                </Select>
+                                            ) : (
+                                                <TextField
+                                                    fullWidth
+                                                    placeholder="Enter the Value"
+                                                    type={item.type === 'integer' ? 'number' : 'text'}
+                                                    {...register(`item.${index}.anfStatementConnector.${i}.operatorValue`)}
+                                                />
+                                            )
+                                        }
+                                    />
+                                </FormControl>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                    <Grid style={{ display: 'flex', alignItems: 'baseline' }}>
-                        <Grid item xs={12} lg={4} sx={{ pt: 2, pr: 2 }}>
-                            <AccordianWrapper title="Anf Statement">
-                                <CustomTabs currentIndex={i + 1} {...{ control, register, index, item, getValues }} />
-                            </AccordianWrapper>
+                        <Grid style={{ display: 'flex', alignItems: 'baseline' }}>
+                            <Grid item xs={12} lg={4} sx={{ pt: 2, pr: 2 }}>
+                                <AccordianWrapper title="Anf Statement">
+                                    <CustomTabs currentIndex={i} {...{ control, register, index, item, getValues, setValue }} />
+                                </AccordianWrapper>
+                            </Grid>      
                         </Grid>
-                        <Button variant="contained" type="button" onClick={() => remove(index)} size="small">
-                            Remove
-                        </Button>
-                    </Grid>
-                </div>
-            ))} */}
-            {item.type !== 'integer' && (
+                    </div>
+                ))
+            ) : (
+                <></>
+            )}
+            {
                 <Grid sx={{ pt: 2, textAlign: 'right' }}>
-                    <Button disableElevation variant="contained" color="primary" size="small" type="button" onClick={() => append({})}>
+                    <Button
+                        disableElevation
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        type="button"
+                        onClick={() => handleAddButtonClick()}
+                    >
                         + Add ANF Statement
                     </Button>
                 </Grid>
-            )}
+            }
         </Grid>
     );
 });

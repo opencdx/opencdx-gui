@@ -27,7 +27,7 @@ const SubjectOfInformation = React.forwardRef(({ register, index, currentIndex, 
                                 {componentType ? (
                                     <TextField
                                         {...register(
-                                            `item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.subjectOfInformation`
+                                            `item.${index}.anfStatementConnector.${currentIndex}.anfStatement.subjectOfInformation`
                                         )}
                                         fullWidth
                                         defaultValue={systemVariables['subjectOfInformation'].subjectOfRecord.match(/(?<=:\s*)[^\s]+/)[0]}
@@ -36,7 +36,7 @@ const SubjectOfInformation = React.forwardRef(({ register, index, currentIndex, 
                                 ) : (
                                     <TextField
                                         {...register(
-                                            `item.${index}.item.${currentIndex}.anfStatementConnector[0].anfStatement.subjectOfInformation`
+                                            `item.${index}.anfStatementConnector.${currentIndex}.anfStatement.subjectOfInformation`
                                         )}
                                         fullWidth
                                         placeholder="Enter Subject Of Information"
