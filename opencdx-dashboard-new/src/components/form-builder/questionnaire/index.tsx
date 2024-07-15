@@ -1,10 +1,14 @@
 'use client';
 
 import React, { useEffect } from 'react';
+
 import { useRouter } from 'next/navigation';
+
 import {
   Accordion,
   AccordionItem,
+  Autocomplete,
+  AutocompleteItem,
   Button,
   Card,
   CardBody,
@@ -22,17 +26,15 @@ import { toast, ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 
-import { ChevronLeft } from 'lucide-react';
-
-import { QuestionnaireItemWrapper } from './questionnaireItem';
-
 import { Endpoints } from '@/axios/apiEndpoints';
 import { Report } from '@/components/form-builder/report';
 import {
   Questionnaire,
   QuestionnaireItem,
 } from '@/generated-api-ts/questionnaire/api';
+import { ChevronLeft } from 'lucide-react';
 
+import { QuestionnaireItemWrapper } from './questionnaireItem';
 
 const QuestionnaireWrapper = () => {
   const { control, register, handleSubmit, getValues, setValue } =
@@ -52,10 +54,13 @@ const QuestionnaireWrapper = () => {
   });
 
   const [responseRule, setResponseRule] = React.useState([
-    { name: '', ruleId: '' },
-  ] as Array<{ name: string; ruleId: string }>);
+    { label: '', ruleId: '' },
+  ] as Array<{ label: string; ruleId: string }>);
 
   const [ruleset, setRuleSet] = React.useState([{ name: '', ruleId: '' }]);
+  const [ruleSets, setRuleSets] = React.useState([]);
+  const [defaultRule, setDefaultRule] = React.useState('');
+  const [defaultId, setDefaultId] = React.useState('');
 
   useEffect(() => {
     const fetchRules = async () => {
@@ -68,17 +73,21 @@ const QuestionnaireWrapper = () => {
           const rules = response.data.ruleSets.map((rule: { name: any }) => {
             return rule.name;
           });
-          const resp = getValues('item')?.map((item: QuestionnaireItem) => {
+
+          setRuleSets(rules);
+          const formData = getValues();
+
+          const ruleQuestion = formData?.item?.map((rule) => {
             return {
-              ruleId: item.linkId,
-              label: item.text,
+              ruleId: rule.linkId,
+              label: rule.text,
             };
           });
 
           setResponseRule(
-            resp?.map((item) => ({
-              name: item.label ?? '',
-              ruleId: item.ruleId ?? '',
+            ruleQuestion?.map((rule) => ({
+              label: rule.label || '',
+              ruleId: rule.ruleId ?? '',
             })) || [],
           );
         })
@@ -86,9 +95,22 @@ const QuestionnaireWrapper = () => {
           console.error('Error fetching Ruleset :', error);
         });
     };
-
     fetchRules();
   }, []);
+  useEffect(() => {
+    const formData = getValues();
+    if (formData?.ruleId) {
+      setDefaultId(formData.ruleId);
+    }
+    if (formData?.ruleQuestionId) {
+      const ruleQuestionId = Array.isArray(formData?.ruleQuestionId)
+        ? formData?.ruleQuestionId[0]
+        : formData?.ruleQuestionId;
+      if (ruleQuestionId) {
+        setDefaultRule(ruleQuestionId);
+      }
+    }
+  }, [ruleset]);
 
   const onSubmit = async (data: Questionnaire) => {
     try {
@@ -176,18 +198,32 @@ const QuestionnaireWrapper = () => {
                     control={control}
                     {...register(`ruleId`)}
                     render={({ field }) => (
-                      <Select
-                        className="max-w-xs mb-4 mt-2 mr-4 ml-4 w-full"
+                      <Autocomplete
+                        className=" mb-4 mt-2 mr-4 ml-4"
+                        selectedKey={defaultId}
+                        onSelectionChange={(e) => {
+                          if (e) {
+                            setDefaultId(String(e));
+                            field.onChange(e);
+                          }
+                          else{
+                            setDefaultId('');
+                            field.onChange('');
+                          }
+                        }}
+                        id="controllable-states-demo1"                      
                         label="Select a rule"
-                        {...field}
-                        defaultSelectedKeys={
-                          field.value ? [field.value] : undefined
-                        }
+                        items={ruleset.map((item) => ({
+                          value: item.ruleId,
+                          label: item.name,
+                        }))}
                       >
-                        {ruleset.map((type) => (
-                          <SelectItem key={type.ruleId}>{type.name}</SelectItem>
-                        ))}
-                      </Select>
+                        {(item: { value: string; label: string }) => (
+                          <AutocompleteItem key={item.value}>
+                            {item.label}
+                          </AutocompleteItem>
+                        )}
+                      </Autocomplete>
                     )}
                   />
                 </div>
@@ -199,20 +235,33 @@ const QuestionnaireWrapper = () => {
                     control={control}
                     {...register(`ruleQuestionId`)}
                     render={({ field }) => (
-                      <Select
-                        className="max-w-xs mb-4 mt-2 mr-4 ml-4 w-full"
-                        label="Select response for rule"
+                      <Autocomplete
+                        className=" mb-4 mt-2 mr-4 ml-4 "
+                        id="controllable-states-demo1"
+                        selectedKey={defaultRule}
                         {...field}
-                        onChange={(e) => {
-                          field.onChange([e.target.value]);
+                        onSelectionChange={(e) => {
+                          if (e) {
+                            setDefaultRule(String(e));
+                            field.onChange([e]);
+                          }else{
+                            setDefaultRule('');
+                            field.onChange([]);
+                          }
+                          
                         }}
+                        label="Select a rule"
+                        items={responseRule.map((item) => ({
+                          value: item.ruleId,
+                          label: item.label,
+                        }))}
                       >
-                        {responseRule?.map((type) => (
-                          <SelectItem key={type.ruleId ?? ''}>
-                            {type.name}
-                          </SelectItem>
-                        )) ?? []}
-                      </Select>
+                        {(item: { value: string; label: string }) => (
+                          <AutocompleteItem key={item.value}>
+                            {item.label}
+                          </AutocompleteItem>
+                        )}
+                      </Autocomplete>
                     )}
                   />
                 </div>
