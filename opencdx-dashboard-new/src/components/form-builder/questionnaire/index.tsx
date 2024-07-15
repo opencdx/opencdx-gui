@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Endpoints } from '@/axios/apiEndpoints';
 import {
@@ -13,8 +13,11 @@ import {
   Button,
   Card,
   CardBody,
+  Select,
+  SelectItem,
 } from '@nextui-org/react';
 import {
+  Controller,
   FormProvider,
   useFieldArray,
   useForm,
@@ -26,20 +29,57 @@ import 'react-toastify/dist/ReactToastify.css';
 import { QuestionnaireItemWrapper } from './questionnaireItem';
 
 const QuestionnaireWrapper = () => {
-  const { control, register, handleSubmit, getValues, setValue } = useForm<Questionnaire>(
-    {
+  const { control, register, handleSubmit, getValues, setValue } =
+    useForm<Questionnaire>({
       defaultValues: async () => {
-        return JSON.parse(localStorage.getItem('questionnaire-store') as string);
+        return JSON.parse(
+          localStorage.getItem('questionnaire-store') as string,
+        );
       },
-    },
-  );
+    });
 
-  const { fields } = useFieldArray(
-    {
-      control,
-      name: 'item',
-    },
-  );
+  const { fields } = useFieldArray({
+    control,
+    name: 'item',
+  });
+
+  const [responseRule, setResponseRule] = React.useState([
+    { name: '', ruleId: '' },
+  ] as Array<{ name: string; ruleId: string }>);
+
+  const [ruleset, setRuleSet] = React.useState([{ name: '', ruleId: '' }]);
+
+  useEffect(() => {
+    const fetchRules = async () => {
+      Endpoints.rulesetList({
+        organizationId: 'organizationId',
+        workspaceId: 'workspaceId',
+      })
+        .then((response) => {
+          setRuleSet(response.data.ruleSets);
+          const rules = response.data.ruleSets.map((rule: { name: any }) => {
+            return rule.name;
+          });
+          const resp = getValues('item')?.map((item: QuestionnaireItem) => {
+            return {
+              ruleId: item.linkId,
+              label: item.text,
+            };
+          });
+          setResponseRule(
+            resp?.map((item) => ({
+              name: item.label ?? '',
+              ruleId: item.ruleId ?? '',
+            })) || [],
+          );
+        })
+        .catch((error) => {
+          console.error('Error fetching Ruleset :', error);
+        });
+    };
+    fetchRules();
+  }, []);
+
   const onSubmit = async (data: Questionnaire) => {
     try {
       let response;
@@ -98,6 +138,52 @@ const QuestionnaireWrapper = () => {
                       );
                     })}
                   </Accordion>
+                </div>
+                <div className=" flex items-center gap-4 w-full pt-2">
+                  <label className="text w-[250px]">Select a rule</label>
+                  <Controller
+                    control={control}
+                    {...register(`ruleId`)}
+                    render={({ field }) => (
+                      <Select
+                        label="Select a rule"
+                        className="max-w-xs mb-4 mt-2 mr-4 ml-4 w-full"
+                        {...field}
+                        defaultSelectedKeys={
+                          field.value ? [field.value] : undefined
+                        }
+                      >
+                        {ruleset.map((type) => (
+                          <SelectItem key={type.ruleId}>{type.name}</SelectItem>
+                        ))}
+                      </Select>
+                    )}
+                  />
+                </div>
+                <div className=" flex items-center gap-4 w-full">
+                  <label className="text w-[250px]">
+                    Select response for rule
+                  </label>
+                  <Controller
+                    control={control}
+                    {...register(`ruleQuestionId`)}
+                    render={({ field }) => (
+                      <Select
+                        label="Select response for rule"
+                        className="max-w-xs mb-4 mt-2 mr-4 ml-4 w-full"
+                        {...field}
+                        onChange={(e) => {
+                          field.onChange([e.target.value]);
+                        }}
+                      >
+                        {responseRule?.map((type) => (
+                          <SelectItem key={type.ruleId ?? ''}>
+                            {type.name}
+                          </SelectItem>
+                        )) ?? []}
+                      </Select>
+                    )}
+                  />
                 </div>
               </CardBody>
             </Card>

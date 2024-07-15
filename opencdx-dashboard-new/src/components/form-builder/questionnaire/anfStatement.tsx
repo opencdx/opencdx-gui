@@ -60,7 +60,6 @@ const TestResultsTable: React.FC = () => {
 
 export default TestResultsTable;
 const ANFStatementWrapper = ({
-  anfStatement,
   questionnaireItemId,
   anfStatementConnectorId,
   currentComponentType,
@@ -89,6 +88,7 @@ const ANFStatementWrapper = ({
         <SubjectOfRecordWrapper
           anfStatementConnectorId={anfStatementConnectorId}
           questionnaireItemId={questionnaireItemId}
+          currentComponentType={currentComponentType}
         />
       ),
     },
@@ -99,6 +99,7 @@ const ANFStatementWrapper = ({
         <AuthorsWrapper
           anfStatementConnectorId={anfStatementConnectorId}
           questionnaireItemId={questionnaireItemId}
+          currentComponentType={currentComponentType}
         />
       ),
     },
@@ -109,6 +110,7 @@ const ANFStatementWrapper = ({
         <SubjectOfInformationWrapper
           anfStatementConnectorId={anfStatementConnectorId}
           questionnaireItemId={questionnaireItemId}
+          currentComponentType={currentComponentType}
         />
       ),
     },
@@ -119,6 +121,7 @@ const ANFStatementWrapper = ({
         <TopicWrapper
           anfStatementConnectorId={anfStatementConnectorId}
           questionnaireItemId={questionnaireItemId}
+          currentComponentType={currentComponentType}
         />
       ),
     },
@@ -129,6 +132,7 @@ const ANFStatementWrapper = ({
         <TypeWrapper
           anfStatementConnectorId={anfStatementConnectorId}
           questionnaireItemId={questionnaireItemId}
+          currentComponentType={currentComponentType}
         />
       ),
     },
@@ -139,6 +143,7 @@ const ANFStatementWrapper = ({
         <PerformanceCircumstanceWrapper
           anfStatementConnectorId={anfStatementConnectorId}
           questionnaireItemId={questionnaireItemId}
+          currentComponentType={currentComponentType}
         />
       ),
     },

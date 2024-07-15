@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React, { useState } from 'react';
 
 import {
   AnfStatementConnector,
@@ -6,6 +6,7 @@ import {
   AnfStatementConnectorAnfStatementTypeEnum,
   QuestionnaireItem,
 } from '@/generated-api-ts/questionnaire/api';
+import { useUpdateFormContext } from '@/lib/useSetContext';
 import { Button, Divider } from '@nextui-org/react';
 import { Plus } from 'lucide-react';
 
@@ -21,27 +22,34 @@ const QuestionnaireItemWrapper = ({
   questionnaireItemId: number;
 }) => {
   const defaultAnfStatement = {};
+  const updateForm = useUpdateFormContext();
+
   const [anfStatementConnectorLength, setAnfStatementConnectorLength] =
     React.useState(item?.anfStatementConnector?.length);
 
-    const [currentComponentType, setCurrentComponentType] = useState('');
-    const handlecurrentComponentTypeChange = (value: React.SetStateAction<string>) => {
-      setCurrentComponentType(value);
+  const [currentComponentType, setCurrentComponentType] = useState('');
+  const handlecurrentComponentTypeChange = (
+    value: string,
+    questionnaireItemId: number,
+    id: number,
+  ) => {
+    updateForm(value, questionnaireItemId, id); // Pass relevant values
+    setCurrentComponentType(value);
+  };
+  React.useEffect(() => {
+    const newConnector: AnfStatementConnector = {
+      anfStatementType:
+        AnfStatementConnectorAnfStatementTypeEnum.AnfStatementTypeUnspecified,
+      anfOperatorType:
+        AnfStatementConnectorAnfOperatorTypeEnum.AnfOperatorTypeUnspecified,
+      anfStatement: defaultAnfStatement,
+    };
+
+    if (!item.anfStatementConnector) {
+      item.anfStatementConnector = [];
     }
-    React.useEffect(() => {
-      const newConnector: AnfStatementConnector = {
-        anfStatementType:
-          AnfStatementConnectorAnfStatementTypeEnum.AnfStatementTypeUnspecified,
-        anfOperatorType:
-          AnfStatementConnectorAnfOperatorTypeEnum.AnfOperatorTypeUnspecified,
-        anfStatement: defaultAnfStatement,
-      };
-  
-      if (!item.anfStatementConnector) {
-        item.anfStatementConnector = [];
-      }
-      item.anfStatementConnector.push(newConnector);
-      setAnfStatementConnectorLength(item.anfStatementConnector.length);
+    item.anfStatementConnector.push(newConnector);
+    setAnfStatementConnectorLength(item.anfStatementConnector.length);
   }, []);
 
   const handleAddButtonClick = () => {
@@ -59,7 +67,7 @@ const QuestionnaireItemWrapper = ({
     item.anfStatementConnector.push(newConnector);
     setAnfStatementConnectorLength(item.anfStatementConnector.length);
   };
-  
+
   return (
     <>
       <>
@@ -72,8 +80,13 @@ const QuestionnaireItemWrapper = ({
                   questionnaireItemId={questionnaireItemId}
                   anfStatementConnectorId={id}
                   currentComponentType={currentComponentType}
-                  onValueChange={handlecurrentComponentTypeChange}
-                 
+                  onValueChange={(value) => {
+                    handlecurrentComponentTypeChange(
+                      value,
+                      questionnaireItemId,
+                      id,
+                    );
+                  }}
                 />
                 <OperatorWrapper
                   questionnaireItemId={questionnaireItemId}
@@ -98,9 +111,7 @@ const QuestionnaireItemWrapper = ({
             ),
           )
         ) : (
-          <>
-            
-          </>
+          <></>
         )}
         <Divider className="my-4 border-neutral-700 " />
         <div className="flex flex-row justify-end">

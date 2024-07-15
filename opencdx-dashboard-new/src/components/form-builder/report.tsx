@@ -43,12 +43,6 @@ const Report = () => {
      <div className="flex flex-col p-4 ">
         <div className="overflow-x-auto rounded-lg shadow-md"> {/* Added rounded corners and shadow */}
           <table className="min-w-full divide-y divide-gray-200"> {/* Set minimum width and divider */}
-            <thead>
-              <tr className="bg-gray-500 text-white"> {/* Darker header background */}
-                <th className="px-4 py-2 text-left font-medium">Type</th>
-                <th className="px-4 py-2 text-left font-medium">Text</th>
-              </tr>
-            </thead>
             <tbody>
               {Object.entries(groupedItems).map(([key, items]) => (
                 <tr key={key}>

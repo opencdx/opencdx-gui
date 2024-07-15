@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import { systemVariables } from '@/lib/constant';
 import { Input } from '@nextui-org/input';
 import { Card, Radio, RadioGroup } from '@nextui-org/react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -8,49 +7,12 @@ import { Controller, useFormContext } from 'react-hook-form';
 const TimeWrapper = ({
   anfStatementConnectorId,
   questionnaireItemId,
-  currentComponentType,
 }: {
   anfStatementConnectorId: number;
   questionnaireItemId: number;
   currentComponentType: string;
 }) => {
-  const { control, setValue, getValues } = useFormContext();
-
-  useEffect(() => {
-    const lowerBoundPath = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.lowerBound`;
-    const upperBoundPath = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.upperBound`;
-    const semanticPath = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.semantic`;
-    const resolutionPath = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.resolution`;
-    const includeUpperBoundPath = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.includeUpperBound`;
-    const includeLowerBoundPath = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.includeLowerBound`;
-
-    
-    // Update form value only when currentComponentType changes and is relevant
-    if (
-      currentComponentType === 'ANF_STATEMENT_TYPE_MAIN' ||
-      currentComponentType === 'ANF_STATEMENT_TYPE_ASSOCIATED'
-    ) {
-      setValue(lowerBoundPath, systemVariables?.time.lowerBound);
-      setValue(upperBoundPath, systemVariables?.time.upperBound);
-      setValue(semanticPath, systemVariables?.time.semantic);
-      setValue(resolutionPath, systemVariables?.time.resolution);
-      setValue(includeUpperBoundPath, systemVariables?.time.includeUpperBound===true?'true':'false');
-      setValue(includeLowerBoundPath, systemVariables?.time.includeLowerBound===true?'true':'false');
-    }  else {
-      setValue(lowerBoundPath, getValues(lowerBoundPath));
-      setValue(upperBoundPath, getValues(upperBoundPath));
-      setValue(semanticPath, getValues(semanticPath));
-      setValue(resolutionPath, getValues(resolutionPath));
-      setValue(includeUpperBoundPath, getValues(includeUpperBoundPath));
-      setValue(includeLowerBoundPath, getValues(includeLowerBoundPath));
-    }
-  }, [
-    currentComponentType,
-    questionnaireItemId,
-    anfStatementConnectorId,
-    setValue,
-    getValues,
-  ]);
+  const { control } = useFormContext();
 
   return (
     <Card className="mb-4 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700 ">
