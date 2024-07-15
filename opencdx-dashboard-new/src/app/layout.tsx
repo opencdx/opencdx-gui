@@ -3,7 +3,6 @@ import '@/styles/globals.css';
 import { Metadata, Viewport } from 'next';
 
 import { fontSans } from '@/config/fonts';
-import { siteConfig } from '@/config/site';
 import clsx from 'clsx';
 
 import { Providers } from './providers';

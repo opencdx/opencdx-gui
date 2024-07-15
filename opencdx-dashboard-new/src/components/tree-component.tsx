@@ -1,10 +1,13 @@
 'use client';
 
 import { MouseEventHandler, useState } from 'react';
+
 import { cn } from '@/lib/utils';
+
 import 'primeicons/primeicons.css';
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
+
 import { Tree } from 'primereact/tree';
 
 export default function TreeComponent() {
@@ -28,12 +31,12 @@ export default function TreeComponent() {
 
     return (
       <button
-        type="button"
         className="p-tree-toggler p-link"
         tabIndex={-1}
+        type="button"
         onClick={options.onClick}
       >
-        <span className={iconClassName} aria-hidden="true"></span>
+        <span aria-hidden="true" className={iconClassName} />
       </button>
     );
   };
@@ -126,17 +129,17 @@ export default function TreeComponent() {
 
   return (
     <Tree
-      value={nodes}
       filter
+      className="w-full"
+      dragdropScope="demo"
       filterMode="lenient"
       filterPlaceholder="Search"
-      dragdropScope="demo"
       selectionKeys={selectedKeys}
       selectionMode="checkbox"
+      value={nodes}
       togglerTemplate={togglerTemplate}
       //@ts-ignore
       onSelectionChange={(e) => setSelectedKeys(e.value)}
-      className="w-full"
     />
   );
 }

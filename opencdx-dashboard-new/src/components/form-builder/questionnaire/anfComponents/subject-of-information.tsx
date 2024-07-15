@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 import { Input } from '@nextui-org/input';
@@ -13,6 +12,7 @@ const SubjectOfInformationWrapper = ({
   questionnaireItemId: number;
 }) => {
   const { control, register } = useFormContext();
+
   return (
     <Card className="mb-4 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700 ">
       <div className=" flex items-center gap-4 w-full">
@@ -24,19 +24,17 @@ const SubjectOfInformationWrapper = ({
           )}
           render={({ field }) => (
             <Input
-              type="text"
-              label="Subject Of Information"
               className="mb-4"
+              label="Subject Of Information"
+              type="text"
               value={field.value}
               onChange={field.onChange}
             />
           )}
         />
       </div>
-     
     </Card>
   );
 };
 
 export { SubjectOfInformationWrapper };
-

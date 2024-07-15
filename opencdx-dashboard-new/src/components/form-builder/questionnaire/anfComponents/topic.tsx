@@ -10,7 +10,6 @@ const TopicWrapper = ({
 }: {
   anfStatementConnectorId: number;
   questionnaireItemId: number;
-  currentComponentType: string;
 }) => {
   const { control } = useFormContext();
 
@@ -23,11 +22,11 @@ const TopicWrapper = ({
           name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.topic`}
           render={({ field }) => (
             <Input
-              type="text"
+              className="mb-4"
               label="Topic"
+              type="text"
               value={field.value}
               onChange={field.onChange}
-              className="mb-4"
             />
           )}
         />

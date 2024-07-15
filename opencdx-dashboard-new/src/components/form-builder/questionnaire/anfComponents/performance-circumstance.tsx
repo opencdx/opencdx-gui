@@ -9,6 +9,7 @@ import {
   SelectItem,
 } from '@nextui-org/react';
 import { Controller, useFormContext } from 'react-hook-form';
+
 import { ControlledInput } from './Custom/ControlledInput';
 import { ControlledRadio } from './Custom/ControlledRadio';
 
@@ -38,8 +39,8 @@ const PerformanceCircumstanceWrapper = ({
           )}
           render={({ field }) => (
             <Select
-              label="Circumstance Type"
               className="mb-4 mt-2 "
+              label="Circumstance Type"
               {...field}
               defaultSelectedKeys={['performance']}
             >
@@ -51,10 +52,10 @@ const PerformanceCircumstanceWrapper = ({
         />
       </div>
 
-    <ControlledInput
-       label='Status'
+      <ControlledInput
+        label="Status"
         name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.status`}
-        />
+      />
       <Card className="mb-4 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700 ">
         <CardHeader className="flex gap-3">
           <h4 className="text-lg font-semibold">Result</h4>
@@ -62,42 +63,38 @@ const PerformanceCircumstanceWrapper = ({
         <Divider />
 
         <CardBody>
-         <ControlledInput
-          label='Lower Bound'
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.result.lowerBound`}
+          <ControlledInput
+            label="Lower Bound"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.result.lowerBound`}
           />
-         <ControlledRadio
-          label='Include Lower Bound'
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.result.includeLowerBound`}
+          <ControlledRadio
+            label="Include Lower Bound"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.result.includeLowerBound`}
           />
 
           <ControlledInput
-          label='Upper Bound'
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.result.upperBound`}
+            label="Upper Bound"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.result.upperBound`}
           />
           <ControlledRadio
-          label='Include Upper Bound'
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.result.includeUpperBound`}
+            label="Include Upper Bound"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.result.includeUpperBound`}
           />
           <ControlledInput
-          label='Sematic'
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.result.semantic`}
+            label="Sematic"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.result.semantic`}
           />
           <ControlledInput
-          label='Resolution'
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.result.resolution`}
+            label="Resolution"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.result.resolution`}
           />
-          
-         
         </CardBody>
       </Card>
 
       <ControlledInput
-        label='Health Risk'
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.healthRisk`}
-          />
-
-
+        label="Health Risk"
+        name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.healthRisk`}
+      />
 
       <Card className="mb-4 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700 ">
         <CardHeader className="flex gap-3">
@@ -106,32 +103,30 @@ const PerformanceCircumstanceWrapper = ({
         <Divider />
 
         <CardBody>
-         <ControlledInput
-          label='Lower Bound'
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.normalRange.lowerBound`}
+          <ControlledInput
+            label="Lower Bound"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.normalRange.lowerBound`}
           />
           <ControlledRadio
-          label='Include Lower Bound'
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.normalRange.includeLowerBound`}
+            label="Include Lower Bound"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.normalRange.includeLowerBound`}
           />
           <ControlledInput
-          label='Upper Bound'
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.normalRange.upperBound`}
+            label="Upper Bound"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.normalRange.upperBound`}
           />
           <ControlledRadio
-          label='Include Upper Bound'
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.normalRange.includeUpperBound`}
+            label="Include Upper Bound"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.normalRange.includeUpperBound`}
           />
           <ControlledInput
-          label='Sematic'
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.normalRange.semantic`}
+            label="Sematic"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.normalRange.semantic`}
           />
           <ControlledInput
-          label='Resolution'
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.normalRange.resolution`}
+            label="Resolution"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.normalRange.resolution`}
           />
-          
-         
         </CardBody>
       </Card>
 
@@ -142,29 +137,29 @@ const PerformanceCircumstanceWrapper = ({
         <Divider />
 
         <CardBody>
-         <ControlledInput
-          label='Lower Bound'
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.timing.lowerBound`}
+          <ControlledInput
+            label="Lower Bound"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.timing.lowerBound`}
           />
           <ControlledRadio
-          label='Include Lower Bound'
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.timing.includeLowerBound`}
+            label="Include Lower Bound"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.timing.includeLowerBound`}
           />
           <ControlledInput
-          label='Upper Bound'
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.timing.upperBound`}
+            label="Upper Bound"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.timing.upperBound`}
           />
           <ControlledRadio
-          label='Include Upper Bound'
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.timing.includeUpperBound`}
+            label="Include Upper Bound"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.timing.includeUpperBound`}
           />
           <ControlledInput
-          label='Sematic'
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.timing.semantic`}
+            label="Sematic"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.timing.semantic`}
           />
           <ControlledInput
-          label='Resolution'
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.timing.resolution`}
+            label="Resolution"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.timing.resolution`}
           />
         </CardBody>
       </Card>
@@ -176,21 +171,18 @@ const PerformanceCircumstanceWrapper = ({
         <Divider />
 
         <CardBody>
-
           <ControlledInput
-          label='ID'
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.participant[0].id`}
+            label="ID"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.participant[0].id`}
           />
           <ControlledInput
-          label='Practitioner Value'
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.participant[0].practitionerValue`}
+            label="Practitioner Value"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.participant[0].practitionerValue`}
           />
           <ControlledInput
-          label='Code'
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.participant[0].code`}
-
+            label="Code"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.participant[0].code`}
           />
-         
         </CardBody>
       </Card>
     </Card>

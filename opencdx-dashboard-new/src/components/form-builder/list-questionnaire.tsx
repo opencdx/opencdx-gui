@@ -1,11 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-
 import { useRouter } from 'next/navigation';
-
-import { Endpoints } from '@/axios/apiEndpoints';
-import { useAnfFormStore } from '@/lib/useAnfFormStore';
 import Button from '@mui/material/Button';
 import { Button as NButton } from '@nextui-org/button';
 import {
@@ -29,6 +25,8 @@ import { allExpanded, defaultStyles, JsonView } from 'react-json-view-lite';
 
 import 'react-json-view-lite/dist/index.css';
 
+import { Endpoints } from '@/axios/apiEndpoints';
+import { useAnfFormStore } from '@/lib/useAnfFormStore';
 import { toast } from 'react-toastify';
 
 export default function ListQuestionnaire() {
@@ -39,8 +37,8 @@ export default function ListQuestionnaire() {
 
   const { setFormData } = useAnfFormStore() as { setFormData: any };
 
-
   const [questionnaires, setQuestionnaires] = useState([] as any);
+
   useEffect(() => {
     const fetchData = async () => {
       Endpoints.getQuestionnaireList({
@@ -52,6 +50,7 @@ export default function ListQuestionnaire() {
       })
         .then((response) => {
           const data = response.data.questionnaires;
+
           data.sort(
             (
               a: { modified: string | number | Date },
@@ -90,11 +89,13 @@ export default function ListQuestionnaire() {
   };
   const handleChange = (e: any) => {
     const fileReader = new FileReader();
+
     fileReader.readAsText(e.target.files[0], 'UTF-8');
     fileReader.onload = (e) => {
       const formData = e.target?.result
         ? JSON.parse(e.target.result as string)
         : null;
+
       delete formData.id;
       setFormData(formData);
       localStorage.setItem('questionnaire-store', JSON.stringify(formData));
@@ -108,6 +109,7 @@ export default function ListQuestionnaire() {
     const blob = new Blob([data], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
+
     link.href = url;
     link.download = 'anf.json';
     link.click();
@@ -118,52 +120,52 @@ export default function ListQuestionnaire() {
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg sm:overflow-hidden dark:bg-gray-900 shadow-md border border-gray-200 dark:border-gray-700 rounded-lg dark:text-white dark:border-gray-700 mt-4">
       <div className="flex items-center justify-between px-3 py-2">
         <div
+          aria-label="View Toggle"
+          aria-labelledby="view-toggle-label"
+          aria-orientation="horizontal"
           className="flex items-center mb-2 justify-start px-3 py-2"
           id="upload"
           role="group"
-          aria-labelledby="view-toggle-label"
-          aria-orientation="horizontal"
-          aria-label="View Toggle"
         >
           <Button
-            onChange={handleChange}
-            component="label"
-            variant="contained"
             color="primary"
+            component="label"
             startIcon={<UploadIcon />}
+            variant="contained"
+            onChange={handleChange}
           >
-            <input type="file" hidden />
+            <input hidden type="file" />
           </Button>
         </div>
         <div
+          aria-label="View Toggle"
+          aria-labelledby="view-toggle-label"
+          aria-orientation="horizontal"
           className="flex items-center mb-2 justify-end px-3 py-2"
           id="view-toggle"
           role="group"
-          aria-labelledby="view-toggle-label"
-          aria-orientation="horizontal"
-          aria-label="View Toggle"
         >
           <NButton
-            id="grid-view-btn"
             className={`focus:outline-none px-4 py-2 rounded-md text-sm font-medium ${
               isGrid
                 ? 'text-gray-700 bg-white hover:bg-gray-100'
                 : 'text-gray-500'
             } dark:text-gray-400 dark:bg-gray-700`}
-            onClick={handleViewToggle}
+            id="grid-view-btn"
             startContent={<LayoutGrid size={16} />}
+            onClick={handleViewToggle}
           >
             Grid
           </NButton>
           <NButton
-            id="list-view-btn"
             className={`focus:outline-none mx-2 px-4 py-2 rounded-md text-sm font-medium ${
               !isGrid
                 ? 'text-gray-700 bg-white hover:bg-gray-100'
                 : 'text-gray-500'
             } dark:text-gray-400 dark:bg-gray-700`}
-            onClick={handleViewToggle}
+            id="list-view-btn"
             startContent={<LayoutList size={16} />}
+            onClick={handleViewToggle}
           >
             List
           </NButton>
@@ -171,8 +173,8 @@ export default function ListQuestionnaire() {
       </div>
       {!isGrid ? (
         <div
-          id="user-grid"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4  dark:bg-gray-800 p-2 sm:p-4 md:p-4 lg:p-4 bg-gray-100"
+          id="user-grid"
         >
           {questionnaires.map(
             (questionnaire: {
@@ -225,7 +227,7 @@ export default function ListQuestionnaire() {
                   <div className="flex items-center">
                     <div
                       className={`h-2.5 w-2.5 rounded-full bg-${questionnaire.status} me-2`}
-                    ></div>
+                    />
                     <span>
                       {questionnaire.status === 'active' ? 'Active' : 'Draft'}
                     </span>
@@ -233,15 +235,16 @@ export default function ListQuestionnaire() {
                 </div>
                 <div className="flex items-center justify-between mt-4">
                   <NButton
+                    className="py-2"
                     onPress={() => {
                       setJson(questionnaire);
                       onOpen();
                     }}
-                    className="py-2"
                   >
                     View
                   </NButton>
                   <NButton
+                    className="py-2"
                     onPress={() => {
                       setFormData(questionnaire);
                       localStorage.setItem(
@@ -251,20 +254,20 @@ export default function ListQuestionnaire() {
 
                       router.push(`/edit-questionnaire/${questionnaire.id}`);
                     }}
-                    className="py-2"
                   >
                     Edit
                   </NButton>
                   <NButton
+                    className="py-2"
                     onPress={() => {
                       setJson(questionnaire);
                       handleDownload();
                     }}
-                    className="py-2"
                   >
                     Download
                   </NButton>
                   <NButton
+                    className="py-2"
                     onPress={() => {
                       const params = {
                         id: questionnaire.id,
@@ -286,7 +289,6 @@ export default function ListQuestionnaire() {
 
                       fetchData();
                     }}
-                    className="py-2"
                   >
                     Delete
                   </NButton>
@@ -297,21 +299,21 @@ export default function ListQuestionnaire() {
         </div>
       ) : (
         <table
-          id="user-table"
           className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+          id="user-table"
         >
           <thead className="text-xs text-gray-700  bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" className="px-6 py-3">
+              <th className="px-6 py-3" scope="col">
                 Title
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th className="px-6 py-3" scope="col">
                 Last Updated
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th className="px-6 py-3" scope="col">
                 Status
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th className="px-6 py-3" scope="col">
                 Action
               </th>
             </tr>
@@ -355,8 +357,8 @@ export default function ListQuestionnaire() {
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                 >
                   <th
-                    scope="row"
                     className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                    scope="row"
                   >
                     <div className="ps-3">
                       <div className="text-base font-semibold">
@@ -371,7 +373,7 @@ export default function ListQuestionnaire() {
                     <div className="flex items-center">
                       <div
                         className={`h-2.5 w-2.5 rounded-full bg-${questionnaire.status} me-2`}
-                      ></div>
+                      />
                       <span>
                         <span>
                           {questionnaire.status === 'active'
@@ -447,7 +449,7 @@ export default function ListQuestionnaire() {
         </table>
       )}
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="auto">
+      <Modal isOpen={isOpen} placement="auto" onOpenChange={onOpenChange}>
         <ModalContent className="w-[100%] md:w-[100%] lg:w-[100%] h-[100%] md:h-[90%] lg:h-[90%] max-h-[90%] md:max-h-[90%] lg:max-h-[90%] overflow-auto">
           {(onClose) => (
             <>

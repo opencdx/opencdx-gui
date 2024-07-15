@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import { Button } from '@nextui-org/button';
+import { Checkbox, CheckboxGroup } from '@nextui-org/checkbox';
 import {
   Accordion,
   AccordionItem,
@@ -12,11 +14,6 @@ import {
   SelectItem,
   Switch,
 } from '@nextui-org/react';
-import { Button } from 'hello-world-gui/src/components/ui/Button';
-import {
-  Checkbox,
-  CheckboxGroup,
-} from 'hello-world-gui/src/components/ui/Checkbox';
 
 export const cities = [
   { key: 'sydney', label: 'Sydney' },
@@ -147,8 +144,8 @@ export default function DashboardPage() {
             <Accordion variant="splitted">
               <AccordionItem
                 key="1"
-                aria-label="Hello-World Project"
-                title="Hello-World Project"
+                aria-label="OpenCDx Project"
+                title="OpenCDx Project"
               >
                 This project serves as a foundational example for building
                 user-friendly web applications using the React ecosystem.

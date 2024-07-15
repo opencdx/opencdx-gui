@@ -1,8 +1,6 @@
 import React from 'react';
-import { Card } from '@nextui-org/react';
+import { Card, Select, SelectItem } from '@nextui-org/react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { Select, SelectItem } from '@nextui-org/react';
-
 
 export const values = [
   { key: 'performance', label: 'Performance' },
@@ -19,6 +17,7 @@ const TypeWrapper = ({
   const { name } = register(
     `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.type`,
   );
+
   return (
     <Card className="mb-4 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700 ">
       <div className=" flex items-center gap-4 w-full">
@@ -28,8 +27,8 @@ const TypeWrapper = ({
           name={name}
           render={({ field }) => (
             <Select
-              label="Select an operator"
               className="max-w-xs mb-4 mt-2 mr-4 ml-4"
+              label="Select an operator"
               {...field}
               defaultSelectedKeys={[field.value]}
             >

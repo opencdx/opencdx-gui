@@ -2,7 +2,6 @@ import '@/styles/globals.css';
 
 import { Navbar } from '@/components/navbar';
 import SideNav from '@/components/side-nav';
-import { siteConfig } from '@/config/site';
 import { Divider } from '@nextui-org/react';
 
 import { Providers } from '../providers';

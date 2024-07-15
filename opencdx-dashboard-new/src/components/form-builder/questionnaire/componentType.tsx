@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { AnfStatementConnectorAnfStatementTypeEnum } from '@/generated-api-ts/questionnaire/api';
 import { Card, cn, Radio, RadioGroup } from '@nextui-org/react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -27,7 +26,6 @@ const ComponentTypeWrapper = ({
   anfStatementConnectorId,
   currentComponentType,
   onValueChange,
-
 }: {
   questionnaireItemId: number;
   anfStatementConnectorId: number;
@@ -49,12 +47,14 @@ const ComponentTypeWrapper = ({
           render={({ field }) => (
             <RadioGroup
               {...field}
-              orientation="horizontal"
               className="mb-4 "
               label="Component Type"
+              orientation="horizontal"
               onChange={(e) => {
                 field.onChange(e.target.value);
-                onValueChange(e.target.value as AnfStatementConnectorAnfStatementTypeEnum);
+                onValueChange(
+                  e.target.value as AnfStatementConnectorAnfStatementTypeEnum,
+                );
               }}
             >
               <CustomRadio

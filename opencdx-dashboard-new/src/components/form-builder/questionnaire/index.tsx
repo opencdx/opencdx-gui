@@ -1,12 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
-
-import { Endpoints } from '@/axios/apiEndpoints';
-import {
-  Questionnaire,
-  QuestionnaireItem,
-} from '@/generated-api-ts/questionnaire/api';
+import { useRouter } from 'next/navigation';
 import {
   Accordion,
   AccordionItem,
@@ -15,6 +10,7 @@ import {
   CardBody,
   Select,
   SelectItem,
+  Switch,
 } from '@nextui-org/react';
 import {
   Controller,
@@ -26,7 +22,17 @@ import { toast, ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 
+import { ChevronLeft } from 'lucide-react';
+
 import { QuestionnaireItemWrapper } from './questionnaireItem';
+
+import { Endpoints } from '@/axios/apiEndpoints';
+import { Report } from '@/components/form-builder/report';
+import {
+  Questionnaire,
+  QuestionnaireItem,
+} from '@/generated-api-ts/questionnaire/api';
+
 
 const QuestionnaireWrapper = () => {
   const { control, register, handleSubmit, getValues, setValue } =
@@ -37,6 +43,8 @@ const QuestionnaireWrapper = () => {
         );
       },
     });
+  const router = useRouter();
+  const [isSelected, setIsSelected] = React.useState(false);
 
   const { fields } = useFieldArray({
     control,
@@ -66,6 +74,7 @@ const QuestionnaireWrapper = () => {
               label: item.text,
             };
           });
+
           setResponseRule(
             resp?.map((item) => ({
               name: item.label ?? '',
@@ -77,12 +86,14 @@ const QuestionnaireWrapper = () => {
           console.error('Error fetching Ruleset :', error);
         });
     };
+
     fetchRules();
   }, []);
 
   const onSubmit = async (data: Questionnaire) => {
     try {
       let response;
+
       if (data && data?.id) {
         response = await Endpoints.updateQuestionnaire({
           questionnaire: data,
@@ -112,10 +123,30 @@ const QuestionnaireWrapper = () => {
   return (
     <>
       <div className="flex flex-col px-4">
+        <div className="flex flex-row justify-between">
+          <Button
+            className="mb-4 mt-4 ml-4"
+            startContent={<ChevronLeft size={16} />}
+            onPress={() => {
+              router.push('/form-builder');
+            }}
+          >
+            Back
+          </Button>
+          <Switch
+            aria-label="Show Report"
+            className="mr-4"
+            isSelected={isSelected}
+            onValueChange={setIsSelected}
+          >
+            Show Report
+          </Switch>
+        </div>
+        {isSelected && <Report />}
         <FormProvider
-          register={register}
           control={control}
           getValues={getValues}
+          register={register}
           setValue={setValue}
         >
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -146,8 +177,8 @@ const QuestionnaireWrapper = () => {
                     {...register(`ruleId`)}
                     render={({ field }) => (
                       <Select
-                        label="Select a rule"
                         className="max-w-xs mb-4 mt-2 mr-4 ml-4 w-full"
+                        label="Select a rule"
                         {...field}
                         defaultSelectedKeys={
                           field.value ? [field.value] : undefined
@@ -169,8 +200,8 @@ const QuestionnaireWrapper = () => {
                     {...register(`ruleQuestionId`)}
                     render={({ field }) => (
                       <Select
-                        label="Select response for rule"
                         className="max-w-xs mb-4 mt-2 mr-4 ml-4 w-full"
+                        label="Select response for rule"
                         {...field}
                         onChange={(e) => {
                           field.onChange([e.target.value]);
@@ -201,4 +232,5 @@ const QuestionnaireWrapper = () => {
     </>
   );
 };
+
 export { QuestionnaireWrapper };

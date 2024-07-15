@@ -10,7 +10,6 @@ const SubjectOfRecordWrapper = ({
 }: {
   anfStatementConnectorId: number;
   questionnaireItemId: number;
-  currentComponentType: string;
 }) => {
   const { register, control } = useFormContext();
 
@@ -25,9 +24,9 @@ const SubjectOfRecordWrapper = ({
           )}
           render={({ field }) => (
             <Input
-              type="text"
-              label="ID"
               className="mb-4"
+              label="ID"
+              type="text"
               value={field.value}
               onChange={field.onChange}
             />
@@ -43,9 +42,9 @@ const SubjectOfRecordWrapper = ({
           )}
           render={({ field }) => (
             <Input
-              type="text"
-              label="Practitioner Value"
               className="mb-4"
+              label="Practitioner Value"
+              type="text"
               value={field.value}
               onChange={field.onChange}
             />
@@ -62,9 +61,9 @@ const SubjectOfRecordWrapper = ({
           )}
           render={({ field }) => (
             <Input
-              type="text"
-              label="Code"
               className="mb-4"
+              label="Code"
+              type="text"
               value={field.value}
               onChange={field.onChange}
             />

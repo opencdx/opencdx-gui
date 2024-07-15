@@ -10,7 +10,6 @@ const TimeWrapper = ({
 }: {
   anfStatementConnectorId: number;
   questionnaireItemId: number;
-  currentComponentType: string;
 }) => {
   const { control } = useFormContext();
 
@@ -23,11 +22,11 @@ const TimeWrapper = ({
           name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.lowerBound`}
           render={({ field }) => (
             <Input
-              type="text"
+              className="mb-4"
               label="Lower Bound"
+              type="text"
               value={field.value}
               onChange={field.onChange}
-              className="mb-4"
             />
           )}
         />
@@ -38,17 +37,18 @@ const TimeWrapper = ({
           control={control}
           name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.includeLowerBound`}
           render={({ field }) => (
-            <RadioGroup 
-            value={field.value}
-            onChange={field.onChange}
-            orientation="horizontal" className="mb-4">
-            <Radio value="true">Yes</Radio>
-            <Radio value="false">No</Radio>
-            <Radio value="not">Not Specified</Radio>
-          </RadioGroup>
+            <RadioGroup
+              className="mb-4"
+              orientation="horizontal"
+              value={field.value}
+              onChange={field.onChange}
+            >
+              <Radio value="true">Yes</Radio>
+              <Radio value="false">No</Radio>
+              <Radio value="not">Not Specified</Radio>
+            </RadioGroup>
           )}
         />
-        
       </div>
 
       <div className=" flex items-center gap-4">
@@ -58,11 +58,11 @@ const TimeWrapper = ({
           name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.upperBound`}
           render={({ field }) => (
             <Input
-              type="text"
+              className="mb-4"
               label="Upper Bound"
+              type="text"
               value={field.value}
               onChange={field.onChange}
-              className="mb-4"
             />
           )}
         />
@@ -73,14 +73,16 @@ const TimeWrapper = ({
           control={control}
           name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.includeUpperBound`}
           render={({ field }) => (
-            <RadioGroup 
-            value={field.value}
-            onChange={field.onChange}
-            orientation="horizontal" className="mb-4">
-            <Radio value="true">Yes</Radio>
-            <Radio value="false">No</Radio>
-            <Radio value="not">Not Specified</Radio>
-          </RadioGroup>
+            <RadioGroup
+              className="mb-4"
+              orientation="horizontal"
+              value={field.value}
+              onChange={field.onChange}
+            >
+              <Radio value="true">Yes</Radio>
+              <Radio value="false">No</Radio>
+              <Radio value="not">Not Specified</Radio>
+            </RadioGroup>
           )}
         />
       </div>
@@ -92,11 +94,11 @@ const TimeWrapper = ({
           name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.semantic`}
           render={({ field }) => (
             <Input
-              type="text"
+              className="mb-4"
               label="Sematic"
+              type="text"
               value={field.value}
               onChange={field.onChange}
-              className="mb-4"
             />
           )}
         />
@@ -108,11 +110,11 @@ const TimeWrapper = ({
           name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.resolution`}
           render={({ field }) => (
             <Input
-              type="text"
+              className="mb-4"
               label="Resolution"
+              type="text"
               value={field.value}
               onChange={field.onChange}
-              className="mb-4"
             />
           )}
         />
