@@ -6,20 +6,21 @@ import { useRouter } from 'next/navigation';
 
 import { Link } from '@nextui-org/link';
 import {
+  Button,
   Card,
   CardBody,
   CardFooter,
   CardHeader,
   Divider,
   Image,
+  Input,
 } from '@nextui-org/react';
 import { toast, ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Endpoints } from '@/axios/apiEndpoints';
-import { Button } from 'hello-world-gui/src/components/ui/Button';
-import { Input } from 'hello-world-gui/src/components/ui/Input';
+
 import { EyeIcon, EyeOffIcon } from 'lucide-react';
 
 export default function Login() {
@@ -81,20 +82,17 @@ export default function Login() {
           </CardHeader>
           <CardBody className="grid gap-4">
             <Input
+              isRequired
               required
               defaultValue="admin@opencdx.org"
               id="email"
               label="Email address"
               type="userName"
-              isRequired
             />
 
             <Input
-              id="password"
-              label="Password"
-              defaultValue="password"
               isRequired
-              type={isVisible ? 'text' : 'password'}
+              defaultValue="password"
               endContent={
                 <button
                   aria-label="toggle password visibility"
@@ -109,6 +107,9 @@ export default function Login() {
                   )}
                 </button>
               }
+              id="password"
+              label="Password"
+              type={isVisible ? 'text' : 'password'}
             />
           </CardBody>
           <CardFooter>

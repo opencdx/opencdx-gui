@@ -14,8 +14,8 @@ import {
   CardHeader,
   Divider,
   Image,
+  Input,
 } from '@nextui-org/react';
-import { Input } from 'hello-world-gui/src/components/ui/Input';
 
 export default function Register() {
   const router = useRouter();
@@ -29,6 +29,7 @@ export default function Register() {
     try {
       const response = await Endpoints.signup({ userName, password });
       const data = response.data;
+
       if (data) {
         router.push('/');
       } else {
@@ -63,20 +64,20 @@ export default function Register() {
             <div className="grid gap-2">
               <div className="grid gap-2 md:grid-cols-2">
                 <Input
+                  isRequired
                   required
                   defaultValue=""
                   id="first_name"
                   label="First Name"
                   type="string"
-                  isRequired
                 />
                 <Input
+                  isRequired
                   required
                   defaultValue=""
                   id="last_name"
                   label="Last Name"
                   type="string"
-                  isRequired
                 />
               </div>
             </div>
@@ -84,22 +85,22 @@ export default function Register() {
             <div className="grid gap-2">
               <div className="grid gap-2">
                 <Input
+                  isRequired
                   required
                   defaultValue=""
                   id="userName"
                   label="Email address"
                   type="email"
-                  isRequired
                 />
               </div>
             </div>
             <div className="grid gap-2">
               <Input
+                isRequired
+                defaultValue=""
                 id="password"
                 label="Password"
                 type="password"
-                isRequired
-                defaultValue=""
               />
             </div>
           </CardBody>

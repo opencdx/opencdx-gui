@@ -1,7 +1,8 @@
-"use client";
+'use client';
+
 import { usePathname } from 'next/navigation';
 
-import { Briefcase, FileText, Home, Settings, User } from 'lucide-react';
+import { FileText } from 'lucide-react';
 
 export const NavItems = () => {
   const pathname = usePathname();

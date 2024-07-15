@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
   ANFStatement,
   QuestionnaireItem,
@@ -34,6 +33,7 @@ const TestResultsTable: React.FC = () => {
   const formData = JSON.parse(
     localStorage.getItem('questionnaire-store') as string,
   );
+
   return (
     <div style={{ height: '300px', overflow: 'auto', width: 'auto' }}>
       <table className="w-full table-auto mb-4 text-left">
@@ -60,15 +60,12 @@ const TestResultsTable: React.FC = () => {
 
 export default TestResultsTable;
 const ANFStatementWrapper = ({
-  anfStatement,
   questionnaireItemId,
   anfStatementConnectorId,
-  currentComponentType,
 }: {
   anfStatement: ANFStatement;
   questionnaireItemId: number;
   anfStatementConnectorId: number;
-  currentComponentType: string;
 }) => {
   let tabs = [
     {
@@ -78,7 +75,6 @@ const ANFStatementWrapper = ({
         <TimeWrapper
           anfStatementConnectorId={anfStatementConnectorId}
           questionnaireItemId={questionnaireItemId}
-          currentComponentType={currentComponentType}
         />
       ),
     },
@@ -151,25 +147,25 @@ const ANFStatementWrapper = ({
         <AccordionItem title={'Anf Statement'}>
           <div className="flex justify-end">
             <Button
-              color="warning"
-              variant="solid"
               className="mr-2"
+              color="warning"
               startContent={<Monitor />}
+              variant="solid"
               onPress={onOpen}
             >
               System Variables
             </Button>
             <Button
-              color="warning"
-              variant="solid"
               className="mr-2"
+              color="warning"
               startContent={<Code />}
+              variant="solid"
               onPress={onOpen}
             >
               Code Lookup
             </Button>
           </div>
-          <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="xl">
+          <Modal isOpen={isOpen} size="xl" onOpenChange={onOpenChange}>
             <ModalContent>
               {(onClose) => (
                 <>

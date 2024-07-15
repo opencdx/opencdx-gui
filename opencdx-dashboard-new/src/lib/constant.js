@@ -190,14 +190,7 @@ export const systemVariables = {
         { id: 'BNAJ-FCSY-1342-GPXZD-QMCO', semantic: 'Precondition' },
         { id: 'GEEI-TJBI-9441-VIAQB-QOYU', semantic: 'Precondition' }
     ],
-    topic: {
-        observationProcedure: {
-            method: 'Examination - action',
-            hasFocus: 'On examination - Systolic blood pressure reading',
-            procedureSiteDirect: 'Structure of right brachial artery',
-            usingDevice: 'Blood pressure cuff adult size'
-        }
-    },
+    topic: '{"observationProcedure": {"method": "Examination - action", "hasFocus": "On examination - Systolic blood pressure reading", "procedureSiteDirect": "Structure of right brachial artery", "usingDevice": "Blood pressure cuff adult size"}}',
     type: {
         expressionType: 'simple',
         expressionLanguage: 'local',
@@ -205,12 +198,7 @@ export const systemVariables = {
         expressionDescription: 'Measurement action has been performed.'
     },
     performanceCircumstance: [{ healthRisk: 'XXXXX ${{rules.engine.calculated[performanceCircumstance.result]}}' }],
-    status: {
-        expressionType: 'simple',
-        expressionLanguage: 'local',
-        expressionValue: 'performed',
-        expressionDescription: 'Measurement action has been performed.'
-    },
+    status: '{"expressionType":"simple","expressionLanguage":"local","expressionValue":"performed","expressionDescription":"Measurement action has been performed."}',
     result: {
         lowerBound: '90',
         semantic:

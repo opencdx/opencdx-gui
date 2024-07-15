@@ -1,4 +1,5 @@
 'use client';
+
 import { Fragment } from 'react';
 import { NavItems } from '@/config/site';
 import { Accordion, AccordionItem } from '@nextui-org/react';
@@ -26,43 +27,43 @@ export default function TreeView() {
                     <Fragment key={idx}>
                       <div>
                         <Accordion
-                          variant="splitted"
                           key={idx}
-                          selectionBehavior="toggle"
-                          isCompact={true}
-                          defaultExpandedKeys={['1']}
                           className="min-h-[100px]"
+                          defaultExpandedKeys={['1']}
+                          isCompact={true}
+                          selectionBehavior="toggle"
+                          variant="splitted"
                         >
                           <AccordionItem
                             key="1"
                             aria-label="Accordion 1"
-                            title="Section 1"
-                            id='section1'
+                            id="section1"
                             indicator={({ isOpen }) =>
                               isOpen ? <Maximize /> : <Minimize />
                             }
+                            title="Section 1"
                           >
                             <TreeComponent />
                           </AccordionItem>
                           <AccordionItem
                             key="2"
                             aria-label="Accordion 2"
-                            title="Section 2"
-                            id='section2'
+                            id="section2"
                             indicator={({ isOpen }) =>
                               isOpen ? <Maximize /> : <Minimize />
                             }
+                            title="Section 2"
                           >
                             <TreeComponent />
                           </AccordionItem>
                           <AccordionItem
                             key="3"
                             aria-label="Accordion 3"
-                            title="Section 3"
-                            id='section3'
+                            id="section3"
                             indicator={({ isOpen }) =>
                               isOpen ? <Maximize /> : <Minimize />
                             }
+                            title="Section 3"
                           >
                             <TreeComponent />
                           </AccordionItem>

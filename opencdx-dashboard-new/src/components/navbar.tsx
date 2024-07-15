@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import NextLink from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   NavbarBrand,
   NavbarContent,
@@ -18,7 +19,6 @@ import {
   Image,
 } from '@nextui-org/react';
 import { ChevronDown, LogOut } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 
 export const Navbar = () => {
   const router = useRouter();
@@ -44,7 +44,7 @@ export const Navbar = () => {
   const selectedOptionValue = Array.from(selectedOption)[0];
 
   return (
-    <NextUINavbar maxWidth='full' position="sticky">
+    <NextUINavbar maxWidth="full" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
@@ -64,7 +64,9 @@ export const Navbar = () => {
       >
         <NavbarItem className="hidden md:flex">
           <ButtonGroup variant="flat">
-            <Button className='w-max-[20px]'>{labelsMap[selectedOptionValue]}</Button>
+            <Button className="w-max-[20px]">
+              {labelsMap[selectedOptionValue]}
+            </Button>
             <Dropdown placement="bottom-end">
               <DropdownTrigger className="max-w-[30px]">
                 <Button isIconOnly>
@@ -74,9 +76,9 @@ export const Navbar = () => {
               <DropdownMenu
                 disallowEmptySelection
                 aria-label="English options"
+                className="max-w-[300px]"
                 selectedKeys={selectedOption}
                 selectionMode="single"
-                className="max-w-[300px]"
               >
                 <DropdownItem
                   key="english"
@@ -99,8 +101,8 @@ export const Navbar = () => {
             className="text-sm font-normal text-default-600 bg-default-100"
             variant="flat"
             onPress={() => router.push('/')}
-            >
-           <LogOut className="text-default-500" />
+          >
+            <LogOut className="text-default-500" />
           </Button>
         </NavbarItem>
       </NavbarContent>
