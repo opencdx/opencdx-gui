@@ -283,7 +283,7 @@ build_docker() {
   local auto_select_all=$1
   local auto_confirm_all=$2
 
-  components=( "opencdx/dashboard" )
+  components=( "opencdx/dashboard" "opencdx/form-render" )
 
   selected_components=()
 
