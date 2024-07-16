@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { NavItems } from '@/config/site';
 import { cn } from '@/lib/utils';
 import { Tooltip } from '@nextui-org/react';
+
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function SideNav() {
@@ -92,7 +93,7 @@ export const SideNavItem: React.FC<{
           </div>
         </Link>
       ) : (
-        <Tooltip>
+        <Tooltip content={label} placement="right">
           <Link
             className={`h-full relative flex items-center whitespace-nowrap rounded-md ${
               active

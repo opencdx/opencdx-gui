@@ -5,16 +5,16 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 import {
-  Accordion,
-  AccordionItem,
   Autocomplete,
   AutocompleteItem,
+  BreadcrumbItem,
+  Breadcrumbs,
   Button,
   Card,
   CardBody,
-  Select,
-  SelectItem,
   Switch,
+  Tab,
+  Tabs,
 } from '@nextui-org/react';
 import {
   Controller,
@@ -125,14 +125,13 @@ const QuestionnaireWrapper = () => {
           questionnaire: data,
         });
       }
-      localStorage.setItem(
-        'questionnaire-store',
-        JSON.stringify(response.data),
-      );
-      toast.success('Successfully saved', {
-        position: 'top-right',
-        autoClose: 2000,
-      });
+      if (response.data) {
+        toast.success('Successfully saved', {
+          position: 'top-right',
+          autoClose: 500,
+        });
+        router.push('/form-builder');
+      }
     } catch (error) {
       console.error(error);
       toast.error('An error occurred', {
@@ -144,26 +143,54 @@ const QuestionnaireWrapper = () => {
 
   return (
     <>
+              <form onSubmit={handleSubmit(onSubmit)}>
+
       <div className="flex flex-col px-4">
-        <div className="flex flex-row justify-between">
-          <Button
-            className="mb-4 mt-4 ml-4"
-            startContent={<ChevronLeft size={16} />}
-            onPress={() => {
-              router.push('/form-builder');
-            }}
-          >
-            Back
-          </Button>
-          <Switch
-            aria-label="Show Report"
-            className="mr-4"
-            isSelected={isSelected}
-            onValueChange={setIsSelected}
-          >
-            Show Report
-          </Switch>
-        </div>
+        <Card className="mb-4 mt-4 p-1 bg-white dark:bg-neutral-800 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700">
+          <CardBody>
+            <div className="flex flex-row justify-between items-center mb-4 mt-4">
+              <div>
+                <h1 className="text-xl">
+                  Edit Form: <strong>{getValues().title}</strong>
+                </h1>
+                <Breadcrumbs>
+                  <BreadcrumbItem href="/form-builder">
+                    Dashboard
+                  </BreadcrumbItem>
+                  <BreadcrumbItem href="/form-builder">
+                    Form Builder
+                  </BreadcrumbItem>
+                  <BreadcrumbItem>
+                    Edit Form: {getValues().title}
+                  </BreadcrumbItem>
+                </Breadcrumbs>
+              </div>
+              <div className="flex flex-row">
+                <Button
+                  className="mr-4"
+                  startContent={<ChevronLeft size={16} />}
+                  variant="bordered"
+                  onPress={() => {
+                    router.push('/form-builder');
+                  }}
+                >
+                  Back
+                </Button>
+                <Button type="submit" variant="solid" color="primary">
+                  Submit
+                </Button>
+              </div>
+            </div>
+          </CardBody>
+        </Card>
+        <Switch
+          aria-label="Show Report"
+          className="mr-4 mb-4"
+          isSelected={isSelected}
+          onValueChange={setIsSelected}
+        >
+          Show Report
+        </Switch>
         {isSelected && <Report />}
         <FormProvider
           control={control}
@@ -171,26 +198,42 @@ const QuestionnaireWrapper = () => {
           register={register}
           setValue={setValue}
         >
-          <form onSubmit={handleSubmit(onSubmit)}>
             <Card className="mb-4 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700">
               <CardBody>
                 <div className="flex flex-col">
-                  <Accordion variant="splitted">
-                    {fields?.map((item: QuestionnaireItem, idx: number) => {
-                      return (
-                        <AccordionItem
-                          key={item.linkId}
-                          aria-label={item.linkId}
-                          title={idx + 1 + '. ' + item.text}
-                        >
-                          <QuestionnaireItemWrapper
-                            item={item}
-                            questionnaireItemId={idx}
-                          />
-                        </AccordionItem>
-                      );
-                    })}
-                  </Accordion>
+                  <div className="flex w-full flex-col">
+                 
+                    <Tabs
+                      aria-label="Options"
+                      isVertical
+                      variant="light"
+                      className="bg-white dark:bg-neutral-800 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700 p-4"
+                    >
+                      {fields?.map((item: QuestionnaireItem, idx: number) => {
+                        return (
+                          <Tab
+                            key={item.linkId}
+                            aria-label={item.linkId}
+                            title={
+                              (idx + 1 + '. ' + item.text).length > 20
+                                ? (idx + 1 + '. ' + item.text).substring(
+                                    0,
+                                    20,
+                                  ) + '...'
+                                : idx + 1 + '. ' + item.text
+                            }
+                            className="text-align-left"
+                            titleValue="left"
+                          >
+                            <QuestionnaireItemWrapper
+                              item={item}
+                              questionnaireItemId={idx}
+                            />
+                          </Tab>
+                        );
+                      })}
+                    </Tabs>
+                  </div>
                 </div>
                 <div className=" flex items-center gap-4 w-full pt-2">
                   <label className="text w-[250px]">Select a rule</label>
@@ -205,13 +248,12 @@ const QuestionnaireWrapper = () => {
                           if (e) {
                             setDefaultId(String(e));
                             field.onChange(e);
-                          }
-                          else{
+                          } else {
                             setDefaultId('');
                             field.onChange('');
                           }
                         }}
-                        id="controllable-states-demo1"                      
+                        id="controllable-states-demo1"
                         label="Select a rule"
                         items={ruleset.map((item) => ({
                           value: item.ruleId,
@@ -244,11 +286,10 @@ const QuestionnaireWrapper = () => {
                           if (e) {
                             setDefaultRule(String(e));
                             field.onChange([e]);
-                          }else{
+                          } else {
                             setDefaultRule('');
                             field.onChange([]);
                           }
-                          
                         }}
                         label="Select a rule"
                         items={responseRule.map((item) => ({
@@ -267,17 +308,11 @@ const QuestionnaireWrapper = () => {
                 </div>
               </CardBody>
             </Card>
-            <Button
-              type="submit"
-              variant="solid"
-              onClick={() => console.log('submit')}
-            >
-              Submit
-            </Button>
-          </form>
         </FormProvider>
         <ToastContainer />
       </div>
+      </form>
+
     </>
   );
 };

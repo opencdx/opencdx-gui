@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   ANFStatement,
   QuestionnaireItem,
@@ -143,60 +144,60 @@ const ANFStatementWrapper = ({
 
   return (
     <>
-      <Accordion variant="splitted">
-        <AccordionItem title={'Anf Statement'}>
-          <div className="flex justify-end">
-            <Button
-              className="mr-2"
-              color="warning"
-              startContent={<Monitor />}
-              variant="solid"
-              onPress={onOpen}
-            >
-              System Variables
-            </Button>
-            <Button
-              className="mr-2"
-              color="warning"
-              startContent={<Code />}
-              variant="solid"
-              onPress={onOpen}
-            >
-              Code Lookup
-            </Button>
-          </div>
-          <Modal isOpen={isOpen} size="xl" onOpenChange={onOpenChange}>
-            <ModalContent>
-              {(onClose) => (
-                <>
-                  <ModalHeader className="flex flex-col gap-1">
-                    System Variables
-                  </ModalHeader>
-                  <ModalBody className="flex flex-col w-full">
-                    <TestResultsTable />
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button color="danger" variant="light" onPress={onClose}>
-                      Close
-                    </Button>
-                  </ModalFooter>
-                </>
-              )}
-            </ModalContent>
-          </Modal>
-          <div className="flex w-full flex-col">
-            <Tabs aria-label="Dynamic tabs" items={tabs}>
-              {(item) => (
-                <Tab key={item.id} title={item.label}>
-                  <Card>
-                    <CardBody>{item.content}</CardBody>
-                  </Card>
-                </Tab>
-              )}
-            </Tabs>
-          </div>
-        </AccordionItem>
-      </Accordion>
+      <div className="flex  gap-4 w-full space-x-4 ">
+        <div className="flex items-center gap-4 w-full">
+          <h2 className="text w-[250px]">Anf Statement</h2>
+        </div>
+        <div className="flex justify-end gap-2 mb-4">
+          <Button
+            className="mr-2"
+            color="warning"
+            startContent={<Monitor />}
+            variant="solid"
+            onPress={onOpen}
+          >
+            System Variables
+          </Button>
+          <Button
+            className="mr-2"
+            color="warning"
+            startContent={<Code />}
+            variant="solid"
+            onPress={onOpen}
+          >
+            Code Lookup
+          </Button>
+        </div>
+      </div>
+
+      <Modal isOpen={isOpen} size="xl" onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                System Variables
+              </ModalHeader>
+              <ModalBody className="flex flex-col w-full">
+                <TestResultsTable />
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+      <div className="flex w-full flex-col">
+        <Tabs aria-label="Dynamic tabs" items={tabs}>
+          {(item) => (
+            <Tab key={item.id} title={item.label}>
+              {item.content}
+            </Tab>
+          )}
+        </Tabs>
+      </div>
     </>
   );
 };

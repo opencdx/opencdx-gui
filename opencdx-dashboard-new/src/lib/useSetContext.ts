@@ -56,6 +56,7 @@ export const useUpdateFormContext = (): FormValueUpdater => {
         setValue(upperBoundPath, systemVariables?.time.upperBound);
         setValue(semanticPath, systemVariables?.time.semantic);
         setValue(resolutionPath, systemVariables?.time.resolution);
+        debugger
         setValue(
           includeUpperBoundPath,
           systemVariables?.time.includeUpperBound === true ? 'true' : 'false',
@@ -93,6 +94,35 @@ export const useUpdateFormContext = (): FormValueUpdater => {
           healthRiskPath,
           systemVariables?.performanceCircumstance[0]?.healthRisk,
         );
+      }
+      else{
+        //Time
+        setValue(lowerBoundPath, '');
+        setValue(upperBoundPath, '');
+        setValue(semanticPath, '');
+        setValue(resolutionPath, '');
+        setValue(includeUpperBoundPath, '');
+        setValue(includeLowerBoundPath, '');
+
+        //Subject of Information
+        setValue(subjectOfInformationPath, '');
+
+        //  Subject of Record
+        setValue(subjectOfRecordPath, '');
+
+        //Authors
+        setValue(authorIDPath, '');
+        setValue(authorPractitionerValuePath, '');
+        setValue(authorCodePath, '');
+
+        //Topic
+        setValue(topicPath, '');
+
+        //Performance Circumstance
+        setValue(statusPath, '');
+
+        //Health Risk
+        setValue(healthRiskPath, '');
       }
     };
 

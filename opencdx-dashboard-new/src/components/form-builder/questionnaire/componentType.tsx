@@ -12,7 +12,7 @@ export const CustomRadio = (props: any) => {
       classNames={{
         base: cn(
           'inline-flex m-0 bg-content1 hover:bg-content2 items-center justify-between',
-          'flex-row max-w-[250px] cursor-pointer rounded-lg gap-4 p-4 border-2 border-transparent',
+          'flex-row w-[450px] cursor-pointer rounded-lg gap-4 p-4 mb-1 border-2 border-transparent',
           'data-[selected=true]:border-primary',
         ),
       }}
@@ -32,7 +32,7 @@ const ComponentTypeWrapper = ({
   currentComponentType: string;
   onValueChange: (value: AnfStatementConnectorAnfStatementTypeEnum) => void;
 }) => {
-  const { register, control } = useFormContext();
+  const { register, control , getValues} = useFormContext();
 
   const { name, ref } = register(
     `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatementType`,
@@ -40,51 +40,61 @@ const ComponentTypeWrapper = ({
 
   return (
     <>
-      <Card className="mb-4 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700">
         <Controller
           control={control}
           name={name}
           render={({ field }) => (
             <RadioGroup
               {...field}
-              className="mb-4 "
-              label="Component Type"
+              label="Select Component Type"
               orientation="horizontal"
               onChange={(e) => {
                 field.onChange(e.target.value);
+                const formData=getValues();
+                localStorage.setItem('questionnaire-store', JSON.stringify(formData));
                 onValueChange(
                   e.target.value as AnfStatementConnectorAnfStatementTypeEnum,
                 );
               }}
             >
-              <CustomRadio
-                description="Component marked as Main ANF type"
-                value="ANF_STATEMENT_TYPE_MAIN"
-              >
-                Main ANF Statement
-              </CustomRadio>
-              <CustomRadio
-                description="Select Main Statement for the Associated Statement"
-                value="ANF_STATEMENT_TYPE_ASSOCIATED"
-              >
-                Associated ANF Statement
-              </CustomRadio>
-              <CustomRadio
-                description="User Provided Data"
-                value="ANF_STATEMENT_USER_QUESTION"
-              >
-                User Question
-              </CustomRadio>
-              <CustomRadio
-                description="Component marked as non ANF type."
-                value="ANF_STATEMENT_TYPE_NOT_APPLICABLE"
-              >
-                Not Applicable
-              </CustomRadio>
+              <div className="flex flex-wrap">
+                <div className="w-1/2">
+                  <CustomRadio
+                    description="Component marked as Main ANF type"
+                    value="ANF_STATEMENT_TYPE_MAIN"
+                  >
+                    Main ANF Statement
+                  </CustomRadio>
+                </div>
+                <div className="w-1/2">
+                  <CustomRadio
+                    description="Select Main Statement for the Associated Statement"
+                    value="ANF_STATEMENT_TYPE_ASSOCIATED"
+                    className="w-full"
+                  >
+                    Associated ANF Statement
+                  </CustomRadio>
+                </div>
+                <div className="w-1/2">
+                  <CustomRadio
+                    description="User Provided Data"
+                    value="ANF_STATEMENT_USER_QUESTION"
+                  >
+                    User Question
+                  </CustomRadio>
+                </div>
+                <div className="w-1/2">
+                  <CustomRadio
+                    description="Component marked as non ANF type."
+                    value="ANF_STATEMENT_TYPE_NOT_APPLICABLE"
+                  >
+                    Not Applicable
+                  </CustomRadio>
+                </div>
+              </div>
             </RadioGroup>
           )}
         />
-      </Card>
     </>
   );
 };

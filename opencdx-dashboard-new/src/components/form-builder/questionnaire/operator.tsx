@@ -42,7 +42,6 @@ const OperatorWrapper = ({
   };
 
   return (
-    <Card className="mb-4 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700">
       <div className="flex items-center gap-4 text-align-center justify-center">
         <div className="w-1/2 flex items-center gap-4">
           <label className="text-sm font-semibold">Operator</label>
@@ -100,7 +99,6 @@ const OperatorWrapper = ({
           />
         </div>
       </div>
-    </Card>
   );
 };
 
