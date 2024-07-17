@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 import Button from '@mui/material/Button';
 import { Button as NButton } from '@nextui-org/button';
 import {
+  BreadcrumbItem,
+  Breadcrumbs,
   Modal,
   ModalBody,
   ModalContent,
@@ -20,8 +22,6 @@ import {
   Download,
   Eye,
   FilePenLine,
-  LayoutGrid,
-  LayoutList,
   Trash2,
   UploadIcon,
 } from 'lucide-react';
@@ -126,12 +126,28 @@ export default function ListQuestionnaire() {
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg sm:overflow-hidden dark:bg-gray-900 shadow-md border border-gray-200 dark:border-gray-700 rounded-lg dark:text-white dark:border-gray-700 mt-4">
-      <div className="flex items-center justify-end px-3 py-2">
-        <div
+      
+       <div className="flex flex-row justify-between items-center m-4">
+              <div >
+                <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
+                  Form Builder
+                </h1>
+                <Breadcrumbs>
+                  <BreadcrumbItem href="/form-builder">
+                    Dashboard
+                  </BreadcrumbItem>
+                  <BreadcrumbItem href="/form-builder">
+                    Form Builder
+                  </BreadcrumbItem>
+                 
+                </Breadcrumbs>
+              </div>
+              <div className="flex flex-row justify-between items-center">
+              <div
           aria-label="View Toggle"
           aria-labelledby="view-toggle-label"
           aria-orientation="horizontal"
-          className="flex items-center mb-2  px-3 py-2"
+          className="flex  p-2"
           id="upload"
           role="group"
         >
@@ -140,32 +156,42 @@ export default function ListQuestionnaire() {
             component="label"
             endIcon={<UploadIcon />}
             variant="contained"
+            size="small"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-48 h-10"
             onChange={handleChange}
-          ><label>Upload Form</label>
+          >
+            Upload Form
             <input hidden type="file" />
           </Button>
         </div>
-        <Tabs aria-label="Options" color="primary" variant="bordered" onSelectionChange={handleViewToggle}>
-        <Tab
-          key="list"
-          title={
-            <div className="flex items-center space-x-2">
-              <span>Grid View</span>
+        <Tabs
+          aria-label="Options"
+          color="primary"
+          variant="bordered"
+          onSelectionChange={handleViewToggle}
+        >
+          <Tab
+            key="list"
+            title={
+              <div className="flex items-center space-x-2">
+                <span>Grid View</span>
+              </div>
+            }
+          />
+          <Tab
+            key="grid"
+            title={
+              <div className="flex items-center space-x-2">
+                <span>List View</span>
+              </div>
+            }
+          />
+        </Tabs>
+              </div>
             </div>
-          }
-
-        />
-        <Tab
-          key="grid"
-          title={
-            <div className="flex items-center space-x-2">
-              <span>List View</span>
-            </div>
-          }
-        />
-       
-      </Tabs>
-      </div>
+            
+      
+      
       {!isGrid ? (
         <div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4  dark:bg-gray-800 p-2 sm:p-4 md:p-4 lg:p-4 bg-gray-100"
