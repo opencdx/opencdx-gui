@@ -56,14 +56,13 @@ export const useUpdateFormContext = (): FormValueUpdater => {
         setValue(upperBoundPath, systemVariables?.time.upperBound);
         setValue(semanticPath, systemVariables?.time.semantic);
         setValue(resolutionPath, systemVariables?.time.resolution);
-        debugger
         setValue(
           includeUpperBoundPath,
-          systemVariables?.time.includeUpperBound === true ? 'true' : 'false',
+          systemVariables?.time.includeUpperBound ,
         );
         setValue(
           includeLowerBoundPath,
-          systemVariables?.time.includeLowerBound === true ? 'true' : 'false',
+          systemVariables?.time.includeLowerBound,
         );
 
         //Subject of Information

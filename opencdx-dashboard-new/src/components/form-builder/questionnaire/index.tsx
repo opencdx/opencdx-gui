@@ -222,7 +222,7 @@ const QuestionnaireWrapper = () => {
                                   ) + '...'
                                 : idx + 1 + '. ' + item.text
                             }
-                            className="text-align-left"
+                            className="text-align-left text-wrap"
                             titleValue="left"
                           >
                             <QuestionnaireItemWrapper

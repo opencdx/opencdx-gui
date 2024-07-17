@@ -1,7 +1,9 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+
 import { useRouter } from 'next/navigation';
+
 import Button from '@mui/material/Button';
 import { Button as NButton } from '@nextui-org/button';
 import {
@@ -10,6 +12,8 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Tab,
+  Tabs,
   useDisclosure,
 } from '@nextui-org/react';
 import {
@@ -26,8 +30,9 @@ import { allExpanded, defaultStyles, JsonView } from 'react-json-view-lite';
 import 'react-json-view-lite/dist/index.css';
 
 import { Endpoints } from '@/axios/apiEndpoints';
+import { Questionnaire, Timestamp } from '@/generated-api-ts/questionnaire/api';
 import { useAnfFormStore } from '@/lib/useAnfFormStore';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 export default function ListQuestionnaire() {
   const [isGrid, setIsGrid] = useState(true);
@@ -71,203 +76,275 @@ export default function ListQuestionnaire() {
   const handleViewToggle = () => {
     setIsGrid(!isGrid);
   };
-  const convertDate = (
-    date:
-      | string
-      | number
-      | bigint
-      | boolean
-      | Date
-      | Promise<React.AwaitedReactNode>
-      | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-      | Iterable<React.ReactNode>
-      | null
-      | undefined,
-  ) => {
-    //@ts-ignore
-    return new Date(date).toLocaleDateString();
+  const convertDate = (date: Timestamp | undefined) => {
+    if (!date) return ''; // Handle missing dates
+    return new Date(date as Date).toLocaleDateString(); // Assert as Date
   };
   const handleChange = (e: any) => {
-    const fileReader = new FileReader();
+    const file = e.target.files[0];
 
-    fileReader.readAsText(e.target.files[0], 'UTF-8');
+    if (!file) {
+      return; // Handle no file selected case
+    }
+    // Check file type using MIME type
+    if (!file.type.match('application/json')) {
+      toast.error('Please select a valid JSON file.');
+      return;
+    }
+
+    const fileReader = new FileReader();
+    fileReader.readAsText(file, 'UTF-8');
     fileReader.onload = (e) => {
       const formData = e.target?.result
         ? JSON.parse(e.target.result as string)
         : null;
 
+      if (!formData) {
+        toast.error('Error parsing the selected file.');
+
+        return;
+      }
+
+      // Rest of your code to process the parsed JSON data
       delete formData.id;
       setFormData(formData);
       localStorage.setItem('questionnaire-store', JSON.stringify(formData));
       const newQuestionnaire = 'new-questionnaire';
-
       router.push(`/edit-questionnaire/${newQuestionnaire}`);
     };
   };
-  const handleDownload = () => {
-    const data = JSON.stringify(json);
+  const handleDownload = (questionnaire: Questionnaire) => {
+    const data = JSON.stringify(questionnaire);
     const blob = new Blob([data], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
-
     link.href = url;
-    link.download = 'anf.json';
+    link.download = `${questionnaire.title}.json`;
     link.click();
     URL.revokeObjectURL(url);
   };
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg sm:overflow-hidden dark:bg-gray-900 shadow-md border border-gray-200 dark:border-gray-700 rounded-lg dark:text-white dark:border-gray-700 mt-4">
-      <div className="flex items-center justify-between px-3 py-2">
+      <div className="flex items-center justify-end px-3 py-2">
         <div
           aria-label="View Toggle"
           aria-labelledby="view-toggle-label"
           aria-orientation="horizontal"
-          className="flex items-center mb-2 justify-start px-3 py-2"
+          className="flex items-center mb-2  px-3 py-2"
           id="upload"
           role="group"
         >
           <Button
             color="primary"
             component="label"
-            startIcon={<UploadIcon />}
+            endIcon={<UploadIcon />}
             variant="contained"
             onChange={handleChange}
-          >
+          ><label>Upload Form</label>
             <input hidden type="file" />
           </Button>
         </div>
-        <div
-          aria-label="View Toggle"
-          aria-labelledby="view-toggle-label"
-          aria-orientation="horizontal"
-          className="flex items-center mb-2 justify-end px-3 py-2"
-          id="view-toggle"
-          role="group"
-        >
-          <NButton
-            className={`focus:outline-none px-4 py-2 rounded-md text-sm font-medium ${
-              isGrid
-                ? 'text-gray-700 bg-white hover:bg-gray-100'
-                : 'text-gray-500'
-            } dark:text-gray-400 dark:bg-gray-700`}
-            id="grid-view-btn"
-            startContent={<LayoutGrid size={16} />}
-            onClick={handleViewToggle}
-          >
-            Grid
-          </NButton>
-          <NButton
-            className={`focus:outline-none mx-2 px-4 py-2 rounded-md text-sm font-medium ${
-              !isGrid
-                ? 'text-gray-700 bg-white hover:bg-gray-100'
-                : 'text-gray-500'
-            } dark:text-gray-400 dark:bg-gray-700`}
-            id="list-view-btn"
-            startContent={<LayoutList size={16} />}
-            onClick={handleViewToggle}
-          >
-            List
-          </NButton>
-        </div>
+        <Tabs aria-label="Options" color="primary" variant="bordered" onSelectionChange={handleViewToggle}>
+        <Tab
+          key="list"
+          title={
+            <div className="flex items-center space-x-2">
+              <span>Grid View</span>
+            </div>
+          }
+
+        />
+        <Tab
+          key="grid"
+          title={
+            <div className="flex items-center space-x-2">
+              <span>List View</span>
+            </div>
+          }
+        />
+       
+      </Tabs>
       </div>
       {!isGrid ? (
         <div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4  dark:bg-gray-800 p-2 sm:p-4 md:p-4 lg:p-4 bg-gray-100"
           id="user-grid"
         >
-          {questionnaires.map(
-            (questionnaire: {
-              id: React.Key | null | undefined;
-              title:
-                | string
-                | number
-                | bigint
-                | boolean
-                | React.ReactElement<
-                    any,
-                    string | React.JSXElementConstructor<any>
-                  >
-                | Iterable<React.ReactNode>
-                | React.ReactPortal
-                | Promise<React.AwaitedReactNode>
-                | null
-                | undefined;
-              modified:
-                | string
-                | number
-                | bigint
-                | boolean
-                | React.ReactElement<
-                    any,
-                    string | React.JSXElementConstructor<any>
-                  >
-                | Iterable<React.ReactNode>
-                | React.ReactPortal
-                | Promise<React.AwaitedReactNode>
-                | null
-                | undefined;
-              status: string;
-            }) => (
-              <div
-                key={questionnaire.id}
-                className="px-6 py-4 rounded-lg shadow-sm bg-white dark:bg-gray-800"
-              >
-                <div className="flex items-center mb-2">
-                  <div className="ml-4">
-                    <h3 className="text-base font-semibold text-gray-900 dark:text-white">
-                      {questionnaire.title}
-                    </h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {convertDate(questionnaire.modified)}
-                    </p>
-                  </div>
+          {questionnaires.map((questionnaire: Questionnaire) => (
+            <div
+              key={questionnaire.id}
+              className="px-6 py-4 rounded-lg shadow-sm bg-white dark:bg-gray-800"
+            >
+              <div className="flex items-center mb-2">
+                <div className="ml-4">
+                  <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+                    {questionnaire.title}
+                  </h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    {convertDate(questionnaire.modified)}
+                  </p>
                 </div>
-                <div className="flex items-center justify-between mt-4">
+              </div>
+              <div className="flex items-center justify-between mt-4">
+                <div className="flex items-center">
+                  <div
+                    className={`h-2.5 w-2.5 rounded-full bg-${questionnaire.status} me-2`}
+                  />
+                  <span>
+                    {questionnaire.status === 'active' ? 'Active' : 'Draft'}
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center justify-between mt-4">
+                <NButton
+                  className="py-2"
+                  onPress={() => {
+                    setJson(questionnaire);
+                    onOpen();
+                  }}
+                >
+                  View
+                </NButton>
+                <NButton
+                  className="py-2"
+                  onPress={() => {
+                    setFormData(questionnaire);
+                    localStorage.setItem(
+                      'questionnaire-store',
+                      JSON.stringify(questionnaire),
+                    );
+
+                    router.push(`/edit-questionnaire/${questionnaire.id}`);
+                  }}
+                >
+                  Edit
+                </NButton>
+                <NButton
+                  className="py-2"
+                  onPress={() => {
+                    setJson(questionnaire);
+                    handleDownload(questionnaire);
+                  }}
+                >
+                  Download
+                </NButton>
+                <NButton
+                  className="py-2"
+                  onPress={() => {
+                    const params = {
+                      id: questionnaire.id,
+                    };
+                    const fetchData = async () => {
+                      Endpoints.deleteQuestionnaireById(params)
+                        .then((response) => {
+                          toast.success(response.data.message);
+                          setQuestionnaires(
+                            questionnaires.filter(
+                              (item: any) => item.id !== questionnaire.id,
+                            ),
+                          );
+                        })
+                        .catch(() => {
+                          console.log('Error fetching data');
+                        });
+                    };
+
+                    fetchData();
+                  }}
+                >
+                  Delete
+                </NButton>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <table
+          className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+          id="user-table"
+        >
+          <thead className="text-xs text-gray-700  bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th className="px-6 py-3" scope="col">
+                Form Title
+              </th>
+              <th className="px-6 py-3" scope="col">
+                Last Updated
+              </th>
+              <th className="px-6 py-3" scope="col">
+                Status
+              </th>
+              <th className="px-6 py-3" scope="col">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {questionnaires.map((questionnaire: Questionnaire) => (
+              <tr
+                key={questionnaire.id}
+                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              >
+                <th
+                  className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                  scope="row"
+                >
+                  <div className="ps-3">
+                    <div className="text-base font-semibold text-gray-900 dark:text-white dark:text-gray-400 dark:text-white text-wrap w-96">
+                      {questionnaire.title}
+                    </div>
+                  </div>
+                </th>
+                <td className="px-6 py-4">
+                  {convertDate(questionnaire.modified)}
+                </td>
+                <td className="px-6 py-4">
                   <div className="flex items-center">
                     <div
                       className={`h-2.5 w-2.5 rounded-full bg-${questionnaire.status} me-2`}
                     />
                     <span>
-                      {questionnaire.status === 'active' ? 'Active' : 'Draft'}
+                      <span>
+                        {questionnaire.status === 'active' ? 'Active' : 'Draft'}
+                      </span>
                     </span>
                   </div>
-                </div>
-                <div className="flex items-center justify-between mt-4">
+                </td>
+                <td className=" text-sm font-medium px-6 py-4 whitespace-nowrap space-x-2">
                   <NButton
-                    className="py-2"
+                    isIconOnly
                     onPress={() => {
                       setJson(questionnaire);
                       onOpen();
                     }}
                   >
-                    View
+                    <Eye size={16} />
                   </NButton>
                   <NButton
-                    className="py-2"
+                    isIconOnly
                     onPress={() => {
                       setFormData(questionnaire);
                       localStorage.setItem(
                         'questionnaire-store',
                         JSON.stringify(questionnaire),
                       );
-
                       router.push(`/edit-questionnaire/${questionnaire.id}`);
                     }}
                   >
-                    Edit
+                    <FilePenLine size={16} />
                   </NButton>
                   <NButton
-                    className="py-2"
+                    isIconOnly
                     onPress={() => {
                       setJson(questionnaire);
-                      handleDownload();
+                      handleDownload(questionnaire);
                     }}
                   >
-                    Download
+                    <Download size={16} />
                   </NButton>
                   <NButton
-                    className="py-2"
+                    isIconOnly
                     onPress={() => {
                       const params = {
                         id: questionnaire.id,
@@ -290,161 +367,11 @@ export default function ListQuestionnaire() {
                       fetchData();
                     }}
                   >
-                    Delete
+                    <Trash2 size={16} />
                   </NButton>
-                </div>
-              </div>
-            ),
-          )}
-        </div>
-      ) : (
-        <table
-          className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-          id="user-table"
-        >
-          <thead className="text-xs text-gray-700  bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th className="px-6 py-3" scope="col">
-                Title
-              </th>
-              <th className="px-6 py-3" scope="col">
-                Last Updated
-              </th>
-              <th className="px-6 py-3" scope="col">
-                Status
-              </th>
-              <th className="px-6 py-3" scope="col">
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {questionnaires.map(
-              (questionnaire: {
-                id: React.Key | null | undefined;
-                title:
-                  | string
-                  | number
-                  | bigint
-                  | boolean
-                  | React.ReactElement<
-                      any,
-                      string | React.JSXElementConstructor<any>
-                    >
-                  | Iterable<React.ReactNode>
-                  | React.ReactPortal
-                  | Promise<React.AwaitedReactNode>
-                  | null
-                  | undefined;
-                modified:
-                  | string
-                  | number
-                  | bigint
-                  | boolean
-                  | React.ReactElement<
-                      any,
-                      string | React.JSXElementConstructor<any>
-                    >
-                  | Iterable<React.ReactNode>
-                  | React.ReactPortal
-                  | Promise<React.AwaitedReactNode>
-                  | null
-                  | undefined;
-                status: string;
-              }) => (
-                <tr
-                  key={questionnaire.id}
-                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                >
-                  <th
-                    className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
-                    scope="row"
-                  >
-                    <div className="ps-3">
-                      <div className="text-base font-semibold">
-                        {questionnaire.title}
-                      </div>
-                    </div>
-                  </th>
-                  <td className="px-6 py-4">
-                    {convertDate(questionnaire.modified)}
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center">
-                      <div
-                        className={`h-2.5 w-2.5 rounded-full bg-${questionnaire.status} me-2`}
-                      />
-                      <span>
-                        <span>
-                          {questionnaire.status === 'active'
-                            ? 'Active'
-                            : 'Draft'}
-                        </span>
-                      </span>
-                    </div>
-                  </td>
-                  <td className=" text-sm font-medium px-6 py-4 whitespace-nowrap space-x-2">
-                    <NButton
-                      isIconOnly
-                      onPress={() => {
-                        setJson(questionnaire);
-                        onOpen();
-                      }}
-                    >
-                      <Eye size={16} />
-                    </NButton>
-                    <NButton
-                      isIconOnly
-                      onPress={() => {
-                        setFormData(questionnaire);
-                        localStorage.setItem(
-                          'questionnaire-store',
-                          JSON.stringify(questionnaire),
-                        );
-                        router.push(`/edit-questionnaire/${questionnaire.id}`);
-                      }}
-                    >
-                      <FilePenLine size={16} />
-                    </NButton>
-                    <NButton
-                      isIconOnly
-                      onPress={() => {
-                        setJson(questionnaire);
-                        handleDownload();
-                      }}
-                    >
-                      <Download size={16} />
-                    </NButton>
-                    <NButton
-                      isIconOnly
-                      onPress={() => {
-                        const params = {
-                          id: questionnaire.id,
-                        };
-                        const fetchData = async () => {
-                          Endpoints.deleteQuestionnaireById(params)
-                            .then((response) => {
-                              toast.success(response.data.message);
-                              setQuestionnaires(
-                                questionnaires.filter(
-                                  (item: any) => item.id !== questionnaire.id,
-                                ),
-                              );
-                            })
-                            .catch(() => {
-                              console.log('Error fetching data');
-                            });
-                        };
-
-                        fetchData();
-                      }}
-                    >
-                      <Trash2 size={16} />
-                    </NButton>
-                  </td>
-                </tr>
-              ),
-            )}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       )}
@@ -472,6 +399,7 @@ export default function ListQuestionnaire() {
           )}
         </ModalContent>
       </Modal>
+      <ToastContainer />
     </div>
   );
 }
