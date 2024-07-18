@@ -1,6 +1,6 @@
 {
   "resourceType": "Questionnaire",  
-  "title": "COVID 19",
+  "title": "COVID 19 Simple",
   "status": "draft",
   "purpose": "To capture user symptoms ",
   "item": [
@@ -1053,7 +1053,5 @@
       "repeats": false,
       "readOnly": false
     }
-  ],
-  "ruleId": "8a75ec67-880b-41cd-a526-a12aa9aef2c1",
-  "ruleQuestionId": ["3977311203946"]
+  ]
 }

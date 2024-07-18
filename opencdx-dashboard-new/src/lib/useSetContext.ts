@@ -58,11 +58,11 @@ export const useUpdateFormContext = (): FormValueUpdater => {
         setValue(resolutionPath, systemVariables?.time.resolution);
         setValue(
           includeUpperBoundPath,
-          systemVariables?.time.includeUpperBound === true ? 'true' : 'false',
+          systemVariables?.time.includeUpperBound ,
         );
         setValue(
           includeLowerBoundPath,
-          systemVariables?.time.includeLowerBound === true ? 'true' : 'false',
+          systemVariables?.time.includeLowerBound,
         );
 
         //Subject of Information
@@ -93,6 +93,35 @@ export const useUpdateFormContext = (): FormValueUpdater => {
           healthRiskPath,
           systemVariables?.performanceCircumstance[0]?.healthRisk,
         );
+      }
+      else{
+        //Time
+        setValue(lowerBoundPath, '');
+        setValue(upperBoundPath, '');
+        setValue(semanticPath, '');
+        setValue(resolutionPath, '');
+        setValue(includeUpperBoundPath, '');
+        setValue(includeLowerBoundPath, '');
+
+        //Subject of Information
+        setValue(subjectOfInformationPath, '');
+
+        //  Subject of Record
+        setValue(subjectOfRecordPath, '');
+
+        //Authors
+        setValue(authorIDPath, '');
+        setValue(authorPractitionerValuePath, '');
+        setValue(authorCodePath, '');
+
+        //Topic
+        setValue(topicPath, '');
+
+        //Performance Circumstance
+        setValue(statusPath, '');
+
+        //Health Risk
+        setValue(healthRiskPath, '');
       }
     };
 

@@ -16,9 +16,12 @@ const ControlledRadio = ({ label, name }: { label: string; name: string }) => {
           <RadioGroup
             className="mb-4"
             orientation="horizontal"
-            value={field.value}
-            onChange={field.onChange}
-          >
+            defaultValue={field.value===true?'true':field.value===false?'false':'not'}
+            onChange={(event) => {
+              if (event.target.value === 'true' || event.target.value === 'false') {
+                field.onChange(event.target.value==='true'?true:false);
+              }
+            }}>
             <Radio value="true">Yes</Radio>
             <Radio value="false">No</Radio>
             <Radio value="not">Not Specified</Radio>

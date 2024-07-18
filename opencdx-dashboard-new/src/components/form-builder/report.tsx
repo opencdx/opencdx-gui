@@ -14,8 +14,9 @@ const Report = () => {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const local = await localStorage.getItem('questionnaire-store');
-      const formData = JSON.parse(local as string);
+      const formData = JSON.parse(
+        localStorage.getItem('questionnaire-store') as string,
+      );
       const groupedItem: Record<string, QuestionnaireItem[]> = {};
 
       if (formData?.item) {
@@ -23,13 +24,15 @@ const Report = () => {
           const connectors = item.anfStatementConnector;
 
           if (connectors) {
-            connectors.forEach((connector: AnfStatementConnector) => {
+            connectors.slice(0, 1).forEach((connector: AnfStatementConnector, index) => {
               const type = connector.anfStatementType || 'UNRECOGNIZED';
 
               if (!groupedItem[type]) {
                 groupedItem[type] = [];
               }
-              groupedItem[type].push(item);
+              if (!groupedItem[type].includes(item)) {
+                groupedItem[type].push(item);
+              }
             });
           }
         });
@@ -38,7 +41,7 @@ const Report = () => {
     };
 
     fetchData();
-  }, []);
+  }, [localStorage.getItem('questionnaire-store')]);
 
   return (
     <>

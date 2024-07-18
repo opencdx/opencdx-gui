@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
 
-import { Button, Divider } from '@nextui-org/react';
-import { Plus } from 'lucide-react';
-
-import { ANFStatementWrapper } from './anfStatement';
-import { ComponentTypeWrapper } from './componentType';
-import { OperatorWrapper } from './operator';
-
 import {
   AnfStatementConnector,
   AnfStatementConnectorAnfOperatorTypeEnum,
   AnfStatementConnectorAnfStatementTypeEnum,
   QuestionnaireItem,
 } from '@/generated-api-ts/questionnaire/api';
-
 import { useUpdateFormContext } from '@/lib/useSetContext';
+import { Button, Card, CardBody, Divider } from '@nextui-org/react';
+import { Plus } from 'lucide-react';
 
+import { ANFStatementWrapper } from './anfStatement';
+import { ComponentTypeWrapper } from './componentType';
+import { OperatorWrapper } from './operator';
 
 const QuestionnaireItemWrapper = ({
   item,
@@ -41,21 +38,23 @@ const QuestionnaireItemWrapper = ({
   };
 
   React.useEffect(() => {
-    const newConnector: AnfStatementConnector = {
-      anfStatementType:
-        AnfStatementConnectorAnfStatementTypeEnum.AnfStatementTypeUnspecified,
-      anfOperatorType:
-        AnfStatementConnectorAnfOperatorTypeEnum.AnfOperatorTypeUnspecified,
-      anfStatement: defaultAnfStatement,
-    };
-
-    if (!item.anfStatementConnector) {
-      item.anfStatementConnector = [];
+    if(item && (!item.anfStatementConnector || item.anfStatementConnector.length === 0)) {
+      const newConnector: AnfStatementConnector = {
+        anfStatementType:
+          AnfStatementConnectorAnfStatementTypeEnum.AnfStatementTypeUnspecified,
+        anfOperatorType:
+          AnfStatementConnectorAnfOperatorTypeEnum.AnfOperatorTypeUnspecified,
+        anfStatement: defaultAnfStatement,
+      };
+      if (!item.anfStatementConnector) {
+        item.anfStatementConnector = [];
+      }
+      item.anfStatementConnector.push(newConnector);
+      setAnfStatementConnectorLength(item.anfStatementConnector.length);
     }
-    item.anfStatementConnector.push(newConnector);
-    setAnfStatementConnectorLength(item.anfStatementConnector.length);
+   
   }, []);
-
+  
   const handleAddButtonClick = () => {
     const newConnector: AnfStatementConnector = {
       anfStatementType:
@@ -73,7 +72,23 @@ const QuestionnaireItemWrapper = ({
   };
 
   return (
+    <Card className="mb-4 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700">
+        <CardBody>
     <>
+      
+          <div className="flex flex-row justify-between">
+            <p>{questionnaireItemId + 1 + '. ' + item.text}</p>
+            <Button
+              className="mb-4 p-4  rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700 flex flex-row justify-center"
+              color="primary"
+              startContent={<Plus />}
+              variant="solid"
+              onClick={handleAddButtonClick}
+            >
+              Add ANF Statement
+            </Button>
+          </div>
+       <Divider className="my-4 border-neutral-700 " />
       <>
         {item?.anfStatementConnector &&
         item.anfStatementConnector.length > 0 ? (
@@ -92,16 +107,23 @@ const QuestionnaireItemWrapper = ({
                     );
                   }}
                 />
+                       <Divider className="my-4 border-neutral-700 " />
+
                 <OperatorWrapper
                   anfStatementConnectorId={id}
                   item={item}
                   questionnaireItemId={questionnaireItemId}
                 />
-                <ANFStatementWrapper
+              {currentComponentType!=='ANF_STATEMENT_USER_QUESTION' && (
+                <>
+                                       <Divider className="my-4 border-neutral-700 " />
+                                       <ANFStatementWrapper
                   anfStatement={connector.anfStatement ?? defaultAnfStatement}
                   anfStatementConnectorId={id}
                   questionnaireItemId={questionnaireItemId}
                 />
+</>
+               )}
 
                 {id < (item.anfStatementConnector?.length ?? 0) - 1 && (
                   <Divider className="my-4 border-neutral-700 " />
@@ -112,20 +134,10 @@ const QuestionnaireItemWrapper = ({
         ) : (
           <></>
         )}
-        <Divider className="my-4 border-neutral-700 " />
-        <div className="flex flex-row justify-end">
-          <Button
-            className="mb-4 p-4  rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700 flex flex-row justify-center"
-            color="primary"
-            startContent={<Plus />}
-            variant="solid"
-            onClick={handleAddButtonClick}
-          >
-            Add ANF Statement
-          </Button>
-        </div>
       </>
     </>
+    </CardBody>
+      </Card>
   );
 };
 
