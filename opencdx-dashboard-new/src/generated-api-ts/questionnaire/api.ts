@@ -55,10 +55,10 @@ export interface ANFStatement {
     'authors'?: Array<Practitioner>;
     /**
      * 
-     * @type {string}
+     * @type {LogicalExpression}
      * @memberof ANFStatement
      */
-    'subjectOfInformation'?: string;
+    'subjectOfInformation'?: LogicalExpression;
     /**
      * 
      * @type {Array<AssociatedStatement>}
@@ -67,16 +67,16 @@ export interface ANFStatement {
     'associatedStatement'?: Array<AssociatedStatement>;
     /**
      * 
-     * @type {string}
+     * @type {LogicalExpression}
      * @memberof ANFStatement
      */
-    'topic'?: string;
+    'topic'?: LogicalExpression;
     /**
      * 
-     * @type {string}
+     * @type {LogicalExpression}
      * @memberof ANFStatement
      */
-    'type'?: string;
+    'type'?: LogicalExpression;
     /**
      * 
      * @type {Timestamp}
@@ -109,10 +109,10 @@ export interface ANFStatement {
     'status'?: ANFStatementStatusEnum;
     /**
      * 
-     * @type {PerformanceCircumstance}
+     * @type {NarrativeCircumstance}
      * @memberof ANFStatement
      */
-    'performanceCircumstance'?: PerformanceCircumstance;
+    'narrativeCircumstance'?: NarrativeCircumstance;
     /**
      * 
      * @type {RequestCircumstance}
@@ -121,10 +121,10 @@ export interface ANFStatement {
     'requestCircumstance'?: RequestCircumstance;
     /**
      * 
-     * @type {NarrativeCircumstance}
+     * @type {PerformanceCircumstance}
      * @memberof ANFStatement
      */
-    'narrativeCircumstance'?: NarrativeCircumstance;
+    'performanceCircumstance'?: PerformanceCircumstance;
 }
 
 export const ANFStatementStatusEnum = {
@@ -240,16 +240,16 @@ export interface AnswerValue {
 export interface AssociatedStatement {
     /**
      * 
-     * @type {string}
+     * @type {Reference}
      * @memberof AssociatedStatement
      */
-    'id'?: string;
+    'id'?: Reference;
     /**
      * 
-     * @type {string}
+     * @type {LogicalExpression}
      * @memberof AssociatedStatement
      */
-    'semantic'?: string;
+    'semantic'?: LogicalExpression;
 }
 /**
  * 
@@ -404,21 +404,34 @@ export interface GetQuestionnaireListRequest {
 /**
  * 
  * @export
+ * @interface LogicalExpression
+ */
+export interface LogicalExpression {
+    /**
+     * 
+     * @type {string}
+     * @memberof LogicalExpression
+     */
+    'expression'?: string;
+}
+/**
+ * 
+ * @export
  * @interface Measure
  */
 export interface Measure {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof Measure
      */
-    'upperBound'?: string;
+    'upperBound'?: number;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof Measure
      */
-    'lowerBound'?: string;
+    'lowerBound'?: number;
     /**
      * 
      * @type {boolean}
@@ -433,16 +446,16 @@ export interface Measure {
     'includeLowerBound'?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {LogicalExpression}
      * @memberof Measure
      */
-    'semantic'?: string;
+    'semantic'?: LogicalExpression;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof Measure
      */
-    'resolution'?: string;
+    'resolution'?: number;
 }
 /**
  * 
@@ -458,10 +471,10 @@ export interface NarrativeCircumstance {
     'timing'?: Measure;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<LogicalExpression>}
      * @memberof NarrativeCircumstance
      */
-    'purpose'?: Array<string>;
+    'purpose'?: Array<LogicalExpression>;
     /**
      * 
      * @type {string}
@@ -526,16 +539,16 @@ export interface Participant {
     'id'?: string;
     /**
      * 
-     * @type {string}
+     * @type {Reference}
      * @memberof Participant
      */
-    'practitionerValue'?: string;
+    'practitionerValue'?: Reference;
     /**
      * 
-     * @type {string}
+     * @type {LogicalExpression}
      * @memberof Participant
      */
-    'code'?: string;
+    'code'?: LogicalExpression;
 }
 /**
  * 
@@ -551,16 +564,16 @@ export interface PerformanceCircumstance {
     'timing'?: Measure;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<LogicalExpression>}
      * @memberof PerformanceCircumstance
      */
-    'purpose'?: Array<string>;
+    'purpose'?: Array<LogicalExpression>;
     /**
      * 
-     * @type {string}
+     * @type {LogicalExpression}
      * @memberof PerformanceCircumstance
      */
-    'status'?: string;
+    'status'?: LogicalExpression;
     /**
      * 
      * @type {Measure}
@@ -569,10 +582,10 @@ export interface PerformanceCircumstance {
     'result'?: Measure;
     /**
      * 
-     * @type {string}
+     * @type {LogicalExpression}
      * @memberof PerformanceCircumstance
      */
-    'healthRisk'?: string;
+    'healthRisk'?: LogicalExpression;
     /**
      * 
      * @type {Measure}
@@ -585,6 +598,12 @@ export interface PerformanceCircumstance {
      * @memberof PerformanceCircumstance
      */
     'participant'?: Array<Participant>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof PerformanceCircumstance
+     */
+    'deviceId'?: Array<string>;
 }
 /**
  * 
@@ -600,16 +619,16 @@ export interface Practitioner {
     'id'?: string;
     /**
      * 
-     * @type {string}
+     * @type {Reference}
      * @memberof Practitioner
      */
-    'practitionerValue'?: string;
+    'practitionerValue'?: Reference;
     /**
      * 
-     * @type {string}
+     * @type {LogicalExpression}
      * @memberof Practitioner
      */
-    'code'?: string;
+    'code'?: LogicalExpression;
 }
 /**
  * 
@@ -1055,122 +1074,71 @@ export interface Questionnaires {
 /**
  * 
  * @export
+ * @interface Reference
+ */
+export interface Reference {
+    /**
+     * 
+     * @type {string}
+     * @memberof Reference
+     */
+    'identifier'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Reference
+     */
+    'display'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Reference
+     */
+    'reference'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Reference
+     */
+    'uri'?: string;
+}
+/**
+ * 
+ * @export
  * @interface Repetition
  */
 export interface Repetition {
     /**
      * 
-     * @type {Timestamp}
+     * @type {Measure}
      * @memberof Repetition
      */
-    'periodStart'?: Timestamp;
+    'periodStart'?: Measure;
     /**
      * 
-     * @type {number}
+     * @type {Measure}
      * @memberof Repetition
      */
-    'periodDuration'?: number;
+    'periodDuration'?: Measure;
     /**
      * 
-     * @type {string}
+     * @type {Measure}
      * @memberof Repetition
      */
-    'periodDurationType'?: RepetitionPeriodDurationTypeEnum;
+    'eventFrequency'?: Measure;
     /**
      * 
-     * @type {number}
+     * @type {Measure}
      * @memberof Repetition
      */
-    'eventFrequency'?: number;
+    'eventSeparation'?: Measure;
     /**
      * 
-     * @type {string}
+     * @type {Measure}
      * @memberof Repetition
      */
-    'eventFrequencyType'?: RepetitionEventFrequencyTypeEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof Repetition
-     */
-    'eventSeparation'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Repetition
-     */
-    'eventSeparationType'?: RepetitionEventSeparationTypeEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof Repetition
-     */
-    'eventDuration'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Repetition
-     */
-    'eventDurationType'?: RepetitionEventDurationTypeEnum;
+    'eventDuration'?: Measure;
 }
-
-export const RepetitionPeriodDurationTypeEnum = {
-    DurationTypeNotSpecified: 'DURATION_TYPE_NOT_SPECIFIED',
-    DurationTypeMilliseconds: 'DURATION_TYPE_MILLISECONDS',
-    DurationTypeSeconds: 'DURATION_TYPE_SECONDS',
-    DurationTypeMinutes: 'DURATION_TYPE_MINUTES',
-    DurationTypeHours: 'DURATION_TYPE_HOURS',
-    DurationTypeDays: 'DURATION_TYPE_DAYS',
-    DurationTypeWeeks: 'DURATION_TYPE_WEEKS',
-    DurationTypeMonths: 'DURATION_TYPE_MONTHS',
-    DurationTypeYears: 'DURATION_TYPE_YEARS',
-    Unrecognized: 'UNRECOGNIZED'
-} as const;
-
-export type RepetitionPeriodDurationTypeEnum = typeof RepetitionPeriodDurationTypeEnum[keyof typeof RepetitionPeriodDurationTypeEnum];
-export const RepetitionEventFrequencyTypeEnum = {
-    DurationTypeNotSpecified: 'DURATION_TYPE_NOT_SPECIFIED',
-    DurationTypeMilliseconds: 'DURATION_TYPE_MILLISECONDS',
-    DurationTypeSeconds: 'DURATION_TYPE_SECONDS',
-    DurationTypeMinutes: 'DURATION_TYPE_MINUTES',
-    DurationTypeHours: 'DURATION_TYPE_HOURS',
-    DurationTypeDays: 'DURATION_TYPE_DAYS',
-    DurationTypeWeeks: 'DURATION_TYPE_WEEKS',
-    DurationTypeMonths: 'DURATION_TYPE_MONTHS',
-    DurationTypeYears: 'DURATION_TYPE_YEARS',
-    Unrecognized: 'UNRECOGNIZED'
-} as const;
-
-export type RepetitionEventFrequencyTypeEnum = typeof RepetitionEventFrequencyTypeEnum[keyof typeof RepetitionEventFrequencyTypeEnum];
-export const RepetitionEventSeparationTypeEnum = {
-    DurationTypeNotSpecified: 'DURATION_TYPE_NOT_SPECIFIED',
-    DurationTypeMilliseconds: 'DURATION_TYPE_MILLISECONDS',
-    DurationTypeSeconds: 'DURATION_TYPE_SECONDS',
-    DurationTypeMinutes: 'DURATION_TYPE_MINUTES',
-    DurationTypeHours: 'DURATION_TYPE_HOURS',
-    DurationTypeDays: 'DURATION_TYPE_DAYS',
-    DurationTypeWeeks: 'DURATION_TYPE_WEEKS',
-    DurationTypeMonths: 'DURATION_TYPE_MONTHS',
-    DurationTypeYears: 'DURATION_TYPE_YEARS',
-    Unrecognized: 'UNRECOGNIZED'
-} as const;
-
-export type RepetitionEventSeparationTypeEnum = typeof RepetitionEventSeparationTypeEnum[keyof typeof RepetitionEventSeparationTypeEnum];
-export const RepetitionEventDurationTypeEnum = {
-    DurationTypeNotSpecified: 'DURATION_TYPE_NOT_SPECIFIED',
-    DurationTypeMilliseconds: 'DURATION_TYPE_MILLISECONDS',
-    DurationTypeSeconds: 'DURATION_TYPE_SECONDS',
-    DurationTypeMinutes: 'DURATION_TYPE_MINUTES',
-    DurationTypeHours: 'DURATION_TYPE_HOURS',
-    DurationTypeDays: 'DURATION_TYPE_DAYS',
-    DurationTypeWeeks: 'DURATION_TYPE_WEEKS',
-    DurationTypeMonths: 'DURATION_TYPE_MONTHS',
-    DurationTypeYears: 'DURATION_TYPE_YEARS',
-    Unrecognized: 'UNRECOGNIZED'
-} as const;
-
-export type RepetitionEventDurationTypeEnum = typeof RepetitionEventDurationTypeEnum[keyof typeof RepetitionEventDurationTypeEnum];
-
 /**
  * 
  * @export
@@ -1185,10 +1153,10 @@ export interface RequestCircumstance {
     'timing'?: Measure;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<LogicalExpression>}
      * @memberof RequestCircumstance
      */
-    'purpose'?: Array<string>;
+    'purpose'?: Array<LogicalExpression>;
     /**
      * 
      * @type {Array<AssociatedStatement>}
@@ -1197,16 +1165,16 @@ export interface RequestCircumstance {
     'conditionalTrigger'?: Array<AssociatedStatement>;
     /**
      * 
-     * @type {Array<Participant>}
+     * @type {Array<Reference>}
      * @memberof RequestCircumstance
      */
-    'requestedParticipant'?: Array<Participant>;
+    'requestedParticipant'?: Array<Reference>;
     /**
      * 
-     * @type {string}
+     * @type {LogicalExpression}
      * @memberof RequestCircumstance
      */
-    'priority'?: RequestCircumstancePriorityEnum;
+    'priority'?: LogicalExpression;
     /**
      * 
      * @type {Measure}
@@ -1219,16 +1187,13 @@ export interface RequestCircumstance {
      * @memberof RequestCircumstance
      */
     'repetition'?: Repetition;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof RequestCircumstance
+     */
+    'deviceId'?: Array<string>;
 }
-
-export const RequestCircumstancePriorityEnum = {
-    Routine: 'ROUTINE',
-    Stat: 'STAT',
-    Unrecognized: 'UNRECOGNIZED'
-} as const;
-
-export type RequestCircumstancePriorityEnum = typeof RequestCircumstancePriorityEnum[keyof typeof RequestCircumstancePriorityEnum];
-
 /**
  * 
  * @export

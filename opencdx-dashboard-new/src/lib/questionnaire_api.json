@@ -1,17 +1,26 @@
 {
   "openapi": "3.0.1",
-  "info": { "title": "OpenAPI definition", "version": "v0" },
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
   "servers": [
     {
-      "url": "https://ec2-3-13-148-183.us-east-2.compute.amazonaws.com:8080/questionnaire",
+      "url": "https://localhost:8080/questionnaire",
       "description": "Generated server url"
     }
   ],
-  "security": [{ "bearerAuth": [] }],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
   "paths": {
     "/system/questionnaire": {
       "put": {
-        "tags": ["open-cdx-rest-questionnaire-controller"],
+        "tags": [
+          "open-cdx-rest-questionnaire-controller"
+        ],
         "operationId": "updateQuestionnaireData",
         "requestBody": {
           "content": {
@@ -28,14 +37,18 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/SubmissionResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionResponse"
+                }
               }
             }
           }
         }
       },
       "post": {
-        "tags": ["open-cdx-rest-questionnaire-controller"],
+        "tags": [
+          "open-cdx-rest-questionnaire-controller"
+        ],
         "operationId": "createQuestionnaireData",
         "requestBody": {
           "content": {
@@ -52,7 +65,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/SubmissionResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionResponse"
+                }
               }
             }
           }
@@ -61,12 +76,16 @@
     },
     "/questionnaire": {
       "put": {
-        "tags": ["open-cdx-rest-questionnaire-controller"],
+        "tags": [
+          "open-cdx-rest-questionnaire-controller"
+        ],
         "operationId": "updateQuestionnaire",
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/QuestionnaireRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/QuestionnaireRequest"
+              }
             }
           },
           "required": true
@@ -76,19 +95,25 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Questionnaire" }
+                "schema": {
+                  "$ref": "#/components/schemas/Questionnaire"
+                }
               }
             }
           }
         }
       },
       "post": {
-        "tags": ["open-cdx-rest-questionnaire-controller"],
+        "tags": [
+          "open-cdx-rest-questionnaire-controller"
+        ],
         "operationId": "createQuestionnaire",
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/QuestionnaireRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/QuestionnaireRequest"
+              }
             }
           },
           "required": true
@@ -98,7 +123,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Questionnaire" }
+                "schema": {
+                  "$ref": "#/components/schemas/Questionnaire"
+                }
               }
             }
           }
@@ -107,7 +134,9 @@
     },
     "/client/questionnaire": {
       "put": {
-        "tags": ["open-cdx-rest-questionnaire-controller"],
+        "tags": [
+          "open-cdx-rest-questionnaire-controller"
+        ],
         "operationId": "updateClientQuestionnaireData",
         "requestBody": {
           "content": {
@@ -124,14 +153,18 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/SubmissionResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionResponse"
+                }
               }
             }
           }
         }
       },
       "post": {
-        "tags": ["open-cdx-rest-questionnaire-controller"],
+        "tags": [
+          "open-cdx-rest-questionnaire-controller"
+        ],
         "operationId": "createClientQuestionnaireData",
         "requestBody": {
           "content": {
@@ -148,7 +181,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/SubmissionResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionResponse"
+                }
               }
             }
           }
@@ -157,7 +192,9 @@
     },
     "/user/questionnaire": {
       "post": {
-        "tags": ["open-cdx-rest-questionnaire-controller"],
+        "tags": [
+          "open-cdx-rest-questionnaire-controller"
+        ],
         "operationId": "createUserQuestionnaireData",
         "requestBody": {
           "content": {
@@ -174,7 +211,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/SubmissionResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionResponse"
+                }
               }
             }
           }
@@ -183,7 +222,9 @@
     },
     "/user/questionnaire/list": {
       "post": {
-        "tags": ["open-cdx-rest-questionnaire-controller"],
+        "tags": [
+          "open-cdx-rest-questionnaire-controller"
+        ],
         "operationId": "getUserQuestionnaireDataList",
         "requestBody": {
           "content": {
@@ -211,7 +252,9 @@
     },
     "/system/questionnaire/list": {
       "post": {
-        "tags": ["open-cdx-rest-questionnaire-controller"],
+        "tags": [
+          "open-cdx-rest-questionnaire-controller"
+        ],
         "operationId": "getQuestionnaireDataList",
         "requestBody": {
           "content": {
@@ -239,7 +282,9 @@
     },
     "/questionnaire/list": {
       "post": {
-        "tags": ["open-cdx-rest-questionnaire-controller"],
+        "tags": [
+          "open-cdx-rest-questionnaire-controller"
+        ],
         "operationId": "getQuestionnaires",
         "requestBody": {
           "content": {
@@ -256,7 +301,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Questionnaires" }
+                "schema": {
+                  "$ref": "#/components/schemas/Questionnaires"
+                }
               }
             }
           }
@@ -265,7 +312,9 @@
     },
     "/client/questionnaire/list": {
       "post": {
-        "tags": ["open-cdx-rest-questionnaire-controller"],
+        "tags": [
+          "open-cdx-rest-questionnaire-controller"
+        ],
         "operationId": "getClientQuestionnaireDataList",
         "requestBody": {
           "content": {
@@ -293,14 +342,18 @@
     },
     "/user/questionnaire/{Id}": {
       "get": {
-        "tags": ["open-cdx-rest-questionnaire-controller"],
+        "tags": [
+          "open-cdx-rest-questionnaire-controller"
+        ],
         "operationId": "getUserQuestionnaire",
         "parameters": [
           {
             "name": "Id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -319,14 +372,18 @@
     },
     "/system/questionnaire/{Id}": {
       "get": {
-        "tags": ["open-cdx-rest-questionnaire-controller"],
+        "tags": [
+          "open-cdx-rest-questionnaire-controller"
+        ],
         "operationId": "getSystemQuestionnaire",
         "parameters": [
           {
             "name": "Id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -343,14 +400,18 @@
         }
       },
       "delete": {
-        "tags": ["open-cdx-rest-questionnaire-controller"],
+        "tags": [
+          "open-cdx-rest-questionnaire-controller"
+        ],
         "operationId": "deleteSystemQuestionnaire",
         "parameters": [
           {
             "name": "Id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -358,7 +419,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/SubmissionResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionResponse"
+                }
               }
             }
           }
@@ -367,20 +430,26 @@
     },
     "/questionnaire/{Id}": {
       "get": {
-        "tags": ["open-cdx-rest-questionnaire-controller"],
+        "tags": [
+          "open-cdx-rest-questionnaire-controller"
+        ],
         "operationId": "getQuestionnaire",
         "parameters": [
           {
             "name": "Id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "updateAnswers",
             "in": "query",
             "required": false,
-            "schema": { "type": "boolean" }
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -388,21 +457,27 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Questionnaire" }
+                "schema": {
+                  "$ref": "#/components/schemas/Questionnaire"
+                }
               }
             }
           }
         }
       },
       "delete": {
-        "tags": ["open-cdx-rest-questionnaire-controller"],
+        "tags": [
+          "open-cdx-rest-questionnaire-controller"
+        ],
         "operationId": "deleteQuestionnaire",
         "parameters": [
           {
             "name": "Id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -410,7 +485,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/SubmissionResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionResponse"
+                }
               }
             }
           }
@@ -419,14 +496,18 @@
     },
     "/questionnaire/refresh/{Id}": {
       "get": {
-        "tags": ["open-cdx-rest-questionnaire-controller"],
+        "tags": [
+          "open-cdx-rest-questionnaire-controller"
+        ],
         "operationId": "refreshQuestionnaire",
         "parameters": [
           {
             "name": "Id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -434,7 +515,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Questionnaire" }
+                "schema": {
+                  "$ref": "#/components/schemas/Questionnaire"
+                }
               }
             }
           }
@@ -443,14 +526,18 @@
     },
     "/client/questionnaire/{Id}": {
       "get": {
-        "tags": ["open-cdx-rest-questionnaire-controller"],
+        "tags": [
+          "open-cdx-rest-questionnaire-controller"
+        ],
         "operationId": "getClientQuestionnaire",
         "parameters": [
           {
             "name": "Id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -467,14 +554,18 @@
         }
       },
       "delete": {
-        "tags": ["open-cdx-rest-questionnaire-controller"],
+        "tags": [
+          "open-cdx-rest-questionnaire-controller"
+        ],
         "operationId": "deleteClientQuestionnaire",
         "parameters": [
           {
             "name": "Id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -482,7 +573,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/SubmissionResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionResponse"
+                }
               }
             }
           }
@@ -495,17 +588,39 @@
       "QuestionnaireData": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
-          "name": { "type": "string" },
-          "status": { "type": "string" },
-          "state": { "type": "string" },
-          "questionJsonId": { "type": "string" },
-          "questionAnfJson": { "type": "string" },
-          "rulesEngineConfig": { "type": "string" },
-          "created": { "$ref": "#/components/schemas/Timestamp" },
-          "modified": { "$ref": "#/components/schemas/Timestamp" },
-          "creator": { "type": "string" },
-          "modifier": { "type": "string" }
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "questionJsonId": {
+            "type": "string"
+          },
+          "questionAnfJson": {
+            "type": "string"
+          },
+          "rulesEngineConfig": {
+            "type": "string"
+          },
+          "created": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "modified": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "creator": {
+            "type": "string"
+          },
+          "modifier": {
+            "type": "string"
+          }
         }
       },
       "QuestionnaireDataRequest": {
@@ -519,39 +634,75 @@
       "Timestamp": {
         "type": "object",
         "properties": {
-          "seconds": { "type": "integer", "format": "int64" },
-          "nanos": { "type": "integer", "format": "int32" }
+          "seconds": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "nanos": {
+            "type": "integer",
+            "format": "int32"
+          }
         }
       },
       "SubmissionResponse": {
         "type": "object",
         "properties": {
-          "success": { "type": "boolean" },
-          "message": { "type": "string" },
-          "id": { "type": "string" }
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          }
         }
       },
       "ANFStatement": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
-          "time": { "$ref": "#/components/schemas/Measure" },
-          "subjectOfRecord": { "$ref": "#/components/schemas/Participant" },
+          "id": {
+            "type": "string"
+          },
+          "time": {
+            "$ref": "#/components/schemas/Measure"
+          },
+          "subjectOfRecord": {
+            "$ref": "#/components/schemas/Participant"
+          },
           "authors": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/Practitioner" }
+            "items": {
+              "$ref": "#/components/schemas/Practitioner"
+            }
           },
-          "subjectOfInformation": { "type": "string" },
+          "subjectOfInformation": {
+            "$ref": "#/components/schemas/LogicalExpression"
+          },
           "associatedStatement": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/AssociatedStatement" }
+            "items": {
+              "$ref": "#/components/schemas/AssociatedStatement"
+            }
           },
-          "topic": { "type": "string" },
-          "type": { "type": "string" },
-          "created": { "$ref": "#/components/schemas/Timestamp" },
-          "modified": { "$ref": "#/components/schemas/Timestamp" },
-          "creator": { "type": "string" },
-          "modifier": { "type": "string" },
+          "topic": {
+            "$ref": "#/components/schemas/LogicalExpression"
+          },
+          "type": {
+            "$ref": "#/components/schemas/LogicalExpression"
+          },
+          "created": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "modified": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "creator": {
+            "type": "string"
+          },
+          "modifier": {
+            "type": "string"
+          },
           "status": {
             "type": "string",
             "enum": [
@@ -561,21 +712,23 @@
               "UNRECOGNIZED"
             ]
           },
-          "performanceCircumstance": {
-            "$ref": "#/components/schemas/PerformanceCircumstance"
+          "narrativeCircumstance": {
+            "$ref": "#/components/schemas/NarrativeCircumstance"
           },
           "requestCircumstance": {
             "$ref": "#/components/schemas/RequestCircumstance"
           },
-          "narrativeCircumstance": {
-            "$ref": "#/components/schemas/NarrativeCircumstance"
+          "performanceCircumstance": {
+            "$ref": "#/components/schemas/PerformanceCircumstance"
           }
         }
       },
       "AnfStatementConnector": {
         "type": "object",
         "properties": {
-          "anfStatement": { "$ref": "#/components/schemas/ANFStatement" },
+          "anfStatement": {
+            "$ref": "#/components/schemas/ANFStatement"
+          },
           "anfStatementType": {
             "type": "string",
             "enum": [
@@ -604,232 +757,413 @@
               "UNRECOGNIZED"
             ]
           },
-          "operatorValue": { "type": "string" }
+          "operatorValue": {
+            "type": "string"
+          }
         }
       },
       "AnswerValue": {
         "type": "object",
         "properties": {
-          "valueInteger": { "type": "integer", "format": "int32" },
-          "valueDouble": { "type": "number", "format": "double" },
-          "valueString": { "type": "string" },
-          "valueBoolean": { "type": "boolean" },
-          "valueCoding": { "$ref": "#/components/schemas/Coding" }
+          "valueInteger": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "valueDouble": {
+            "type": "number",
+            "format": "double"
+          },
+          "valueString": {
+            "type": "string"
+          },
+          "valueBoolean": {
+            "type": "boolean"
+          },
+          "valueCoding": {
+            "$ref": "#/components/schemas/Coding"
+          }
         }
       },
       "AssociatedStatement": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
-          "semantic": { "type": "string" }
+          "id": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "semantic": {
+            "$ref": "#/components/schemas/LogicalExpression"
+          }
         }
       },
       "Code": {
         "type": "object",
         "properties": {
-          "system": { "type": "string" },
-          "code": { "type": "string" }
+          "system": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
         }
       },
       "Coding": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
-          "system": { "type": "string" },
-          "version": { "type": "string" },
-          "code": { "type": "string" },
-          "display": { "type": "string" }
+          "id": {
+            "type": "string"
+          },
+          "system": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "display": {
+            "type": "string"
+          }
         }
       },
       "Extension": {
         "type": "object",
         "properties": {
-          "url": { "type": "string" },
-          "valueDecimal": { "type": "number", "format": "double" },
-          "valueCodeableConcept": { "$ref": "#/components/schemas/Coding" }
+          "url": {
+            "type": "string"
+          },
+          "valueDecimal": {
+            "type": "number",
+            "format": "double"
+          },
+          "valueCodeableConcept": {
+            "$ref": "#/components/schemas/Coding"
+          }
+        }
+      },
+      "LogicalExpression": {
+        "type": "object",
+        "properties": {
+          "expression": {
+            "type": "string"
+          }
         }
       },
       "Measure": {
         "type": "object",
         "properties": {
-          "upperBound": { "type": "string" },
-          "lowerBound": { "type": "string" },
-          "includeUpperBound": { "type": "boolean" },
-          "includeLowerBound": { "type": "boolean" },
-          "semantic": { "type": "string" },
-          "resolution": { "type": "string" }
+          "upperBound": {
+            "type": "number",
+            "format": "double"
+          },
+          "lowerBound": {
+            "type": "number",
+            "format": "double"
+          },
+          "includeUpperBound": {
+            "type": "boolean"
+          },
+          "includeLowerBound": {
+            "type": "boolean"
+          },
+          "semantic": {
+            "$ref": "#/components/schemas/LogicalExpression"
+          },
+          "resolution": {
+            "type": "number",
+            "format": "double"
+          }
         }
       },
       "NarrativeCircumstance": {
         "type": "object",
         "properties": {
-          "timing": { "$ref": "#/components/schemas/Measure" },
+          "timing": {
+            "$ref": "#/components/schemas/Measure"
+          },
           "purpose": {
             "type": "array",
-            "properties": {
-              "underlyingElements": {
-                "type": "array",
-                "items": { "type": "object" }
-              },
-              "unmodifiableView": {
-                "type": "array",
-                "properties": {
-                  "underlyingElements": {
-                    "type": "array",
-                    "items": { "type": "object" }
-                  },
-                  "empty": { "type": "boolean" },
-                  "first": { "type": "string" },
-                  "last": { "type": "string" }
-                },
-                "items": { "type": "string" }
-              },
-              "empty": { "type": "boolean" },
-              "first": { "type": "string" },
-              "last": { "type": "string" },
-              "modifiable": { "type": "boolean" }
-            },
-            "items": { "type": "string" }
+            "items": {
+              "$ref": "#/components/schemas/LogicalExpression"
+            }
           },
-          "text": { "type": "string" }
+          "text": {
+            "type": "string"
+          }
         }
       },
       "Participant": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
-          "practitionerValue": { "type": "string" },
-          "code": { "type": "string" }
+          "id": {
+            "type": "string"
+          },
+          "practitionerValue": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "code": {
+            "$ref": "#/components/schemas/LogicalExpression"
+          }
         }
       },
       "PerformanceCircumstance": {
         "type": "object",
         "properties": {
-          "timing": { "$ref": "#/components/schemas/Measure" },
+          "timing": {
+            "$ref": "#/components/schemas/Measure"
+          },
           "purpose": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LogicalExpression"
+            }
+          },
+          "status": {
+            "$ref": "#/components/schemas/LogicalExpression"
+          },
+          "result": {
+            "$ref": "#/components/schemas/Measure"
+          },
+          "healthRisk": {
+            "$ref": "#/components/schemas/LogicalExpression"
+          },
+          "normalRange": {
+            "$ref": "#/components/schemas/Measure"
+          },
+          "participant": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Participant"
+            }
+          },
+          "deviceId": {
             "type": "array",
             "properties": {
               "underlyingElements": {
                 "type": "array",
-                "items": { "type": "object" }
+                "items": {
+                  "type": "object"
+                }
               },
               "unmodifiableView": {
                 "type": "array",
                 "properties": {
                   "underlyingElements": {
                     "type": "array",
-                    "items": { "type": "object" }
+                    "items": {
+                      "type": "object"
+                    }
                   },
-                  "empty": { "type": "boolean" },
-                  "first": { "type": "string" },
-                  "last": { "type": "string" }
+                  "empty": {
+                    "type": "boolean"
+                  },
+                  "first": {
+                    "type": "string"
+                  },
+                  "last": {
+                    "type": "string"
+                  }
                 },
-                "items": { "type": "string" }
+                "items": {
+                  "type": "string"
+                }
               },
-              "empty": { "type": "boolean" },
-              "first": { "type": "string" },
-              "last": { "type": "string" },
-              "modifiable": { "type": "boolean" }
+              "empty": {
+                "type": "boolean"
+              },
+              "first": {
+                "type": "string"
+              },
+              "last": {
+                "type": "string"
+              },
+              "modifiable": {
+                "type": "boolean"
+              }
             },
-            "items": { "type": "string" }
-          },
-          "status": { "type": "string" },
-          "result": { "$ref": "#/components/schemas/Measure" },
-          "healthRisk": { "type": "string" },
-          "normalRange": { "$ref": "#/components/schemas/Measure" },
-          "participant": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/Participant" }
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
       "Practitioner": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
-          "practitionerValue": { "type": "string" },
-          "code": { "type": "string" }
+          "id": {
+            "type": "string"
+          },
+          "practitionerValue": {
+            "$ref": "#/components/schemas/Reference"
+          },
+          "code": {
+            "$ref": "#/components/schemas/LogicalExpression"
+          }
         }
       },
       "Questionnaire": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
-          "resourceType": { "type": "string" },
-          "title": { "type": "string" },
+          "id": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
           "status": {
             "type": "string",
-            "enum": ["draft", "active", "retired", "unknown", "UNRECOGNIZED"]
+            "enum": [
+              "draft",
+              "active",
+              "retired",
+              "unknown",
+              "UNRECOGNIZED"
+            ]
           },
-          "description": { "type": "string" },
-          "purpose": { "type": "string" },
+          "description": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "string"
+          },
           "item": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/QuestionnaireItem" }
+            "items": {
+              "$ref": "#/components/schemas/QuestionnaireItem"
+            }
           },
-          "ruleId": { "type": "string" },
+          "ruleId": {
+            "type": "string"
+          },
           "ruleQuestionId": {
             "type": "array",
             "properties": {
               "underlyingElements": {
                 "type": "array",
-                "items": { "type": "object" }
+                "items": {
+                  "type": "object"
+                }
               },
               "unmodifiableView": {
                 "type": "array",
                 "properties": {
                   "underlyingElements": {
                     "type": "array",
-                    "items": { "type": "object" }
+                    "items": {
+                      "type": "object"
+                    }
                   },
-                  "empty": { "type": "boolean" },
-                  "first": { "type": "string" },
-                  "last": { "type": "string" }
+                  "empty": {
+                    "type": "boolean"
+                  },
+                  "first": {
+                    "type": "string"
+                  },
+                  "last": {
+                    "type": "string"
+                  }
                 },
-                "items": { "type": "string" }
+                "items": {
+                  "type": "string"
+                }
               },
-              "empty": { "type": "boolean" },
-              "first": { "type": "string" },
-              "last": { "type": "string" },
-              "modifiable": { "type": "boolean" }
+              "empty": {
+                "type": "boolean"
+              },
+              "first": {
+                "type": "string"
+              },
+              "last": {
+                "type": "string"
+              },
+              "modifiable": {
+                "type": "boolean"
+              }
             },
-            "items": { "type": "string" }
+            "items": {
+              "type": "string"
+            }
           },
-          "created": { "$ref": "#/components/schemas/Timestamp" },
-          "modified": { "$ref": "#/components/schemas/Timestamp" },
-          "creator": { "type": "string" },
-          "modifier": { "type": "string" },
-          "version": { "type": "string" }
+          "created": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "modified": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "creator": {
+            "type": "string"
+          },
+          "modifier": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
         }
       },
       "QuestionnaireEnableWhen": {
         "type": "object",
         "properties": {
-          "question": { "type": "string" },
-          "operator": { "type": "string" },
-          "answerCoding": { "$ref": "#/components/schemas/Coding" },
-          "answerInteger": { "type": "integer", "format": "int32" },
-          "answerDouble": { "type": "number", "format": "double" },
-          "answerBoolean": { "type": "boolean" }
+          "question": {
+            "type": "string"
+          },
+          "operator": {
+            "type": "string"
+          },
+          "answerCoding": {
+            "$ref": "#/components/schemas/Coding"
+          },
+          "answerInteger": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "answerDouble": {
+            "type": "number",
+            "format": "double"
+          },
+          "answerBoolean": {
+            "type": "boolean"
+          }
         }
       },
       "QuestionnaireItem": {
         "type": "object",
         "properties": {
-          "type": { "type": "string" },
-          "linkId": { "type": "string" },
-          "text": { "type": "string" },
+          "type": {
+            "type": "string"
+          },
+          "linkId": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
           "enableWhen": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/QuestionnaireEnableWhen" }
+            "items": {
+              "$ref": "#/components/schemas/QuestionnaireEnableWhen"
+            }
           },
-          "enableBehavior": { "type": "string" },
-          "required": { "type": "boolean" },
-          "repeats": { "type": "boolean" },
-          "readOnly": { "type": "boolean" },
+          "enableBehavior": {
+            "type": "string"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "repeats": {
+            "type": "boolean"
+          },
+          "readOnly": {
+            "type": "boolean"
+          },
           "code": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/Code" }
+            "items": {
+              "$ref": "#/components/schemas/Code"
+            }
           },
           "extension": {
             "type": "array",
@@ -845,179 +1179,219 @@
           },
           "initial": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/QuestionnaireItemInitial" }
+            "items": {
+              "$ref": "#/components/schemas/QuestionnaireItemInitial"
+            }
           },
           "anfStatementConnector": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/AnfStatementConnector" }
+            "items": {
+              "$ref": "#/components/schemas/AnfStatementConnector"
+            }
           },
           "answer": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/AnswerValue" }
+            "items": {
+              "$ref": "#/components/schemas/AnswerValue"
+            }
           }
         }
       },
       "QuestionnaireItemAnswerOption": {
         "type": "object",
         "properties": {
-          "valueCoding": { "$ref": "#/components/schemas/Coding" },
-          "initialSelected": { "type": "boolean" },
+          "valueCoding": {
+            "$ref": "#/components/schemas/Coding"
+          },
+          "initialSelected": {
+            "type": "boolean"
+          },
           "extension": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/Extension" }
+            "items": {
+              "$ref": "#/components/schemas/Extension"
+            }
           }
         }
       },
       "QuestionnaireItemExtension": {
         "type": "object",
         "properties": {
-          "url": { "type": "string" },
+          "url": {
+            "type": "string"
+          },
           "valueCodeableConcept": {
             "$ref": "#/components/schemas/ValueCodeableConcept"
           },
-          "valueCoding": { "$ref": "#/components/schemas/Coding" },
-          "valueInteger": { "type": "integer", "format": "int32" },
-          "valueDecimal": { "type": "number", "format": "double" }
+          "valueCoding": {
+            "$ref": "#/components/schemas/Coding"
+          },
+          "valueInteger": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "valueDecimal": {
+            "type": "number",
+            "format": "double"
+          }
         }
       },
       "QuestionnaireItemInitial": {
         "type": "object",
         "properties": {
-          "valueBoolean": { "type": "boolean" },
-          "valueInteger": { "type": "integer", "format": "int32" },
-          "valueDecimal": { "type": "number", "format": "double" }
+          "valueBoolean": {
+            "type": "boolean"
+          },
+          "valueInteger": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "valueDecimal": {
+            "type": "number",
+            "format": "double"
+          }
         }
       },
       "QuestionnaireRequest": {
         "type": "object",
         "properties": {
-          "questionnaire": { "$ref": "#/components/schemas/Questionnaire" }
+          "questionnaire": {
+            "$ref": "#/components/schemas/Questionnaire"
+          }
+        }
+      },
+      "Reference": {
+        "type": "object",
+        "properties": {
+          "identifier": {
+            "type": "string"
+          },
+          "display": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          },
+          "uri": {
+            "type": "string"
+          }
         }
       },
       "Repetition": {
         "type": "object",
         "properties": {
-          "periodStart": { "$ref": "#/components/schemas/Timestamp" },
-          "periodDuration": { "type": "integer", "format": "int32" },
-          "periodDurationType": {
-            "type": "string",
-            "enum": [
-              "DURATION_TYPE_NOT_SPECIFIED",
-              "DURATION_TYPE_MILLISECONDS",
-              "DURATION_TYPE_SECONDS",
-              "DURATION_TYPE_MINUTES",
-              "DURATION_TYPE_HOURS",
-              "DURATION_TYPE_DAYS",
-              "DURATION_TYPE_WEEKS",
-              "DURATION_TYPE_MONTHS",
-              "DURATION_TYPE_YEARS",
-              "UNRECOGNIZED"
-            ]
+          "periodStart": {
+            "$ref": "#/components/schemas/Measure"
           },
-          "eventFrequency": { "type": "integer", "format": "int32" },
-          "eventFrequencyType": {
-            "type": "string",
-            "enum": [
-              "DURATION_TYPE_NOT_SPECIFIED",
-              "DURATION_TYPE_MILLISECONDS",
-              "DURATION_TYPE_SECONDS",
-              "DURATION_TYPE_MINUTES",
-              "DURATION_TYPE_HOURS",
-              "DURATION_TYPE_DAYS",
-              "DURATION_TYPE_WEEKS",
-              "DURATION_TYPE_MONTHS",
-              "DURATION_TYPE_YEARS",
-              "UNRECOGNIZED"
-            ]
+          "periodDuration": {
+            "$ref": "#/components/schemas/Measure"
           },
-          "eventSeparation": { "type": "integer", "format": "int32" },
-          "eventSeparationType": {
-            "type": "string",
-            "enum": [
-              "DURATION_TYPE_NOT_SPECIFIED",
-              "DURATION_TYPE_MILLISECONDS",
-              "DURATION_TYPE_SECONDS",
-              "DURATION_TYPE_MINUTES",
-              "DURATION_TYPE_HOURS",
-              "DURATION_TYPE_DAYS",
-              "DURATION_TYPE_WEEKS",
-              "DURATION_TYPE_MONTHS",
-              "DURATION_TYPE_YEARS",
-              "UNRECOGNIZED"
-            ]
+          "eventFrequency": {
+            "$ref": "#/components/schemas/Measure"
           },
-          "eventDuration": { "type": "integer", "format": "int32" },
-          "eventDurationType": {
-            "type": "string",
-            "enum": [
-              "DURATION_TYPE_NOT_SPECIFIED",
-              "DURATION_TYPE_MILLISECONDS",
-              "DURATION_TYPE_SECONDS",
-              "DURATION_TYPE_MINUTES",
-              "DURATION_TYPE_HOURS",
-              "DURATION_TYPE_DAYS",
-              "DURATION_TYPE_WEEKS",
-              "DURATION_TYPE_MONTHS",
-              "DURATION_TYPE_YEARS",
-              "UNRECOGNIZED"
-            ]
+          "eventSeparation": {
+            "$ref": "#/components/schemas/Measure"
+          },
+          "eventDuration": {
+            "$ref": "#/components/schemas/Measure"
           }
         }
       },
       "RequestCircumstance": {
         "type": "object",
         "properties": {
-          "timing": { "$ref": "#/components/schemas/Measure" },
+          "timing": {
+            "$ref": "#/components/schemas/Measure"
+          },
           "purpose": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LogicalExpression"
+            }
+          },
+          "conditionalTrigger": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AssociatedStatement"
+            }
+          },
+          "requestedParticipant": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Reference"
+            }
+          },
+          "priority": {
+            "$ref": "#/components/schemas/LogicalExpression"
+          },
+          "requestedResult": {
+            "$ref": "#/components/schemas/Measure"
+          },
+          "repetition": {
+            "$ref": "#/components/schemas/Repetition"
+          },
+          "deviceId": {
             "type": "array",
             "properties": {
               "underlyingElements": {
                 "type": "array",
-                "items": { "type": "object" }
+                "items": {
+                  "type": "object"
+                }
               },
               "unmodifiableView": {
                 "type": "array",
                 "properties": {
                   "underlyingElements": {
                     "type": "array",
-                    "items": { "type": "object" }
+                    "items": {
+                      "type": "object"
+                    }
                   },
-                  "empty": { "type": "boolean" },
-                  "first": { "type": "string" },
-                  "last": { "type": "string" }
+                  "empty": {
+                    "type": "boolean"
+                  },
+                  "first": {
+                    "type": "string"
+                  },
+                  "last": {
+                    "type": "string"
+                  }
                 },
-                "items": { "type": "string" }
+                "items": {
+                  "type": "string"
+                }
               },
-              "empty": { "type": "boolean" },
-              "first": { "type": "string" },
-              "last": { "type": "string" },
-              "modifiable": { "type": "boolean" }
+              "empty": {
+                "type": "boolean"
+              },
+              "first": {
+                "type": "string"
+              },
+              "last": {
+                "type": "string"
+              },
+              "modifiable": {
+                "type": "boolean"
+              }
             },
-            "items": { "type": "string" }
-          },
-          "conditionalTrigger": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/AssociatedStatement" }
-          },
-          "requestedParticipant": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/Participant" }
-          },
-          "priority": {
-            "type": "string",
-            "enum": ["ROUTINE", "STAT", "UNRECOGNIZED"]
-          },
-          "requestedResult": { "$ref": "#/components/schemas/Measure" },
-          "repetition": { "$ref": "#/components/schemas/Repetition" }
+            "items": {
+              "type": "string"
+            }
+          }
         }
       },
       "ValueCodeableConcept": {
         "type": "object",
         "properties": {
-          "text": { "type": "string" },
+          "text": {
+            "type": "string"
+          },
           "coding": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/Coding" }
+            "items": {
+              "$ref": "#/components/schemas/Coding"
+            }
           }
         }
       },
@@ -1026,11 +1400,19 @@
         "properties": {
           "questionnaireData": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/QuestionnaireData" }
+            "items": {
+              "$ref": "#/components/schemas/QuestionnaireData"
+            }
           },
-          "organizationId": { "type": "string" },
-          "workspaceId": { "type": "string" },
-          "ruleId": { "type": "string" }
+          "organizationId": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "string"
+          },
+          "ruleId": {
+            "type": "string"
+          }
         }
       },
       "ClientQuestionnaireDataRequest": {
@@ -1044,11 +1426,17 @@
       "UserQuestionnaireData": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
-          "patientId": { "type": "string" },
+          "id": {
+            "type": "string"
+          },
+          "patientId": {
+            "type": "string"
+          },
           "questionnaireData": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/Questionnaire" }
+            "items": {
+              "$ref": "#/components/schemas/Questionnaire"
+            }
           }
         }
       },
@@ -1063,20 +1451,42 @@
       "GetQuestionnaireListRequest": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
-          "pagination": { "$ref": "#/components/schemas/Pagination" },
-          "updateAnswers": { "type": "boolean" }
+          "id": {
+            "type": "string"
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/Pagination"
+          },
+          "updateAnswers": {
+            "type": "boolean"
+          }
         }
       },
       "Pagination": {
         "type": "object",
         "properties": {
-          "pageNumber": { "type": "integer", "format": "int32" },
-          "pageSize": { "type": "integer", "format": "int32" },
-          "sortAscending": { "type": "boolean" },
-          "sort": { "type": "string" },
-          "totalPages": { "type": "integer", "format": "int64" },
-          "totalRecords": { "type": "integer", "format": "int64" }
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sortAscending": {
+            "type": "boolean"
+          },
+          "sort": {
+            "type": "string"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalRecords": {
+            "type": "integer",
+            "format": "int64"
+          }
         }
       },
       "UserQuestionnaireDataResponse": {
@@ -1084,9 +1494,13 @@
         "properties": {
           "list": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/UserQuestionnaireData" }
+            "items": {
+              "$ref": "#/components/schemas/UserQuestionnaireData"
+            }
           },
-          "pagination": { "$ref": "#/components/schemas/Pagination" }
+          "pagination": {
+            "$ref": "#/components/schemas/Pagination"
+          }
         }
       },
       "SystemQuestionnaireData": {
@@ -1094,7 +1508,9 @@
         "properties": {
           "questionnaireData": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/QuestionnaireData" }
+            "items": {
+              "$ref": "#/components/schemas/QuestionnaireData"
+            }
           }
         }
       },
@@ -1103,9 +1519,13 @@
         "properties": {
           "questionnaires": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/Questionnaire" }
+            "items": {
+              "$ref": "#/components/schemas/Questionnaire"
+            }
           },
-          "pagination": { "$ref": "#/components/schemas/Pagination" }
+          "pagination": {
+            "$ref": "#/components/schemas/Pagination"
+          }
         }
       }
     },
