@@ -8,8 +8,11 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "cy": "cypress open",
+    "build": "next build",
     "generated-iam-api": "npx @openapitools/openapi-generator-cli generate -i ./src/lib/iam_api.json  -g typescript-axios -o ./src/generated-api-ts/iam",
-    "generated-questionnaire-api": "npx @openapitools/openapi-generator-cli generate -i ./src/lib/questionnaire_api.json -g typescript-axios -o ./src/generated-api-ts/questionnaire"
+    "generated-questionnaire-api": "npx @openapitools/openapi-generator-cli generate -i ./src/lib/questionnaire_api.json -g typescript-axios -o ./src/generated-api-ts/questionnaire",
+    "lg": "lighthouse http://localhost:3000/form-builder  http://localhost:3000/edit-questionnaire/669f9dc3deb4dc0ffc72853b --only-categories=accessibility,seo --output-path ./reports/lighthouse/report.html --view",
+    "lighthouse": "node lighthouse.js"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -59,6 +62,7 @@
     "eslint-plugin-unused-imports": "^3.2.0",
     "framer-motion": "~11.1.1",
     "intl-messageformat": "^10.5.0",
+    "lighthouse": "^12.1.0",
     "lucide-react": "^0.395.0",
     "next": "14.2.3",
     "next-themes": "^0.2.1",
@@ -81,6 +85,7 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.5.0",
+    "@cypress-audit/lighthouse": "^1.4.2",
     "@storybook/addon-essentials": "^8.1.10",
     "@storybook/addon-interactions": "^8.1.10",
     "@storybook/addon-links": "^8.1.10",
@@ -89,7 +94,9 @@
     "@storybook/nextjs": "^8.1.10",
     "@storybook/react": "^8.1.10",
     "@storybook/test": "^8.1.10",
-    "cypress": "^13.12.0",
+    "@testing-library/react": "^16.0.0",
+    "cypress": "^13.13.1",
+    "cypress-file-upload": "^5.0.8",
     "eslint-plugin-storybook": "^0.8.0",
     "storybook": "^8.1.10"
   }

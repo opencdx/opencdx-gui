@@ -143,22 +143,18 @@ export default function ListQuestionnaire() {
                 </Breadcrumbs>
               </div>
               <div className="flex flex-row justify-between items-center">
-              <div
-          aria-label="View Toggle"
-          aria-labelledby="view-toggle-label"
-          aria-orientation="horizontal"
-          className="flex  p-2"
-          id="upload"
-          role="group"
-        >
+              <div className="p-2">
           <Button
             color="primary"
             component="label"
             endIcon={<UploadIcon />}
             variant="contained"
             size="small"
+            aria-label="Upload Form"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-48 h-10"
             onChange={handleChange}
+            data-testid="upload-form"
+    
           >
             Upload Form
             <input hidden type="file" />
@@ -204,9 +200,9 @@ export default function ListQuestionnaire() {
             >
               <div className="flex items-center mb-2">
                 <div className="ml-4">
-                  <h3 className="text-base font-semibold text-gray-900 dark:text-white">
+                  <div className="text-base font-semibold text-gray-900 dark:text-white">
                     {questionnaire.title}
-                  </h3>
+                  </div>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
                     {convertDate(questionnaire.modified)}
                   </p>
