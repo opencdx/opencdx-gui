@@ -12,7 +12,7 @@
 // please read our getting started guide:
 // https://on.cypress.io/introduction-to-cypress
 
-describe('example to-do app', () => {
+describe('Register Test', () => {
     beforeEach(() => {
       // Cypress starts out with a blank slate for each test
       // so we must tell it to visit our website with the `cy.visit()` command.
@@ -21,13 +21,13 @@ describe('example to-do app', () => {
       cy.visit('http://localhost:3000/')
     })
   
-    it('displays two todo items by default', () => {
+    it('verify register page components', () => {
       // We use the `cy.get()` command to get all elements that match the selector.
       // Then, we use `should` to assert that there are two matched items,
       // which are the two default items.
       //cy.get('.w-full').contains('Sign in').click()
       cy.get('[role="link"]').contains('Don\'t have an account?').click()
-      cy.wait(2000)
+      cy.wait(5000)
       cy.get('[alt="nextui logo"]').should('exist')
       cy.get('[for="first_name"]').should('exist')
       cy.get('[data-slot="inner-wrapper"]').eq(0).should('exist')
