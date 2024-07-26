@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 
 import {
-  AnfStatementConnector,
-  AnfStatementConnectorAnfOperatorTypeEnum,
-  AnfStatementConnectorAnfStatementTypeEnum,
   QuestionnaireItem,
-} from '@/generated-api-ts/questionnaire/api';
+} from '@/api/questionnaire/model/questionnaire-item';
+import { AnfStatementConnector } from '@/api/questionnaire/model/anf-statement-connector';
+
+import { AnfStatementType } from '@/api/questionnaire/model/anf-statement-connector';
+import { AnfOperatorType } from '@/api/questionnaire/model/anf-statement-connector';
 import { useUpdateFormContext } from '@/lib/useSetContext';
 import { Button, Card, CardBody, Divider } from '@nextui-org/react';
 import { Plus } from 'lucide-react';
@@ -41,9 +42,9 @@ const QuestionnaireItemWrapper = ({
     if(item && (!item.anfStatementConnector || item.anfStatementConnector.length === 0)) {
       const newConnector: AnfStatementConnector = {
         anfStatementType:
-          AnfStatementConnectorAnfStatementTypeEnum.AnfStatementTypeUnspecified,
+          AnfStatementType.AnfStatementTypeUnspecified,
         anfOperatorType:
-          AnfStatementConnectorAnfOperatorTypeEnum.AnfOperatorTypeUnspecified,
+          AnfOperatorType.AnfOperatorTypeUnspecified,
         anfStatement: defaultAnfStatement,
       };
       if (!item.anfStatementConnector) {
@@ -58,9 +59,9 @@ const QuestionnaireItemWrapper = ({
   const handleAddButtonClick = () => {
     const newConnector: AnfStatementConnector = {
       anfStatementType:
-        AnfStatementConnectorAnfStatementTypeEnum.AnfStatementTypeUnspecified,
+        AnfStatementType.AnfStatementTypeUnspecified,
       anfOperatorType:
-        AnfStatementConnectorAnfOperatorTypeEnum.AnfOperatorTypeUnspecified,
+        AnfOperatorType.AnfOperatorTypeUnspecified,
       anfStatement: defaultAnfStatement,
     };
 

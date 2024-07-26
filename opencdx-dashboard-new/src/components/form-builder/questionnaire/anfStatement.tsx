@@ -1,9 +1,9 @@
 import React from 'react';
 
 import {
-  ANFStatement,
-  QuestionnaireItem,
-} from '@/generated-api-ts/questionnaire/api';
+  ANFStatement
+} from '@/api/questionnaire/model/anfstatement';
+import { QuestionnaireItem } from '@/api/questionnaire/model/questionnaire-item';
 import {
   Accordion,
   AccordionItem,

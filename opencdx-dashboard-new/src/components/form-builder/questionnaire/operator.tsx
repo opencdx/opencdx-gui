@@ -1,5 +1,5 @@
 import React from 'react';
-import { QuestionnaireItem } from '@/generated-api-ts/questionnaire/api';
+import { QuestionnaireItem } from '@/api/questionnaire/model/questionnaire-item';
 import { Input } from '@nextui-org/input';
 import { Card } from '@nextui-org/react';
 import { Select, SelectItem } from '@nextui-org/select';

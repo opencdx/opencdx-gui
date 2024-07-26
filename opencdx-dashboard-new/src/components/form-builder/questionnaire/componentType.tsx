@@ -1,6 +1,6 @@
 import React from 'react';
-import { AnfStatementConnectorAnfStatementTypeEnum } from '@/generated-api-ts/questionnaire/api';
-import { Card, cn, Radio, RadioGroup } from '@nextui-org/react';
+import { AnfStatementType } from '@/api/questionnaire/model/anf-statement-connector';
+import { cn, Radio, RadioGroup } from '@nextui-org/react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 export const CustomRadio = (props: any) => {
@@ -30,7 +30,7 @@ const ComponentTypeWrapper = ({
   questionnaireItemId: number;
   anfStatementConnectorId: number;
   currentComponentType: string;
-  onValueChange: (value: AnfStatementConnectorAnfStatementTypeEnum) => void;
+  onValueChange: (value: AnfStatementType) => void;
 }) => {
   const { register, control , getValues} = useFormContext();
 
@@ -53,7 +53,7 @@ const ComponentTypeWrapper = ({
                 const formData=getValues();
                 localStorage.setItem('questionnaire-store', JSON.stringify(formData));
                 onValueChange(
-                  e.target.value as AnfStatementConnectorAnfStatementTypeEnum,
+                  e.target.value as AnfStatementType,
                 );
               }}
             >

@@ -1,55 +1,58 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
+import Loading from '@/components/custom/loading';
 import { Link } from '@nextui-org/link';
 import {
-  Button,
   Card,
   CardBody,
   CardFooter,
   CardHeader,
-  Divider,
   Image,
-  Input,
 } from '@nextui-org/react';
 import { toast, ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 
-import { Endpoints } from '@/axios/apiEndpoints';
-
-import { EyeIcon, EyeOffIcon } from 'lucide-react';
+import { useLogin } from '@/hooks/iam-hooks';
+import { useTranslations } from 'next-intl';
+import { Button, Input } from 'ui-library';
 
 export default function Login() {
+  const { mutate: login, error } = useLogin();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const t = useTranslations('common');
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
-
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const toggleVisibility = () => setIsVisible(!isVisible);
+  // check the value of all fields in the form, if all fields are filled, the button will be enabled
+  const isDisabled = () => {
+    return !username || !password;
+  };
+
+  const handlePasswordChange = (newPassword: string) => {
+    setPassword(newPassword);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setIsLoading(true); // Set loading to true before making the API call
+
     e.preventDefault();
+
     const userName = e.currentTarget.email.value;
     const password = e.currentTarget.password.value;
 
-    try {
-      const response = await Endpoints.login({ userName, password });
+    await login({ userName, password });
+    setIsLoading(false); // Set loading to false after making the API call
 
-      const data = response.data;
-
-      if (data.token) {
-        localStorage.setItem('serviceToken', data.token);
-        router.push('/form-builder');
-      } else {
-        toast.error(data.message || 'Login failed', {
-          position: 'top-right',
-          autoClose: 2000,
-        });
-      }
-    } catch (err: any) {
-      toast.error(err.message || 'An error occurred', {
+    if (error) {
+      toast.error(error.message || t('error_occurred'), {
         position: 'top-center',
         autoClose: 2000,
       });
@@ -58,41 +61,50 @@ export default function Login() {
 
   return (
     <div className="flex justify-center items-center h-screen min-h-[calc(100vh - 68px)]">
+      {isLoading && <Loading />}
+
       <form
         className="flex justify-center items-center"
         onSubmit={handleSubmit}
       >
         <Card
           aria-label="login form"
-          className="w-[450px] max-w-full p-4"
+          className="w-[500px] max-w-full p-4"
           tabIndex={0}
+          shadow="none"
         >
           <CardHeader className="flex justify-center">
             <div aria-label="open">
               <Image
-                alt="opencdx logo s"
-                aria-label="Login Logo"
-                height={40}
-                radius="sm"
-                src="/opencdx.png"
+                alt="opencdx logos"
+                aria-label="OpenCDX Logo"
+                radius="none"
+                src="/login-logo.png"
                 tabIndex={0}
-                width={100}
               />
             </div>
           </CardHeader>
           <CardBody className="grid gap-4">
             <Input
-              isRequired
               required
-              defaultValue="admin@opencdx.org"
+              defaultValue=""
+              variant="bordered"
               id="email"
-              label="Email address"
+              label={t('email_usename_placeholder')}
               type="userName"
+              isRequired
+              onValueChange={setUsername}
             />
 
             <Input
+              id="password"
+              label={t('password_placeholder')}
+              defaultValue=""
               isRequired
-              defaultValue="password"
+              variant="bordered"
+              type={isVisible ? 'text' : 'password'}
+              onValueChange={handlePasswordChange}
+              errorMessage={t('invalid_password')}
               endContent={
                 <button
                   aria-label="toggle password visibility"
@@ -101,30 +113,36 @@ export default function Login() {
                   onClick={toggleVisibility}
                 >
                   {isVisible ? (
-                    <EyeIcon className="text-2xl text-default-400 pointer-events-none" />
+                    <Image alt="nextui logo" src="/eye.png" />
                   ) : (
-                    <EyeOffIcon className="text-2xl text-default-400 pointer-events-none" />
+                    <Image alt="nextui logo" src="/cross_eye.png" />
                   )}
                 </button>
               }
-              id="password"
-              label="Password"
-              type={isVisible ? 'text' : 'password'}
             />
           </CardBody>
           <CardFooter>
-            <Button className="w-full" color="primary" type="submit">
-              Sign in
+            <Button
+              className="w-full"
+              color={isDisabled() ? 'default' : 'primary'}
+              type="submit"
+              disabled={isDisabled()}
+            >
+              {t('login_label')}
             </Button>
           </CardFooter>
-          <Divider />
+
           <CardFooter className="flex justify-center">
+            <label className="text-center text-gray-500">
+              {t('dont_have_account')}
+            </label>
+            &nbsp;
             <Link
               className="text-center"
-              color="foreground"
-              onClick={() => router.push('/register')}
+              color="primary"
+              onPress={() => router.push('/signup')}
             >
-              Don&apos;t have an account?
+              {t('sign_up_label')}
             </Link>
           </CardFooter>
         </Card>

@@ -1,12 +1,8 @@
 'use client';
 
 import React from 'react';
-
-import {
-  AnfStatementConnector,
-  QuestionnaireItem,
-} from '@/generated-api-ts/questionnaire/api';
-
+import { QuestionnaireItem } from '@/api/questionnaire/model/questionnaire-item';
+import { AnfStatementConnector } from '@/api/questionnaire/model/anf-statement-connector';
 const Report = () => {
   const [groupedItems, setGroupedItems] = React.useState<
     Record<string, QuestionnaireItem[]>
