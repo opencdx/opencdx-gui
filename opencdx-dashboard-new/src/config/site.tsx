@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 
 import { FileText } from 'lucide-react';
 
-export const NavItems = () => {
+export const SiteConfig = () => {
   const pathname = usePathname();
 
   function isNavItemActive(pathname: string, nav: string) {

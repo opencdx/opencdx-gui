@@ -30,8 +30,8 @@ import { Endpoints } from '@/axios/apiEndpoints';
 import { Report } from '@/components/form-builder/report';
 import {
   Questionnaire,
-  QuestionnaireItem,
-} from '@/generated-api-ts/questionnaire/api';
+} from '@/api/questionnaire/model/questionnaire';
+import { QuestionnaireItem } from '@/api/questionnaire/model/questionnaire-item';
 import { ChevronLeft } from 'lucide-react';
 
 import { QuestionnaireItemWrapper } from './questionnaireItem';

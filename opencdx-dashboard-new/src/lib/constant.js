@@ -8,6 +8,11 @@ export const statementType = {
     NOT_APPLICABLE: 'ANF_STATEMENT_TYPE_NOT_APPLICABLE'
 };
 
+export const systemName = 'opencdx';
+export const type = 'IAM_USER_TYPE_REGULAR';
+export const organizationId = 'opencdx';
+export const workspaceId = 'opencdx';
+
 export const categories = [
     { key: 0, label: 'ANF Topic', selected: true },
     { key: 1, label: 'General', selected: false },

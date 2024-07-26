@@ -1,7 +1,6 @@
-import React from 'react';
 
-import Login from '@/components/auth/login';
+import {redirect} from 'next/navigation';
 
-export default function LoginPage() {
-  return <Login />;
+export default function IndexPage() {
+  redirect('/login');
 }

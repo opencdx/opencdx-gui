@@ -2,14 +2,14 @@
 
 import { Fragment, useState } from 'react';
 import Link from 'next/link';
-import { NavItems } from '@/config/site';
+import { SiteConfig } from '@/config/site';
 import { cn } from '@/lib/utils';
 import { Tooltip } from '@nextui-org/react';
 
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function SideNav() {
-  const navItems = NavItems();
+  const navItems = SiteConfig();
 
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
 

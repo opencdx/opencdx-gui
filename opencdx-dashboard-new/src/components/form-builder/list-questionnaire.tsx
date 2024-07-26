@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
+import { Suspense } from 'react';
+import Loading from '@/components/custom/loading';
 
 import Button from '@mui/material/Button';
 import { Button as NButton } from '@nextui-org/button';
@@ -30,11 +32,16 @@ import { allExpanded, defaultStyles, JsonView } from 'react-json-view-lite';
 import 'react-json-view-lite/dist/index.css';
 
 import { Endpoints } from '@/axios/apiEndpoints';
-import { Questionnaire, Timestamp } from '@/generated-api-ts/questionnaire/api';
+import { Questionnaire } from '@/api/questionnaire/model/questionnaire'
+import { Timestamp } from '@/api/questionnaire/model/timestamp';
 import { useAnfFormStore } from '@/lib/useAnfFormStore';
 import { toast, ToastContainer } from 'react-toastify';
+import {  useCurrentUser } from '@/hooks/iam-hooks';
 
 export default function ListQuestionnaire() {
+  const { data: currentUser } = useCurrentUser();
+
+  
   const [isGrid, setIsGrid] = useState(true);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [json, setJson] = useState({} as any);
@@ -43,9 +50,21 @@ export default function ListQuestionnaire() {
   const { setFormData } = useAnfFormStore() as { setFormData: any };
 
   const [questionnaires, setQuestionnaires] = useState([] as any);
+  const [isLoading, setIsLoading] = useState(true); // State for loading indicator
+
 
   useEffect(() => {
-    const fetchData = async () => {
+    if (!currentUser) {
+      return;
+    }
+    const id = currentUser?.data?.iamUser?.id;
+    localStorage.setItem('id', id || "");
+  }
+  , [currentUser]);
+  useEffect(() => {
+    const fetchData = async () => {      
+      setIsLoading(true);
+  
       Endpoints.getQuestionnaireList({
         pagination: {
           pageSize: 300,
@@ -67,10 +86,14 @@ export default function ListQuestionnaire() {
         })
         .catch(() => {
           console.log('Error fetching data');
-        });
+        }).finally(() => {
+          setIsLoading(false);
+        }
+        );
     };
 
     fetchData();
+    
   }, []);
 
   const handleViewToggle = () => {
@@ -125,7 +148,13 @@ export default function ListQuestionnaire() {
   };
 
   return (
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg sm:overflow-hidden dark:bg-gray-900 shadow-md border border-gray-200 dark:border-gray-700 rounded-lg dark:text-white dark:border-gray-700 mt-4">
+    <Suspense fallback={<Loading />}>
+
+{isLoading ? (
+          <div className="flex justify-center items-center h-full">
+            <Loading />
+          </div>
+        ) :  <div className="relative overflow-x-auto shadow-md sm:rounded-lg sm:overflow-hidden dark:bg-gray-900 shadow-md border border-gray-200 dark:border-gray-700 rounded-lg dark:text-white dark:border-gray-700 mt-4">
       
        <div className="flex flex-row justify-between items-center m-4">
               <div >
@@ -422,6 +451,7 @@ export default function ListQuestionnaire() {
         </ModalContent>
       </Modal>
       <ToastContainer />
-    </div>
+    </div>}
+    </Suspense>
   );
 }
