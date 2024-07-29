@@ -40,19 +40,28 @@ const TimeWrapper = ({
             <RadioGroup
               className="mb-4"
               orientation="horizontal"
-              defaultValue={field.value===true?'true':field.value===false?'false':'not'}
+              defaultValue={
+                field.value === true
+                  ? 'true'
+                  : field.value === false
+                    ? 'false'
+                    : 'not'
+              }
               onChange={(event) => {
-                if (event.target.value === 'true' || event.target.value === 'false') {
-                  field.onChange(event.target.value==='true'?true:false);
+                if (
+                  event.target.value === 'true' ||
+                  event.target.value === 'false'
+                ) {
+                  field.onChange(event.target.value === 'true' ? true : false);
                 }
-              }}>            
+              }}
+            >
               <Radio value="true">Yes</Radio>
               <Radio value="false">No</Radio>
               <Radio value="not">Not Specified</Radio>
             </RadioGroup>
           )}
         />
-       
       </div>
 
       <div className=" flex items-center gap-4">
@@ -80,12 +89,22 @@ const TimeWrapper = ({
             <RadioGroup
               className="mb-4"
               orientation="horizontal"
-              defaultValue={field.value===true?'true':field.value===false?'false':'not'}
+              defaultValue={
+                field.value === true
+                  ? 'true'
+                  : field.value === false
+                    ? 'false'
+                    : 'not'
+              }
               onChange={(event) => {
-                if (event.target.value === 'true' || event.target.value === 'false') {
-                  field.onChange(event.target.value==='true'?true:false);
+                if (
+                  event.target.value === 'true' ||
+                  event.target.value === 'false'
+                ) {
+                  field.onChange(event.target.value === 'true' ? true : false);
                 }
-              }}> 
+              }}
+            >
               <Radio value="true">Yes</Radio>
               <Radio value="false">No</Radio>
               <Radio value="not">Not Specified</Radio>
