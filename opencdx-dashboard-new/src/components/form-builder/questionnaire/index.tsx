@@ -35,11 +35,11 @@ import { QuestionnaireItem } from '@/api/questionnaire/model/questionnaire-item'
 import { ChevronLeft } from 'lucide-react';
 
 import { QuestionnaireItemWrapper } from './questionnaireItem';
-import { useCreateQuestionnaire } from '@/hooks/iam-hooks';
+import { useCreateQuestionnaire , useUpdateQuestionnaire} from '@/hooks/iam-hooks';
 
 const QuestionnaireWrapper = () => {
   const { mutate:createQuestionnaire, data:isCreated,error:isCreateError } = useCreateQuestionnaire();
-  const { mutate:updateQuestionnaire, data:isUpdated, error:isUpdateError } = useCreateQuestionnaire();
+  const { mutate:updateQuestionnaire, data:isUpdated, error:isUpdateError } = useUpdateQuestionnaire();
   const { control, register, handleSubmit, getValues, setValue } =
     useForm<Questionnaire>({
       defaultValues: async () => {
@@ -114,7 +114,22 @@ const QuestionnaireWrapper = () => {
       }
     }
   }, [ruleset]);
-
+  if (isCreated || isUpdated) {
+    toast.success('Successfully saved', {
+      position: 'top-right',
+      autoClose: 500,
+    });
+    setTimeout(() => {
+      router.push('/form-builder');
+    }
+    , 500);
+  }
+  if (isCreateError || isUpdateError) {
+    toast.error('An error occurred', {
+      position: 'top-center',
+      autoClose: 2000,
+    });
+  }
   const onSubmit = async (updtatedData: Questionnaire) => {
     try {
   
@@ -124,13 +139,7 @@ const QuestionnaireWrapper = () => {
       } else {
         await createQuestionnaire({questionnaire: updtatedData});
       }
-      if (isCreated || isUpdated) {
-        toast.success('Successfully saved', {
-          position: 'top-right',
-          autoClose: 500,
-        });
-        router.push('/form-builder');
-      }
+      
     } catch (error) {
       console.error(error);
       toast.error('An error occurred', {

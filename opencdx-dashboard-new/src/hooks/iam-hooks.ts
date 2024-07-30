@@ -28,7 +28,6 @@ export const useLogin = () => {
         },
         onError: (error) => {
             console.error('Login failed:', error);
-            // Handle login errors, e.g., display error message
         },
     });
 };
@@ -43,7 +42,6 @@ export const useSignUp = () => {
         },
         onError: (error) => {
             console.error('Registration failed:', error);
-            // Handle registration errors, e.g., display error message
         },
     });
 }
@@ -57,7 +55,6 @@ export const usePasswordChange = () => {
         },
         onError: (error) => {
             console.error('Password change failed:', error);
-            // Handle password change errors, e.g., display error message
         },
     });
 }
@@ -69,19 +66,10 @@ export const useCurrentUser = () => {
     })
 }
 
-
-
 export const useGetQuestionnaireList = () => {
 
     return useMutation({
-        mutationFn: (params: GetQuestionnaireListRequest) => questionnaireApi.getQuestionnaires({ getQuestionnaireListRequest: params }),
-        onSuccess: (data) => {
-            console.log(data);
-        },
-        onError: (error) => {
-            console.error('Login failed:', error);
-            // Handle login errors, e.g., display error message
-        },
+        mutationFn: (params: GetQuestionnaireListRequest) => questionnaireApi.getQuestionnaires({ getQuestionnaireListRequest: params })
     });
 };
 
@@ -89,52 +77,27 @@ export const useGetQuestionnaireList = () => {
 export const useDeleteQuestionnaire = () => {
 
     return useMutation({
-        mutationFn: (credentials: string) => questionnaireApi.deleteQuestionnaire({ id: credentials }),
-        onSuccess: (data) => {
-            console.log(data);
-        },
-        onError: (error) => {
-            console.error('Delete Questionnaire failed:', error);
-        },
+        mutationFn: (credentials: string) => questionnaireApi.deleteQuestionnaire({ id: credentials })
     });
 };
 
 export const useGetRuleSets = () => {
 
     return useMutation({
-        mutationFn: (params: RuleSetsRequest) => classificationApi.getRuleSets({ ruleSetsRequest: params }),
-        onSuccess: (data) => {
-            console.log(data);
-        },
-        onError: (error) => {
-            console.error('Login failed:', error);
-            // Handle login errors, e.g., display error message
-        },
+        mutationFn: (params: RuleSetsRequest) => classificationApi.getRuleSets({ ruleSetsRequest: params })
     });
 };
 
 export const useCreateQuestionnaire = () => {
-    
-        return useMutation({
-            mutationFn: (params: QuestionnaireRequest) => questionnaireApi.createQuestionnaire({ questionnaireRequest: params }),
-            onSuccess: (data) => {
-                console.log(data);
-            },
-            onError: (error) => {
-                console.error('Submit Questionnaire failed:', error);
-            },
-        });
-    };
+
+    return useMutation({
+        mutationFn: (params: QuestionnaireRequest) => questionnaireApi.createQuestionnaire({ questionnaireRequest: params })
+    });
+};
 export const useUpdateQuestionnaire = () => {
-        
-            return useMutation({
-                mutationFn: (params: QuestionnaireRequest) => questionnaireApi.updateQuestionnaire({ questionnaireRequest: params }),
-                onSuccess: (data) => {
-                    console.log(data);
-                },
-                onError: (error) => {
-                    console.error('Update Questionnaire failed:', error);
-                },
-            });
-        };
+
+    return useMutation({
+        mutationFn: (params: QuestionnaireRequest) => questionnaireApi.updateQuestionnaire({ questionnaireRequest: params })
+    });
+};
 
