@@ -14,6 +14,7 @@
 
 
 
+export * from './server/open-cdx-analysis-engine-rest-controller-api';
 export * from './server/open-cdx-rest-protector-controller-api';
 export * from './server/open-cdxiam-organization-rest-controller-api';
 export * from './server/open-cdxiam-user-rest-controller-api';

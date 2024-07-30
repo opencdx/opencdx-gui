@@ -19,7 +19,7 @@ const TopicWrapper = ({
         <label className="text w-[250px]">Topic</label>
         <Controller
           control={control}
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.topic`}
+          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.topic.expression`}
           render={({ field }) => (
             <Input
               className="mb-4"

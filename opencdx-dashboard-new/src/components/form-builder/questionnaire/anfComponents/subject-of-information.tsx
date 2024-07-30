@@ -20,7 +20,7 @@ const SubjectOfInformationWrapper = ({
         <Controller
           control={control}
           {...register(
-            `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.subjectOfInformation`,
+            `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.subjectOfInformation.expression`,
           )}
           render={({ field }) => (
             <Input

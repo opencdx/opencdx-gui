@@ -38,7 +38,7 @@ const SubjectOfRecordWrapper = ({
         <Controller
           control={control}
           {...register(
-            `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.subjectOfRecord.practitionerValue`,
+            `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.subjectOfRecord.practitionerValue.identifier`,
           )}
           render={({ field }) => (
             <Input
@@ -57,7 +57,7 @@ const SubjectOfRecordWrapper = ({
         <Controller
           control={control}
           {...register(
-            `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.subjectOfRecord.code`,
+            `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.subjectOfRecord.code.expression`,
           )}
           render={({ field }) => (
             <Input

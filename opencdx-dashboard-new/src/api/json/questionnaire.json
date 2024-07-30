@@ -3,7 +3,7 @@
   "info": { "title": "OpenAPI definition", "version": "v0" },
   "servers": [
     {
-      "url": "https://ec2-3-13-148-183.us-east-2.compute.amazonaws.com:8080/questionnaire",
+      "url": "https://localhost:8080/questionnaire",
       "description": "Generated server url"
     }
   ],
@@ -541,13 +541,15 @@
             "type": "array",
             "items": { "$ref": "#/components/schemas/Practitioner" }
           },
-          "subjectOfInformation": { "type": "string" },
+          "subjectOfInformation": {
+            "$ref": "#/components/schemas/LogicalExpression"
+          },
           "associatedStatement": {
             "type": "array",
             "items": { "$ref": "#/components/schemas/AssociatedStatement" }
           },
-          "topic": { "type": "string" },
-          "type": { "type": "string" },
+          "topic": { "$ref": "#/components/schemas/LogicalExpression" },
+          "type": { "$ref": "#/components/schemas/LogicalExpression" },
           "created": { "$ref": "#/components/schemas/Timestamp" },
           "modified": { "$ref": "#/components/schemas/Timestamp" },
           "creator": { "type": "string" },
@@ -561,14 +563,14 @@
               "UNRECOGNIZED"
             ]
           },
-          "performanceCircumstance": {
-            "$ref": "#/components/schemas/PerformanceCircumstance"
+          "narrativeCircumstance": {
+            "$ref": "#/components/schemas/NarrativeCircumstance"
           },
           "requestCircumstance": {
             "$ref": "#/components/schemas/RequestCircumstance"
           },
-          "narrativeCircumstance": {
-            "$ref": "#/components/schemas/NarrativeCircumstance"
+          "performanceCircumstance": {
+            "$ref": "#/components/schemas/PerformanceCircumstance"
           }
         }
       },
@@ -620,8 +622,8 @@
       "AssociatedStatement": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
-          "semantic": { "type": "string" }
+          "id": { "$ref": "#/components/schemas/Reference" },
+          "semantic": { "$ref": "#/components/schemas/LogicalExpression" }
         }
       },
       "Code": {
@@ -649,15 +651,19 @@
           "valueCodeableConcept": { "$ref": "#/components/schemas/Coding" }
         }
       },
+      "LogicalExpression": {
+        "type": "object",
+        "properties": { "expression": { "type": "string" } }
+      },
       "Measure": {
         "type": "object",
         "properties": {
-          "upperBound": { "type": "string" },
-          "lowerBound": { "type": "string" },
+          "upperBound": { "type": "number", "format": "double" },
+          "lowerBound": { "type": "number", "format": "double" },
           "includeUpperBound": { "type": "boolean" },
           "includeLowerBound": { "type": "boolean" },
-          "semantic": { "type": "string" },
-          "resolution": { "type": "string" }
+          "semantic": { "$ref": "#/components/schemas/LogicalExpression" },
+          "resolution": { "type": "number", "format": "double" }
         }
       },
       "NarrativeCircumstance": {
@@ -666,30 +672,7 @@
           "timing": { "$ref": "#/components/schemas/Measure" },
           "purpose": {
             "type": "array",
-            "properties": {
-              "underlyingElements": {
-                "type": "array",
-                "items": { "type": "object" }
-              },
-              "unmodifiableView": {
-                "type": "array",
-                "properties": {
-                  "underlyingElements": {
-                    "type": "array",
-                    "items": { "type": "object" }
-                  },
-                  "empty": { "type": "boolean" },
-                  "first": { "type": "string" },
-                  "last": { "type": "string" }
-                },
-                "items": { "type": "string" }
-              },
-              "empty": { "type": "boolean" },
-              "first": { "type": "string" },
-              "last": { "type": "string" },
-              "modifiable": { "type": "boolean" }
-            },
-            "items": { "type": "string" }
+            "items": { "$ref": "#/components/schemas/LogicalExpression" }
           },
           "text": { "type": "string" }
         }
@@ -698,8 +681,8 @@
         "type": "object",
         "properties": {
           "id": { "type": "string" },
-          "practitionerValue": { "type": "string" },
-          "code": { "type": "string" }
+          "practitionerValue": { "$ref": "#/components/schemas/Reference" },
+          "code": { "$ref": "#/components/schemas/LogicalExpression" }
         }
       },
       "PerformanceCircumstance": {
@@ -707,6 +690,18 @@
         "properties": {
           "timing": { "$ref": "#/components/schemas/Measure" },
           "purpose": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/LogicalExpression" }
+          },
+          "status": { "$ref": "#/components/schemas/LogicalExpression" },
+          "result": { "$ref": "#/components/schemas/Measure" },
+          "healthRisk": { "$ref": "#/components/schemas/LogicalExpression" },
+          "normalRange": { "$ref": "#/components/schemas/Measure" },
+          "participant": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Participant" }
+          },
+          "deviceId": {
             "type": "array",
             "properties": {
               "underlyingElements": {
@@ -732,14 +727,6 @@
               "modifiable": { "type": "boolean" }
             },
             "items": { "type": "string" }
-          },
-          "status": { "type": "string" },
-          "result": { "$ref": "#/components/schemas/Measure" },
-          "healthRisk": { "type": "string" },
-          "normalRange": { "$ref": "#/components/schemas/Measure" },
-          "participant": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/Participant" }
           }
         }
       },
@@ -747,8 +734,8 @@
         "type": "object",
         "properties": {
           "id": { "type": "string" },
-          "practitionerValue": { "type": "string" },
-          "code": { "type": "string" }
+          "practitionerValue": { "$ref": "#/components/schemas/Reference" },
+          "code": { "$ref": "#/components/schemas/LogicalExpression" }
         }
       },
       "Questionnaire": {
@@ -894,74 +881,23 @@
           "questionnaire": { "$ref": "#/components/schemas/Questionnaire" }
         }
       },
+      "Reference": {
+        "type": "object",
+        "properties": {
+          "identifier": { "type": "string" },
+          "display": { "type": "string" },
+          "reference": { "type": "string" },
+          "uri": { "type": "string" }
+        }
+      },
       "Repetition": {
         "type": "object",
         "properties": {
-          "periodStart": { "$ref": "#/components/schemas/Timestamp" },
-          "periodDuration": { "type": "integer", "format": "int32" },
-          "periodDurationType": {
-            "type": "string",
-            "enum": [
-              "DURATION_TYPE_NOT_SPECIFIED",
-              "DURATION_TYPE_MILLISECONDS",
-              "DURATION_TYPE_SECONDS",
-              "DURATION_TYPE_MINUTES",
-              "DURATION_TYPE_HOURS",
-              "DURATION_TYPE_DAYS",
-              "DURATION_TYPE_WEEKS",
-              "DURATION_TYPE_MONTHS",
-              "DURATION_TYPE_YEARS",
-              "UNRECOGNIZED"
-            ]
-          },
-          "eventFrequency": { "type": "integer", "format": "int32" },
-          "eventFrequencyType": {
-            "type": "string",
-            "enum": [
-              "DURATION_TYPE_NOT_SPECIFIED",
-              "DURATION_TYPE_MILLISECONDS",
-              "DURATION_TYPE_SECONDS",
-              "DURATION_TYPE_MINUTES",
-              "DURATION_TYPE_HOURS",
-              "DURATION_TYPE_DAYS",
-              "DURATION_TYPE_WEEKS",
-              "DURATION_TYPE_MONTHS",
-              "DURATION_TYPE_YEARS",
-              "UNRECOGNIZED"
-            ]
-          },
-          "eventSeparation": { "type": "integer", "format": "int32" },
-          "eventSeparationType": {
-            "type": "string",
-            "enum": [
-              "DURATION_TYPE_NOT_SPECIFIED",
-              "DURATION_TYPE_MILLISECONDS",
-              "DURATION_TYPE_SECONDS",
-              "DURATION_TYPE_MINUTES",
-              "DURATION_TYPE_HOURS",
-              "DURATION_TYPE_DAYS",
-              "DURATION_TYPE_WEEKS",
-              "DURATION_TYPE_MONTHS",
-              "DURATION_TYPE_YEARS",
-              "UNRECOGNIZED"
-            ]
-          },
-          "eventDuration": { "type": "integer", "format": "int32" },
-          "eventDurationType": {
-            "type": "string",
-            "enum": [
-              "DURATION_TYPE_NOT_SPECIFIED",
-              "DURATION_TYPE_MILLISECONDS",
-              "DURATION_TYPE_SECONDS",
-              "DURATION_TYPE_MINUTES",
-              "DURATION_TYPE_HOURS",
-              "DURATION_TYPE_DAYS",
-              "DURATION_TYPE_WEEKS",
-              "DURATION_TYPE_MONTHS",
-              "DURATION_TYPE_YEARS",
-              "UNRECOGNIZED"
-            ]
-          }
+          "periodStart": { "$ref": "#/components/schemas/Measure" },
+          "periodDuration": { "$ref": "#/components/schemas/Measure" },
+          "eventFrequency": { "$ref": "#/components/schemas/Measure" },
+          "eventSeparation": { "$ref": "#/components/schemas/Measure" },
+          "eventDuration": { "$ref": "#/components/schemas/Measure" }
         }
       },
       "RequestCircumstance": {
@@ -969,6 +905,21 @@
         "properties": {
           "timing": { "$ref": "#/components/schemas/Measure" },
           "purpose": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/LogicalExpression" }
+          },
+          "conditionalTrigger": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/AssociatedStatement" }
+          },
+          "requestedParticipant": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Reference" }
+          },
+          "priority": { "$ref": "#/components/schemas/LogicalExpression" },
+          "requestedResult": { "$ref": "#/components/schemas/Measure" },
+          "repetition": { "$ref": "#/components/schemas/Repetition" },
+          "deviceId": {
             "type": "array",
             "properties": {
               "underlyingElements": {
@@ -994,21 +945,7 @@
               "modifiable": { "type": "boolean" }
             },
             "items": { "type": "string" }
-          },
-          "conditionalTrigger": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/AssociatedStatement" }
-          },
-          "requestedParticipant": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/Participant" }
-          },
-          "priority": {
-            "type": "string",
-            "enum": ["ROUTINE", "STAT", "UNRECOGNIZED"]
-          },
-          "requestedResult": { "$ref": "#/components/schemas/Measure" },
-          "repetition": { "$ref": "#/components/schemas/Repetition" }
+          }
         }
       },
       "ValueCodeableConcept": {

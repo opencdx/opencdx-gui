@@ -35,8 +35,11 @@ import { QuestionnaireItem } from '@/api/questionnaire/model/questionnaire-item'
 import { ChevronLeft } from 'lucide-react';
 
 import { QuestionnaireItemWrapper } from './questionnaireItem';
+import { useCreateQuestionnaire } from '@/hooks/iam-hooks';
 
 const QuestionnaireWrapper = () => {
+  const { mutate:createQuestionnaire, data:isCreated,error:isCreateError } = useCreateQuestionnaire();
+  const { mutate:updateQuestionnaire, data:isUpdated, error:isUpdateError } = useCreateQuestionnaire();
   const { control, register, handleSubmit, getValues, setValue } =
     useForm<Questionnaire>({
       defaultValues: async () => {
@@ -112,20 +115,16 @@ const QuestionnaireWrapper = () => {
     }
   }, [ruleset]);
 
-  const onSubmit = async (data: Questionnaire) => {
+  const onSubmit = async (updtatedData: Questionnaire) => {
     try {
-      let response;
+  
+      if (updtatedData && updtatedData?.id) {
+        await updateQuestionnaire({questionnaire: updtatedData});
 
-      if (data && data?.id) {
-        response = await Endpoints.updateQuestionnaire({
-          questionnaire: data,
-        });
       } else {
-        response = await Endpoints.submitQuestionnaire({
-          questionnaire: data,
-        });
+        await createQuestionnaire({questionnaire: updtatedData});
       }
-      if (response.data) {
+      if (isCreated || isUpdated) {
         toast.success('Successfully saved', {
           position: 'top-right',
           autoClose: 500,

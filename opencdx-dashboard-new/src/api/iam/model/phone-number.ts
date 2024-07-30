@@ -34,7 +34,7 @@ export interface PhoneNumber {
     'type'?: Type;
 }
 
-const Type = {
+export const Type = {
     PhoneTypeNotSpecified: 'PHONE_TYPE_NOT_SPECIFIED',
     PhoneTypeMobile: 'PHONE_TYPE_MOBILE',
     PhoneTypeHome: 'PHONE_TYPE_HOME',
@@ -44,6 +44,6 @@ const Type = {
     Unrecognized: 'UNRECOGNIZED'
 } as const;
 
- type Type = typeof Type[keyof typeof Type];
+export type Type = typeof Type[keyof typeof Type];
 
 

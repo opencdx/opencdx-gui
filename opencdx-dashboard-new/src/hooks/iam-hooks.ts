@@ -1,7 +1,11 @@
 
-import { iamApi } from "../api";
-import { LoginRequest , SignUpRequest, ChangePasswordRequest} from "../api/iam";
-import { useMutation , useQuery} from '@tanstack/react-query';
+import { iamApi, questionnaireApi, classificationApi } from "../api";
+import { LoginRequest, SignUpRequest, ChangePasswordRequest } from "../api/iam";
+
+import { GetQuestionnaireListRequest, QuestionnaireRequest } from "@/api/questionnaire";
+import { RuleSetsRequest } from "@/api/classification";
+
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
 // This hook uses the useMutation hook from react-query
@@ -15,52 +19,122 @@ import { useRouter } from 'next/navigation';
 export const useLogin = () => {
     const router = useRouter();
 
-return useMutation({
-    mutationFn: (credentials: LoginRequest) => iamApi.login({ loginRequest: credentials }),
-    onSuccess: (data) => {
+    return useMutation({
+        mutationFn: (credentials: LoginRequest) => iamApi.login({ loginRequest: credentials }),
+        onSuccess: (data) => {
             const { token } = data.data
             localStorage.setItem('serviceToken', token as string);
             router.push('/form-builder');
-    },
-    onError: (error) => {
-        console.error('Login failed:', error);
-        // Handle login errors, e.g., display error message
-    },
-});
+        },
+        onError: (error) => {
+            console.error('Login failed:', error);
+            // Handle login errors, e.g., display error message
+        },
+    });
 };
 
 export const useSignUp = () => {
     const router = useRouter();
-    
-        return useMutation({
-            mutationFn: (credentials: SignUpRequest) => iamApi.signUp({ signUpRequest: credentials }),
-            onSuccess: (data) => {
-                router.push('/form-builder');
-            },
-            onError: (error) => {
-                console.error('Registration failed:', error);
-                // Handle registration errors, e.g., display error message
-            },
-        });
-    }
+
+    return useMutation({
+        mutationFn: (credentials: SignUpRequest) => iamApi.signUp({ signUpRequest: credentials }),
+        onSuccess: (data) => {
+            router.push('/form-builder');
+        },
+        onError: (error) => {
+            console.error('Registration failed:', error);
+            // Handle registration errors, e.g., display error message
+        },
+    });
+}
 
 export const usePasswordChange = () => {
-    const router = useRouter();    
-        return useMutation({
-            mutationFn: (credentials: ChangePasswordRequest) => iamApi.changePassword({ changePasswordRequest: credentials }),
-            onSuccess: (data) => {
+    const router = useRouter();
+    return useMutation({
+        mutationFn: (credentials: ChangePasswordRequest) => iamApi.changePassword({ changePasswordRequest: credentials }),
+        onSuccess: (data) => {
             router.push('/login');
-            },
-            onError: (error) => {
-                console.error('Password change failed:', error);
-                // Handle password change errors, e.g., display error message
-            },
-        });
-    }
+        },
+        onError: (error) => {
+            console.error('Password change failed:', error);
+            // Handle password change errors, e.g., display error message
+        },
+    });
+}
 
 export const useCurrentUser = () => {
     return useQuery({
         queryKey: ['currentUser'],
         queryFn: async () => iamApi.currentUser(),
-      })
+    })
 }
+
+
+
+export const useGetQuestionnaireList = () => {
+
+    return useMutation({
+        mutationFn: (params: GetQuestionnaireListRequest) => questionnaireApi.getQuestionnaires({ getQuestionnaireListRequest: params }),
+        onSuccess: (data) => {
+            console.log(data);
+        },
+        onError: (error) => {
+            console.error('Login failed:', error);
+            // Handle login errors, e.g., display error message
+        },
+    });
+};
+
+
+export const useDeleteQuestionnaire = () => {
+
+    return useMutation({
+        mutationFn: (credentials: string) => questionnaireApi.deleteQuestionnaire({ id: credentials }),
+        onSuccess: (data) => {
+            console.log(data);
+        },
+        onError: (error) => {
+            console.error('Delete Questionnaire failed:', error);
+        },
+    });
+};
+
+export const useGetRuleSets = () => {
+
+    return useMutation({
+        mutationFn: (params: RuleSetsRequest) => classificationApi.getRuleSets({ ruleSetsRequest: params }),
+        onSuccess: (data) => {
+            console.log(data);
+        },
+        onError: (error) => {
+            console.error('Login failed:', error);
+            // Handle login errors, e.g., display error message
+        },
+    });
+};
+
+export const useCreateQuestionnaire = () => {
+    
+        return useMutation({
+            mutationFn: (params: QuestionnaireRequest) => questionnaireApi.createQuestionnaire({ questionnaireRequest: params }),
+            onSuccess: (data) => {
+                console.log(data);
+            },
+            onError: (error) => {
+                console.error('Submit Questionnaire failed:', error);
+            },
+        });
+    };
+export const useUpdateQuestionnaire = () => {
+        
+            return useMutation({
+                mutationFn: (params: QuestionnaireRequest) => questionnaireApi.updateQuestionnaire({ questionnaireRequest: params }),
+                onSuccess: (data) => {
+                    console.log(data);
+                },
+                onError: (error) => {
+                    console.error('Update Questionnaire failed:', error);
+                },
+            });
+        };
+

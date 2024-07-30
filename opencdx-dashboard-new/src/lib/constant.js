@@ -167,10 +167,10 @@ export const observationAttributes = [
 
 export const systemVariables = {
     time: {
-        lowerBound: '${{system.util.epoc("${{application.statement.documented.start.time}}")}}',
+        lowerBound: 70,
         semantic: 'Seconds | ${{upperbound - lowerbound}}',
-        resolution: '1 second',
-        upperBound: '${{system.util.epoc("${{application.statement.documented.end.time}}")}}',
+        resolution: 1,
+        upperBound: 90,
         includeLowerBound: true,
         includeUpperBound: true
     },
@@ -196,19 +196,14 @@ export const systemVariables = {
         { id: 'GEEI-TJBI-9441-VIAQB-QOYU', semantic: 'Precondition' }
     ],
     topic: '{"observationProcedure": {"method": "Examination - action", "hasFocus": "On examination - Systolic blood pressure reading", "procedureSiteDirect": "Structure of right brachial artery", "usingDevice": "Blood pressure cuff adult size"}}',
-    type: {
-        expressionType: 'simple',
-        expressionLanguage: 'local',
-        expressionValue: 'performed',
-        expressionDescription: 'Measurement action has been performed.'
-    },
+    type: '{ "expressionType": "simple","expressionLanguage": "local","expressionValue": "performed","expressionDescription": "Measurement action has been performed."}',
     performanceCircumstance: [{ healthRisk: 'XXXXX ${{rules.engine.calculated[performanceCircumstance.result]}}' }],
     status: '{"expressionType":"simple","expressionLanguage":"local","expressionValue":"performed","expressionDescription":"Measurement action has been performed."}',
     result: {
         lowerBound: '90',
         semantic:
             '[${{getElementById("3079919224534").value}}, ${{getElementById("3079919224534").value}}] ${{getElementById("3079919224534").unit}}',
-        resolution: '1 mmHg',
+        resolution: 1,
         upperBound: '120',
         includeLowerBound: true,
         includeUpperBound: true
@@ -216,7 +211,7 @@ export const systemVariables = {
     rangeMeasure: {
         lowerBound: '90',
         semantic: 'Systolic blood pressure measurement',
-        resolution: '1 mmHg',
+        resolution: 1,
         upperBound: '120',
         includeLowerBound: true,
         includeUpperBound: true
@@ -237,10 +232,10 @@ export const systemVariables = {
     },
 
     timingMeasure: {
-        lowerBound: '${{system.util.epoc("${{application.statement.measurement.start.time}}")}}',
+        lowerBound: 20,
         semantic: 'Seconds | ${{upperbound - lowerbound}}',
-        resolution: '1 second',
-        upperBound: '${{system.util.epoc("${{application.statement.measurement.end.time}}")}}',
+        resolution: 1,
+        upperBound: 40,
         includeLowerBound: true,
         includeUpperBound: true
     },

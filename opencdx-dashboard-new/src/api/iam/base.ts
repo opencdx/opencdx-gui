@@ -19,7 +19,7 @@ import type { Configuration } from './configuration';
 import type { AxiosPromise, AxiosInstance, RawAxiosRequestConfig } from 'axios';
 import globalAxios from 'axios';
 
-export const BASE_PATH = "https://ec2-3-13-148-183.us-east-2.compute.amazonaws.com:8080/iam".replace(/\/+$/, "");
+export const BASE_PATH = "https://localhost:8080/iam".replace(/\/+$/, "");
 
 /**
  *

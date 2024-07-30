@@ -15,7 +15,7 @@ const TypeWrapper = ({
 }) => {
   const { register, control } = useFormContext();
   const { name } = register(
-    `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.type`,
+    `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.type.expression`,
   );
 
   return (
