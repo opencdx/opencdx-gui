@@ -79,15 +79,16 @@ const QuestionnaireItemWrapper = ({
       
           <div className="flex flex-row justify-between">
             <p>{questionnaireItemId + 1 + '. ' + item.text}</p>
+            {currentComponentType !== AnfStatementType.AnfStatementUserQuestion &&
             <Button
-              className="mb-4 p-4  rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700 flex flex-row justify-center"
+              className="rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700 flex flex-row justify-center"
               color="primary"
               startContent={<Plus />}
               variant="solid"
               onClick={handleAddButtonClick}
             >
               Add ANF Statement
-            </Button>
+            </Button>}
           </div>
        <Divider className="my-4 border-neutral-700 " />
       <>

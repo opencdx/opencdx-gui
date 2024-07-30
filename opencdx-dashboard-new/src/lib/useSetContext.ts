@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react';
-
-
-import { systemVariables } from '@/lib/constant';
-
 import { FieldValues, useFormContext } from 'react-hook-form';
-
-// Import FieldValues interface
+import { systemVariables } from '@/lib/constant';
+import { AnfStatementType } from '@/api/questionnaire';
 
 export interface FormValueUpdater {
   (
@@ -16,125 +12,77 @@ export interface FormValueUpdater {
 }
 
 export const useUpdateFormContext = (): FormValueUpdater => {
-  const formContext = useFormContext<FieldValues>(); // Specify generic type for form values
-  const { setValue, getValues } = formContext;
+  const formContext = useFormContext<FieldValues>();
+  const { setValue } = formContext;
 
   const [currentComponentType, setCurrentComponentType] = useState<string>('');
   const [questionnaireItemId, setQuestionnaireItemId] = useState<any>(null);
-  const [anfStatementConnectorId, setAnfStatementConnectorId] =
-    useState<any>(null);
+  const [anfStatementConnectorId, setAnfStatementConnectorId] = useState<any>(null);
 
-  // Update form value based on component type and relevance
   useEffect(() => {
     const updateForm = () => {
-      const lowerBoundPath = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.lowerBound`;
-      const upperBoundPath = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.upperBound`;
-      const semanticPath = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.semantic`;
-      const resolutionPath = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.resolution`;
-      const includeUpperBoundPath = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.includeUpperBound`;
-      const includeLowerBoundPath = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.includeLowerBound`;
-
-      const subjectOfInformationPath = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.subjectOfInformation`;
-      const subjectOfRecordPath = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.subjectOfRecord`;
-
-      const authorIDPath = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.authors[0].id`;
-      const authorPractitionerValuePath = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.authors[0].practitionerValue`;
-      const authorCodePath = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.authors[0].code`;
-
-      const topicPath = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.topic`;
-
-      const statusPath = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.status`;
-
-      const healthRiskPath = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.healthRisk`;
+      const paths = [
+        `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time`,
+        `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.subjectOfInformation`,
+        `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.subjectOfRecord`,
+        `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.authors[0]`,
+        `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.topic`,
+        `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance`,
+        `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance[0].healthRisk`,
+      ];
 
       if (
-        currentComponentType === 'ANF_STATEMENT_TYPE_MAIN' ||
-        currentComponentType === 'ANF_STATEMENT_TYPE_ASSOCIATED'
+        currentComponentType === AnfStatementType.AnfStatementTypeMain ||
+        currentComponentType === AnfStatementType.AnfStatementTypeAssociated
       ) {
-        //Time
-        setValue(lowerBoundPath, systemVariables?.time.lowerBound);
-        setValue(upperBoundPath, systemVariables?.time.upperBound);
-        setValue(semanticPath, systemVariables?.time.semantic);
-        setValue(resolutionPath, systemVariables?.time.resolution);
-        setValue(
-          includeUpperBoundPath,
-          systemVariables?.time.includeUpperBound ,
-        );
-        setValue(
-          includeLowerBoundPath,
-          systemVariables?.time.includeLowerBound,
-        );
+        paths.forEach((path) => {
+          setValue(`${path}.lowerBound`, systemVariables?.time.lowerBound);
+          setValue(`${path}.upperBound`, systemVariables?.time.upperBound);
+          setValue(`${path}.semantic`, systemVariables?.time.semantic);
+          setValue(`${path}.resolution`, systemVariables?.time.resolution);
+          setValue(`${path}.includeUpperBound`, systemVariables?.time.includeUpperBound);
+          setValue(`${path}.includeLowerBound`, systemVariables?.time.includeLowerBound);
+        });
 
-        //Subject of Information
-        setValue(
-          subjectOfInformationPath,
-          systemVariables?.subjectOfInformation?.subjectOfRecord,
-        );
+        setValue(`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.subjectOfInformation`, systemVariables?.subjectOfInformation?.subjectOfRecord);
+        setValue(`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.subjectOfRecord`, systemVariables?.subjectOfRecord);
+        setValue(`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.authors[0].id`, systemVariables?.authors?.id);
+        setValue(`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.authors[0].practitionerValue`, systemVariables?.authors?.practitionerValue);
+        setValue(`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.authors[0].code`, systemVariables?.authors?.code);
+        setValue(`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.topic`, systemVariables?.topic);
+        setValue(`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.status`, systemVariables?.status);
+        setValue(`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.healthRisk`, systemVariables?.performanceCircumstance[0]?.healthRisk);
+      } else {
+        paths.forEach((path) => {
+          setValue(`${path}.lowerBound`, '');
+          setValue(`${path}.upperBound`, '');
+          setValue(`${path}.semantic`, '');
+          setValue(`${path}.resolution`, '');
+          setValue(`${path}.includeUpperBound`, '');
+          setValue(`${path}.includeLowerBound`, '');
+        });
 
-        //  Subject of Record
-        setValue(subjectOfRecordPath, systemVariables?.subjectOfRecord);
-
-        //Authors
-        setValue(authorIDPath, systemVariables?.authors?.id);
-        setValue(
-          authorPractitionerValuePath,
-          systemVariables?.authors?.practitionerValue,
-        );
-        setValue(authorCodePath, systemVariables?.authors?.code);
-
-        //Topic
-        setValue(topicPath, systemVariables?.topic);
-
-        //Performance Circumstance
-        setValue(statusPath, systemVariables?.status);
-
-        //Health Risk
-        setValue(
-          healthRiskPath,
-          systemVariables?.performanceCircumstance[0]?.healthRisk,
-        );
+        setValue(`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.subjectOfInformation`, '');
+        setValue(`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.subjectOfRecord`, '');
+        setValue(`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.authors[0].id`, '');
+        setValue(`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.authors[0].practitionerValue`, '');
+        setValue(`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.authors[0].code`, '');
+        setValue(`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.topic`, '');
+        setValue(`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.status`, '');
+        setValue(`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.healthRisk`, '');
       }
-      else{
-        //Time
-        setValue(lowerBoundPath, '');
-        setValue(upperBoundPath, '');
-        setValue(semanticPath, '');
-        setValue(resolutionPath, '');
-        setValue(includeUpperBoundPath, '');
-        setValue(includeLowerBoundPath, '');
 
-        //Subject of Information
-        setValue(subjectOfInformationPath, '');
-
-        //  Subject of Record
-        setValue(subjectOfRecordPath, '');
-
-        //Authors
-        setValue(authorIDPath, '');
-        setValue(authorPractitionerValuePath, '');
-        setValue(authorCodePath, '');
-
-        //Topic
-        setValue(topicPath, '');
-
-        //Performance Circumstance
-        setValue(statusPath, '');
-
-        //Health Risk
-        setValue(healthRiskPath, '');
+      if (currentComponentType === AnfStatementType.AnfStatementTypeNotApplicable) {
+        setValue(`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.includeUpperBound`, 'not');
+        setValue(`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.includeLowerBound`, 'not');
       }
     };
 
-    if (
-      currentComponentType ||
-      questionnaireItemId ||
-      anfStatementConnectorId
-    ) {
+    if (currentComponentType || questionnaireItemId || anfStatementConnectorId) {
       updateForm();
     }
-  }, [currentComponentType, questionnaireItemId, anfStatementConnectorId]);
+  }, [currentComponentType, questionnaireItemId, anfStatementConnectorId, setValue]);
 
-  // Function to update state from functional component
   const updateState: FormValueUpdater = (
     newComponentType,
     newQuestionnaireItemId,
