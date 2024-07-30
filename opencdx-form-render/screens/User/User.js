@@ -17,7 +17,7 @@ const User = ({ navigation }) => {
       try {
         const response = await Endpoints.questionnaireList({
           pagination: {
-            pageNumber: currentPage,
+            pageNumber: currentPage-1,
             pageSize,
             sort: "modified", // Assuming "modified" is the sorting field
             sortAscending: true,
