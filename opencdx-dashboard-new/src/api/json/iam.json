@@ -3,7 +3,7 @@
   "info": { "title": "OpenAPI definition", "version": "v0" },
   "servers": [
     {
-      "url": "https://ec2-3-13-148-183.us-east-2.compute.amazonaws.com:8080/iam",
+      "url": "https://localhost:8080/iam",
       "description": "Generated server url"
     }
   ],
@@ -136,6 +136,60 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CreateOrganizationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analysis-engine": {
+      "put": {
+        "tags": ["open-cdx-analysis-engine-rest-controller"],
+        "operationId": "updateAnalysisEngineRequest",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAnalysisEngineRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateAnalysisEngineResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["open-cdx-analysis-engine-rest-controller"],
+        "operationId": "createAnalysisEngineRequest",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAnalysisEngineRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateAnalysisEngineResponse"
                 }
               }
             }
@@ -433,6 +487,34 @@
         }
       }
     },
+    "/analysis-engine/list": {
+      "post": {
+        "tags": ["open-cdx-analysis-engine-rest-controller"],
+        "operationId": "listAnalysisEngineRequest",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListAnalysisEnginesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListAnalysisEnginesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/workspace/{id}": {
       "get": {
         "tags": ["open-cdxiam-workspace-rest-controller"],
@@ -564,6 +646,56 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GetOrganizationDetailsByIdResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analysis-engine/{id}": {
+      "get": {
+        "tags": ["open-cdx-analysis-engine-rest-controller"],
+        "operationId": "getAnalysisEngineRequest",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAnalysisEngineResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["open-cdx-analysis-engine-rest-controller"],
+        "operationId": "deleteAnalysisEngine",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteAnalysisEngineResponse"
                 }
               }
             }
@@ -891,6 +1023,32 @@
         "type": "object",
         "properties": {
           "organization": { "$ref": "#/components/schemas/Organization" }
+        }
+      },
+      "AnalysisEngine": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "identifier": { "type": "string" },
+          "organizationId": { "type": "string" },
+          "workspaceId": { "type": "string" },
+          "created": { "$ref": "#/components/schemas/Timestamp" },
+          "modified": { "$ref": "#/components/schemas/Timestamp" },
+          "creator": { "type": "string" },
+          "modifier": { "type": "string" }
+        }
+      },
+      "UpdateAnalysisEngineRequest": {
+        "type": "object",
+        "properties": {
+          "analysisEngine": { "$ref": "#/components/schemas/AnalysisEngine" }
+        }
+      },
+      "UpdateAnalysisEngineResponse": {
+        "type": "object",
+        "properties": {
+          "analysisEngine": { "$ref": "#/components/schemas/AnalysisEngine" }
         }
       },
       "CreateWorkspaceRequest": {
@@ -1317,6 +1475,35 @@
           }
         }
       },
+      "CreateAnalysisEngineRequest": {
+        "type": "object",
+        "properties": {
+          "analysisEngine": { "$ref": "#/components/schemas/AnalysisEngine" }
+        }
+      },
+      "CreateAnalysisEngineResponse": {
+        "type": "object",
+        "properties": {
+          "analysisEngine": { "$ref": "#/components/schemas/AnalysisEngine" }
+        }
+      },
+      "ListAnalysisEnginesRequest": {
+        "type": "object",
+        "properties": {
+          "organizationId": { "type": "string" },
+          "pagination": { "$ref": "#/components/schemas/Pagination" }
+        }
+      },
+      "ListAnalysisEnginesResponse": {
+        "type": "object",
+        "properties": {
+          "analysisEngine": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/AnalysisEngine" }
+          },
+          "pagination": { "$ref": "#/components/schemas/Pagination" }
+        }
+      },
       "GetWorkspaceDetailsByIdResponse": {
         "type": "object",
         "properties": {
@@ -1337,9 +1524,19 @@
           "organization": { "$ref": "#/components/schemas/Organization" }
         }
       },
+      "GetAnalysisEngineResponse": {
+        "type": "object",
+        "properties": {
+          "analysisEngine": { "$ref": "#/components/schemas/AnalysisEngine" }
+        }
+      },
       "DeleteIamUserResponse": {
         "type": "object",
         "properties": { "iamUser": { "$ref": "#/components/schemas/IamUser" } }
+      },
+      "DeleteAnalysisEngineResponse": {
+        "type": "object",
+        "properties": { "success": { "type": "boolean" } }
       }
     },
     "securitySchemes": {

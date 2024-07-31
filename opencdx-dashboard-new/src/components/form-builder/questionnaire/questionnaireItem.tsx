@@ -7,7 +7,7 @@ import { AnfStatementConnector } from '@/api/questionnaire/model/anf-statement-c
 
 import { AnfStatementType } from '@/api/questionnaire/model/anf-statement-connector';
 import { AnfOperatorType } from '@/api/questionnaire/model/anf-statement-connector';
-import { useUpdateFormContext } from '@/lib/useSetContext';
+// import { useUpdateFormContext } from '@/lib/useSetContext';
 import { Button, Card, CardBody, Divider } from '@nextui-org/react';
 import { Plus } from 'lucide-react';
 
@@ -23,7 +23,7 @@ const QuestionnaireItemWrapper = ({
   questionnaireItemId: number;
 }) => {
   const defaultAnfStatement = {};
-  const updateForm = useUpdateFormContext();
+  //const updateForm = useUpdateFormContext();
 
   const [anfStatementConnectorLength, setAnfStatementConnectorLength] =
     React.useState(item?.anfStatementConnector?.length);
@@ -34,7 +34,7 @@ const QuestionnaireItemWrapper = ({
     questionnaireItemId: number,
     id: number,
   ) => {
-    updateForm(value, questionnaireItemId, id); // Pass relevant values
+   // updateForm(value, questionnaireItemId, id); // Pass relevant values
     setCurrentComponentType(value);
   };
 

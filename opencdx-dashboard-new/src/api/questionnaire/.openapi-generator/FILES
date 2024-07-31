@@ -17,6 +17,7 @@ model/coding.ts
 model/extension.ts
 model/get-questionnaire-list-request.ts
 model/index.ts
+model/logical-expression.ts
 model/measure.ts
 model/narrative-circumstance.ts
 model/pagination.ts
@@ -33,6 +34,7 @@ model/questionnaire-item.ts
 model/questionnaire-request.ts
 model/questionnaire.ts
 model/questionnaires.ts
+model/reference.ts
 model/repetition.ts
 model/request-circumstance.ts
 model/submission-response.ts

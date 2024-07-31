@@ -54,7 +54,7 @@ const PerformanceCircumstanceWrapper = ({
 
       <ControlledInput
         label="Status"
-        name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.status`}
+        name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.status.expression`}
       />
       <Card className="mb-4 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700 ">
         <CardHeader className="flex gap-3">
@@ -65,6 +65,7 @@ const PerformanceCircumstanceWrapper = ({
         <CardBody>
           <ControlledInput
             label="Lower Bound"
+            type="number"
             name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.result.lowerBound`}
           />
           <ControlledRadio
@@ -74,6 +75,7 @@ const PerformanceCircumstanceWrapper = ({
 
           <ControlledInput
             label="Upper Bound"
+            type="number"
             name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.result.upperBound`}
           />
           <ControlledRadio
@@ -82,10 +84,11 @@ const PerformanceCircumstanceWrapper = ({
           />
           <ControlledInput
             label="Sematic"
-            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.result.semantic`}
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.result.semantic.expression`}
           />
           <ControlledInput
             label="Resolution"
+            type='number'
             name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.result.resolution`}
           />
         </CardBody>
@@ -93,7 +96,7 @@ const PerformanceCircumstanceWrapper = ({
 
       <ControlledInput
         label="Health Risk"
-        name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.healthRisk`}
+        name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.healthRisk.expression`}
       />
 
       <Card className="mb-4 p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700 ">
@@ -105,6 +108,7 @@ const PerformanceCircumstanceWrapper = ({
         <CardBody>
           <ControlledInput
             label="Lower Bound"
+            type="number"
             name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.normalRange.lowerBound`}
           />
           <ControlledRadio
@@ -113,6 +117,7 @@ const PerformanceCircumstanceWrapper = ({
           />
           <ControlledInput
             label="Upper Bound"
+            type="number"
             name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.normalRange.upperBound`}
           />
           <ControlledRadio
@@ -121,10 +126,11 @@ const PerformanceCircumstanceWrapper = ({
           />
           <ControlledInput
             label="Sematic"
-            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.normalRange.semantic`}
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.normalRange.semantic.expression`}
           />
           <ControlledInput
             label="Resolution"
+            type='number'
             name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.normalRange.resolution`}
           />
         </CardBody>
@@ -139,6 +145,7 @@ const PerformanceCircumstanceWrapper = ({
         <CardBody>
           <ControlledInput
             label="Lower Bound"
+            type="number"
             name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.timing.lowerBound`}
           />
           <ControlledRadio
@@ -147,6 +154,7 @@ const PerformanceCircumstanceWrapper = ({
           />
           <ControlledInput
             label="Upper Bound"
+            type="number"
             name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.timing.upperBound`}
           />
           <ControlledRadio
@@ -155,10 +163,11 @@ const PerformanceCircumstanceWrapper = ({
           />
           <ControlledInput
             label="Sematic"
-            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.timing.semantic`}
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.timing.semantic.expression`}
           />
           <ControlledInput
             label="Resolution"
+            type='number'
             name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.timing.resolution`}
           />
         </CardBody>

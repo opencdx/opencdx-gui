@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiInterceptors = axios.create({
-    baseURL: 'https://ec2-3-13-148-183.us-east-2.compute.amazonaws.com:' + '8080'
+    baseURL: 'https://localhost:' + '8080'
 });
 apiInterceptors.interceptors.request.use(
     (config) => {

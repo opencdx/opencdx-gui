@@ -24,7 +24,7 @@ const TimeWrapper = ({
             <Input
               className="mb-4"
               label="Lower Bound"
-              type="text"
+              type="number"
               value={field.value}
               onChange={field.onChange}
             />
@@ -73,7 +73,7 @@ const TimeWrapper = ({
             <Input
               className="mb-4"
               label="Upper Bound"
-              type="text"
+              type="number"
               value={field.value}
               onChange={field.onChange}
             />
@@ -114,10 +114,10 @@ const TimeWrapper = ({
       </div>
 
       <div className=" flex items-center gap-4">
-        <label className="text w-[250px]">Sematic</label>
+        <label className="text w-[250px]">Semantic</label>
         <Controller
           control={control}
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.semantic`}
+          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.semantic.expression`}
           render={({ field }) => (
             <Input
               className="mb-4"
@@ -138,7 +138,7 @@ const TimeWrapper = ({
             <Input
               className="mb-4"
               label="Resolution"
-              type="text"
+              type="number"
               value={field.value}
               onChange={field.onChange}
             />

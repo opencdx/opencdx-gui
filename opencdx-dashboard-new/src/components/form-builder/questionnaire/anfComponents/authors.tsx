@@ -18,11 +18,11 @@ const AuthorsWrapper = ({
       />
       <ControlledInput
         label="Practitioner Value"
-        name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.authors[0].practitionerValue`}
+        name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.authors[0].practitionerValue.identifier`}
       />
       <ControlledInput
         label="Code"
-        name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.authors[0].code`}
+        name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.authors[0].code.expression`}
       />
     </Card>
   );

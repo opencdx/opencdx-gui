@@ -70,7 +70,7 @@ export interface SignUpRequest {
     'workspaceId'?: string;
 }
 
- const Type = {
+export const Type = {
     IamUserTypeUnspecified: 'IAM_USER_TYPE_UNSPECIFIED',
     IamUserTypeRegular: 'IAM_USER_TYPE_REGULAR',
     IamUserTypeSystem: 'IAM_USER_TYPE_SYSTEM',
@@ -78,6 +78,6 @@ export interface SignUpRequest {
     Unrecognized: 'UNRECOGNIZED'
 } as const;
 
- type Type = typeof Type[keyof typeof Type];
+export type Type = typeof Type[keyof typeof Type];
 
 
