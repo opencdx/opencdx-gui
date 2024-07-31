@@ -3,12 +3,16 @@ import { Configuration as QuestionnaireConfig , OpenCdxRestQuestionnaireControll
 import { Configuration as ClassificationConfig, OpenCdxRestClassificationControllerApi } from "./classification";
 import exp from "constants";
 
-const iam = new IAMConfig();
+const iam = new IAMConfig({
+    basePath: "https://ec2-3-13-148-183.us-east-2.compute.amazonaws.com:8080/iam"
+});
 iam.accessToken = async () => {
     return localStorage.getItem('serviceToken') || '';
 }
 
-const questionnaire = new QuestionnaireConfig();
+const questionnaire = new QuestionnaireConfig({
+    basePath: "https://ec2-3-13-148-183.us-east-2.compute.amazonaws.com:8080/questionnaire"
+});
 questionnaire.accessToken = async () => {
     return localStorage.getItem('serviceToken') || '';
 }
