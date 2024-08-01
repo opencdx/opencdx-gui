@@ -1,9 +1,6 @@
 'use client';
-
 import React, { Suspense, useEffect, useState } from 'react';
-
 import { useRouter } from 'next/navigation';
-
 import Loading from '@/components/custom/loading';
 import Button from '@mui/material/Button';
 import { Button as NButton } from '@nextui-org/button';
@@ -26,8 +23,11 @@ import 'react-json-view-lite/dist/index.css';
 
 import { Questionnaire } from '@/api/questionnaire/model/questionnaire';
 import { Timestamp } from '@/api/questionnaire/model/timestamp';
-import { Endpoints } from '@/axios/apiEndpoints';
-import { useCurrentUser, useGetQuestionnaireList, useDeleteQuestionnaire } from '@/hooks/iam-hooks';
+import {
+  useCurrentUser,
+  useDeleteQuestionnaire,
+  useGetQuestionnaireList,
+} from '@/hooks/iam-hooks';
 import { useAnfFormStore } from '@/lib/useAnfFormStore';
 import { toast, ToastContainer } from 'react-toastify';
 
@@ -47,8 +47,6 @@ export default function ListQuestionnaire() {
   const router = useRouter();
 
   const { setFormData } = useAnfFormStore() as { setFormData: any };
-
-  const [questionnaireData, setQuestionnaireData] = useState([] as any);
   const [isLoading, setIsLoading] = useState(true); // State for loading indicator
 
   useEffect(() => {
@@ -58,6 +56,7 @@ export default function ListQuestionnaire() {
     const id = currentUser?.data?.iamUser?.id;
     localStorage.setItem('id', id || '');
   }, [currentUser]);
+
   useEffect(() => {
     const getQuestionnaire = async () => {
       const params = {
@@ -119,6 +118,7 @@ export default function ListQuestionnaire() {
       router.push(`/edit-questionnaire/${newQuestionnaire}`);
     };
   };
+
   const handleDownload = (questionnaire: Questionnaire) => {
     const data = JSON.stringify(questionnaire);
     const blob = new Blob([data], { type: 'application/json' });
@@ -267,12 +267,11 @@ export default function ListQuestionnaire() {
                           const params = {
                             id: questionnaire.id,
                           };
-                          
+
                           const fetchData = async () => {
                             if (params.id) {
                               deleteQuestionnaire(params.id);
                             }
-
                           };
 
                           fetchData();
@@ -307,92 +306,94 @@ export default function ListQuestionnaire() {
                 </tr>
               </thead>
               <tbody>
-                {questionnaireData.map((questionnaire: Questionnaire) => (
-                  <tr
-                    key={questionnaire.id}
-                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                  >
-                    <th
-                      className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
-                      scope="row"
+                {data?.data?.questionnaires?.map(
+                  (questionnaire: Questionnaire) => (
+                    <tr
+                      key={questionnaire.id}
+                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                     >
-                      <div className="ps-3">
-                        <div className="text-base font-semibold text-gray-900 dark:text-white dark:text-gray-400 dark:text-white text-wrap w-96">
-                          {questionnaire.title}
+                      <th
+                        className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                        scope="row"
+                      >
+                        <div className="ps-3">
+                          <div className="text-base font-semibold text-gray-900 dark:text-white dark:text-gray-400 dark:text-white text-wrap w-96">
+                            {questionnaire.title}
+                          </div>
                         </div>
-                      </div>
-                    </th>
-                    <td className="px-6 py-4">
-                      {convertDate(questionnaire.modified)}
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center">
-                        <div
-                          className={`h-2.5 w-2.5 rounded-full bg-${questionnaire.status} me-2`}
-                        />
-                        <span>
+                      </th>
+                      <td className="px-6 py-4">
+                        {convertDate(questionnaire.modified)}
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center">
+                          <div
+                            className={`h-2.5 w-2.5 rounded-full bg-${questionnaire.status} me-2`}
+                          />
                           <span>
-                            {questionnaire.status === 'active'
-                              ? 'Active'
-                              : 'Draft'}
+                            <span>
+                              {questionnaire.status === 'active'
+                                ? 'Active'
+                                : 'Draft'}
+                            </span>
                           </span>
-                        </span>
-                      </div>
-                    </td>
-                    <td className=" text-sm font-medium px-6 py-4 whitespace-nowrap space-x-2">
-                      <NButton
-                        isIconOnly
-                        onPress={() => {
-                          setJson(questionnaire);
-                          onOpen();
-                        }}
-                      >
-                        <Eye size={16} />
-                      </NButton>
-                      <NButton
-                        isIconOnly
-                        onPress={() => {
-                          setFormData(questionnaire);
-                          localStorage.setItem(
-                            'questionnaire-store',
-                            JSON.stringify(questionnaire),
-                          );
-                          router.push(
-                            `/edit-questionnaire/${questionnaire.id}`,
-                          );
-                        }}
-                      >
-                        <FilePenLine size={16} />
-                      </NButton>
-                      <NButton
-                        isIconOnly
-                        onPress={() => {
-                          setJson(questionnaire);
-                          handleDownload(questionnaire);
-                        }}
-                      >
-                        <Download size={16} />
-                      </NButton>
-                      <NButton
-                        isIconOnly
-                        onPress={() => {
-                          const params = {
-                            id: questionnaire.id,
-                          };
-                          
-                          const fetchData = async () => {
-                            if (params.id) {
-                              deleteQuestionnaire(params.id);
-                            }
-                          };
-                          fetchData();
-                        }}
-                      >
-                        <Trash2 size={16} />
-                      </NButton>
-                    </td>
-                  </tr>
-                ))}
+                        </div>
+                      </td>
+                      <td className=" text-sm font-medium px-6 py-4 whitespace-nowrap space-x-2">
+                        <NButton
+                          isIconOnly
+                          onPress={() => {
+                            setJson(questionnaire);
+                            onOpen();
+                          }}
+                        >
+                          <Eye size={16} />
+                        </NButton>
+                        <NButton
+                          isIconOnly
+                          onPress={() => {
+                            setFormData(questionnaire);
+                            localStorage.setItem(
+                              'questionnaire-store',
+                              JSON.stringify(questionnaire),
+                            );
+                            router.push(
+                              `/edit-questionnaire/${questionnaire.id}`,
+                            );
+                          }}
+                        >
+                          <FilePenLine size={16} />
+                        </NButton>
+                        <NButton
+                          isIconOnly
+                          onPress={() => {
+                            setJson(questionnaire);
+                            handleDownload(questionnaire);
+                          }}
+                        >
+                          <Download size={16} />
+                        </NButton>
+                        <NButton
+                          isIconOnly
+                          onPress={() => {
+                            const params = {
+                              id: questionnaire.id,
+                            };
+
+                            const fetchData = async () => {
+                              if (params.id) {
+                                deleteQuestionnaire(params.id);
+                              }
+                            };
+                            fetchData();
+                          }}
+                        >
+                          <Trash2 size={16} />
+                        </NButton>
+                      </td>
+                    </tr>
+                  ),
+                )}
               </tbody>
             </table>
           )}
