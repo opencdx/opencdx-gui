@@ -3,7 +3,6 @@ import { Configuration as QuestionnaireConfig, OpenCdxRestQuestionnaireControlle
 import { Configuration as ClassificationConfig, OpenCdxRestClassificationControllerApi } from "./classification";
 
 
-
 const classification = new ClassificationConfig({
     basePath: (process.env.REACT_APP_API_HOST ?? '') + process.env.REACT_APP_API_PORT + "/classification"
 });
