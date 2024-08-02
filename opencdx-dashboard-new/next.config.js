@@ -20,7 +20,7 @@ const nextConfig = {
 
         // Local Server host and port number
 
-        // REACT_APP_API_HOST: 'http://localhost:',
+        // REACT_APP_API_HOST: 'https://localhost:',
         // REACT_APP_API_PORT:'8080',
         // REACT_APP_GRAPHQL_HOST: 'http://localhost:',
         // REACT_APP_GRAPHQL_PORT:'8632',
