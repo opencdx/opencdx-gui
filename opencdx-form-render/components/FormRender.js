@@ -55,6 +55,25 @@ export default function App({ questionnaire, navigation }) {
           field.answer.push({ valueString: data[field.linkId] });
           break;
       }
+
+      if (field.anfStatementConnector && field.answer.length > 0 && field.answerOption) {
+        var answerIndex;
+        switch (field.type) {
+          case "integer":
+            answerIndex = field.answerOption.findIndex(option => option.valueCoding.display === field.answer[0].valueInteger);
+            break;
+          case "boolean":
+            answerIndex = field.answerOption.findIndex(option => option.valueCoding.display === field.answer[0].valueBoolean);
+            break;
+          default:
+            answerIndex = field.answerOption.findIndex(option => option.valueCoding.display === field.answer[0].valueString);
+            break;
+        }
+        if (answerIndex >= 0) {
+          var anfAnswer = field.anfStatementConnector.findIndex(anf => parseInt(anf.operatorValue) === answerIndex);
+          field.anfStatementConnector = [field.anfStatementConnector[anfAnswer]];
+        }
+      }
     });
 
     const userQuestionnaireData = {
