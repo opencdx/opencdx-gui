@@ -2,7 +2,6 @@ import { Configuration as IAMConfig, OpenCdxiamUserRestControllerApi } from "./i
 import { Configuration as QuestionnaireConfig, OpenCdxRestQuestionnaireControllerApi } from "./questionnaire";
 import { Configuration as ClassificationConfig, OpenCdxRestClassificationControllerApi } from "./classification";
 
-
 const iam = new IAMConfig({
     basePath: (process.env.REACT_APP_API_HOST ?? '') + process.env.REACT_APP_API_PORT + "/iam"
 });
