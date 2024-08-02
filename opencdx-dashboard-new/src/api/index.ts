@@ -1,8 +1,8 @@
-import { Configuration as IAMConfig,OpenCdxiamUserRestControllerApi } from "./iam";
-import { Configuration as QuestionnaireConfig , OpenCdxRestQuestionnaireControllerApi } from "./questionnaire";
+import { Configuration as IAMConfig, OpenCdxiamUserRestControllerApi } from "./iam";
+import { Configuration as QuestionnaireConfig, OpenCdxRestQuestionnaireControllerApi } from "./questionnaire";
 import { Configuration as ClassificationConfig, OpenCdxRestClassificationControllerApi } from "./classification";
 
-  
+
 const iam = new IAMConfig({
     basePath: (process.env.REACT_APP_API_HOST ?? '') + process.env.REACT_APP_API_PORT + "/iam"
 });
@@ -19,7 +19,7 @@ questionnaire.accessToken = async () => {
 
 const classification = new ClassificationConfig({
     basePath: (process.env.REACT_APP_API_HOST ?? '') + process.env.REACT_APP_API_PORT + "/classification"
-  });
+});
 classification.accessToken = async () => {
     return localStorage.getItem('serviceToken') || '';
 }
