@@ -34,14 +34,14 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
         initialStateUpperBound = formData.item?.[index]?.anfStatementConnector?.[currentIndex]?.anfStatement?.[tab]?.includeUpperBound;
     }
 
-    const [lowerBoundState, setLowerBound] = useState(systemVariables[tab]?.lowerBound);
-    const [upperBoundState, setUpperBound] = useState(systemVariables[tab]?.upperBound);
+    const [lowerBoundState, setLowerBound] = useState(systemVariables[tab]?.lowerBoundConfig);
+    const [upperBoundState, setUpperBound] = useState(systemVariables[tab]?.upperBoundConfig);
     const [resolutionState, setResolution] = useState(systemVariables[tab]?.resolution);
     const [semanticState, setSemantic] = useState(systemVariables[tab]?.semantic);
     // eslint-disable-next-line no-unused-vars
-    const [upperBoundOptionsState, setUpperBoundOptions] = useState(systemVariables[tab]?.upperBound);
+    const [upperBoundOptionsState, setUpperBoundOptions] = useState(systemVariables[tab]?.upperBoundConfig);
     // eslint-disable-next-line no-unused-vars
-    const [lowerBoundOptionsState, setLowerBoundOptions] = useState(systemVariables[tab]?.lowerBound);
+    const [lowerBoundOptionsState, setLowerBoundOptions] = useState(systemVariables[tab]?.lowerBoundConfig);
 
     return (
         <Grid item xs={12} lg={12} ref={ref}>
@@ -193,7 +193,7 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                         {componentType ? (
                             <TextField
                                 type={'text'}
-                                {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.upperBound`)}
+                                {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.upperBoundConfig`)}
                                 fullWidth
                                 value={upperBoundState}
                                 onChange={(e) => {
@@ -203,7 +203,7 @@ export const MeasureComponent = React.forwardRef(({ register, index, currentInde
                             />
                         ) : (
                             <TextField
-                                {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.upperBound`)}
+                                {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.upperBoundConfig`)}
                                 fullWidth
                                 InputProps={{
                                     inputProps: { min: 0 }
