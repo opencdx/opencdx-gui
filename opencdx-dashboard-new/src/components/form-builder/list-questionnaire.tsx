@@ -387,6 +387,10 @@ export default function ListQuestionnaire() {
                             const fetchData = async () => {
                               if (params.id) {
                                 deleteQuestionnaire(params.id);
+                                data.data.questionnaires = data?.data?.questionnaires?.filter(
+                                  (item: Questionnaire) =>
+                                    item.id !== questionnaire.id,
+                                );
                               }
                             };
                             fetchData();
