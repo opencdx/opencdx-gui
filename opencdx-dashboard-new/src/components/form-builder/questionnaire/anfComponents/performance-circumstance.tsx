@@ -108,8 +108,8 @@ const PerformanceCircumstanceWrapper = ({
         <CardBody>
           <ControlledInput
             label="Lower Bound"
-            type="number"
-            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.normalRange.lowerBound`}
+            type="text"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.normalRange.lowerBoundConfig`}
           />
           <ControlledRadio
             label="Include Lower Bound"
@@ -117,8 +117,8 @@ const PerformanceCircumstanceWrapper = ({
           />
           <ControlledInput
             label="Upper Bound"
-            type="number"
-            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.normalRange.upperBound`}
+            type="text"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.normalRange.upperBoundConfig`}
           />
           <ControlledRadio
             label="Include Upper Bound"
@@ -145,8 +145,8 @@ const PerformanceCircumstanceWrapper = ({
         <CardBody>
           <ControlledInput
             label="Lower Bound"
-            type="number"
-            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.timing.lowerBound`}
+            type="text"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.timing.lowerBoundConfig`}
           />
           <ControlledRadio
             label="Include Lower Bound"
@@ -154,8 +154,8 @@ const PerformanceCircumstanceWrapper = ({
           />
           <ControlledInput
             label="Upper Bound"
-            type="number"
-            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.timing.upperBound`}
+            type="text"
+            name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.timing.upperBoundConfig`}
           />
           <ControlledRadio
             label="Include Upper Bound"
