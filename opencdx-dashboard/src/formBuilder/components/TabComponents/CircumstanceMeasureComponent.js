@@ -124,7 +124,7 @@ export const CircumstanceMeasureComponent = React.forwardRef(({ register, index,
                     <Grid item xs={12} sm={9} lg={8}>
                         
                             <TextField
-                                {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.upperBound`)}
+                                {...register(`item.${index}.anfStatementConnector.${currentIndex}.anfStatement.${tab}.upperBoundConfig`)}
                                 fullWidth
                                 InputProps={{
                                     inputProps: { min: 0 }

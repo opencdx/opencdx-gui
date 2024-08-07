@@ -74,6 +74,54 @@ export default function App({ questionnaire, navigation }) {
           field.anfStatementConnector = [field.anfStatementConnector[anfAnswer]];
         }
       }
+
+      if (field.anfStatementConnector && field.anfStatementConnector.length > 0) {
+        field.anfStatementConnector.forEach((currentStatment, index) => {
+          if (!isNaN(parseFloat(currentStatment.anfStatement.time?.lowerBoundConfig))) {
+            field.anfStatementConnector[index].anfStatement.time.lowerBound = parseFloat(currentStatment.anfStatement.time.lowerBoundConfig);
+          } else if (currentStatment.anfStatement.time?.lowerBoundConfig) {
+            field.anfStatementConnector[index].anfStatement.time.lowerBound = data[currentStatment.anfStatement.time?.lowerBoundConfig.match(/\d+/)[0]];
+          }
+          if (!isNaN(parseFloat(currentStatment.anfStatement.time?.upperBoundConfig.par))) {
+            field.anfStatementConnector[index].anfStatement.time.upperBound = parseFloat(currentStatment.anfStatement.time.upperBoundConfig);
+          } else if (currentStatment.anfStatement.time?.upperBoundConfig){
+            field.anfStatementConnector[index].anfStatement.time.upperBound = data[currentStatment.anfStatement.time?.upperBoundConfig.match(/\d+/)[0]];
+          }
+
+          if (!isNaN(parseFloat(currentStatment.anfStatement.performanceCircumstance?.timing?.lowerBoundConfig))) {
+            field.anfStatementConnector[index].anfStatement.time.lowerBound = parseFloat(currentStatment.anfStatement.time.lowerBoundConfig);
+          } else if (currentStatment.anfStatement.performanceCircumstance?.timing?.lowerBoundConfig){
+            field.anfStatementConnector[index].anfStatement.performanceCircumstance.timing.lowerBound = data[currentStatment.anfStatement.performanceCircumstance?.timing?.lowerBoundConfig.match(/\d+/)[0]];
+          }
+          if (!isNaN(parseFloat(currentStatment.anfStatement.performanceCircumstance?.timing?.upperBoundConfig.par))) {
+            field.anfStatementConnector[index].anfStatement.performanceCircumstance.timing.upperBound = parseFloat(currentStatment.anfStatement.timing.upperBoundConfig);
+          } else if (currentStatment.anfStatement.performanceCircumstance?.timing?.upperBoundConfig) {
+            field.anfStatementConnector[index].anfStatement.performanceCircumstance.timing.upperBound = data[currentStatment.anfStatement.performanceCircumstance?.timing?.upperBoundConfig.match(/\d+/)[0]];
+          }
+
+          if (!isNaN(parseFloat(currentStatment.anfStatement.performanceCircumstance?.normalRange?.lowerBoundConfig))) {
+            field.anfStatementConnector[index].anfStatement.normalRange.lowerBound = parseFloat(currentStatment.anfStatement.normalRange.lowerBoundConfig);
+          } else if (currentStatment.anfStatement.performanceCircumstance?.time?.lowerBoundConfig) {
+            field.anfStatementConnector[index].anfStatement.performanceCircumstance.normalRange.lowerBound = data[currentStatment.anfStatement.performanceCircumstance?.time?.lowerBoundConfig.match(/\d+/)[0]];
+          }
+          if (!isNaN(parseFloat(currentStatment.anfStatement.performanceCircumstance?.normalRange?.upperBoundConfig.par))) {
+            field.anfStatementConnector[index].anfStatement.performanceCircumstance.normalRange.upperBound = parseFloat(currentStatment.anfStatement.normalRange.upperBoundConfig);
+          } else if (currentStatment.anfStatement.performanceCircumstance?.normalRange?.upperBoundConfig) {
+            field.anfStatementConnector[index].anfStatement.performanceCircumstance.normalRange.upperBound = data[currentStatment.anfStatement.performanceCircumstance?.normalRange?.upperBoundConfig.match(/\d+/)[0]];
+          }
+
+          if (!isNaN(parseFloat(currentStatment.anfStatement.performanceCircumstance?.result?.lowerBoundConfig))) {
+            field.anfStatementConnector[index].anfStatement.result.lowerBound = parseFloat(currentStatment.anfStatement.result.lowerBoundConfig);
+          } else if (currentStatment.anfStatement.performanceCircumstance?.result?.lowerBoundConfig){
+            field.anfStatementConnector[index].anfStatement.performanceCircumstance.result.lowerBound = data[currentStatment.anfStatement.performanceCircumstance?.result?.lowerBoundConfig.match(/\d+/)[0]];
+          }
+          if (!isNaN(parseFloat(currentStatment.anfStatement.performanceCircumstance?.result?.upperBoundConfig.par))) {
+            field.anfStatementConnector[index].anfStatement.performanceCircumstance.result.upperBound = parseFloat(currentStatment.anfStatement.result.upperBoundConfig);
+          } else if (currentStatment.anfStatement.performanceCircumstance?.result?.upperBoundConfig){
+            field.anfStatementConnector[index].anfStatement.performanceCircumstance.result.upperBound = data[currentStatment.anfStatement.performanceCircumstance?.result?.upperBoundConfig.match(/\d+/)[0]];
+          }
+        });
+      }
     });
 
     const userQuestionnaireData = {

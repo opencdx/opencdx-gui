@@ -19,12 +19,12 @@ const TimeWrapper = ({
         <label className="text w-[250px]">Lower Bound</label>
         <Controller
           control={control}
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.lowerBound`}
+          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.lowerBoundConfig`}
           render={({ field }) => (
             <Input
               className="mb-4"
               label="Lower Bound"
-              type="number"
+              type="text"
               value={field.value}
               onChange={field.onChange}
             />
@@ -68,12 +68,12 @@ const TimeWrapper = ({
         <label className="text w-[250px]">Upper Bound</label>
         <Controller
           control={control}
-          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.upperBound`}
+          name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.time.upperBoundConfig`}
           render={({ field }) => (
             <Input
               className="mb-4"
               label="Upper Bound"
-              type="number"
+              type="text"
               value={field.value}
               onChange={field.onChange}
             />
