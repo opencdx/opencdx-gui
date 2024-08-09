@@ -1,0 +1,417 @@
+{
+    "id": "6644e6c1c6d5fc7d42dabf40",
+    "resourceType": "Questionnaire LIDR",
+    "title": "LIDR",
+    "status": "draft",
+    "description": "",
+    "item": [
+        {
+            "type": "choice",
+            "linkId": "8061462366643",
+            "text": "What was the test kit device used?",
+            "enableWhen": [],
+            "code": [
+                {
+                    "system": "lidr-result-conformances",
+                    "code": "ac475ee0-8f34-49e7-b0ba-28f5b4cb2a44"
+                }
+            ],
+            "item": [
+                {
+                    "enableWhen": [],
+                    "code": [],
+                    "item": [],
+                    "extension": [],
+                    "answerOption": [],
+                    "initial": [],
+                    "anfStatementConnector": [
+                        {
+                            "anfStatement": {
+                                "id": "",
+                                "time": {
+                                    "upperBound": "",
+                                    "lowerBound": "",
+                                    "includeUpperBound": false,
+                                    "includeLowerBound": false,
+                                    "semantic": "",
+                                    "resolution": ""
+                                },
+                                "authors": [],
+                                "subjectOfInformation": "",
+                                "associatedStatement": [],
+                                "topic": "",
+                                "type": "",
+                                "status": "STATUS_UNSPECIFIED"
+                            },
+                            "anfStatementType": "ANF_STATEMENT_TYPE_UNSPECIFIED",
+                            "anfOperatorType": "ANF_OPERATOR_TYPE_UNSPECIFIED",
+                            "operatorValue": ""
+                        }
+                    ],
+                    "answer": []
+                }
+            ],
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "id": "",
+                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                "version": "",
+                                "code": "drop-down",
+                                "display": "Drop down"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "SARS-CoV-2 (COVID-19) N gene [Presence] in Respiratory specimen by NAA with probe detection"
+                    },
+                    "extension": []
+                }
+            ],
+            "initial": [],
+            "anfStatementConnector": [],
+            "answer": []
+        },
+        {
+            "type": "choice",
+            "linkId": "1773018523777",
+            "text": "What was the result of the test 1?",
+            "enableWhen": [
+                {
+                    "question": "8061462366643",
+                    "operator": "=",
+                    "answerCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Test 1"
+                    }
+                }
+            ],
+            "code": [
+                {
+                    "system": "lidr-allowed-results",
+                    "code": "ac475ee0-8f34-49e7-b0ba-28f5b4cb2a44"
+                }
+            ],
+            "item": [
+                {
+                    "enableWhen": [],
+                    "code": [],
+                    "item": [],
+                    "extension": [],
+                    "answerOption": [],
+                    "initial": [],
+                    "anfStatementConnector": [
+                        {
+                            "anfStatement": {
+                                "id": "",
+                                "time": {
+                                    "upperBound": "",
+                                    "lowerBound": "",
+                                    "includeUpperBound": false,
+                                    "includeLowerBound": false,
+                                    "semantic": "",
+                                    "resolution": ""
+                                },
+                                "authors": [],
+                                "subjectOfInformation": "",
+                                "associatedStatement": [],
+                                "topic": "",
+                                "type": "",
+                                "status": "STATUS_UNSPECIFIED"
+                            },
+                            "anfStatementType": "ANF_STATEMENT_TYPE_UNSPECIFIED",
+                            "anfOperatorType": "ANF_OPERATOR_TYPE_UNSPECIFIED",
+                            "operatorValue": ""
+                        }
+                    ],
+                    "answer": []
+                }
+            ],
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "id": "",
+                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                "version": "",
+                                "code": "drop-down",
+                                "display": "Drop down"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Indeterminate (qualifier value)"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Invalid result (qualifier value)"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Detected (qualifier value)"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Test not done (qualifier value)"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Not detected (qualifier value)"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Specimen unsatisfactory for evaluation (finding)"
+                    },
+                    "extension": []
+                }
+            ],
+            "initial": [],
+            "anfStatementConnector": [],
+            "answer": []
+        },
+        {
+            "type": "choice",
+            "linkId": "7708449731754",
+            "text": "What was the result of the test 2?",
+            "enableWhen": [
+                {
+                    "question": "8061462366643",
+                    "operator": "=",
+                    "answerCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Test 2"
+                    }
+                }
+            ],
+            "code": [],
+            "item": [
+                {
+                    "enableWhen": [],
+                    "code": [],
+                    "item": [],
+                    "extension": [],
+                    "answerOption": [],
+                    "initial": [],
+                    "anfStatementConnector": [
+                        {
+                            "anfStatement": {
+                                "id": "",
+                                "time": {
+                                    "upperBound": "",
+                                    "lowerBound": "",
+                                    "includeUpperBound": false,
+                                    "includeLowerBound": false,
+                                    "semantic": "",
+                                    "resolution": ""
+                                },
+                                "authors": [],
+                                "subjectOfInformation": "",
+                                "associatedStatement": [],
+                                "topic": "",
+                                "type": "",
+                                "status": "STATUS_UNSPECIFIED"
+                            },
+                            "anfStatementType": "ANF_STATEMENT_TYPE_UNSPECIFIED",
+                            "anfOperatorType": "ANF_OPERATOR_TYPE_UNSPECIFIED",
+                            "operatorValue": ""
+                        }
+                    ],
+                    "answer": []
+                }
+            ],
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "id": "",
+                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                "version": "",
+                                "code": "drop-down",
+                                "display": "Drop down"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Choice 3"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Choice 4"
+                    },
+                    "extension": []
+                }
+            ],
+            "initial": [],
+            "anfStatementConnector": [],
+            "answer": []
+        },
+        {
+            "type": "choice",
+            "linkId": "3433880349128",
+            "text": "What was the result of the test 3?",
+            "enableWhen": [
+                {
+                    "question": "8061462366643",
+                    "operator": "=",
+                    "answerCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Test 3"
+                    }
+                }
+            ],
+            "code": [],
+            "item": [
+                {
+                    "enableWhen": [],
+                    "code": [],
+                    "item": [],
+                    "extension": [],
+                    "answerOption": [],
+                    "initial": [],
+                    "anfStatementConnector": [
+                        {
+                            "anfStatement": {
+                                "id": "",
+                                "time": {
+                                    "upperBound": "",
+                                    "lowerBound": "",
+                                    "includeUpperBound": false,
+                                    "includeLowerBound": false,
+                                    "semantic": "",
+                                    "resolution": ""
+                                },
+                                "authors": [],
+                                "subjectOfInformation": "",
+                                "associatedStatement": [],
+                                "topic": "",
+                                "type": "",
+                                "status": "STATUS_UNSPECIFIED"
+                            },
+                            "anfStatementType": "ANF_STATEMENT_TYPE_UNSPECIFIED",
+                            "anfOperatorType": "ANF_OPERATOR_TYPE_UNSPECIFIED",
+                            "operatorValue": ""
+                        }
+                    ],
+                    "answer": []
+                }
+            ],
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "id": "",
+                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                "version": "",
+                                "code": "drop-down",
+                                "display": "Drop down"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Choice 5"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Choice 6"
+                    },
+                    "extension": []
+                }
+            ],
+            "initial": [],
+            "anfStatementConnector": [],
+            "answer": []
+        }
+    ]
+}
