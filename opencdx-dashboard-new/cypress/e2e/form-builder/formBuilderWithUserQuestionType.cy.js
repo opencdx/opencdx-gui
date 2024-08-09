@@ -68,14 +68,6 @@ describe('New form-builder E2E Test', () => {
 
           //click Save
           cy.get('button').contains('Submit').click()
-          
-      // We can go even further and check that the default todos each contain
-      // the correct text. We use the `first` and `last` functions
-      // to get just the first and last matched elements individually,
-      // and then perform an assertion with `should`.
-
-      //cy.get('[data-slot="mainWrapper"]').eq(0).click()
-      //cy.get('span').contains('Equal').click()
     })
   })
   
