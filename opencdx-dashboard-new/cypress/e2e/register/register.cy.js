@@ -25,8 +25,7 @@ describe('Register Test', () => {
       // We use the `cy.get()` command to get all elements that match the selector.
       // Then, we use `should` to assert that there are two matched items,
       // which are the two default items.
-      //cy.get('.w-full').contains('Sign in').click()
-      cy.get('[role="link"]').contains('Don\'t have an account?').click()
+      cy.get('[role="link"]').contains('Sign up').click()
       cy.wait(5000)
       cy.get('[alt="nextui logo"]').should('exist')
       cy.get('[for="first_name"]').should('exist')
@@ -37,7 +36,10 @@ describe('Register Test', () => {
       cy.get('[data-slot="inner-wrapper"]').eq(2).should('exist')
       cy.get('[for="password"]').should('exist')
       cy.get('[data-slot="inner-wrapper"]').eq(2).should('exist')
-      cy.get('[type="submit"]').should('exist')
-      cy.get('[role="link"]').contains('Already have an account?').click()      
+      cy.get('[type="button"]').contains('Sign up').should('exist')
+      cy.get('.text-center.text-gray-500').contains('Already have an account?').should('exist')
+      cy.get('[role="link"]').contains('Login').click()
+      // cy.wait(10000)
+      // cy.url().should('include', 'http://localhost:3000/login')
     })
   })

@@ -25,12 +25,12 @@ describe('Login Test', () => {
       // We use the `cy.get()` command to get all elements that match the selector.
       // Then, we use `should` to assert that there are two matched items,
       // which are the two default items.
-      cy.get('[alt="opencdx logo s"]').should('exist')
+      cy.get('[alt="opencdx logos"]').should('exist')
       cy.get('#email').should('exist')
       cy.get('#password').should('exist')
       cy.get('[class="focus:outline-none"]').should('exist')
-      cy.get('.w-full').contains('Sign in').click()
-      cy.get('[role="link"]').contains('Don\'t have an account?').should('exist')
+      cy.get('.w-full').contains('Login').should('exist')
+      cy.get('.text-center.text-gray-500').contains('Already have an account?').should('exist')
       
   
       // We can go even further and check that the default todos each contain
