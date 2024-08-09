@@ -62,9 +62,6 @@ describe('New form-builder E2E Test', () => {
           cy.get('[data-slot="input-wrapper"]').eq(1).clear()
           cy.get('[data-slot="input-wrapper"]').eq(1).type('120')
 
-          //select upper bound radio as required
-          //cy.get('div').contains('Not Specified').eq(1).click()
-
           //clear sematic field and enter new value
           cy.get('[data-slot="input-wrapper"]').eq(2).clear()
           cy.get('[data-slot="input-wrapper"]').eq(2).type('5 seconds')
@@ -146,9 +143,6 @@ describe('New form-builder E2E Test', () => {
           //clear Upper Bound field and enter new value
           cy.get('[data-slot="input-wrapper"]').eq(2).clear()
           cy.get('[data-slot="input-wrapper"]').eq(2).type('Test_Upper')
-
-          //select Include Upper Bound radio
-          //cy.get('div').contains('Yes').eq(1).click()
 
           //clear Sematic field and enter new value
           cy.get('[data-slot="input-wrapper"]').eq(3).clear()
