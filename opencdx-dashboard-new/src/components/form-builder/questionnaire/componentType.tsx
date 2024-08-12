@@ -61,7 +61,7 @@ const ComponentTypeWrapper = ({
                 <div className="w-1/2">
                   <CustomRadio
                     description="Component marked as Main ANF type"
-                    value="ANF_STATEMENT_TYPE_MAIN"
+                    value={AnfStatementType.AnfStatementTypeMain}
                   >
                     Main ANF Statement
                   </CustomRadio>
@@ -69,7 +69,7 @@ const ComponentTypeWrapper = ({
                 <div className="w-1/2">
                   <CustomRadio
                     description="Select Main Statement for the Associated Statement"
-                    value="ANF_STATEMENT_TYPE_ASSOCIATED"
+                    value={AnfStatementType.AnfStatementTypeAssociated}
                     className="w-full"
                   >
                     Associated ANF Statement
@@ -78,7 +78,7 @@ const ComponentTypeWrapper = ({
                 <div className="w-1/2">
                   <CustomRadio
                     description="User Provided Data"
-                    value="ANF_STATEMENT_USER_QUESTION"
+                    value={AnfStatementType.AnfStatementUserQuestion}
                   >
                     User Question
                   </CustomRadio>
@@ -86,7 +86,7 @@ const ComponentTypeWrapper = ({
                 <div className="w-1/2">
                   <CustomRadio
                     description="Component marked as non ANF type."
-                    value="ANF_STATEMENT_TYPE_NOT_APPLICABLE"
+                    value={AnfStatementType.AnfStatementTypeNotApplicable}
                   >
                     Not Applicable
                   </CustomRadio>
