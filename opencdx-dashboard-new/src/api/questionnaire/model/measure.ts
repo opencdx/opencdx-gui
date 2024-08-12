@@ -25,10 +25,22 @@ import type { LogicalExpression } from './logical-expression';
 export interface Measure {
     /**
      * 
+     * @type {string}
+     * @memberof Measure
+     */
+    'upperBoundConfig'?: string;
+    /**
+     * 
      * @type {number}
      * @memberof Measure
      */
     'upperBound'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Measure
+     */
+    'lowerBoundConfig'?: string;
     /**
      * 
      * @type {number}
