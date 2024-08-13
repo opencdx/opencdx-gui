@@ -30,8 +30,8 @@ export const useUpdateFormContext = (): FormValueUpdater => {
         currentComponentType === AnfStatementType.AnfStatementTypeAssociated
       ) {
         paths.forEach((path) => {
-          setValue(`${path}.lowerBound`, systemVariables?.time.lowerBound);
-          setValue(`${path}.upperBound`, systemVariables?.time.upperBound);
+          setValue(`${path}.lowerBoundConfig`, systemVariables?.time.lowerBoundConfig);
+          setValue(`${path}.upperBoundConfig`, systemVariables?.time.upperBoundConfig);
           setValue(`${path}.semantic.expression`, systemVariables?.time.semantic);
           setValue(`${path}.resolution`, systemVariables?.time.resolution);
           setValue(`${path}.includeUpperBound`, systemVariables?.time.includeUpperBound);

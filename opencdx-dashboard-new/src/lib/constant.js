@@ -167,10 +167,10 @@ export const observationAttributes = [
 
 export const systemVariables = {
     time: {
-        lowerBound: 70,
+        lowerBoundConfig: 70,
         semantic: 'Seconds | ${{upperbound - lowerbound}}',
         resolution: 1,
-        upperBound: 90,
+        upperBoundConfig: 90,
         includeLowerBound: true,
         includeUpperBound: true
     },
