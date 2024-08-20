@@ -148,7 +148,7 @@ export default function ResetPassword() {
                     onClick={toggleVisibility}
                   >
                     {isVisible ? (
-                      <Image alt="nextui logo" src="/eye.png" />
+                      <Image alt="nextui logo" src="/eye.svg" />
                     ) : (
                       <Image alt="nextui logo" src="/cross_eye.svg" />
                     )}

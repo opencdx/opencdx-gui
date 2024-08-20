@@ -106,7 +106,7 @@ const handleError = (error: AxiosError) => {
               isRequired
               onValueChange={setUsername}
             />
-          <div className="w-full flex flex-col gap-0">
+          <div className="w-full flex flex-col m-0 gap-0">
             <Input
                 id="password"
                 label={t('password_placeholder')}
@@ -124,7 +124,7 @@ const handleError = (error: AxiosError) => {
                     onClick={toggleVisibility}
                   >
                     {isVisible ? (
-                      <Image alt="nextui logo" src="/eye.png" />
+                      <Image alt="nextui logo" src="/eye.svg" />
                     ) : (
                       <Image alt="nextui logo" src="/cross_eye.svg" />
                     )}
@@ -137,7 +137,7 @@ const handleError = (error: AxiosError) => {
             </div>
             
           </CardBody>
-          <CardFooter className="flex justify-end">
+          <CardFooter className="flex m-0 justify-end">
             <Link
               className="text-center"
               color="primary"

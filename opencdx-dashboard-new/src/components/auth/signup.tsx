@@ -183,7 +183,7 @@ export default function SignUp() {
                       <Image
                         alt="nextui logo"
                         height={25}
-                        src="/eye.png"
+                        src="/eye.svg"
                         width={25}
                       />
                     ) : (
