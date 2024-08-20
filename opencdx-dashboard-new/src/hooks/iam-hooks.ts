@@ -1,6 +1,7 @@
 
 import { iamApi, questionnaireApi, classificationApi } from "../api";
-import { LoginRequest, SignUpRequest, ChangePasswordRequest } from "../api/iam";
+import { LoginRequest, SignUpRequest, ChangePasswordRequest, ResetPasswordRequest } from "../api/iam";
+
 
 import { GetQuestionnaireListRequest, QuestionnaireRequest } from "@/api/questionnaire";
 import { RuleSetsRequest } from "@/api/classification";
@@ -16,7 +17,7 @@ import { useRouter } from 'next/navigation';
 // - onError: A callback function that is called when the login request fails
 
 
-export const useLogin = () => {
+export const useLogin = (onSuccess: (data: any) => void, onError: (error: any) => void) => {
     const router = useRouter();
 
     return useMutation({
@@ -25,9 +26,11 @@ export const useLogin = () => {
             const { token } = data.data
             localStorage.setItem('serviceToken', token as string);
             router.push('/form-builder');
+            if (onSuccess) onSuccess(data);
         },
         onError: (error) => {
             console.error('Login failed:', error);
+            if (onError) onError(error);
         },
     });
 };
@@ -42,6 +45,19 @@ export const useSignUp = () => {
         },
         onError: (error) => {
             console.error('Registration failed:', error);
+        },
+    });
+}
+
+export const useResetPassword = () => {
+    const router = useRouter();
+    return useMutation({
+        mutationFn: (credentials: ResetPasswordRequest) => iamApi.resetPassword({ resetPasswordRequest: credentials }),
+        onSuccess: (data) => {
+            router.push('/login');
+        },
+        onError: (error) => {
+            console.error('Password change failed:', error);
         },
     });
 }

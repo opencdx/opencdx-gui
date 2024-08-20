@@ -20,9 +20,26 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useLogin } from '@/hooks/iam-hooks';
 import { useTranslations } from 'next-intl';
 import { Button, Input } from 'ui-library';
+import { AxiosError } from 'axios';
+import { set } from 'cypress/types/lodash';
 
 export default function Login() {
-  const { mutate: login, error } = useLogin();
+  // Define success and error callback functions
+const handleSuccess = (data: any) => {
+    setIsLoading(false); 
+    console.log('Login successful:', data);
+};
+
+const handleError = (error: AxiosError) => {
+    setIsLoading(false); 
+    const errorData = error.response?.data as { cause: { localizedMessage: string } };
+    if(errorData){
+      setErrorMessage(errorData.cause.localizedMessage);
+    } else {
+      setErrorMessage(t('error_occurred'));
+    }
+};
+  const { mutate: login, error } = useLogin(handleSuccess, handleError);
   const [isLoading, setIsLoading] = useState(false);
 
   const t = useTranslations('common');
@@ -30,6 +47,7 @@ export default function Login() {
   const [isVisible, setIsVisible] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const toggleVisibility = () => setIsVisible(!isVisible);
   // check the value of all fields in the form, if all fields are filled, the button will be enabled
   const isDisabled = () => {
@@ -37,26 +55,19 @@ export default function Login() {
   };
 
   const handlePasswordChange = (newPassword: string) => {
+    setErrorMessage('');
     setPassword(newPassword);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setIsLoading(true); // Set loading to true before making the API call
-
+    setErrorMessage('');
     e.preventDefault();
 
     const userName = e.currentTarget.email.value;
     const password = e.currentTarget.password.value;
 
     await login({ userName, password });
-    setIsLoading(false); // Set loading to false after making the API call
-
-    if (error) {
-      toast.error(error.message || t('error_occurred'), {
-        position: 'top-center',
-        autoClose: 2000,
-      });
-    }
   };
 
   return (
@@ -95,32 +106,46 @@ export default function Login() {
               isRequired
               onValueChange={setUsername}
             />
-
+          <div className="w-full flex flex-col gap-0">
             <Input
-              id="password"
-              label={t('password_placeholder')}
-              defaultValue=""
-              isRequired
-              variant="bordered"
-              type={isVisible ? 'text' : 'password'}
-              onValueChange={handlePasswordChange}
-              errorMessage={t('invalid_password')}
-              endContent={
-                <button
-                  aria-label="toggle password visibility"
-                  className="focus:outline-none"
-                  type="button"
-                  onClick={toggleVisibility}
-                >
-                  {isVisible ? (
-                    <Image alt="nextui logo" src="/eye.png" />
-                  ) : (
-                    <Image alt="nextui logo" src="/cross_eye.png" />
-                  )}
-                </button>
-              }
-            />
+                id="password"
+                label={t('password_placeholder')}
+                defaultValue=""
+                isRequired
+                variant="bordered"
+                type={isVisible ? 'text' : 'password'}
+                onValueChange={handlePasswordChange}
+                errorMessage={ errorMessage.length > 0 ? errorMessage : t('invalid_password')}
+                endContent={
+                  <button
+                    aria-label="toggle password visibility"
+                    className="focus:outline-none"
+                    type="button"
+                    onClick={toggleVisibility}
+                  >
+                    {isVisible ? (
+                      <Image alt="nextui logo" src="/eye.png" />
+                    ) : (
+                      <Image alt="nextui logo" src="/cross_eye.svg" />
+                    )}
+                  </button>
+                }
+              />
+              {errorMessage && (
+                <p className="text-danger" style={{ fontSize: '0.70rem' }}>&nbsp;&nbsp;&nbsp;{errorMessage}</p>
+              )}
+            </div>
+            
           </CardBody>
+          <CardFooter className="flex justify-end">
+            <Link
+              className="text-center"
+              color="primary"
+              onPress={() => router.push('/forgot-password')}
+            >
+              {t('forgot_password_label')}
+            </Link>
+          </CardFooter>
           <CardFooter>
             <Button
               className="w-full"

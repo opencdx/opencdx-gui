@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import '../../styles/password-validation.css';
 
 import { useRouter } from 'next/navigation';
 import { useSignUp } from '@/hooks/iam-hooks';
@@ -32,21 +33,37 @@ export default function SignUp() {
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [isPasswordStrong, setIsPasswordStrong] = useState(false);
   const [isUsernameValid, setIsUsernameValid] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
+  const [validation, setValidation] = useState({
+    length: false,
+    specialChar: false,
+    uppercase: false,
+    lowercase: false,
+    number: false
+  });
+
+  const validatePassword = (pass: string) => {
+    setValidation({
+      length: pass.length >= 8,
+      specialChar: /[!@#$%^&*(),.?":{}|<>]/.test(pass),
+      uppercase: /[A-Z]/.test(pass),
+      lowercase: /[a-z]/.test(pass),
+      number: /[0-9]/.test(pass)
+    });
+  };
 
   // check the value of all fields in the form, if all fields are filled, the button will be enabled
   const isDisabled = () => {
     return (
-      !username || !password || !firstName || !lastName || !isPasswordStrong
+      !username || !password || !firstName || !lastName || !validation.length || !validation.specialChar || !validation.uppercase || !validation.lowercase || !validation.number
     );
   };
 
   const handlePasswordChange = (newPassword: string) => {
     setPassword(newPassword);
-    setIsPasswordStrong(isStrongPassword(newPassword));
+    validatePassword(newPassword);
   };
 
   const handleUsernameChange = (newUsername: string) => {
@@ -54,17 +71,7 @@ export default function SignUp() {
     setIsUsernameValid(isValidEmail(newUsername));
   };
 
-  const isStrongPassword = (password: string) => {
-    return true;
-    // password strength validation logic
-    // checking if the password is at least 8 characters long and contains at least one uppercase letter, one lowercase letter, and one number
-    return (
-      password.length >= 8 &&
-      /[A-Z]/.test(password) &&
-      /[a-z]/.test(password) &&
-      /\d/.test(password)
-    );
-  };
+
 
   const isValidEmail = (email: string) => {
     return email.length > 0;
@@ -163,7 +170,6 @@ export default function SignUp() {
                 defaultValue=""
                 variant="bordered"
                 type={isVisible ? 'text' : 'password'}
-                isInvalid={!isPasswordStrong && password.length > 0}
                 errorMessage={t('invalid_password')}
                 onValueChange={handlePasswordChange}
                 endContent={
@@ -184,7 +190,7 @@ export default function SignUp() {
                       <Image
                         alt="nextui logo"
                         height={25}
-                        src="/cross_eye.png"
+                        src="/cross_eye.svg"
                         width={25}
                       />
                     )}
@@ -192,6 +198,28 @@ export default function SignUp() {
                 }
               />
             </div>
+            <div className="validation-container">
+                    <ValidationRow
+                    isValid={validation.length}
+                    label={t("password_min_characters")}
+                    />
+                    <ValidationRow
+                    isValid={validation.specialChar}
+                    label={t("password_special_characters")}
+                    />
+                    <ValidationRow
+                    isValid={validation.number}
+                    label={t("password_number_characters")}
+                    />
+                    <ValidationRow
+                    isValid={validation.lowercase}
+                    label={t("password_lower_characters")}
+                    />
+                    <ValidationRow
+                    isValid={validation.uppercase}
+                    label={t("password_upper_characters")}
+                    />
+                </div>
           </CardBody>
           <CardFooter>
             <Button
@@ -256,3 +284,40 @@ export default function SignUp() {
     </div>
   );
 }
+
+const ValidationRow = ({ isValid, label }: { isValid: boolean, label: string }) => (
+  <div className="validation-row">
+    {isValid ? (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="blue"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="validation-icon"
+      >
+        <path d="M20 6L9 17l-5-5" />
+      </svg>
+    ) : (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#D1D5DB"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="validation-icon"
+      >
+        <path d="M18 6L6 18M6 6l12 12" />
+      </svg>
+    )}
+    <p className='text-gray-400 text-small' style={{ fontSize: '0.80rem' }}>{label}</p>
+  </div>
+);

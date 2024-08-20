@@ -40,6 +40,8 @@ export * from './privacy-protection-data';
 export * from './privacy-protection-data-request';
 export * from './real-time-monitoring-data';
 export * from './real-time-monitoring-data-request';
+export * from './reset-password-request';
+export * from './reset-password-response';
 export * from './security-response';
 export * from './sign-up-request';
 export * from './sign-up-response';

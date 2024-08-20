@@ -49,6 +49,8 @@ model/privacy-protection-data-request.ts
 model/privacy-protection-data.ts
 model/real-time-monitoring-data-request.ts
 model/real-time-monitoring-data.ts
+model/reset-password-request.ts
+model/reset-password-response.ts
 model/security-response.ts
 model/sign-up-request.ts
 model/sign-up-response.ts
