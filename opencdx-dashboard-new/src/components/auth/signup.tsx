@@ -1,13 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import ValidationRow from '@/components/custom/validationRow';
 import '../../styles/password-validation.css';
-
 import { useRouter } from 'next/navigation';
 import { useSignUp } from '@/hooks/iam-hooks';
 import { toast, ToastContainer } from 'react-toastify';
-import { organizationId, workspaceId, systemName, type} from '@/lib/constant';
-
+import { type} from '@/lib/constant';
 import { Link } from '@nextui-org/link';
 import {
   Card,
@@ -43,7 +42,6 @@ export default function SignUp() {
     lowercase: false,
     number: false
   });
-
   const validatePassword = (pass: string) => {
     setValidation({
       length: pass.length >= 8,
@@ -53,7 +51,6 @@ export default function SignUp() {
       number: /[0-9]/.test(pass)
     });
   };
-
   // check the value of all fields in the form, if all fields are filled, the button will be enabled
   const isDisabled = () => {
     return (
@@ -71,8 +68,6 @@ export default function SignUp() {
     setIsUsernameValid(isValidEmail(newUsername));
   };
 
-
-
   const isValidEmail = (email: string) => {
     return email.length > 0;
     // email validation logic
@@ -82,13 +77,11 @@ export default function SignUp() {
 
   const handleSubmit =  async() => {
      await signUp({
+      type,
       username,
       password,
       firstName,
       lastName,
-      systemName,
-      organizationId,
-      workspaceId,
     });
 
     if (error) {
@@ -170,7 +163,6 @@ export default function SignUp() {
                 defaultValue=""
                 variant="bordered"
                 type={isVisible ? 'text' : 'password'}
-                errorMessage={t('invalid_password')}
                 onValueChange={handlePasswordChange}
                 endContent={
                   <button
@@ -180,14 +172,14 @@ export default function SignUp() {
                     onClick={toggleVisibility}
                   >
                     {isVisible ? (
-                      <Image
+                      <img
                         alt="nextui logo"
                         height={25}
                         src="/eye.svg"
                         width={25}
                       />
                     ) : (
-                      <Image
+                      <img
                         alt="nextui logo"
                         height={25}
                         src="/cross_eye.svg"
@@ -197,8 +189,7 @@ export default function SignUp() {
                   </button>
                 }
               />
-            </div>
-            <div className="validation-container">
+              <div className="validation-container">
                     <ValidationRow
                     isValid={validation.length}
                     label={t("password_min_characters")}
@@ -220,6 +211,7 @@ export default function SignUp() {
                     label={t("password_upper_characters")}
                     />
                 </div>
+            </div>
           </CardBody>
           <CardFooter>
             <Button
@@ -284,40 +276,3 @@ export default function SignUp() {
     </div>
   );
 }
-
-const ValidationRow = ({ isValid, label }: { isValid: boolean, label: string }) => (
-  <div className="validation-row">
-    {isValid ? (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="blue"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="validation-icon"
-      >
-        <path d="M20 6L9 17l-5-5" />
-      </svg>
-    ) : (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="#D1D5DB"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="validation-icon"
-      >
-        <path d="M18 6L6 18M6 6l12 12" />
-      </svg>
-    )}
-    <p className='text-gray-400 text-small' style={{ fontSize: '0.80rem' }}>{label}</p>
-  </div>
-);

@@ -2,21 +2,39 @@
 
 import React, { useEffect, useState } from 'react';
 import '../../styles/password-validation.css';
-
-
+import styles from '../../styles/custom-input.module.css';
+import { AxiosError } from 'axios';
+import ValidationRow from '@/components/custom/validationRow';
 
 import { Card, CardBody, CardFooter, CardHeader, Image, user } from '@nextui-org/react';
 import { toast, ToastContainer } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 import 'react-toastify/dist/ReactToastify.css';
 import { useResetPassword } from '@/hooks/iam-hooks';
 
 import { Button, Input } from 'ui-library';
 import {useTranslations} from 'next-intl';
+import { use } from 'chai';
+import { set } from 'cypress/types/lodash';
 // import { cookies } from 'next/headers';
 
 
 export default function ResetPassword() {
-  const { mutate: resetPassword, error } = useResetPassword();
+  const handleSuccess = (data: any) => {
+    setIsLoading(false); 
+    console.log('Login successful:', data);
+};
+
+const handleError = (error: AxiosError) => {
+    setIsLoading(false); 
+    const errorData = error.response?.data as { cause: { localizedMessage: string } };
+    if(errorData){
+      setErrorMessage(errorData.cause.localizedMessage);
+    } else {
+      setErrorMessage(t('error_occurred'));
+    }
+};
+  const { mutate: resetPassword, error } = useResetPassword(handleSuccess, handleError);
   const t = useTranslations('common');
   const [isVisible, setIsVisible] = useState(false);
   const [password, setPassword] = useState('');
@@ -25,6 +43,7 @@ export default function ResetPassword() {
   const [username, setUsername] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const toggleVisibility = () => setIsVisible(!isVisible);
+  const [isLoading, setIsLoading] = useState(false);
   const [validation, setValidation] = useState({
     length: false,
     specialChar: false,
@@ -42,7 +61,6 @@ export default function ResetPassword() {
       number: /[0-9]/.test(pass)
     });
   };
-
   const isDisabled = () => {
     // validate the username as email address
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -73,19 +91,11 @@ export default function ResetPassword() {
     setConfirmPassword(newPassword);
     setConfirmPasswordMatched(newPassword === password);
   };
- 
+
   const handleSubmit = async () => {
     if (username) {
-        console.log(username);
-        await resetPassword({ username, newPassword: password, newPasswordConfirmation: password });
+        resetPassword({ username, newPassword: password, newPasswordConfirmation: password});
     }
-    if (error) {
-        // setErrorMessage(error.response.data.cause.localizedMessage || t('error_occurred'));
-        toast.error(t('error_occurred'), {
-          position: 'top-center',
-          autoClose: 2000,
-        });
-      }
   };
 
   return (
@@ -106,7 +116,6 @@ export default function ResetPassword() {
             tabIndex={0}
             />
         </div>
-
         </CardHeader>
         <CardBody className="grid gap-4">
             <label className="text-start text-black-500 text-lg">
@@ -115,9 +124,7 @@ export default function ResetPassword() {
             <label className="text-start text-gray-500 text-sm">
                 {t("change_password_description")}
             </label>
-
-            <div className="w-full flex flex-col gap-6"> </div>
-
+            
             <Input
               required
               isReadOnly
@@ -129,8 +136,7 @@ export default function ResetPassword() {
               isRequired
               onValueChange={setUsername}
             />
-
-            <div className="w-full flex flex-col gap-3">
+            <div className="w-full flex flex-col gap-2">
             <Input
                 id="password"
                 label={t("new_password_placeholder")}
@@ -139,7 +145,7 @@ export default function ResetPassword() {
                 variant="bordered"
                 type={isVisible ? 'text' : 'password'}
                 onValueChange={handlePasswordChange}
-                errorMessage={ errorMessage.length > 0 ? errorMessage : t('invalid_password')}
+                
                 endContent={
                   <button
                     aria-label="toggle password visibility"
@@ -148,9 +154,9 @@ export default function ResetPassword() {
                     onClick={toggleVisibility}
                   >
                     {isVisible ? (
-                      <Image alt="nextui logo" src="/eye.svg" />
+                      <img alt="nextui logo" src="/eye.svg" />
                     ) : (
-                      <Image alt="nextui logo" src="/cross_eye.svg" />
+                      <img alt="nextui logo" src="/cross_eye.svg" />
                     )}
                   </button>
                 }
@@ -158,20 +164,18 @@ export default function ResetPassword() {
               {errorMessage && (
                 <p className="text-danger" style={{ fontSize: '0.70rem' }}>&nbsp;&nbsp;&nbsp;{errorMessage}</p>
               )}
-            </div>
-            <div className="w-full flex flex-col gap-3">
-            <Input
-              id="confirmPassword"
-              label={t('confirm_password_placeholder')}
-              defaultValue=""
-              isRequired
-              variant="bordered"
-              type={ "text" }
-              isInvalid={!confirmPasswordMatched}
-              onValueChange={handleConfirmPasswordChange}
-              errorMessage={t('password_mismatch')}
-            />
-             <div className="validation-container">
+              <Input
+                id="confirmPassword"
+                label={t('confirm_password_placeholder')}
+                defaultValue=""
+                isRequired
+                variant="bordered"
+                type={ "text" }
+                isInvalid={!confirmPasswordMatched}
+                onValueChange={handleConfirmPasswordChange}
+                errorMessage={t('password_mismatch')}
+              />
+                <div className="validation-container">
                     <ValidationRow
                     isValid={validation.length}
                     label={t("password_min_characters")}
@@ -193,10 +197,7 @@ export default function ResetPassword() {
                     label={t("password_upper_characters")}
                     />
                 </div>
-
             </div>
-           
-
           </CardBody>
           <CardFooter>
             <Button className="w-full"
@@ -214,39 +215,3 @@ export default function ResetPassword() {
   );
 }
 
-const ValidationRow = ({ isValid, label }: { isValid: boolean, label: string }) => (
-    <div className="validation-row">
-      {isValid ? (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="blue"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="validation-icon"
-        >
-          <path d="M20 6L9 17l-5-5" />
-        </svg>
-      ) : (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#D1D5DB"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="validation-icon"
-        >
-          <path d="M18 6L6 18M6 6l12 12" />
-        </svg>
-      )}
-      <p className='text-gray-400 text-small' style={{ fontSize: '0.80rem' }}>{label}</p>
-    </div>
-  );

@@ -41,7 +41,7 @@ export const useSignUp = () => {
     return useMutation({
         mutationFn: (credentials: SignUpRequest) => iamApi.signUp({ signUpRequest: credentials }),
         onSuccess: (data) => {
-            router.push('/form-builder');
+            router.push('/');
         },
         onError: (error) => {
             console.error('Registration failed:', error);
@@ -49,15 +49,17 @@ export const useSignUp = () => {
     });
 }
 
-export const useResetPassword = () => {
+export const useResetPassword = (onSuccess: (data: any) => void, onError: (error: any) => void) => {
     const router = useRouter();
     return useMutation({
         mutationFn: (credentials: ResetPasswordRequest) => iamApi.resetPassword({ resetPasswordRequest: credentials }),
         onSuccess: (data) => {
-            router.push('/login');
+            router.push('/reset-password-success');
+            if (onSuccess) onSuccess(data);
         },
         onError: (error) => {
             console.error('Password change failed:', error);
+            if (onError) onError(error);
         },
     });
 }

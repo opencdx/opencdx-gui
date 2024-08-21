@@ -43,12 +43,6 @@ export interface SignUpRequest {
      * @type {string}
      * @memberof SignUpRequest
      */
-    'systemName'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SignUpRequest
-     */
     'username'?: string;
     /**
      * 
@@ -56,18 +50,7 @@ export interface SignUpRequest {
      * @memberof SignUpRequest
      */
     'password'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SignUpRequest
-     */
-    'organizationId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SignUpRequest
-     */
-    'workspaceId'?: string;
+
 }
 
 export const Type = {
