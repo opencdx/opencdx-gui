@@ -1,6 +1,6 @@
 {
   "common": {
-    "login_failed": "Login failed",
+    "login_failed": "Invalid Credentials.",
     "error_occurred": "An error occurred",
     "email_usename_placeholder": "Email Address",
     "password_placeholder": "Password",

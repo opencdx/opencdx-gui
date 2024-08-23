@@ -20,7 +20,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useLogin } from '@/hooks/iam-hooks';
 import { useTranslations } from 'next-intl';
 import { Button, Input } from 'ui-library';
-import { AxiosError } from 'axios';
+import { AxiosError, HttpStatusCode } from 'axios';
 import { set } from 'cypress/types/lodash';
 
 export default function Login() {
@@ -33,7 +33,19 @@ const handleSuccess = (data: any) => {
 const handleError = (error: AxiosError) => {
     setIsLoading(false); 
     const errorData = error.response?.data as { cause: { localizedMessage: string } };
-    toast.error(errorData.cause.localizedMessage || t('error_occurred'));
+    const errorCode = error.response?.status 
+
+    if (errorCode === 401)
+    {
+       toast.error( t('login_failed'));
+    }
+    else{
+
+      toast.error(errorData.cause.localizedMessage || t('error_occurred'));
+
+    }
+    
+    
 };
   const { mutate: login, error } = useLogin(handleSuccess, handleError);
   const [isLoading, setIsLoading] = useState(false);
