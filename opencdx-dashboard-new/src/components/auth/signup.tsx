@@ -176,7 +176,6 @@ const handleError = (error: AxiosError) => {
                 endContent={
                   <button
                     aria-label="toggle password visibility"
-                    className="focus:outline-none"
                     type="button"
                     onClick={toggleVisibility}
                   >
@@ -198,7 +197,7 @@ const handleError = (error: AxiosError) => {
                   </button>
                 }
               />
-              <div className="validation-container">
+              <div className="validation-container" aria-label={"Password Criteria" + t("password_min_characters") + t("password_special_characters") + t("password_number_characters") + t("password_lower_characters") + t("password_upper_characters")} tabIndex={0}>
                     <ValidationRow
                     isValid={validation.length}
                     label={t("password_min_characters")}
@@ -233,7 +232,7 @@ const handleError = (error: AxiosError) => {
             </Button>
           </CardFooter>
           <CardFooter className="flex justify-center">
-            <label className="text-center text-gray-500">
+            <label className="text-center text-gray-500" tabIndex={0}>
               {t('already_have_account_placeholder')}
             </label>
             &nbsp;
@@ -274,11 +273,13 @@ const handleError = (error: AxiosError) => {
                 
               </ModalBody>
               <ModalFooter>
-                <Button color="primary" variant='bordered' onPress={onClose}>
+                <Button color="primary" variant='bordered' onPress={onClose} aria-label='Cancel' tabIndex={0}>
                   Cancel
                 </Button>
                 <Button
                     color="primary"
+                    aria-label='Continue to complete signup' 
+                    tabIndex={0}
                     onPress={() => {
                       onClose();
                       handleSubmit();

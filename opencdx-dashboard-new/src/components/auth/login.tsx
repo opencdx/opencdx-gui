@@ -117,7 +117,6 @@ const handleError = (error: AxiosError) => {
                 endContent={
                   <button
                     aria-label="toggle password visibility"
-                    className="focus:outline-none"
                     type="button"
                     onClick={toggleVisibility}
                   >

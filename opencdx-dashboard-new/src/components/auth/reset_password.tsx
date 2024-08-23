@@ -132,10 +132,10 @@ const handleError = (error: AxiosError) => {
         </div>
         </CardHeader>
         <CardBody className="grid gap-4">
-            <label className="text-start text-black-500 text-lg">
+            <label className="text-start text-black-500 text-lg" tabIndex={0}>
                 {t("change_password_title")}
             </label>
-            <label className="text-start text-gray-500 text-sm">
+            <label className="text-start text-gray-500 text-sm" tabIndex={0}>
                 {t("change_password_description")}
             </label>
             
@@ -165,7 +165,6 @@ const handleError = (error: AxiosError) => {
                 endContent={
                   <button
                     aria-label="toggle password visibility"
-                    className="focus:outline-none"
                     type="button"
                     onClick={toggleVisibility}
                   >
@@ -194,7 +193,6 @@ const handleError = (error: AxiosError) => {
                 endContent={
                   <button
                     aria-label="toggle password visibility"
-                    className="focus:outline-none"
                     type="button"
                     onClick={toggleConfirmVisibility}
                   >
@@ -206,7 +204,7 @@ const handleError = (error: AxiosError) => {
                   </button>
                 }
               />
-                <div className="validation-container">
+                <div className="validation-container" aria-label={"Password Criteria" + t("password_min_characters") + t("password_special_characters") + t("password_number_characters") + t("password_lower_characters") + t("password_upper_characters")} tabIndex={0}>
                     <ValidationRow
                     isValid={validation.length}
                     label={t("password_min_characters")}
@@ -268,11 +266,13 @@ const handleError = (error: AxiosError) => {
                 
               </ModalBody>
               <ModalFooter>
-                <Button color="primary" variant='bordered' onPress={onClose}>
+                <Button color="primary" variant='bordered' onPress={onClose} aria-label='Cancel' tabIndex={0}>
                   Cancel
                 </Button>
                 <Button
                     color="primary"
+                    aria-label='Continue to reset password' 
+                    tabIndex={0}
                     onPress={() => {
                       onClose();
                       handleSubmit();

@@ -67,10 +67,10 @@ export default function ForgotPassword() {
         </div>
         </CardHeader>
         <CardBody className="grid gap-4">
-            <label className="text-start text-black-500 text-lg">
+            <label className="text-start text-black-500 text-lg" tabIndex={0}>
                 {t("forgot_password_title")}
             </label>
-            <label className="text-start text-gray-500 text-sm">
+            <label className="text-start text-gray-500 text-sm" tabIndex={0}>
                 {t("forgot_password_description")}
             </label>
             <Input
