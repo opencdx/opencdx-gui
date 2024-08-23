@@ -28,7 +28,6 @@ export default function ResetPasswordSuccessPage() {
     >
       <Card
         className={`w-[500px] max-w-full p-4 ${isMobile ? 'h-[100%]' : ''}`}
-        tabIndex={0}
         shadow='none'
       >
         <CardBody className={`grid gap-2`}>
@@ -40,15 +39,17 @@ export default function ResetPasswordSuccessPage() {
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
             style={{ display: 'block', margin: '20px auto' }}
+            tabIndex={0}
+            aria-label='Success logo'
           >
             <circle cx="12" cy="12" r="10" fill="none" stroke="#006FEF" strokeWidth="2" />
             <path d="M7 12l3 3 7-7" stroke="#006FEF" strokeWidth="2" fill="none" />
           </svg>
           
-          <p className="text-center text-black-500 text-lg">
+          <p className="text-center text-black-500 text-lg" tabIndex={0}>
             {t('password_changed')}
           </p>
-          <p className="text-center text-gray-500 text-sm">
+          <p className="text-center text-gray-500 text-sm" tabIndex={0}>
             {t('password_change_success')}
           </p>
           </div>
@@ -62,6 +63,7 @@ export default function ResetPasswordSuccessPage() {
                 color={'primary'}
                 type="submit"
                 onClick={handleSubmit}
+                aria-label={t('proceed_to_login')}
             >
                 {t('proceed_to_login')}
             </Button>

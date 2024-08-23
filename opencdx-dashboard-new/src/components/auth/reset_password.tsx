@@ -14,8 +14,6 @@ import { useResetPassword } from '@/hooks/iam-hooks';
 
 import { Button, Input } from 'ui-library';
 import {useTranslations} from 'next-intl';
-import { use } from 'chai';
-import { set } from 'cypress/types/lodash';
 import Loading from '@/components/custom/loading';
 
 

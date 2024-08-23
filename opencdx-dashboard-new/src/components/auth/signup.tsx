@@ -181,14 +181,14 @@ const handleError = (error: AxiosError) => {
                   >
                     {isVisible ? (
                       <img
-                        alt="nextui logo"
+                        alt="password visibility image"
                         height={25}
                         src="/eye.svg"
                         width={25}
                       />
                     ) : (
                       <img
-                        alt="nextui logo"
+                        alt="password invisibility image"
                         height={25}
                         src="/cross_eye.svg"
                         width={25}
