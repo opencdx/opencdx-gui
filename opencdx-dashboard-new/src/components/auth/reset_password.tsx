@@ -6,7 +6,7 @@ import styles from '../../styles/custom-input.module.css';
 import { AxiosError } from 'axios';
 import ValidationRow from '@/components/custom/validationRow';
 
-import { Card, CardBody, CardFooter, CardHeader, Image, user } from '@nextui-org/react';
+import { Card, CardBody, CardFooter, CardHeader, Image, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from '@nextui-org/react';
 import { toast, ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,10 +16,11 @@ import { Button, Input } from 'ui-library';
 import {useTranslations} from 'next-intl';
 import { use } from 'chai';
 import { set } from 'cypress/types/lodash';
-// import { cookies } from 'next/headers';
+import Loading from '@/components/custom/loading';
 
 
 export default function ResetPassword() {
+  const router = useRouter();
   const handleSuccess = (data: any) => {
     setIsLoading(false); 
     console.log('Login successful:', data);
@@ -28,21 +29,20 @@ export default function ResetPassword() {
 const handleError = (error: AxiosError) => {
     setIsLoading(false); 
     const errorData = error.response?.data as { cause: { localizedMessage: string } };
-    if(errorData){
-      setErrorMessage(errorData.cause.localizedMessage);
-    } else {
-      setErrorMessage(t('error_occurred'));
-    }
+    toast.error(errorData.cause.localizedMessage || t('error_occurred'));
 };
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const { mutate: resetPassword, error } = useResetPassword(handleSuccess, handleError);
   const t = useTranslations('common');
   const [isVisible, setIsVisible] = useState(false);
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [confirmPasswordMatched, setConfirmPasswordMatched] = useState(true);
   const [username, setUsername] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const toggleVisibility = () => setIsVisible(!isVisible);
+  const toggleConfirmVisibility = () => setIsConfirmVisible(!isConfirmVisible);
   const [isLoading, setIsLoading] = useState(false);
   const [validation, setValidation] = useState({
     length: false,
@@ -94,12 +94,26 @@ const handleError = (error: AxiosError) => {
 
   const handleSubmit = async () => {
     if (username) {
+        setIsLoading(true);
         resetPassword({ username, newPassword: password, newPasswordConfirmation: password});
     }
   };
-
+  const handleBack = () => {
+    router.back();
+  };
   return (
+    <div>
+    <Button
+    className='button-no-hover'
+    color="primary"
+    variant="light"
+    onClick={handleBack} // Handle back button click
+    startContent={<Image src="/back.svg" alt="back" width={16} height={16} />}
+  >
+    {t('go_back')}
+  </Button>
     <div className="flex justify-center items-center h-screen min-h-[calc(100vh - 68px)]">
+      {isLoading && <Loading />}
         <Card
           aria-label="reset passowrd form"
           className="w-[500px] max-w-full p-4"
@@ -126,6 +140,7 @@ const handleError = (error: AxiosError) => {
             </label>
             
             <Input
+              className='label-color'
               required
               isReadOnly
               defaultValue={localStorage.getItem('username') ?? ''}
@@ -138,6 +153,7 @@ const handleError = (error: AxiosError) => {
             />
             <div className="w-full flex flex-col gap-2">
             <Input
+                className='label-color'
                 id="password"
                 label={t("new_password_placeholder")}
                 defaultValue=""
@@ -165,15 +181,30 @@ const handleError = (error: AxiosError) => {
                 <p className="text-danger" style={{ fontSize: '0.70rem' }}>&nbsp;&nbsp;&nbsp;{errorMessage}</p>
               )}
               <Input
+                className='label-color'
                 id="confirmPassword"
                 label={t('confirm_password_placeholder')}
                 defaultValue=""
                 isRequired
                 variant="bordered"
-                type={ "text" }
+                type={isConfirmVisible ? 'text' : 'password'}
                 isInvalid={!confirmPasswordMatched}
                 onValueChange={handleConfirmPasswordChange}
                 errorMessage={t('password_mismatch')}
+                endContent={
+                  <button
+                    aria-label="toggle password visibility"
+                    className="focus:outline-none"
+                    type="button"
+                    onClick={toggleConfirmVisibility}
+                  >
+                    {isConfirmVisible ? (
+                      <img alt="nextui logo" src="/eye.svg" />
+                    ) : (
+                      <img alt="nextui logo" src="/cross_eye.svg" />
+                    )}
+                  </button>
+                }
               />
                 <div className="validation-container">
                     <ValidationRow
@@ -204,13 +235,57 @@ const handleError = (error: AxiosError) => {
               color={isDisabled() ? 'default' : 'primary'}
               type="submit"
               disabled={isDisabled()}
-              onClick={handleSubmit}
+              onPress={onOpen}
             >
               {t("confirm_password_reset_button")}
             </Button>
           </CardFooter>
         </Card>
-      <ToastContainer />
+      <ToastContainer 
+          position={"top-right"}
+          icon={false}
+          autoClose={2000}
+          hideProgressBar={true}
+          closeOnClick={true}
+          pauseOnHover={true}
+          draggable={true}
+          theme={"colored"}
+          closeButton={false} 
+      />
+      <Modal 
+        isOpen={isOpen} 
+        placement={'center'}
+        onOpenChange={onOpenChange} 
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">Production Note</ModalHeader>
+              <ModalBody>
+                <p> 
+                In a production environment, you would receive an email for this step.
+                </p>
+                
+              </ModalBody>
+              <ModalFooter>
+                <Button color="primary" variant='bordered' onPress={onClose}>
+                  Cancel
+                </Button>
+                <Button
+                    color="primary"
+                    onPress={() => {
+                      onClose();
+                      handleSubmit();
+                    }}
+                  >
+                                    Continue
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+    </div>
     </div>
   );
 }

@@ -32,8 +32,23 @@ export default function ForgotPassword() {
     router.push('/reset-password');
   };
 
+  const handleBack = () => {
+    router.back();
+  };
+
   return (
+    <div>
+    <Button
+    className='button-no-hover'
+    color="primary"
+    variant="light"
+    onClick={handleBack} // Handle back button click
+    startContent={<Image src="/back.svg" alt="back" width={16} height={16} />}
+  >
+    {t('go_back')}
+  </Button>
     <div className="flex justify-center items-center h-screen min-h-[calc(100vh - 68px)]">
+     
         <Card
           aria-label="forgot passowrd form"
           className="w-[500px] max-w-full p-4"
@@ -59,6 +74,7 @@ export default function ForgotPassword() {
                 {t("forgot_password_description")}
             </label>
             <Input
+              className='label-color'
               required
               defaultValue=""
               variant="bordered"
@@ -80,7 +96,18 @@ export default function ForgotPassword() {
             </Button>
           </CardFooter>
         </Card>
-      <ToastContainer />
+        <ToastContainer 
+          position={"top-right"}
+          icon={false}
+          autoClose={2000}
+          hideProgressBar={true}
+          closeOnClick={true}
+          pauseOnHover={true}
+          draggable={true}
+          theme={"colored"}
+          closeButton={false} 
+      />
+    </div>
     </div>
   );
 }

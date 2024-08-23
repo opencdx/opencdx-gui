@@ -42,10 +42,7 @@ export default function PasswordChange() {
       await changePassword({ id, oldPassword, newPassword, newPasswordConfirmation });
     }
     if(error) {
-      toast.error(error.message || t('error_occurred'), {
-        position: 'top-center',
-        autoClose: 2000,
-      });
+      toast.error(error.message || t('error_occurred'));
     }
   };
 
@@ -74,6 +71,7 @@ export default function PasswordChange() {
           </CardHeader>
           <CardBody className="grid gap-4">
             <Input
+              className='label-color'
               required
               defaultValue=""
               variant="bordered"
@@ -85,6 +83,7 @@ export default function PasswordChange() {
             />
 
             <Input
+              className='label-color'
               id="newPassword"
               label={t('new_password_placeholder')}
               defaultValue=""
@@ -95,6 +94,7 @@ export default function PasswordChange() {
               errorMessage={t('invalid_password')}
             />
             <Input
+              className='label-color'
               id="confirmPassword"
               label={t('confirm_password_placeholder')}
               defaultValue=""
@@ -116,7 +116,17 @@ export default function PasswordChange() {
           </CardFooter>
         </Card>
       </form>
-      <ToastContainer />
+      <ToastContainer 
+          position={"top-right"}
+          icon={false}
+          autoClose={2000}
+          hideProgressBar={true}
+          closeOnClick={true}
+          pauseOnHover={true}
+          draggable={true}
+          theme={"colored"}
+          closeButton={false} 
+      />
     </div>
   );
 }

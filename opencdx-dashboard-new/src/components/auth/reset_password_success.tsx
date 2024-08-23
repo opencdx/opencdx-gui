@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react';
 import { Button } from 'ui-library';
 import { Card, CardBody, CardFooter } from '@nextui-org/react';
 import { useTranslations } from 'next-intl';
-
+import { useRouter } from 'next/navigation';
 export default function ResetPasswordSuccessPage() {
-    
+  const router = useRouter();
   const t = useTranslations('common');
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
@@ -17,6 +17,10 @@ export default function ResetPasswordSuccessPage() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  function handleSubmit() {
+    router.push('/login');
+  }
 
   return (
     <div
@@ -57,8 +61,9 @@ export default function ResetPasswordSuccessPage() {
                 className="w-full"
                 color={'primary'}
                 type="submit"
+                onClick={handleSubmit}
             >
-                {t('proceed_to_dashboard')}
+                {t('proceed_to_login')}
             </Button>
         </CardFooter>
       </Card>

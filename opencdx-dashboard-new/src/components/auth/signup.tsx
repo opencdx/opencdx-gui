@@ -17,14 +17,24 @@ import {
   Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure,
 } from '@nextui-org/react';
 import { Button, Input ,} from 'ui-library';
-
+import { AxiosError } from 'axios';
 import { useLocale, useTranslations } from 'next-intl';
-
+import Loading from '@/components/custom/loading';
 export default function SignUp() {
+  const handleSuccess = (data: any) => {
+    setIsLoading(false); 
+    console.log('Login successful:', data);
+};
+
+const handleError = (error: AxiosError) => {
+    setIsLoading(false); 
+    const errorData = error.response?.data as { cause: { localizedMessage: string } };
+    toast.error(errorData.cause.localizedMessage || t('error_occurred'));
+};
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
-  const { mutate: signUp, error } = useSignUp();
-
+  const { mutate: signUp, error } = useSignUp(handleSuccess, handleError);
+  const [isLoading, setIsLoading] = useState(false);
   const t = useTranslations('common');
   const locale = useLocale();
   const router = useRouter();
@@ -76,24 +86,19 @@ export default function SignUp() {
   };
 
   const handleSubmit =  async() => {
-     await signUp({
+    setIsLoading(true); // Set loading to true before making the API call
+     signUp({
       type,
       username,
       password,
       firstName,
       lastName,
     });
-
-    if (error) {
-      toast.error(error.message || t('error_occurred'), {
-        position: 'top-center',
-        autoClose: 2000,
-      });
-    }
   };
 
   return (
     <div className="flex justify-center items-center h-screen min-h-[calc(100vh - 68px)]">
+      {isLoading && <Loading />}
       <form
         className="flex justify-center items-center"
       >
@@ -117,6 +122,7 @@ export default function SignUp() {
             <div className="grid gap-2">
               <div className="grid gap-2 md:grid-cols-2">
                 <Input
+                  className='label-color'
                   required
                   defaultValue=""
                   id="first_name"
@@ -127,6 +133,7 @@ export default function SignUp() {
                   onValueChange={setFirstName}
                 />
                 <Input
+                  className='label-color'
                   required
                   defaultValue=""
                   id="last_name"
@@ -142,6 +149,7 @@ export default function SignUp() {
             <div className="grid gap-2">
               <div className="grid gap-2">
                 <Input
+                  className='label-color'
                   required
                   defaultValue=""
                   id="userName"
@@ -157,6 +165,7 @@ export default function SignUp() {
             </div>
             <div className="grid gap-2">
               <Input
+                className='label-color'
                 id="password"
                 label="Password"
                 isRequired
@@ -237,7 +246,17 @@ export default function SignUp() {
             </Link>
           </CardFooter>
         </Card>
-        <ToastContainer />
+        <ToastContainer 
+          position={"top-right"}
+          icon={false}
+          autoClose={2000}
+          hideProgressBar={true}
+          closeOnClick={true}
+          pauseOnHover={true}
+          draggable={true}
+          theme={"colored"}
+          closeButton={false} 
+      />
       </form>
       <Modal 
         isOpen={isOpen} 

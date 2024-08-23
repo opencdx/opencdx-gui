@@ -1,6 +1,6 @@
 
 import { iamApi, questionnaireApi, classificationApi } from "../api";
-import { LoginRequest, SignUpRequest, ChangePasswordRequest, ResetPasswordRequest } from "../api/iam";
+import { LoginRequest, SignUpRequest, ChangePasswordRequest, ResetPasswordRequest, SignUpResponse } from "../api/iam";
 
 
 import { GetQuestionnaireListRequest, QuestionnaireRequest } from "@/api/questionnaire";
@@ -35,16 +35,27 @@ export const useLogin = (onSuccess: (data: any) => void, onError: (error: any) =
     });
 };
 
-export const useSignUp = () => {
+export const useSignUp = (onSuccess: (data: any) => void, onError: (error: any) => void) => {
     const router = useRouter();
 
     return useMutation({
         mutationFn: (credentials: SignUpRequest) => iamApi.signUp({ signUpRequest: credentials }),
-        onSuccess: (data) => {
-            router.push('/');
+        onSuccess: async (data) => {
+            const signupData: SignUpResponse = data.data;
+            const userId = signupData.iamUser?.id || '';
+            try {
+                await iamApi.verifyEmailIamUser({ id: userId });
+                router.push('/login');
+                if (onSuccess) onSuccess(data);
+            } catch (error) {
+                console.error('Email verification failed:', error);
+                if (onError) onError(error);
+            }
+            
         },
         onError: (error) => {
             console.error('Registration failed:', error);
+            if (onError) onError(error);
         },
     });
 }
@@ -118,4 +129,8 @@ export const useUpdateQuestionnaire = () => {
         mutationFn: (params: QuestionnaireRequest) => questionnaireApi.updateQuestionnaire({ questionnaireRequest: params })
     });
 };
+
+export const useUserVerify = (userId: string) => {
+    return iamApi.verifyEmailIamUser({id: userId});
+}
 

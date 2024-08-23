@@ -21,6 +21,7 @@
     "password_lower_characters": "1 Lowercase letter",
     "password_upper_characters": "1 Uppercase letter",
     "confirm_password_reset_button": "Confirm Password Reset",
+    "go_back": "Back",
     "forgot_password_title": "Forgot Password",
     "forgot_password_description": "Please enter the email address associated with your account.",
     "continue": "Continue",

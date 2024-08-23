@@ -20,6 +20,7 @@
     "password_number_characters": "1 número",
     "password_lower_characters": "1 carácter en minúscula",
     "password_upper_characters": "1 carácter en mayúscula",
+    "go_back": "De regreso",
     "confirm_password_reset_button": "Confirmar restablecimiento de contraseña",
     "forgot_password_title": "Has olvidado tu contraseña",
     "forgot_password_description": "Por favor ingrese la dirección de correo electrónico asociada con su cuenta.",

@@ -33,11 +33,7 @@ const handleSuccess = (data: any) => {
 const handleError = (error: AxiosError) => {
     setIsLoading(false); 
     const errorData = error.response?.data as { cause: { localizedMessage: string } };
-    if(errorData){
-      setErrorMessage(errorData.cause.localizedMessage);
-    } else {
-      setErrorMessage(t('error_occurred'));
-    }
+    toast.error(errorData.cause.localizedMessage || t('error_occurred'));
 };
   const { mutate: login, error } = useLogin(handleSuccess, handleError);
   const [isLoading, setIsLoading] = useState(false);
@@ -97,6 +93,7 @@ const handleError = (error: AxiosError) => {
           </CardHeader>
           <CardBody className="grid gap-4">
             <Input
+              className='label-color'
               required
               defaultValue=""
               variant="bordered"
@@ -108,6 +105,7 @@ const handleError = (error: AxiosError) => {
             />
           <div className="w-full flex flex-col m-0 gap-0">
             <Input
+                className='label-color'
                 id="password"
                 label={t('password_placeholder')}
                 defaultValue=""
@@ -172,7 +170,17 @@ const handleError = (error: AxiosError) => {
           </CardFooter>
         </Card>
       </form>
-      <ToastContainer />
+      <ToastContainer 
+          position={"top-right"}
+          icon={false}
+          autoClose={2000}
+          hideProgressBar={true}
+          closeOnClick={true}
+          pauseOnHover={true}
+          draggable={true}
+          theme={"colored"}
+          closeButton={false} 
+      />
     </div>
   );
 }
