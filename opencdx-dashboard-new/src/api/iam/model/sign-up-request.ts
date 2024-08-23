@@ -38,6 +38,12 @@ export interface SignUpRequest {
      * @memberof SignUpRequest
      */
     'lastName'?: string;
+     /**
+     * 
+     * @type {string}
+     * @memberof SignUpRequest
+     */
+     'systemName'?: string;
     /**
      * 
      * @type {string}
@@ -50,6 +56,18 @@ export interface SignUpRequest {
      * @memberof SignUpRequest
      */
     'password'?: string;
+      /**
+     * 
+     * @type {string}
+     * @memberof SignUpRequest
+     */
+      'organizationId'?: string;
+      /**
+     * 
+     * @type {string}
+     * @memberof SignUpRequest
+     */
+      'workspaceId'?: string;
 
 }
 
