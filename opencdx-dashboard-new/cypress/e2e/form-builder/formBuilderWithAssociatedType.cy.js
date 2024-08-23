@@ -46,20 +46,10 @@ describe('New form-builder E2E Test with Associated ANF Statement Component Type
           // const selectedOption = options[randomIndex]
           // cy.get('[data-slot="mainWrapper"]').eq(0).select(selectedOption)
 
-          if(cy.get('[data-slot="mainWrapper"]'))
-          /*cy.get('[data-slot="mainWrapper"]').eq(1).click()
-          cy.get('span').contains('SARS-CoV-2').click()
-          cy.get('div').contains('Time').click()
-          
-          cy.get('li[role="option"]').each(($ele, index) => {
-            cy.log($ele.text())
-            if(index === 1) {
-              cy.wrap($ele).click()             
-            }            
-          })*/
+          //cy.get('[data-slot="mainWrapper"]').eq(0).click()
 
-          cy.get('[data-slot="base"]').eq(6).clear()
-          cy.get('[data-slot="base"]').eq(6).type('50')
+          cy.get('[data-slot="input-wrapper"]').eq(0).clear()
+          cy.get('[data-slot="input-wrapper"]').eq(0).type('50')
 
           //Time Tab
           //clear lower bound field and enter new value
