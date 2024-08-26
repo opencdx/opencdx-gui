@@ -148,7 +148,7 @@ const handleError = (error: AxiosError) => {
           </CardBody>
           <CardFooter className="flex m-0 justify-end">
             <Link
-              className="text-center"
+              className="text-center cursor-pointer"
               color="primary"
               onPress={() => router.push('/forgot-password')}
             >
@@ -172,7 +172,7 @@ const handleError = (error: AxiosError) => {
             </label>
             &nbsp;
             <Link
-              className="text-center"
+              className="text-center cursor-pointer"
               color="primary"
               onPress={() => router.push('/signup')}
             >

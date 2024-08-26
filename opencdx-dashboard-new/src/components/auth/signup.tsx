@@ -237,7 +237,7 @@ const handleError = (error: AxiosError) => {
             </label>
             &nbsp;
             <Link
-              className="text-center"
+              className="text-center cursor-pointer"
               color="primary"
               onPress={() => router.push('/')}
             >
