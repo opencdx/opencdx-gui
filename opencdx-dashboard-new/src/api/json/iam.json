@@ -265,6 +265,32 @@
         }
       }
     },
+    "/user/password/reset": {
+      "post": {
+        "tags": ["open-cdxiam-user-rest-controller"],
+        "operationId": "resetPassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ResetPasswordRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResetPasswordResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/user/login": {
       "post": {
         "tags": ["open-cdxiam-user-rest-controller"],
@@ -1108,6 +1134,17 @@
         }
       },
       "ChangePasswordResponse": {
+        "type": "object",
+        "properties": { "iamUser": { "$ref": "#/components/schemas/IamUser" } }
+      },
+      "ResetPasswordRequest": {
+        "type": "object",
+        "properties": {
+          "username": { "type": "string" },
+          "newPassword": { "type": "string" }
+        }
+      },
+      "ResetPasswordResponse": {
         "type": "object",
         "properties": { "iamUser": { "$ref": "#/components/schemas/IamUser" } }
       },

@@ -68,6 +68,7 @@ export interface SignUpRequest {
      * @memberof SignUpRequest
      */
     'workspaceId'?: string;
+
 }
 
 export const Type = {

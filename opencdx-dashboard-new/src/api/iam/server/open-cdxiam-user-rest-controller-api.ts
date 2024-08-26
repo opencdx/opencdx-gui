@@ -40,6 +40,10 @@ import type { LoginRequest } from '../model';
 // @ts-ignore
 import type { LoginResponse } from '../model';
 // @ts-ignore
+import type { ResetPasswordRequest } from '../model';
+// @ts-ignore
+import type { ResetPasswordResponse } from '../model';
+// @ts-ignore
 import type { SignUpRequest } from '../model';
 // @ts-ignore
 import type { SignUpResponse } from '../model';
@@ -283,6 +287,45 @@ export const OpenCdxiamUserRestControllerApiAxiosParamCreator = function (config
         },
         /**
          * 
+         * @param {ResetPasswordRequest} resetPasswordRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resetPassword: async (resetPasswordRequest: ResetPasswordRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'resetPasswordRequest' is not null or undefined
+            assertParamExists('resetPassword', 'resetPasswordRequest', resetPasswordRequest)
+            const localVarPath = `/user/password/reset`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(resetPasswordRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {SignUpRequest} signUpRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -518,6 +561,18 @@ export const OpenCdxiamUserRestControllerApiFp = function(configuration?: Config
         },
         /**
          * 
+         * @param {ResetPasswordRequest} resetPasswordRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async resetPassword(resetPasswordRequest: ResetPasswordRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResetPasswordResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.resetPassword(resetPasswordRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OpenCdxiamUserRestControllerApi.resetPassword']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {SignUpRequest} signUpRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -629,6 +684,15 @@ export const OpenCdxiamUserRestControllerApiFactory = function (configuration?: 
         },
         /**
          * 
+         * @param {OpenCdxiamUserRestControllerApiResetPasswordRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resetPassword(requestParameters: OpenCdxiamUserRestControllerApiResetPasswordRequest, options?: RawAxiosRequestConfig): AxiosPromise<ResetPasswordResponse> {
+            return localVarFp.resetPassword(requestParameters.resetPasswordRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {OpenCdxiamUserRestControllerApiSignUpRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -734,6 +798,20 @@ export interface OpenCdxiamUserRestControllerApiLoginRequest {
      * @memberof OpenCdxiamUserRestControllerApiLogin
      */
     readonly loginRequest: LoginRequest
+}
+
+/**
+ * Request parameters for resetPassword operation in OpenCdxiamUserRestControllerApi.
+ * @export
+ * @interface OpenCdxiamUserRestControllerApiResetPasswordRequest
+ */
+export interface OpenCdxiamUserRestControllerApiResetPasswordRequest {
+    /**
+     * 
+     * @type {ResetPasswordRequest}
+     * @memberof OpenCdxiamUserRestControllerApiResetPassword
+     */
+    readonly resetPasswordRequest: ResetPasswordRequest
 }
 
 /**
@@ -862,6 +940,17 @@ export class OpenCdxiamUserRestControllerApi extends BaseAPI {
      */
     public login(requestParameters: OpenCdxiamUserRestControllerApiLoginRequest, options?: RawAxiosRequestConfig) {
         return OpenCdxiamUserRestControllerApiFp(this.configuration).login(requestParameters.loginRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {OpenCdxiamUserRestControllerApiResetPasswordRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OpenCdxiamUserRestControllerApi
+     */
+    public resetPassword(requestParameters: OpenCdxiamUserRestControllerApiResetPasswordRequest, options?: RawAxiosRequestConfig) {
+        return OpenCdxiamUserRestControllerApiFp(this.configuration).resetPassword(requestParameters.resetPasswordRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
