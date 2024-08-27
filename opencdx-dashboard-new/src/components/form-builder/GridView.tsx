@@ -3,7 +3,7 @@ import { Card, CardBody, CardFooter } from '@nextui-org/react';
 import { Button as NButton } from '@nextui-org/button';
 import TitleIcon from '@mui/icons-material/Title';
 import CalendarIcon from '@mui/icons-material/CalendarToday';
-import StatusIcon from '@mui/icons-material/FactCheck';
+import StatusIcon from '@mui/icons-material/FactCheckOutlined';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import EditNoteIcon from '@mui/icons-material/EditNote';
@@ -28,7 +28,7 @@ const GridView: React.FC<GridViewProps> = ({
   convertDate,
 }) => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 m-1 ">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-4 mr-4 ">
       {questionnaires?.map((questionnaire: Questionnaire) => (
         <Card 
           key={questionnaire.id} 
@@ -38,26 +38,26 @@ const GridView: React.FC<GridViewProps> = ({
             <div className="space-y-6">
               <div>
                 <div className="flex items-center mb-2">
-                  <TitleIcon className="w-5 h-5 mr-2 text-blue-500 flex-shrink-0" />
-                  <span className="text-sm font-semibold text-gray-600">Form Title</span>
+                  <TitleIcon className="w-5 h-5 mr-2 text-black-500 flex-shrink-0" />
+                  <span className="text-sm font-semibold">Form Title</span>
                 </div>
-                <p className="text-base font-medium ml-7">{questionnaire.title}</p>
+                <p className="text-sm font-sm ml-7" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{questionnaire.title}</p>
               </div>
               <div>
                 <div className="flex items-center mb-2">
-                  <CalendarIcon className="w-5 h-5 mr-2 text-blue-500 flex-shrink-0" />
-                  <span className="text-sm font-semibold text-gray-600">Last Updated</span>
+                  <CalendarIcon className="w-5 h-5 mr-2 text-black-500 flex-shrink-0" />
+                  <span className="text-sm font-semibold ">Last Updated</span>
                 </div>
-                <p className="text-base ml-7">{convertDate(questionnaire.modified)}</p>
+                <p className="text-sm font-sm ml-7">{convertDate(questionnaire.modified)}</p>
               </div>
               <div>
                 <div className="flex items-center mb-2">
-                  <StatusIcon className="w-5 h-5 mr-2 text-blue-500 flex-shrink-0" />
-                  <span className="text-sm font-semibold text-gray-600">Status</span>
+                  <StatusIcon className="w-5 h-5 mr-2 text-black-500 flex-shrink-0" />
+                  <span className="text-sm font-semibold ">Status</span>
                 </div>
                 <div className="flex items-center ml-7">
                   <div className={`h-2.5 w-2.5 rounded-full ${questionnaire.status === 'active' ? 'bg-green-500' : 'bg-gray-500'} mr-2`} />
-                  <span className="text-base capitalize">{questionnaire.status}</span>
+                  <span className="text-sm font-sm capitalize">{questionnaire.status}</span>
                 </div>
               </div>
               

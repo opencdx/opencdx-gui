@@ -17,6 +17,7 @@ import { Link, Tab, Tabs } from 'ui-library';
 import { allExpanded, defaultStyles, JsonView } from 'react-json-view-lite';
 import DynamicFormIcon from '@mui/icons-material/DynamicForm';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
+import ArrowBackIcon  from '@mui/icons-material/ArrowBack'
 import { Button } from '@mui/material';
 import 'react-json-view-lite/dist/index.css';
 
@@ -139,7 +140,7 @@ export default function ListQuestionnaire() {
         </div>
       ) : (
         <div className="p-4 md:p-8 lg:p-8">
-          <div className="flex flex-row justify-between items-center mb-4 bg-white dark:bg-neutral-800 p-4 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700">
+          <div className="flex flex-row justify-between items-center bg-white dark:bg-neutral-800 p-4 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700">
             <div className="flex items-center  justify-center space-x-4 align-center ">
               <DynamicFormIcon className="w-12 h-12" />
               <div className="flex flex-col space-y-1">
@@ -153,12 +154,19 @@ export default function ListQuestionnaire() {
             </div>
             <div className="flex items-center space-x-2">
               <Link href="/form-builder">
-                <NButton color="primary" variant="light">
-                  ← Back
-                </NButton>
+              <NButton
+                    className="mr-4"
+                    color="primary"
+                    variant="bordered"
+                  >
+                    <ArrowBackIcon className="w-4 h-4 inline" />
+                    Back
+
+                  </NButton>
+               
               </Link>
               <NButton color="primary">Create New Form <DynamicFormIcon className="w-4 h-4 inline" /></NButton>
-              
+
                 <Button
                   color="primary"
                   component="label"
@@ -166,7 +174,9 @@ export default function ListQuestionnaire() {
                   variant="contained"
                   size="small"
                   aria-label="Upload Form"
-                  className="bg-[#006FEE] border-[8px] border-[0px] border-[0px] border-[0px]"
+                  style={{ textTransform: 'unset' }}
+
+                  className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent data-[pressed=true]:scale-[0.97] outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-4 min-w-20 h-10 text-small gap-2 rounded-medium [&>svg]:max-w-[theme(spacing.8)] transition-transform-colors-opacity motion-reduce:transition-none bg-primary text-primary-foreground data-[hover=true]:opacity-hover p-0 h-[40px]"
                   onChange={handleChange}
                   data-testid="upload-form"
                 >
@@ -193,8 +203,9 @@ export default function ListQuestionnaire() {
               onView={(questionnaire) => { setJson(questionnaire); onOpen(); }}
               onDownload={handleDownload}
               onEdit={(questionnaire) => {
-                setFormData(questionnaire);
-                localStorage.setItem('questionnaire-store', JSON.stringify(questionnaire));
+                console.log('questionnaire', questionnaire);
+               // setFormData(questionnaire);
+                //localStorage.setItem('questionnaire-store', JSON.stringify(questionnaire));
                 router.push(`/edit-questionnaire/${questionnaire.id}`);
               }}
               onDelete={(id) => {
@@ -226,6 +237,7 @@ export default function ListQuestionnaire() {
                 }
               }}
               convertDate={convertDate}
+              pagination={data?.data?.pagination}
             />
           )}
 

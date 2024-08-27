@@ -2,12 +2,14 @@ import React from 'react';
 import { Button as NButton } from '@nextui-org/button';
 import TitleIcon from '@mui/icons-material/Title';
 import CalendarIcon from '@mui/icons-material/CalendarToday';
-import StatusIcon from '@mui/icons-material/FactCheck';
+import StatusIcon from '@mui/icons-material/FactCheckOutlined';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import SettingsIcon from '@mui/icons-material/SettingsSuggest';
 import { Questionnaire } from '@/api/questionnaire/model/questionnaire';
+import {Pagination} from "@nextui-org/react";
 
 interface ListViewProps {
   questionnaires: Questionnaire[];
@@ -16,6 +18,7 @@ interface ListViewProps {
   onEdit: (questionnaire: Questionnaire) => void;
   onDelete: (id: string) => void;
   convertDate: (date: any) => string;
+  pagination: any;
 }
 
 const ListView: React.FC<ListViewProps> = ({
@@ -25,11 +28,13 @@ const ListView: React.FC<ListViewProps> = ({
   onEdit,
   onDelete,
   convertDate,
+  pagination,
 }) => {
   return (
+    <>
     <div className="overflow-x-auto">
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-blue-50 dark:bg-gray-700 dark:text-gray-400">
+        <thead className="text-xs text-gray-700 bg-blue-50 dark:bg-gray-700 dark:text-gray-400" style={{ backgroundColor: 'var(--colors-base-primary-100, #CCE3FD)' }}>
           <tr>
             <th className="px-6 py-3" scope="col">
               <div className="flex items-center">
@@ -38,27 +43,30 @@ const ListView: React.FC<ListViewProps> = ({
               </div>
             </th>
             <th className="px-6 py-3" scope="col">
-              <div className="flex items-center">
+              <div className="flex items-center ">
                 <CalendarIcon className="w-4 h-4 mr-2" />
                 Last Updated
               </div>
             </th>
             <th className="px-6 py-3" scope="col">
-              <div className="flex items-center">
+              <div className="flex items-center ">
                 <StatusIcon className="w-4 h-4 mr-2" />
                 Status
               </div>
             </th>
             <th className="px-6 py-3" scope="col">
-              Actions
+              <div className="flex items-center">
+                <SettingsIcon className="w-4 h-4 mr-2" />
+                Actions
+              </div>
             </th>
           </tr>
         </thead>
         <tbody>
-          {questionnaires?.map((questionnaire: Questionnaire) => (
+        {questionnaires?.map((questionnaire: Questionnaire, index: number) => (
             <tr
               key={questionnaire.id}
-              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              className={`bg-${index % 2 === 0 ? 'white' : 'blue-50'} border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600`}
             >
               <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {questionnaire.title}
@@ -104,7 +112,13 @@ const ListView: React.FC<ListViewProps> = ({
           ))}
         </tbody>
       </table>
+      
     </div>
+    <div className="flex justify-between items-center p-4 bg-white dark:bg-gray-800 dark:border-gray-700">
+       <>Displaying {pagination?.totalPages} of {pagination?.totalRecords} rows</>
+      <Pagination showControls total={pagination?.totalPages} initialPage={pagination?.pageNumber} />
+    </div>
+    </>
   );
 };
 
