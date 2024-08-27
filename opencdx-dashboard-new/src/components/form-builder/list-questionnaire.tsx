@@ -2,7 +2,6 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Loading from '@/components/custom/loading';
-import Button from '@mui/material/Button';
 import { Button as NButton } from '@nextui-org/button';
 import {
   BreadcrumbItem,
@@ -12,13 +11,14 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  Tab,
-  Tabs,
   useDisclosure,
 } from '@nextui-org/react';
-import { Download, Eye, FilePenLine, Trash2, UploadIcon } from 'lucide-react';
+import { Link, Tab, Tabs } from 'ui-library';
 import { allExpanded, defaultStyles, JsonView } from 'react-json-view-lite';
-
+import DynamicFormIcon from '@mui/icons-material/DynamicForm';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
+import ArrowBackIcon  from '@mui/icons-material/ArrowBack'
+import { Button } from '@mui/material';
 import 'react-json-view-lite/dist/index.css';
 
 import { Questionnaire } from '@/api/questionnaire/model/questionnaire';
@@ -30,6 +30,8 @@ import {
 } from '@/hooks/iam-hooks';
 import { useAnfFormStore } from '@/lib/useAnfFormStore';
 import { toast, ToastContainer } from 'react-toastify';
+import GridView from './GridView';
+import ListView from './ListView';
 
 export default function ListQuestionnaire() {
   const { data: currentUser } = useCurrentUser();
@@ -137,273 +139,106 @@ export default function ListQuestionnaire() {
           <Loading />
         </div>
       ) : (
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg sm:overflow-hidden dark:bg-gray-900 shadow-md border border-gray-200 dark:border-gray-700 rounded-lg dark:text-white dark:border-gray-700 mt-4">
-          <div className="flex flex-row justify-between items-center m-4">
-            <div>
-              <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
-                Form Builder
-              </h1>
-              <Breadcrumbs>
-                <BreadcrumbItem href="/form-builder">Dashboard</BreadcrumbItem>
-                <BreadcrumbItem href="/form-builder">
-                  Form Builder
-                </BreadcrumbItem>
-              </Breadcrumbs>
+        <div className="p-4 md:p-8 lg:p-8">
+          <div className="flex flex-row justify-between items-center bg-white dark:bg-neutral-800 p-4 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700">
+            <div className="flex items-center  justify-center space-x-4 align-center ">
+              <DynamicFormIcon className="w-12 h-12" />
+              <div className="flex flex-col space-y-1">
+                <h1 className="text-base font-semibold">Forms Builder</h1>
+                <Breadcrumbs className="mb-4">
+                  <BreadcrumbItem href="/form-builder">Dashboard</BreadcrumbItem>
+                  <BreadcrumbItem>Forms Builder</BreadcrumbItem>
+                </Breadcrumbs>
+              </div>
+
             </div>
-            <div className="flex flex-row justify-between items-center">
-              <div className="p-2">
+            <div className="flex items-center space-x-2">
+              <Link href="/form-builder">
+              <NButton
+                    className="mr-4"
+                    color="primary"
+                    variant="bordered"
+                  >
+                    <ArrowBackIcon className="w-4 h-4 inline" />
+                    Back
+
+                  </NButton>
+               
+              </Link>
+              <NButton color="primary">Create New Form <DynamicFormIcon className="w-4 h-4 inline" /></NButton>
+
                 <Button
                   color="primary"
                   component="label"
-                  endIcon={<UploadIcon />}
+                  endIcon={<FileUploadIcon />}
                   variant="contained"
                   size="small"
                   aria-label="Upload Form"
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-48 h-10"
+                  style={{ textTransform: 'unset' }}
+
+                  className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent data-[pressed=true]:scale-[0.97] outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-4 min-w-20 h-10 text-small gap-2 rounded-medium [&>svg]:max-w-[theme(spacing.8)] transition-transform-colors-opacity motion-reduce:transition-none bg-primary text-primary-foreground data-[hover=true]:opacity-hover p-0 h-[40px]"
                   onChange={handleChange}
                   data-testid="upload-form"
                 >
                   Upload Form
                   <input hidden type="file" />
                 </Button>
-              </div>
+
               <Tabs
-                aria-label="Options"
+                aria-label="View options"
                 color="primary"
-                variant="bordered"
+                variant='solid'
                 onSelectionChange={handleViewToggle}
               >
-                <Tab
-                  key="list"
-                  title={
-                    <div className="flex items-center space-x-2">
-                      <span>Grid View</span>
-                    </div>
-                  }
-                />
-                <Tab
-                  key="grid"
-                  title={
-                    <div className="flex items-center space-x-2">
-                      <span>List View</span>
-                    </div>
-                  }
-                />
+                <Tab key="grid" title="Grid View" />
+                <Tab key="list" title="List View" />
               </Tabs>
             </div>
           </div>
 
+
           {!isGrid ? (
-            <div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4  dark:bg-gray-800 p-2 sm:p-4 md:p-4 lg:p-4 bg-gray-100"
-              id="user-grid"
-            >
-              {data?.data?.questionnaires?.map(
-                (questionnaire: Questionnaire) => (
-                  <div
-                    key={questionnaire.id}
-                    className="px-6 py-4 rounded-lg shadow-sm bg-white dark:bg-gray-800"
-                  >
-                    <div className="flex items-center mb-2">
-                      <div className="ml-4">
-                        <div className="text-base font-semibold text-gray-900 dark:text-white">
-                          {questionnaire.title}
-                        </div>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                          {convertDate(questionnaire.modified)}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between mt-4">
-                      <div className="flex items-center">
-                        <div
-                          className={`h-2.5 w-2.5 rounded-full bg-${questionnaire.status} me-2`}
-                        />
-                        <span>
-                          {questionnaire.status === 'active'
-                            ? 'Active'
-                            : 'Draft'}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between mt-4">
-                      <NButton
-                        className="py-2"
-                        onPress={() => {
-                          setJson(questionnaire);
-                          onOpen();
-                        }}
-                      >
-                        View
-                      </NButton>
-                      <NButton
-                        className="py-2"
-                        onPress={() => {
-                          setFormData(questionnaire);
-                          localStorage.setItem(
-                            'questionnaire-store',
-                            JSON.stringify(questionnaire),
-                          );
-
-                          router.push(
-                            `/edit-questionnaire/${questionnaire.id}`,
-                          );
-                        }}
-                      >
-                        Edit
-                      </NButton>
-                      <NButton
-                        className="py-2"
-                        onPress={() => {
-                          setJson(questionnaire);
-                          handleDownload(questionnaire);
-                        }}
-                      >
-                        Download
-                      </NButton>
-                      <NButton
-                        className="py-2"
-                        onPress={() => {
-                          const params = {
-                            id: questionnaire.id,
-                          };
-
-                          const fetchData = async () => {
-                            if (params.id) {
-                              deleteQuestionnaire(params.id);
-                              data.data.questionnaires = data?.data?.questionnaires?.filter(
-                                (item: Questionnaire) =>
-                                  item.id !== questionnaire.id,
-                              );
-                            }
-                          };
-
-                          fetchData();
-                        }}
-                      >
-                        Delete
-                      </NButton>
-                    </div>
-                  </div>
-                ),
-              )}
-            </div>
+            <GridView
+              questionnaires={data?.data?.questionnaires || []} // Provide default empty array
+              onView={(questionnaire) => { setJson(questionnaire); onOpen(); }}
+              onDownload={handleDownload}
+              onEdit={(questionnaire) => {
+                console.log('questionnaire', questionnaire);
+               // setFormData(questionnaire);
+                //localStorage.setItem('questionnaire-store', JSON.stringify(questionnaire));
+                router.push(`/edit-questionnaire/${questionnaire.id}`);
+              }}
+              onDelete={(id) => {
+                deleteQuestionnaire(id);
+                if (data?.data?.questionnaires) { // Check if questionnaires exist
+                  data.data.questionnaires = data.data.questionnaires.filter(
+                    (item: Questionnaire) => item.id !== id
+                  );
+                }
+              }}
+              convertDate={convertDate}
+            />
           ) : (
-            <table
-              className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-              id="user-table"
-            >
-              <thead className="text-xs text-gray-700  bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th className="px-6 py-3" scope="col">
-                    Form Title
-                  </th>
-                  <th className="px-6 py-3" scope="col">
-                    Last Updated
-                  </th>
-                  <th className="px-6 py-3" scope="col">
-                    Status
-                  </th>
-                  <th className="px-6 py-3" scope="col">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {data?.data?.questionnaires?.map(
-                  (questionnaire: Questionnaire) => (
-                    <tr
-                      key={questionnaire.id}
-                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    >
-                      <th
-                        className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
-                        scope="row"
-                      >
-                        <div className="ps-3">
-                          <div className="text-base font-semibold text-gray-900 dark:text-white dark:text-gray-400 dark:text-white text-wrap w-96">
-                            {questionnaire.title}
-                          </div>
-                        </div>
-                      </th>
-                      <td className="px-6 py-4">
-                        {convertDate(questionnaire.modified)}
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center">
-                          <div
-                            className={`h-2.5 w-2.5 rounded-full bg-${questionnaire.status} me-2`}
-                          />
-                          <span>
-                            <span>
-                              {questionnaire.status === 'active'
-                                ? 'Active'
-                                : 'Draft'}
-                            </span>
-                          </span>
-                        </div>
-                      </td>
-                      <td className=" text-sm font-medium px-6 py-4 whitespace-nowrap space-x-2">
-                        <NButton
-                          isIconOnly
-                          onPress={() => {
-                            setJson(questionnaire);
-                            onOpen();
-                          }}
-                        >
-                          <Eye size={16} />
-                        </NButton>
-                        <NButton
-                          isIconOnly
-                          onPress={() => {
-                            setFormData(questionnaire);
-                            localStorage.setItem(
-                              'questionnaire-store',
-                              JSON.stringify(questionnaire),
-                            );
-                            router.push(
-                              `/edit-questionnaire/${questionnaire.id}`,
-                            );
-                          }}
-                        >
-                          <FilePenLine size={16} />
-                        </NButton>
-                        <NButton
-                          isIconOnly
-                          onPress={() => {
-                            setJson(questionnaire);
-                            handleDownload(questionnaire);
-                          }}
-                        >
-                          <Download size={16} />
-                        </NButton>
-                        <NButton
-                          isIconOnly
-                          onPress={() => {
-                            const params = {
-                              id: questionnaire.id,
-                            };
-
-                            const fetchData = async () => {
-                              if (params.id) {
-                                deleteQuestionnaire(params.id);
-                                data.data.questionnaires = data?.data?.questionnaires?.filter(
-                                  (item: Questionnaire) =>
-                                    item.id !== questionnaire.id,
-                                );
-                              }
-                            };
-                            fetchData();
-                          }}
-                        >
-                          <Trash2 size={16} />
-                        </NButton>
-                      </td>
-                    </tr>
-                  ),
-                )}
-              </tbody>
-            </table>
+            <ListView
+              questionnaires={data?.data?.questionnaires || []} // Provide default empty array
+              onView={(questionnaire) => { setJson(questionnaire); onOpen(); }}
+              onDownload={handleDownload}
+              onEdit={(questionnaire) => {
+                setFormData(questionnaire);
+                localStorage.setItem('questionnaire-store', JSON.stringify(questionnaire));
+                router.push(`/edit-questionnaire/${questionnaire.id}`);
+              }}
+              onDelete={(id) => {
+                deleteQuestionnaire(id);
+                if (data?.data?.questionnaires) { // Check if questionnaires exist
+                  data.data.questionnaires = data.data.questionnaires.filter(
+                    (item: Questionnaire) => item.id !== id
+                  );
+                }
+              }}
+              convertDate={convertDate}
+              pagination={data?.data?.pagination}
+            />
           )}
 
           <Modal isOpen={isOpen} placement="auto" onOpenChange={onOpenChange}>
