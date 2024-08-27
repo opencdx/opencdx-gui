@@ -1,113 +1,143 @@
-'use client';
+"use client";
+import { cn } from "@/lib/utils";
+import Link, { LinkProps } from "next/link";
+import React, { useState, createContext, useContext } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronRight, IceCream } from "lucide-react";
 
-import { Fragment, useState } from 'react';
-import Link from 'next/link';
-import { SiteConfig } from '@/config/site';
-import { cn } from '@/lib/utils';
-import { Tooltip } from '@nextui-org/react';
-
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-
-export default function SideNav() {
-  const navItems = SiteConfig();
-
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
-
-  // Toggle the sidebar state
-  const toggleSidebar = () => {
-    setIsSidebarExpanded(!isSidebarExpanded);
-  };
-
-  return (
-    <div className="pr-4">
-      <div
-        className={cn(
-          isSidebarExpanded ? 'w-[200px]' : 'w-[68px]',
-          'border-r transition-all duration-300 ease-in-out transform hidden sm:flex h-full  bg-accent',
-        )}
-      >
-        <aside className="flex h-full flex-col w-full break-words px-4   overflow-x-hidden columns-1">
-          {/* Top */}
-          <div className="mt-4 relative pb-2 ">
-            <div className="flex flex-col space-y-1">
-              {navItems.map((item, idx) => {
-                if (item.position === 'top') {
-                  return (
-                    <Fragment key={idx}>
-                      <div className="space-y-1">
-                        <SideNavItem
-                          active={item.active}
-                          icon={item.icon}
-                          isSidebarExpanded={isSidebarExpanded}
-                          label={item.name}
-                          path={item.href}
-                        />
-                      </div>
-                    </Fragment>
-                  );
-                }
-              })}
-            </div>
-          </div>
-        </aside>
-        <div className="mt-[calc(calc(90vh)-40px)] relative">
-          <button
-            className="absolute bottom-32 right-[-12px] flex h-6 w-6 items-center justify-center rounded-full bg-neutral-100 shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out"
-            title="Toggle Sidebar"
-            type="button"
-            onClick={toggleSidebar}
-          >
-            {isSidebarExpanded ? (
-              <ChevronLeft size={16} />
-            ) : (
-              <ChevronRight size={16} />
-            )}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+interface Links {
+  label: string;
+  href: string;
+  icon: React.JSX.Element | React.ReactNode;
 }
 
-export const SideNavItem: React.FC<{
-  label: string;
-  icon: any;
-  path: string;
-  active: boolean;
-  isSidebarExpanded: boolean;
-}> = ({ label, icon, path, active, isSidebarExpanded }) => {
+interface SidebarContextProps {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  animate: boolean;
+}
+
+const SidebarContext = createContext<SidebarContextProps | undefined>(
+  undefined
+);
+
+export const useSidebar = () => {
+  const context = useContext(SidebarContext);
+  if (!context) {
+    throw new Error("useSidebar must be used within a SidebarProvider");
+  }
+  return context;
+};
+
+export const SidebarProvider = ({
+  children,
+  open: openProp,
+  setOpen: setOpenProp,
+  animate = true,
+}: {
+  children: React.ReactNode;
+  open?: boolean;
+  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  animate?: boolean;
+}) => {
+  const [openState, setOpenState] = useState(false);
+
+  const open = openProp !== undefined ? openProp : openState;
+  const setOpen = setOpenProp !== undefined ? setOpenProp : setOpenState;
+
+  return (
+    <SidebarContext.Provider value={{ open, setOpen, animate: animate }}>
+      {children}
+    </SidebarContext.Provider>
+  );
+};
+
+export const Sidebar = ({
+  children,
+  open,
+  setOpen,
+  animate,
+}: {
+  children: React.ReactNode;
+  open?: boolean;
+  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  animate?: boolean;
+}) => {
+  return (
+    <SidebarProvider open={open} setOpen={setOpen} animate={animate}>
+      {children}
+    </SidebarProvider>
+  );
+};
+
+export const SidebarBody = (props: React.ComponentProps<typeof motion.div>) => {
   return (
     <>
-      {isSidebarExpanded ? (
-        <Link
-          className={`h-full relative flex items-center whitespace-nowrap rounded-md ${
-            active
-              ? 'font-base text-sm bg-neutral-200 shadow-sm text-neutral-700 dark:bg-neutral-800 dark:text-white'
-              : 'hover:bg-neutral-200  hover:text-neutral-700 text-neutral-500 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white'
-          }`}
-          href={path}
-        >
-          <div className="relative font-base text-sm py-1.5 px-2 flex flex-row items-center space-x-2 rounded-md duration-100">
-            {icon}
-            <span>{label}</span>
-          </div>
-        </Link>
-      ) : (
-        <Tooltip content={label} placement="right">
-          <Link
-            className={`h-full relative flex items-center whitespace-nowrap rounded-md ${
-              active
-                ? 'font-base text-sm  bg-neutral-200 text-neutral-700 dark:bg-neutral-800 dark:text-white'
-                : 'hover:bg-neutral-200 hover:text-neutral-700 text-neutral-500 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white'
-            }`}
-            href={path}
-          >
-            <div className="relative font-base text-sm p-2 flex flex-row items-center space-x-2 rounded-md duration-100">
-              {icon}
-            </div>
-          </Link>
-        </Tooltip>
-      )}
+      <DesktopSidebar {...props} />
     </>
   );
 };
+
+export const DesktopSidebar = ({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof motion.div>) => {
+  const { open, setOpen, animate } = useSidebar();
+
+  return (
+    <>
+    
+      <motion.div
+        className={cn(
+          "h-full px-4 py-4   md:flex md:flex-col h-screen bg-[#020B2D] bg-gradient-to-b from-[#020B2D] from-70% via-[#0A2A88] to-[#0D47E9] w-[260px] flex-shrink-0",
+        )}
+        animate={{
+          width: animate ? (open ? "300px" : "60px") : "300px",
+        }}
+        
+        {...props}
+      >
+        {children}
+      </motion.div>
+    </>
+  );
+};
+
+export const SidebarLink = ({
+  link,
+  className,
+  ...props
+}: {
+  link: Links;
+  className?: string;
+  props?: LinkProps;
+  
+}) => {
+  const { open,setOpen, animate } = useSidebar();
+
+  return (
+    <Link
+      href={link.href}
+      className={cn(
+        "flex items-center justify-start gap-2  group/sidebar py-2",
+        className
+      )}
+      {...props}
+    >
+      {link.icon}
+
+      <motion.span
+        animate={{
+          display: animate ? (open ? "inline-block" : "none") : "inline-block",
+          opacity: animate ? (open ? 1 : 0) : 1,
+        }}
+        className="text-white dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0"
+      >
+        {link.label}
+      </motion.span>
+     
+    </Link>
+  );
+};
+

@@ -68,20 +68,10 @@ export const Navbar = () => {
   const selectedOptionValue = Array.from(selectedOption)[0];
 
   return (
-    <NextUINavbar maxWidth="full" position="sticky">
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        <NavbarBrand as="li" className="gap-3 max-w-fit">
-            <Image
-              alt="opencdx logo"
-              height={40}
-              src="/opencdx.png"
-              width={100}
-            />
-        </NavbarBrand>
-      </NavbarContent>
+    <NextUINavbar className=" rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full" position="sticky">
+     
 
       <NavbarContent
-        className="hidden sm:flex basis-1/5 sm:basis-full"
         justify="end"
       >
         <NavbarItem className="hidden md:flex">
@@ -182,3 +172,4 @@ export const Navbar = () => {
     </NextUINavbar>
   );
 };
+
