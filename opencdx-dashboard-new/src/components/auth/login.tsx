@@ -85,34 +85,30 @@ const handleError = (error: AxiosError) => {
       <form
         className="flex justify-center items-center"
         onSubmit={handleSubmit}
+        aria-label='login form'
       >
         <Card
-          aria-label="login form"
           className="w-[500px] max-w-full p-4"
-          tabIndex={0}
           shadow="none"
         >
           <CardHeader className="flex justify-center">
-            <div aria-label="open">
-              <Image
+            <div> 
+            <Image
                 alt="opencdx logos"
-                aria-label="OpenCDX Logo"
+                aria-label="opencdx logos"
                 radius="none"
                 src="/login-logo.png"
-                tabIndex={0}
               />
             </div>
           </CardHeader>
           <CardBody className="grid gap-4">
             <Input
               className='label-color'
-              required
-              defaultValue=""
-              variant="bordered"
               id="email"
+              variant="bordered"
               label={t('email_usename_placeholder')}
-              type="userName"
               isRequired
+              type="userName"
               onValueChange={setUsername}
             />
           <div className="w-full flex flex-col m-0 gap-0">
@@ -175,6 +171,7 @@ const handleError = (error: AxiosError) => {
               className="text-center cursor-pointer"
               color="primary"
               onPress={() => router.push('/signup')}
+              aria-label= {t('dont_have_account') + t('sign_up_label')} 
             >
               {t('sign_up_label')}
             </Link>
