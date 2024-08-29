@@ -44,6 +44,10 @@ const handleError = (error: AxiosError) => {
   const [lastName, setLastName] = useState('');
   const [isUsernameValid, setIsUsernameValid] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [confirmPasswordMatched, setConfirmPasswordMatched] = useState(true);
+  const toggleConfirmVisibility = () => setIsConfirmVisible(!isConfirmVisible);
   const toggleVisibility = () => setIsVisible(!isVisible);
   const [validation, setValidation] = useState({
     length: false,
@@ -64,13 +68,23 @@ const handleError = (error: AxiosError) => {
   // check the value of all fields in the form, if all fields are filled, the button will be enabled
   const isDisabled = () => {
     return (
-      !username || !password || !firstName || !lastName || !validation.length || !validation.specialChar || !validation.uppercase || !validation.lowercase || !validation.number
+      !username || !password || !firstName || !lastName || !validation.length || !validation.specialChar || !validation.uppercase || !validation.lowercase || !validation.number ||!confirmPasswordMatched || !confirmPassword
     );
   };
 
   const handlePasswordChange = (newPassword: string) => {
     setPassword(newPassword);
     validatePassword(newPassword);
+    if (confirmPassword) {
+      setConfirmPasswordMatched(newPassword === confirmPassword);
+    } else {
+      setConfirmPasswordMatched(true);
+    }
+  };
+
+  const handleConfirmPasswordChange = (newPassword: string) => {
+    setConfirmPassword(newPassword);
+    setConfirmPasswordMatched(newPassword === password);
   };
 
   const handleUsernameChange = (newUsername: string) => {
@@ -147,7 +161,7 @@ const handleError = (error: AxiosError) => {
             </div>
 
             <div className="grid gap-2">
-              <div className="grid gap-2">
+              <div className="grid gap-1">
                 <Input
                   className='label-color'
                   required
@@ -163,7 +177,7 @@ const handleError = (error: AxiosError) => {
                 />
               </div>
             </div>
-            <div className="grid gap-2">
+            <div className="grid gap-4">
               <Input
                 className='label-color'
                 id="password"
@@ -193,6 +207,30 @@ const handleError = (error: AxiosError) => {
                         src="/cross_eye.svg"
                         width={25}
                       />
+                    )}
+                  </button>
+                }
+              />
+                <Input
+                className='label-color'
+                id="confirmPassword"
+                label={t('confirm_password_placeholder')}
+                defaultValue=""
+                isRequired
+                variant="bordered"
+                type={isConfirmVisible ? 'text' : 'password'}
+                isInvalid={!confirmPasswordMatched}
+                onValueChange={handleConfirmPasswordChange}
+                endContent={
+                  <button
+                    aria-label="toggle password visibility"
+                    type="button"
+                    onClick={toggleConfirmVisibility}
+                  >
+                    {isConfirmVisible ? (
+                      <img alt="nextui logo" src="/eye.svg" />
+                    ) : (
+                      <img alt="nextui logo" src="/cross_eye.svg" />
                     )}
                   </button>
                 }
