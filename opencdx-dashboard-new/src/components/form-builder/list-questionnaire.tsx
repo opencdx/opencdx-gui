@@ -12,7 +12,7 @@ import {
   ModalFooter,
   ModalHeader,
   useDisclosure,
-} from '@nextui-org/react';
+} from 'ui-library';
 import { Link, Tab, Tabs } from 'ui-library';
 import { allExpanded, defaultStyles, JsonView } from 'react-json-view-lite';
 import DynamicFormIcon from '@mui/icons-material/DynamicForm';

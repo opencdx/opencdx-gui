@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Input } from '@nextui-org/input';
-import { Card } from '@nextui-org/react';
+import { Card } from 'ui-library';
 import { Controller, useFormContext } from 'react-hook-form';
 
 const TopicWrapper = ({

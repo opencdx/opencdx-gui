@@ -6,7 +6,7 @@ import styles from '../../styles/custom-input.module.css';
 import { AxiosError } from 'axios';
 import ValidationRow from '@/components/custom/validationRow';
 
-import { Card, CardBody, CardFooter, CardHeader, Image, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from '@nextui-org/react';
+import { Card, CardBody, CardFooter, CardHeader, Image, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from 'ui-library';
 import { toast, ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import 'react-toastify/dist/ReactToastify.css';

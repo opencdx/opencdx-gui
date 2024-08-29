@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Radio, RadioGroup } from '@nextui-org/react';
+import { Radio, RadioGroup } from 'ui-library';
 import { Controller, useFormContext } from 'react-hook-form';
 
 const ControlledRadio = ({ label, name }: { label: string; name: string }) => {

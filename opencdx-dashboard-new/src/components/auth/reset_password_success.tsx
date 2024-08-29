@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { Button } from 'ui-library';
-import { Card, CardBody, CardFooter } from '@nextui-org/react';
+import { Card, CardBody, CardFooter } from 'ui-library';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 export default function ResetPasswordSuccessPage() {

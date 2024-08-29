@@ -8,7 +8,7 @@ import { AnfStatementConnector } from '@/api/questionnaire/model/anf-statement-c
 import { AnfStatementType } from '@/api/questionnaire/model/anf-statement-connector';
 import { AnfOperatorType } from '@/api/questionnaire/model/anf-statement-connector';
 // import { useUpdateFormContext } from '@/lib/useSetContext';
-import { Button, Card, CardBody, Divider } from '@nextui-org/react';
+import { Button, Card, CardBody, Divider } from 'ui-library';
 import { Plus } from 'lucide-react';
 
 import { ANFStatementWrapper } from './anfStatement';

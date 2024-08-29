@@ -9,7 +9,7 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import SettingsIcon from '@mui/icons-material/SettingsSuggest';
 import { Questionnaire } from '@/api/questionnaire/model/questionnaire';
-import {Pagination} from "@nextui-org/react";
+import {Pagination} from "ui-library";
 
 interface ListViewProps {
   questionnaires: Questionnaire[];

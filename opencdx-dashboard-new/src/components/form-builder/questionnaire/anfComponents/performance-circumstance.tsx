@@ -7,7 +7,7 @@ import {
   Divider,
   Select,
   SelectItem,
-} from '@nextui-org/react';
+} from 'ui-library';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { ControlledInput } from './Custom/ControlledInput';

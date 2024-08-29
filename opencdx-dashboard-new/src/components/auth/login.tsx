@@ -12,7 +12,7 @@ import {
   CardFooter,
   CardHeader,
   Image,
-} from '@nextui-org/react';
+} from 'ui-library';
 import { toast, ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';

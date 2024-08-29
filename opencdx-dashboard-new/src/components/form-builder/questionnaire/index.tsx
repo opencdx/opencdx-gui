@@ -15,7 +15,7 @@ import {
   Switch,
   Tab,
   Tabs,
-} from '@nextui-org/react';
+} from 'ui-library';
 import {
   Controller,
   FormProvider,

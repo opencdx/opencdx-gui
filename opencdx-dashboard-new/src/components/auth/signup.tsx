@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useSignUp } from '@/hooks/iam-hooks';
 import { toast, ToastContainer } from 'react-toastify';
 import { type} from '@/lib/constant';
-import { Link } from '@nextui-org/link';
+import { Link } from 'ui-library';
 import {
   Card,
   CardBody,
@@ -15,7 +15,7 @@ import {
   CardHeader,
   Image,
   Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure,
-} from '@nextui-org/react';
+} from 'ui-library';
 import { Button, Input ,} from 'ui-library';
 import { AxiosError } from 'axios';
 import { useLocale, useTranslations } from 'next-intl';
