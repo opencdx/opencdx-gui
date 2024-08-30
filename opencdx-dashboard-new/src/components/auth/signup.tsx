@@ -44,6 +44,10 @@ const handleError = (error: AxiosError) => {
   const [lastName, setLastName] = useState('');
   const [isUsernameValid, setIsUsernameValid] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [confirmPasswordMatched, setConfirmPasswordMatched] = useState(true);
+  const toggleConfirmVisibility = () => setIsConfirmVisible(!isConfirmVisible);
   const toggleVisibility = () => setIsVisible(!isVisible);
   const [validation, setValidation] = useState({
     length: false,
@@ -64,13 +68,23 @@ const handleError = (error: AxiosError) => {
   // check the value of all fields in the form, if all fields are filled, the button will be enabled
   const isDisabled = () => {
     return (
-      !username || !password || !firstName || !lastName || !validation.length || !validation.specialChar || !validation.uppercase || !validation.lowercase || !validation.number
+      !username || !password || !firstName || !lastName || !validation.length || !validation.specialChar || !validation.uppercase || !validation.lowercase || !validation.number ||!confirmPasswordMatched || !confirmPassword
     );
   };
 
   const handlePasswordChange = (newPassword: string) => {
     setPassword(newPassword);
     validatePassword(newPassword);
+    if (confirmPassword) {
+      setConfirmPasswordMatched(newPassword === confirmPassword);
+    } else {
+      setConfirmPasswordMatched(true);
+    }
+  };
+
+  const handleConfirmPasswordChange = (newPassword: string) => {
+    setConfirmPassword(newPassword);
+    setConfirmPasswordMatched(newPassword === password);
   };
 
   const handleUsernameChange = (newUsername: string) => {
@@ -101,11 +115,10 @@ const handleError = (error: AxiosError) => {
       {isLoading && <Loading />}
       <form
         className="flex justify-center items-center"
+        aria-label="register form"
       >
         <Card
-          aria-label="register form"
           className="w-[500px] max-w-full p-4"
-          tabIndex={0}
           shadow="none"
         >
           <CardHeader className="flex justify-center">
@@ -114,7 +127,6 @@ const handleError = (error: AxiosError) => {
               aria-label="OpenCDX Logo"
               radius="none"
               src="/login-logo.png"
-              tabIndex={0}
             />
           </CardHeader>
 
@@ -123,7 +135,6 @@ const handleError = (error: AxiosError) => {
               <div className="grid gap-2 md:grid-cols-2">
                 <Input
                   className='label-color'
-                  required
                   defaultValue=""
                   id="first_name"
                   label={t('first_name_placeholder')}
@@ -134,7 +145,6 @@ const handleError = (error: AxiosError) => {
                 />
                 <Input
                   className='label-color'
-                  required
                   defaultValue=""
                   id="last_name"
                   variant="bordered"
@@ -147,10 +157,9 @@ const handleError = (error: AxiosError) => {
             </div>
 
             <div className="grid gap-2">
-              <div className="grid gap-2">
+              <div className="grid gap-1">
                 <Input
                   className='label-color'
-                  required
                   defaultValue=""
                   id="userName"
                   variant="bordered"
@@ -163,7 +172,7 @@ const handleError = (error: AxiosError) => {
                 />
               </div>
             </div>
-            <div className="grid gap-2">
+            <div className="grid gap-4">
               <Input
                 className='label-color'
                 id="password"
@@ -180,24 +189,38 @@ const handleError = (error: AxiosError) => {
                     onClick={toggleVisibility}
                   >
                     {isVisible ? (
-                      <img
-                        alt="password visibility image"
-                        height={25}
-                        src="/eye.svg"
-                        width={25}
-                      />
+                      <Image alt="nextui logo" src="/eye.svg" />
                     ) : (
-                      <img
-                        alt="password invisibility image"
-                        height={25}
-                        src="/cross_eye.svg"
-                        width={25}
-                      />
+                      <Image alt="nextui logo" src="/cross_eye.svg" />
                     )}
                   </button>
                 }
               />
-              <div className="validation-container" aria-label={"Password Criteria" + t("password_min_characters") + t("password_special_characters") + t("password_number_characters") + t("password_lower_characters") + t("password_upper_characters")} tabIndex={0}>
+                <Input
+                className='label-color'
+                id="confirmPassword"
+                label={t('confirm_password_placeholder')}
+                defaultValue=""
+                isRequired
+                variant="bordered"
+                type={isConfirmVisible ? 'text' : 'password'}
+                isInvalid={!confirmPasswordMatched}
+                onValueChange={handleConfirmPasswordChange}
+                endContent={
+                  <button
+                    aria-label="toggle password visibility"
+                    type="button"
+                    onClick={toggleConfirmVisibility}
+                  >
+                    {isConfirmVisible ? (
+                      <Image alt="nextui logo" src="/eye.svg" />
+                    ) : (
+                      <Image alt="nextui logo" src="/cross_eye.svg" />
+                    )}
+                  </button>
+                }
+              />
+              <div className="validation-container">
                     <ValidationRow
                     isValid={validation.length}
                     label={t("password_min_characters")}
@@ -232,7 +255,7 @@ const handleError = (error: AxiosError) => {
             </Button>
           </CardFooter>
           <CardFooter className="flex justify-center">
-            <label className="text-center text-gray-500" tabIndex={0}>
+            <label className="text-center text-gray-500">
               {t('already_have_account_placeholder')}
             </label>
             &nbsp;
@@ -240,6 +263,7 @@ const handleError = (error: AxiosError) => {
               className="text-center cursor-pointer"
               color="primary"
               onPress={() => router.push('/')}
+              aria-label= {t('already_have_account_placeholder') + t('login_up_label')} 
             >
               {t('login_up_label')}
             </Link>

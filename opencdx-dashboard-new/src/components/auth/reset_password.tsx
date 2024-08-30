@@ -113,33 +113,29 @@ const handleError = (error: AxiosError) => {
     <div className="flex justify-center items-center h-screen min-h-[calc(100vh - 68px)]">
       {isLoading && <Loading />}
         <Card
-          aria-label="reset passowrd form"
           className="w-[500px] max-w-full p-4"
-          tabIndex={0}
           shadow='none'
         >
         <CardHeader className="flex justify-center">
-        <div aria-label="open">
+        <div>
             <Image
             alt="opencdx logos"
             aria-label="OpenCDX Logo"
             radius="none"
             src="/login-logo.png"
-            tabIndex={0}
             />
         </div>
         </CardHeader>
         <CardBody className="grid gap-4">
-            <label className="text-start text-black-500 text-lg" tabIndex={0}>
+            <label className="text-start text-black-500 text-lg">
                 {t("change_password_title")}
             </label>
-            <label className="text-start text-gray-500 text-sm" tabIndex={0}>
+            <label className="text-start text-gray-500 text-sm">
                 {t("change_password_description")}
             </label>
             
             <Input
               className='label-color'
-              required
               isReadOnly
               defaultValue={localStorage.getItem('username') ?? ''}
               variant="bordered"
@@ -154,6 +150,7 @@ const handleError = (error: AxiosError) => {
                 className='label-color'
                 id="password"
                 label={t("new_password_placeholder")}
+                aria-label={"Password criteria to enter" + t("password_min_characters") + t("password_special_characters") + t("password_number_characters") + t("password_lower_characters") + t("password_upper_characters")}
                 defaultValue=""
                 isRequired
                 variant="bordered"
@@ -202,7 +199,7 @@ const handleError = (error: AxiosError) => {
                   </button>
                 }
               />
-                <div className="validation-container" aria-label={"Password Criteria" + t("password_min_characters") + t("password_special_characters") + t("password_number_characters") + t("password_lower_characters") + t("password_upper_characters")} tabIndex={0}>
+                <div className="validation-container">
                     <ValidationRow
                     isValid={validation.length}
                     label={t("password_min_characters")}

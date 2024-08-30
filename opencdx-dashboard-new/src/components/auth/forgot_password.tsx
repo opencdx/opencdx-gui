@@ -49,33 +49,35 @@ export default function ForgotPassword() {
   </Button>
     <div className="flex justify-center items-center h-screen min-h-[calc(100vh - 68px)]">
      
+    <div
+        className="flex justify-center items-center"
+        role='form'
+        aria-label= {t("forgot_password_title") + t("forgot_password_description")}
+        tabIndex={0}
+      >
         <Card
-          aria-label="forgot passowrd form"
           className="w-[500px] max-w-full p-4"
-          tabIndex={0}
           shadow='none'
         >
         <CardHeader className="flex justify-center">
-        <div aria-label="open">
+        <div>
             <Image
             alt="opencdx logos"
             aria-label="OpenCDX Logo"
             radius="none"
             src="/login-logo.png"
-            tabIndex={0}
             />
         </div>
         </CardHeader>
         <CardBody className="grid gap-4">
-            <label className="text-start text-black-500 text-lg" tabIndex={0}>
+            <label className="text-start text-black-500 text-lg">
                 {t("forgot_password_title")}
             </label>
-            <label className="text-start text-gray-500 text-sm" tabIndex={0}>
+            <label className="text-start text-gray-500 text-sm">
                 {t("forgot_password_description")}
             </label>
             <Input
               className='label-color'
-              required
               defaultValue=""
               variant="bordered"
               id="email"
@@ -107,6 +109,7 @@ export default function ForgotPassword() {
           theme={"colored"}
           closeButton={false} 
       />
+      </div>
     </div>
     </div>
   );

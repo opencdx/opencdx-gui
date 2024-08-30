@@ -1,11 +1,14 @@
 import '../../styles/password-validation.css';
+
 import React from 'react';
+
 const ValidationRow = ({ isValid, label }: { isValid: boolean, label: string }) => (
 
     <div className="validation-row">
       {isValid ? (
         <div className="validation-icon">
         <svg
+          aria-label='check'
           xmlns="http://www.w3.org/2000/svg"
           width="20"
           height="20"
@@ -23,6 +26,7 @@ const ValidationRow = ({ isValid, label }: { isValid: boolean, label: string }) 
         <div className="validation-icon">
         <svg
           xmlns="http://www.w3.org/2000/svg"
+          aria-label='cross'
           width="20"
           height="20"
           viewBox="0 0 24 24"
