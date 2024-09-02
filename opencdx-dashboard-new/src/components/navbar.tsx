@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 import { useRouter, usePathname } from 'next/navigation';
-import { User } from "@nextui-org/react";
+import { User } from "ui-library";
 import { useLocale } from 'next-intl';
 import {useTransition} from 'react';
 
@@ -21,7 +21,7 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Image,
-} from '@nextui-org/react';
+} from 'ui-library';
 
 import { ChevronDown, ChevronUp, LogOut } from 'lucide-react';
 import { Locale} from '@/config/locale';

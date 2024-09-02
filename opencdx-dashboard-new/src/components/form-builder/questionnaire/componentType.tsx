@@ -1,7 +1,8 @@
 import React from 'react';
 import { AnfStatementType } from '@/api/questionnaire/model/anf-statement-connector';
-import { cn, Radio, RadioGroup } from '@nextui-org/react';
+import {  Radio, RadioGroup } from 'ui-library';
 import { Controller, useFormContext } from 'react-hook-form';
+import {cn} from "@/lib/utils";
 
 export const CustomRadio = (props: any) => {
   const { children, ...otherProps } = props;

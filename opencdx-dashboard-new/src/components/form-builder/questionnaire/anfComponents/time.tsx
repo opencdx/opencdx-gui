@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Input } from '@nextui-org/input';
-import { Card, Radio, RadioGroup } from '@nextui-org/react';
+import { Card, Radio, RadioGroup } from 'ui-library';
 import { Controller, useFormContext } from 'react-hook-form';
 
 const TimeWrapper = ({

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardBody, CardFooter } from '@nextui-org/react';
+import { Card, CardBody, CardFooter } from 'ui-library';
 import { Button as NButton } from '@nextui-org/button';
 import TitleIcon from '@mui/icons-material/Title';
 import CalendarIcon from '@mui/icons-material/CalendarToday';

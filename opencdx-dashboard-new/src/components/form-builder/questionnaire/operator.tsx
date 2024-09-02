@@ -1,7 +1,7 @@
 import React from 'react';
 import { QuestionnaireItem } from '@/api/questionnaire/model/questionnaire-item';
 import { Input } from '@nextui-org/input';
-import { Card } from '@nextui-org/react';
+import { Card } from 'ui-library';
 import { Select, SelectItem } from '@nextui-org/select';
 import { Controller, useFormContext } from 'react-hook-form';
 

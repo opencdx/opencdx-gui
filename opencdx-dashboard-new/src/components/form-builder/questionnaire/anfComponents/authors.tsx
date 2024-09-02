@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from '@nextui-org/react';
+import { Card } from 'ui-library';
 
 import { ControlledInput } from './Custom/ControlledInput';
 

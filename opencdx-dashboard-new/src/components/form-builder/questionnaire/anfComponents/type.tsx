@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Select, SelectItem } from '@nextui-org/react';
+import { Card, Select, SelectItem } from 'ui-library';
 import { Controller, useFormContext } from 'react-hook-form';
 
 export const values = [

@@ -19,7 +19,7 @@ import {
   Tab,
   Tabs,
   useDisclosure,
-} from '@nextui-org/react';
+} from 'ui-library';
 import { Code, Monitor } from 'lucide-react';
 
 import { AuthorsWrapper } from './anfComponents/authors';
