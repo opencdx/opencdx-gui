@@ -206,9 +206,8 @@ export default function ListQuestionnaire() {
               onView={(questionnaire) => { setJson(questionnaire); onOpen(); }}
               onDownload={handleDownload}
               onEdit={(questionnaire) => {
-                console.log('questionnaire', questionnaire);
-               // setFormData(questionnaire);
-                //localStorage.setItem('questionnaire-store', JSON.stringify(questionnaire));
+                setFormData(questionnaire);
+                localStorage.setItem('questionnaire-store', JSON.stringify(questionnaire));
                 router.push(`/edit-questionnaire/${questionnaire.id}`);
               }}
               onDelete={(id) => {

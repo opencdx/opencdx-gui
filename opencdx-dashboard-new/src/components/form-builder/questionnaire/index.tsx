@@ -119,11 +119,12 @@ const QuestionnaireWrapper = () => {
    
   }, []);
   if (isCreated || isUpdated) {
-    toast.success('Successfully saved', {
-      position: 'top-right',
-      autoClose: 500,
-    });
+    // toast.success('Successfully saved', {
+    //   position: 'top-right',
+    //   autoClose: 500,
+    // });
     setTimeout(() => {
+      localStorage.removeItem('questionnaire-store');
       router.push('/form-builder');
     }, 500);
   }
@@ -190,6 +191,7 @@ const QuestionnaireWrapper = () => {
                     variant="bordered"
                     color="primary"
                     onPress={() => {
+                      localStorage.removeItem('questionnaire-store');
                       router.push('/form-builder');
                     }}
                   >
