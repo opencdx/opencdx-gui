@@ -20,6 +20,8 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 import ArrowBackIcon  from '@mui/icons-material/ArrowBack'
 import { Button } from '@mui/material';
 import 'react-json-view-lite/dist/index.css';
+import Image from 'next/image';
+import { Key } from 'react'; // Add this import at the top of the file
 
 import { Questionnaire } from '@/api/questionnaire/model/questionnaire';
 import { Timestamp } from '@/api/questionnaire/model/timestamp';
@@ -80,8 +82,8 @@ export default function ListQuestionnaire() {
     }
   }, []);
 
-  const handleViewToggle = (e: string) => {
-    setIsGrid(e === 'grid');
+  const handleViewToggle = (key: Key) => {
+    setIsGrid(key === 'grid');
   }
   const convertDate = (date: Timestamp | undefined) => {
     if (!date) return ''; // Handle missing dates
@@ -142,7 +144,7 @@ export default function ListQuestionnaire() {
         <div className="p-4 md:p-8 lg:p-8">
           <div className="flex flex-row justify-between items-center bg-white dark:bg-neutral-800 p-4 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700">
             <div className="flex items-center  justify-center space-x-4 align-center ">
-              <DynamicFormIcon className="w-12 h-12" />
+              <Image src="/images/dynamic_form.png" alt="Dynamic Form" width={48} height={48} />
               <div className="flex flex-col space-y-1">
                 <h1 className="text-base font-semibold">Forms Builder</h1>
                 <Breadcrumbs className="mb-4">
@@ -165,12 +167,12 @@ export default function ListQuestionnaire() {
                   </NButton>
                
               </Link>
-              <NButton color="primary">Create New Form <DynamicFormIcon className="w-4 h-4 inline" /></NButton>
+              <NButton color="primary">Create New Form <Image src="/images/dynamic_form_transparent.png" alt="Upload" width={20} height={20} /></NButton>
 
                 <Button
                   color="primary"
                   component="label"
-                  endIcon={<FileUploadIcon />}
+                  endIcon={<Image src="/images/file_upload_transparent.png" alt="Upload" width={20} height={20} />}
                   variant="contained"
                   size="small"
                   aria-label="Upload Form"
