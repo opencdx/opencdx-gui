@@ -101,8 +101,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </Sidebar>
           <div className="flex flex-col flex-1">
             <Navbar />
-            <div className=" bg-white w-full h-screen overflow-x-auto">
-              <div className="h-screen  bg-[#F4F9FF] dark:bg-[#1a1a1a]">
+            <div className="bg-white w-full h-screen overflow-x-auto">
+              <div className="h-auto  bg-[#F4F9FF] dark:bg-[#1a1a1a]">
                     {children}
               </div>
             </div>
