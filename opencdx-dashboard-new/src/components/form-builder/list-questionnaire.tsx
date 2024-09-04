@@ -80,9 +80,9 @@ export default function ListQuestionnaire() {
     }
   }, []);
 
-  const handleViewToggle = () => {
-    setIsGrid(!isGrid);
-  };
+  const handleViewToggle = (e: string) => {
+    setIsGrid(e === 'grid');
+  }
   const convertDate = (date: Timestamp | undefined) => {
     if (!date) return ''; // Handle missing dates
     return new Date(date as Date).toLocaleDateString(); // Assert as Date
