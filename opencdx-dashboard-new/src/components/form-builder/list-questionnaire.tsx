@@ -192,8 +192,8 @@ export default function ListQuestionnaire() {
                 variant='solid'
                 onSelectionChange={handleViewToggle}
               >
-                <Tab key="grid" title="Grid View" />
                 <Tab key="list" title="List View" />
+                <Tab key="grid" title="Grid View" />
               </Tabs>
             </div>
           </div>
