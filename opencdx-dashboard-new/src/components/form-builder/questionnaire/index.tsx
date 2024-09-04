@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 import {
   Autocomplete,
@@ -161,11 +162,13 @@ const QuestionnaireWrapper = () => {
           <Card className="mb-4 mt-4 p-1 bg-white dark:bg-neutral-800 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700">
             <CardBody>
               <div className="flex flex-row justify-between items-center mb-4 mt-4">
-                <div>
-                  <h1 className="text-xl">
+              <div className="flex items-center  justify-center space-x-4 align-center ">
+              <Image src="/images/edit_note_lite.png" alt="Dynamic Form" width={48} height={48} />
+              <div className="flex flex-col space-y-1">
+              <h1 className="text-xl">
                     Edit Form: <strong>{getValues().title}</strong>
                   </h1>
-                  <Breadcrumbs>
+                  <Breadcrumbs  separator="/" >
                     <BreadcrumbItem href="/form-builder">
                       Dashboard
                     </BreadcrumbItem>
@@ -176,12 +179,16 @@ const QuestionnaireWrapper = () => {
                       Edit Form: {getValues().title}
                     </BreadcrumbItem>
                   </Breadcrumbs>
-                </div>
+              </div>
+
+            </div>
+                
                 <div className="flex flex-row">
                   <Button
                     className="mr-4"
                     startContent={<ChevronLeft size={16} />}
                     variant="bordered"
+                    color="primary"
                     onPress={() => {
                       router.push('/form-builder');
                     }}
@@ -189,7 +196,7 @@ const QuestionnaireWrapper = () => {
                     Back
                   </Button>
                   <Button type="submit" variant="solid" color="primary">
-                    Submit
+                    Submit Form
                   </Button>
                 </div>
               </div>

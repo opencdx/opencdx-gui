@@ -42,7 +42,6 @@ export default function ListQuestionnaire() {
     error,
     data,
   } = useGetQuestionnaireList();
-console.log('data', defaultStyles);
   const [isGrid, setIsGrid] = useState(true);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [json, setJson] = useState({} as any);
@@ -146,7 +145,7 @@ console.log('data', defaultStyles);
               <Image src="/images/dynamic_form.png" alt="Dynamic Form" width={48} height={48} />
               <div className="flex flex-col space-y-1">
                 <h1 className="text-base font-semibold">Forms Builder</h1>
-                <Breadcrumbs className="mb-4">
+                <Breadcrumbs className="mb-4" separator="/" >
                   <BreadcrumbItem href="/form-builder">Dashboard</BreadcrumbItem>
                   <BreadcrumbItem>Forms Builder</BreadcrumbItem>
                 </Breadcrumbs>
