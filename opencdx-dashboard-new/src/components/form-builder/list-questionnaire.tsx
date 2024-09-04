@@ -15,8 +15,6 @@ import {
 } from 'ui-library';
 import { Link, Tab, Tabs } from 'ui-library';
 import { allExpanded, defaultStyles, JsonView } from 'react-json-view-lite';
-import DynamicFormIcon from '@mui/icons-material/DynamicForm';
-import FileUploadIcon from '@mui/icons-material/FileUpload';
 import ArrowBackIcon  from '@mui/icons-material/ArrowBack'
 import { Button } from '@mui/material';
 import 'react-json-view-lite/dist/index.css';
@@ -44,7 +42,7 @@ export default function ListQuestionnaire() {
     error,
     data,
   } = useGetQuestionnaireList();
-
+console.log('data', defaultStyles);
   const [isGrid, setIsGrid] = useState(true);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [json, setJson] = useState({} as any);
@@ -252,7 +250,7 @@ export default function ListQuestionnaire() {
               {(onClose) => (
                 <>
                   <ModalHeader className="flex flex-col gap-1">
-                    Preview JSON
+                    Preview JSON : {json.title}
                   </ModalHeader>
                   <ModalBody className="w-[100%] md:w-[100%] lg:w-[100%] h-[100%] md:h-[0%] lg:h-[100%] max-h-[100%] md:max-h-[100%] lg:max-h-[100%] overflow-auto">
                     <JsonView
@@ -262,7 +260,7 @@ export default function ListQuestionnaire() {
                     />
                   </ModalBody>
                   <ModalFooter>
-                    <NButton color="danger" variant="light" onPress={onClose}>
+                    <NButton color="primary" variant="solid" onPress={onClose}>
                       Close
                     </NButton>
                   </ModalFooter>
