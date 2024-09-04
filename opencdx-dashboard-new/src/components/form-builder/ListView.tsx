@@ -65,10 +65,10 @@ const ListView: React.FC<ListViewProps> = ({
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {questionnaire.title}
                 </td>
-                <td className="px-6 py-4">
+                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {convertDate(questionnaire.modified)}
                 </td>
-                <td className="px-6 py-4">
+                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   <div className="flex items-center">
                     <div
                       className={`h-3 w-3 rounded-full mr-2 ${questionnaire.status === 'active'

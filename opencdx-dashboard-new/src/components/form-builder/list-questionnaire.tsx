@@ -87,8 +87,9 @@ export default function ListQuestionnaire() {
   }
   const convertDate = (date: Timestamp | undefined) => {
     if (!date) return ''; // Handle missing dates
-    return new Date(date as Date).toLocaleDateString(); // Assert as Date
-  };
+    const d = new Date(date as Date);
+    return `${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getDate().toString().padStart(2, '0')}/${d.getFullYear()}`;
+};
   const handleChange = (e: any) => {
     const file = e.target.files[0];
 
