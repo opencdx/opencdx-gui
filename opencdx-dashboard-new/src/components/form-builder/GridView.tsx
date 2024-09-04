@@ -60,7 +60,7 @@ const GridView: React.FC<GridViewProps> = ({
 
           </CardBody>
           <CardFooter className="justify-center px-6 py-4 border-t border-neutral-200 dark:border-neutral-700">
-            <div className="flex justify-between w-full">
+            <div className="flex justify-center w-full gap-2">
               <NButton isIconOnly variant="bordered" color='primary' onPress={() => onView(questionnaire)} >
                 <Image src="/images/remove_red_eye.png" alt="Upload" width={24} height={24} />
               </NButton>
