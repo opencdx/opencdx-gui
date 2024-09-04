@@ -8,10 +8,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Sidebar, SidebarBody, SidebarLink } from '@/components/side-nav';
-import { cn } from '@/lib/utils';
-// import SpaceDashboardOutlinedIcon from '@mui/icons-material/SpaceDashboardOutlined';
-import DynamicFormIcon from '@mui/icons-material/DynamicForm';
-
 import { Providers } from '../providers';
 import { Navbar } from '@/components/navbar';
 
@@ -52,64 +48,56 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const [open, setOpen] = useState(true);
 
   const links = [
-    // {
-    //   label: 'Dashboard',
-    //   href: '/',
-    //   icon: (
-    //     <SpaceDashboardOutlinedIcon className="text-white h-5 w-5 flex-shrink-0" />
-    //   ),
-    // },
     {
-      label: 'Form Builder',
-      href: '/form-builder',
+      label: 'Dashboard',
+      href: '/dashboard',
       icon: (
-        <DynamicFormIcon className="text-white h-5 w-5 flex-shrink-0" />
+        <Image src="/images/space_dashboard.png" alt="dashboard" width={20} height={20} />
       ),
     },
-    // {
-    //   label: 'Maps',
-    //   href: '/maps',
-    //   icon: (
-    //     <LocateIcon className="text-white h-5 w-5 flex-shrink-0" />
-    //   ),
-    // },
-    // {
-    //   label: 'My Profile',
-    //   href: '/profile',
-    //   icon: (
-    //     <LocateIcon className="text-white h-5 w-5 flex-shrink-0" />
-    //   ),
-    // },
+    {
+      label: 'Forms Builder',
+      href: '/form-builder',
+      icon: (
+        <Image src="/images/dynamic_form_left.png" alt="form-builder" width={20} height={20} />
+      ),
+    },
+    {
+      label: 'Maps',
+      href: '/maps',
+      icon: (
+        <Image src="/images/map.png" alt="map" width={20} height={20} />
+      ),
+    },
+    {
+      label: 'My Profile',
+      href: '/profile',
+      icon: (
+        <Image src="/images/person.png" alt="profile" width={20} height={20} />
+      ),
+    },
   ];
 
   return (
     <Providers
-      themeProps={{ attribute: 'className', defaultTheme: 'light', children }}
+      themeProps={{ attribute: 'className', defaultTheme: 'dark', children }}
     >
-        <div
-          className={cn(
-            'flex',
-            'h-screen w-screen',
-            'overflow-hidden',
-            'bg-white dark:bg-neutral-900',
-            'transition-all duration-300 ease-in-out' // Add transition for smooth animation
-          )}
-        >
+        <div className="flex h-screen w-screen overflow-hidden bg-neutral-900 transition-all duration-300 ease-in-out">
           <Sidebar open={open} setOpen={setOpen}>
             <SidebarBody className="justify-between gap-10">
               <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
                 {open ? <Logo /> : <LogoIcon />}
-                <div className="mt-8 flex flex-col gap-2">
+                <div className="mt-8 flex flex-col gap-4">
                   {links.map((link, idx) => (
-                    <SidebarLink key={idx} link={link} />
+                    <SidebarLink 
+                      key={idx} 
+                      link={link} 
+                      
+                    />
                   ))}
                 </div>
               </div>
-
-              <div></div>
-
             </SidebarBody>
-
           </Sidebar>
           <div className="flex flex-col flex-1">
             <Navbar />
