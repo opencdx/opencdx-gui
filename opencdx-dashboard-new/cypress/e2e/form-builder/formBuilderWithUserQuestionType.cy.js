@@ -33,8 +33,10 @@ describe('New form-builder E2E Test', () => {
       cy.wait(10000)
 
       //uploading json file
-      cy.get('[data-testid="upload-form"]').parent().find('input[type="file"]').attachFile('./LIDR.R4_(1).json');
-          cy.wait(20000)
+      //cy.get('[data-testid="upload-form"]').parent().find('input[type="file"]').attachFile('./LIDR.R4_(1).json');
+      //cy.get('[data-testid="upload-form"]').attachFile('./alpha.json');
+      cy.get('input[type="file"]').attachFile('./alpha.json');
+          cy.wait(30000)
 
           //Select COmponent Type as User Question 
           cy.get('span').contains('User Question').click()
@@ -42,23 +44,28 @@ describe('New form-builder E2E Test', () => {
 
           //Select Operator
           cy.get('[data-slot="mainWrapper"]').eq(0).click()
+          // cy.xpath('(//label[contains(text(), "Select an operator")])[2]').click()
           cy.get('span').contains('Equal').click()
 
           //Select Value
-          cy.get('[data-slot="mainWrapper"]').eq(1).click()
+          /*cy.get('[data-slot="mainWrapper"]').eq(1).clear()
           cy.get('li[role="option"]').each(($ele, index) => {
               cy.log($ele.text())
               if(index === 1) {
                 cy.wrap($ele).click()             
               }            
-            })
+            })*/
+            cy.get('[data-slot="input-wrapper"]').eq(0).clear()
+            cy.get('[data-slot="input-wrapper"]').eq(0).type('50')
 
           //Select a Rule as Blood Pressure 
-          cy.get('[data-slot="input-wrapper"]').eq(0).click()
+          cy.get('[data-slot="input-wrapper"]').eq(1).click()
+          // cy.xpath('(//label[contains(text(), "Select an operator")])[2]').click()
           cy.get('span').contains('Blood Pressure').click()
 
           //Select response for rule
-          cy.get('[data-slot="input-wrapper"]').eq(1).click()
+          cy.get('[data-slot="input-wrapper"]').eq(2).click()
+          // cy.xpath('(//label[contains(text(), "Select an operator")])[3]').click()
           cy.get('li[role="option"]').each(($ele, index) => {
             cy.log($ele.text())
             if(index === 3) {
