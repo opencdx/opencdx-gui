@@ -19,13 +19,19 @@ const User = ({ navigation }) => {
           pagination: {
             pageNumber: currentPage - 1,
             pageSize,
-            sort: "modified", // Assuming "modified" is the sorting field
-            sortAscending: true,
+            sort: "modified", // Sorting field is already set to "modified"
+            sortAscending: false, // This ensures ascending order
           },
           updateAnswers: true,
         });
         const { questionnaires, pagination } = response.data;
-        setButtonTitles(questionnaires);
+        
+        // Sort questionnaires by modified date in ascending order
+        const sortedQuestionnaires = questionnaires.sort((a, b) => 
+          new Date(b.modified) - new Date(a.modified)
+        );
+        
+        setButtonTitles(sortedQuestionnaires);
         setTotalPages(pagination.totalPages);
         setTotalRecords(pagination.totalRecords);
       } catch (error) {
