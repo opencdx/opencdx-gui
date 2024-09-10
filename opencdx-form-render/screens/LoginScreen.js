@@ -3,22 +3,29 @@ import { View, StyleSheet, Platform, SafeAreaView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useLogin } from '../utils/axios/iam-hooks';
 import {
-    Button, Input, ButtonText, Image, InputField, Link, LinkText, Text,
+    Button, Input, ButtonText, Image, InputField, Text,
     InputSlot,
-    useToast, Toast, VStack, ToastDescription
+    useToast, Toast, ToastDescription
 } from '@gluestack-ui/themed';
+import Loader from '../components/Loader';
 // import { Endpoints } from '../utils/axios/apiEndpoints';
 
 const LoginScreen = ({ navigation }) => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState();
+    const [password, setPassword] = useState();
     const [showPassword, setShowPassword] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
     const handleState = () => {
         setShowPassword((showState) => {
             return !showState
         })
     }
-    const [rememberMe, setRememberMe] = useState(false);
+    const handleSetPassword = (value) => {
+        setPassword(value);
+    }
+    const handleSetUsername = (value) => {
+        setUsername(value);
+    }
     const toast = useToast();
     const toggleRememberMe = (value) => {
         setRememberMe(value);
@@ -39,12 +46,18 @@ const LoginScreen = ({ navigation }) => {
 
     const handleLogin = async () => {
         try {
+            setIsLoading(true);
             // const response = await Endpoints.login({ userName: username, password: password });
             login({ userName: username, password: password });
         } catch (error) {
+            setIsLoading(false);
             showToaster(error);
         }
     };
+
+    const isDisabled = () => {
+        return !username || !password || isLoading;
+      };
 
     const showToaster = (message) => {
         toast.show({
@@ -75,43 +88,73 @@ const LoginScreen = ({ navigation }) => {
                 />
                 
                 <Input
-                    onChangeText={setUsername}
                     style={styles.inputRequired}
                     variant="outlined"
                     size="md"
                 >
-                    <InputField placeholder="Email or Username*" defaultValue={username} required={true}/>
+                    <InputField 
+                    placeholder="Email or Username*" 
+                    defaultValue={username}
+                    onChangeText={handleSetUsername}
+                    />
                 </Input>
                 <Input
-                    onChangeText={setPassword}
-                    style={styles.input}
+                    style={styles.inputRequired}
                     variant="outlined"
                     size="md"
                 >
-                    <InputField type={showPassword ? "text" : "password"} placeholder="Password*" defaultValue={password} />
+                    <InputField 
+                    type={showPassword ? "text" : "password"} 
+                    placeholder="Password*" 
+                    defaultValue={password}
+                    onChangeText={handleSetPassword} 
+                    />
                     
                     <InputSlot pr="$3" onPress={handleState}>
-                    <Image source={ showPassword ? require('../assets/eye.svg') : require('../assets/cross_eye.svg') } style={{ width: 20, height: 20 }} />
+                    <Image 
+                    source={ showPassword ? require('../assets/eye.svg') : require('../assets/cross_eye.svg') } 
+                    style={{ width: 20, height: 20 }} 
+                    alt="show password"
+                    />
                     </InputSlot>
                 </Input>
-                <View style={styles.forget}>
-                    <Text style={styles.forget}>
-                        Forget Password</Text>
-                </View>
+                <Button
+                    size="md"
+                    variant="link"
+                    action="primary"
+                    isFocusVisible={false}
+                    style={styles.forget}
+                    onPress={() => navigation.navigate('ForgotPassword')}
+                    >
+                        <ButtonText>Forget Password</ButtonText>
+                    </Button>
             </View>
             <View style={styles.footer}>
-                <Button title="Sign In" onPress={() => {
+                <Button 
+                title="Sign In" 
+                onPress={() => {
                     handleLogin();
-                }} style={styles.button}>
+                }} 
+                style={styles.button}
+                isDisabled={isDisabled()}
+                >
                     <ButtonText style={styles.buttonText}>Login</ButtonText>
                 </Button>
                 <View style={styles.center}>
                     <Text style={styles.centerText}>Don't have an account?</Text>
-                    <Text style={styles.signup}>
-                        Sign Up
-                    </Text>
+                    <Button
+                    size="md"
+                    variant="link"
+                    action="primary"
+                    isFocusVisible={false}
+                    style={styles.signup}
+                    onPress={() => navigation.navigate('Signup')}
+                    >
+                        <ButtonText>Sign Up</ButtonText>
+                    </Button>
                 </View>
             </View>
+            <Loader isVisible={isLoading} />
         </SafeAreaView>
     );
 };
@@ -156,10 +199,6 @@ const styles = StyleSheet.create({
             content: '*',
             color: 'red',
         },
-    },
-    input: {
-        marginBottom: 14,
-        height: 50,
     },
     button: {
         marginBottom: 10,

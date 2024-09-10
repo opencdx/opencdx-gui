@@ -3,6 +3,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet } from 'react-native'; // Added import statement for StyleSheet module
 import LoginScreen from './screens/LoginScreen';
+import Signup from './screens/Signup';
+import ForgotPassword from './screens/ForgotPassword';
+import ResetPassword from './screens/ResetPassword';
+import ResetPasswordSuccess from './screens/ResetPasswordSuccess';
 import User from './screens/User/User';
 import ListQuestion from './screens/User/ListQuestion';
 import ListScreen from './screens/ListScreen';
@@ -46,6 +50,38 @@ const App = () => {
       <NavigationContainer styles={styles.container}>
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen name="Login" component={LoginScreen} 
+            options={{
+              headerShown: false,  
+              cardStyle:{
+                backgroundColor:'#FFFFFF'
+              }
+            }}
+          />
+          <Stack.Screen name="Signup" component={Signup} 
+            options={{
+              headerShown: false,  
+              cardStyle:{
+                backgroundColor:'#FFFFFF'
+              }
+            }}
+          />
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword} 
+            options={{
+              headerShown: false,  
+              cardStyle:{
+                backgroundColor:'#FFFFFF'
+              }
+            }}
+          />
+          <Stack.Screen name="ResetPassword" component={ResetPassword} 
+            options={{
+              headerShown: false,  
+              cardStyle:{
+                backgroundColor:'#FFFFFF'
+              }
+            }}
+          />
+          <Stack.Screen name="ResetPasswordSuccess" component={ResetPasswordSuccess} 
             options={{
               headerShown: false,  
               cardStyle:{
