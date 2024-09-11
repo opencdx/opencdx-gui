@@ -41,14 +41,58 @@ import VaccineHistory from './screens/VaccineHistory/VaccineHistory';
 import TestRecord from './screens/VaccineHistory/TestRecord';
 import CameraScreen from './screens/CameraScreen';
 import UploadScreen from './screens/UploadScreen';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Stack = createStackNavigator();
+import { useEffect, useState } from 'react';
+import Loader from './components/Loader';
+import {View, Image, Pressable} from 'react-native';
 
 const App = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const handleLogout = async (navigation) => {
+    try {
+      // Clear JWT token or other authentication data
+      await AsyncStorage.removeItem('jwtToken');
+      // Navigate to the login screen or any other screen
+      navigation.navigate('Login');
+    } catch (error) {
+      Alert.alert('Logout failed', 'Unable to log out. Please try again.');
+    }
+  };
+  useEffect(() => {
+    const checkToken = async () => {
+      try {
+        const token = await AsyncStorage.getItem('jwtToken');
+        if (token) {
+          // Token exists, user is authenticated
+          setIsAuthenticated(true);
+        } else {
+          // No token found, user is not authenticated
+          setIsAuthenticated(false);
+        }
+      } catch (error) {
+        console.error('Failed to fetch token from AsyncStorage:', error);
+        setIsAuthenticated(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkToken();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Loader isVisible={true} />
+      </View>
+    );
+  }
   return (
     <GluestackUIProvider config={config}>
       <NavigationContainer styles={styles.container}>
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName={isAuthenticated ? "List" : "List"}>
           <Stack.Screen name="Login" component={LoginScreen} 
             options={{
               headerShown: false,  
@@ -90,12 +134,19 @@ const App = () => {
             }}
           />
           <Stack.Screen name="List" component={ListScreen} 
-            options={{
-              headerShown: false,
+            options={({ navigation }) => ({
+              headerShown: true,
+              headerRight: () => (
+                <Pressable onPress={() => handleLogout(navigation)}>
+                  <Image
+                    source={require('./assets/logout.svg')}
+                    style={{ width: 20, height: 20, marginRight: 10 }}
+                  />
+                </Pressable>),
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               }
-            }}
+            })}
           />
           <Stack.Screen name="User" component={User}
             options={{

@@ -20,7 +20,6 @@ const toast = useToast();
   const [confirmPasswordMatched, setConfirmPasswordMatched] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [validation, setValidation] = useState({
     length: false,
@@ -34,6 +33,11 @@ const toast = useToast();
     setIsVisible((showState) => {
         return !isVisible
     })
+}
+const handleConfirmPasswordState = () => {
+  setIsConfirmVisible((showState) => {
+      return !isConfirmVisible
+  })
 }
   const validatePassword = (pass) => {
     setValidation({
@@ -59,7 +63,7 @@ const toast = useToast();
   const handleSuccess = (data) => {
     setIsLoading(false); 
     navigation.navigate('Login');
-    console.log('SIgnup successful:', data);
+    showToaster('Sign up successful');
 };
 
 const handleError = (error) => {
@@ -72,10 +76,6 @@ const { signup, loading, error } = useSignUp(handleSuccess, handleError);
 
   const handleSubmit = () => {
     setIsLoading(true);
-    // Add sign-up logic here
-    // For example:
-    setIsLoading(true); // Set loading to true before making the API call
-    // signup();
     signup({
       type: "IAM_USER_TYPE_REGULAR",
       username,
@@ -83,11 +83,10 @@ const { signup, loading, error } = useSignUp(handleSuccess, handleError);
       firstName,
       lastName,
     });
-    showToaster('Sign up successful');
   };
 
   const isDisabled = () => {
-    return !username || !password || !firstName || !lastName || !validation.length || !validation.specialChar || !validation.uppercase || !validation.lowercase || !validation.number;
+    return !username || !password || !confirmPasswordMatched || !firstName || !lastName || !validation.length || !validation.specialChar || !validation.uppercase || !validation.lowercase || !validation.number;
   };
 
 const showToaster = (message) => {
@@ -176,6 +175,31 @@ const showToaster = (message) => {
                     />
                     </InputSlot>
                 </Input>
+                <Input
+                    style={styles.inputRequired}
+                    variant="outlined"
+                    size="md"
+                >
+                    <InputField 
+                    type={isConfirmVisible ? "text" : "password"} 
+                    placeholder="Confirm Password*" 
+                    defaultValue={confirmPassword}
+                    onChangeText={handleConfirmPasswordChange} 
+                    />
+                    
+                    <InputSlot pr="$3" onPress={handleConfirmPasswordState}>
+                    <Image 
+                    source={ isConfirmVisible ? require('../assets/eye.svg') : require('../assets/cross_eye.svg') } 
+                    style={{ width: 20, height: 20 }} 
+                    alt="show confirm password"
+                    />
+                    </InputSlot>
+                </Input>
+                {!confirmPasswordMatched && (
+                    <Text style={styles.errorDescription}>
+                    New password and confirm password do not match
+                    </Text>
+                )}
         <View style={styles.validationContainer}>
             <View style={styles.item}>
                 <ValidationRow
@@ -374,6 +398,11 @@ inputRequired: {
             width: '90%',
         }
     })
+},
+errorDescription: {
+  fontSize: 12,
+  color: 'red',
+  marginBottom: 5,
 },
   signin: {
     textAlign: 'right',
