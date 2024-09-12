@@ -150,7 +150,7 @@ const showToaster = (message) => {
                     size="md"
                 >
                     <InputField 
-                    placeholder="Email or Username*" 
+                    placeholder="Email Address*" 
                     defaultValue={username}
                     onChangeText={setUsername}
                     />

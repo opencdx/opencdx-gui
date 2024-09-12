@@ -93,7 +93,7 @@ const LoginScreen = ({ navigation }) => {
                     size="md"
                 >
                     <InputField 
-                    placeholder="Email or Username*" 
+                    placeholder="Email Address*" 
                     defaultValue={username}
                     onChangeText={handleSetUsername}
                     />
@@ -122,7 +122,7 @@ const LoginScreen = ({ navigation }) => {
                     size="md"
                     variant="link"
                     action="primary"
-                    isFocusVisible={false}
+                    isFocusVisible={true}
                     style={styles.forget}
                     onPress={() => navigation.navigate('ForgotPassword')}
                     >
