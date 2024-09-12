@@ -122,7 +122,7 @@ const LoginScreen = ({ navigation }) => {
                     size="md"
                     variant="link"
                     action="primary"
-                    isFocusVisible={true}
+                    isFocusVisible={false}
                     style={styles.forget}
                     onPress={() => navigation.navigate('ForgotPassword')}
                     >
