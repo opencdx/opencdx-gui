@@ -220,7 +220,7 @@ const handleError = (error: AxiosError) => {
                   </button>
                 }
               />
-              <div className="validation-container">
+              <div className="validation-container" tabIndex={0} aria-label= {"Password criteria is" + t("password_min_characters") + t("password_special_characters") + t("password_number_characters") + t("password_lower_characters") + t("password_upper_characters")}>
                     <ValidationRow
                     isValid={validation.length}
                     label={t("password_min_characters")}
