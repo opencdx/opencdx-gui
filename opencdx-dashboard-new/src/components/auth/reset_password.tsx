@@ -29,7 +29,7 @@ const handleError = (error: AxiosError) => {
     const errorData = error.response?.data as { cause: { localizedMessage: string } };
     const errorCode = error.response?.status 
 
-      if (errorCode === 401)
+      if (errorCode === 401 || errorCode === 404)
       {
          toast.error( t('reset_password_failed'));
       }
@@ -259,6 +259,8 @@ const handleError = (error: AxiosError) => {
         isOpen={isOpen} 
         placement={'center'}
         onOpenChange={onOpenChange} 
+        hideCloseButton = {true}
+        radius='none'
       >
         <ModalContent>
           {(onClose) => (
@@ -270,13 +272,14 @@ const handleError = (error: AxiosError) => {
                 </p>
               </ModalBody>
               <ModalFooter>
-                <Button color="primary" variant='bordered' onPress={onClose} aria-label='Cancel' tabIndex={0}>
+                <Button color="primary" variant='bordered' onPress={onClose} aria-label='Cancel' tabIndex={0} size='lg'>
                   Cancel
                 </Button>
                 <Button
                     color="primary"
                     aria-label='Continue to reset password' 
                     tabIndex={0}
+                    size='lg'
                     onPress={() => {
                       onClose();
                       handleSubmit();
