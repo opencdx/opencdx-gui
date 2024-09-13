@@ -7,10 +7,12 @@
     "old_password_placeholder": "Contraseña anterior",
     "new_password_placeholder": "Nueva contraseña",
     "confirm_password_placeholder": "confirmar Contraseña",
+    "confirm_new_password_placeholder": "confirmar Contraseña",
     "password_reset_placeholder": "Restablecer contraseña",
     "forgot_password_label": "¿Has olvidado tu contraseña?",
     "password_mismatch": "La nueva contraseña y la confirmación de contraseña no coinciden",
     "change_password_title": "Cambiar la contraseña",
+  
     "password_changed": "Contraseña cambiada",
     "password_change_success": "Su contraseña ha sido cambiada exitosamente.",
     "proceed_to_login": "Proceder al panel",

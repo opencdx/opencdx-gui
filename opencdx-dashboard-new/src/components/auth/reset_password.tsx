@@ -177,7 +177,7 @@ const handleError = (error: AxiosError) => {
               <Input
                 className='label-color'
                 id="confirmPassword"
-                label={t('confirm_password_placeholder')}
+                label={t('confirm_new_password_placeholder')}
                 defaultValue=""
                 isRequired
                 variant="bordered"
@@ -258,7 +258,6 @@ const handleError = (error: AxiosError) => {
                 <p> 
                 In a production environment, you would receive an email for this step.
                 </p>
-                
               </ModalBody>
               <ModalFooter>
                 <Button color="primary" variant='bordered' onPress={onClose} aria-label='Cancel' tabIndex={0}>

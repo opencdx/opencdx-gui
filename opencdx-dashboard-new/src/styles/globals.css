@@ -24,6 +24,14 @@
     border-radius: 0 !important; /* Remove rounded corners */
   }
   
+  
   .Toastify__toast-container {
     border-radius: 0 !important; /* Remove rounded corners from the container */
   }
+
+  .Toastify__toast-theme--colored.Toastify__toast--error {
+
+    background-color: rgba(243, 18, 96, 1) !important;
+}
+
+  
