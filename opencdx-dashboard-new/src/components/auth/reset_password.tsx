@@ -27,8 +27,18 @@ export default function ResetPassword() {
 const handleError = (error: AxiosError) => {
     setIsLoading(false); 
     const errorData = error.response?.data as { cause: { localizedMessage: string } };
-    toast.error(errorData.cause.localizedMessage || t('error_occurred'));
+    const errorCode = error.response?.status 
+
+      if (errorCode === 401)
+      {
+         toast.error( t('reset_password_failed'));
+      }
+      else
+      {
+        toast.error(errorData.cause.localizedMessage || t('error_occurred'));
+      }
 };
+
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const { mutate: resetPassword, error } = useResetPassword(handleSuccess, handleError);
   const t = useTranslations('common');
