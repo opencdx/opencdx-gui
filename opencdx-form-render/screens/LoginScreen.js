@@ -33,14 +33,25 @@ const LoginScreen = ({ navigation }) => {
     const { login, loading, error } = useLogin(
         (data) => {
             setIsLoading(false);
-            showToaster('Login successful');
             AsyncStorage.setItem('jwtToken', data.token);
             navigation.navigate('List');
         },
         (err) => {
             const errorData = err.response?.data;
             setIsLoading(false);
-            showToaster(errorData.cause.localizedMessage);
+
+            const errorCode = errorData.errorCode
+
+            if (errorCode == 401 || errorCode == 404 )
+            {
+                showToaster('Invalid Credentials.')
+            }
+            else
+            {
+                showToaster(errorData.cause.localizedMessage);
+            }
+
+
         }
       );
 
@@ -66,7 +77,7 @@ const LoginScreen = ({ navigation }) => {
             render: ({ id }) => {
               const toastId = "toast-" + id
               return (
-                <Toast nativeID={toastId} bg='$red500'>
+                <Toast nativeID={toastId} bg='#F31260'>
                   <ToastDescription color='$white'>
                       {message}
                     </ToastDescription>

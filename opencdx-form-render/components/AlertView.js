@@ -22,9 +22,6 @@ const AlertView = ({
       <ModalContent>
         <ModalHeader>
           <Text style={styles.title}>{title}</Text>
-          <ModalCloseButton>
-              <Image source={require('../assets/black_cross.svg')} style={{ width: 20, height: 20 }} alt="cross" />
-            </ModalCloseButton>
         </ModalHeader>
         <ModalBody>
           <Text>{content}</Text>

@@ -85,7 +85,17 @@ const ResetPassword = ({ navigation }) => {
 const handleError = (error) => {
     setIsLoading(false); 
     const errorData = error.response?.data;
-    showToaster(errorData.cause.localizedMessage);
+
+    const errorCode = errorData.errorCode
+
+    if (errorCode == 401 || errorCode == 404 )
+    {
+        showToaster('User does not exist.')
+    }
+    else
+    {
+        showToaster(errorData.cause.localizedMessage);
+    }
 };
   const { resetPassword, loading, error } = useResetPassword(handleSuccess, handleError);
   const handleSubmit = async () => {
@@ -100,7 +110,7 @@ const handleError = (error) => {
         render: ({ id }) => {
           const toastId = "toast-" + id
           return (
-            <Toast nativeID={toastId} bg='$red500'>
+            <Toast nativeID={toastId} bg='#F31260'>
               <ToastDescription color='$white'>
                   {message}
                 </ToastDescription>

@@ -63,7 +63,6 @@ const handleConfirmPasswordState = () => {
   const handleSuccess = (data) => {
     setIsLoading(false); 
     navigation.navigate('Login');
-    showToaster('Sign up successful');
 };
 
 const handleError = (error) => {
@@ -86,7 +85,8 @@ const { signup, loading, error } = useSignUp(handleSuccess, handleError);
   };
 
   const isDisabled = () => {
-    return !username || !password || !confirmPasswordMatched || !firstName || !lastName || !validation.length || !validation.specialChar || !validation.uppercase || !validation.lowercase || !validation.number;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return !username || !emailRegex.test(username) ||  !password || !confirmPasswordMatched || !firstName || !lastName || !validation.length || !validation.specialChar || !validation.uppercase || !validation.lowercase || !validation.number;
   };
 
 const showToaster = (message) => {
@@ -96,7 +96,7 @@ const showToaster = (message) => {
         render: ({ id }) => {
           const toastId = "toast-" + id
           return (
-            <Toast nativeID={toastId} bg='$red500'>
+            <Toast nativeID={toastId} bg='#F31260'>
               <ToastDescription color='$white'>
                   {message}
                 </ToastDescription>
@@ -263,6 +263,7 @@ const showToaster = (message) => {
             </View>
       <AlertView
         visible={showAlert}
+        
         onClose={() => setShowAlert(false)}
         title="Production Note"
         content="In a production environment, you would receive an email for this step."
