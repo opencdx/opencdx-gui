@@ -1,39 +1,82 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Platform, SafeAreaView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useLogin } from '../utils/axios/iam-hooks';
 import {
-    Button, Input, ButtonText, InputField, Image, Link, LinkText, Text,
+    Button, Input, ButtonText, Image, InputField, Text,
     InputSlot,
-    InputIcon,
-    EyeIcon,
-    EyeOffIcon,
-    Switch,
+    useToast, Toast, ToastDescription
 } from '@gluestack-ui/themed';
-import { Endpoints } from '../utils/axios/apiEndpoints';
+import Loader from '../components/Loader';
+// import { Endpoints } from '../utils/axios/apiEndpoints';
 
 const LoginScreen = ({ navigation }) => {
-    const [username, setUsername] = useState('admin@opencdx.org');
-    const [password, setPassword] = useState('password');
+    const [username, setUsername] = useState();
+    const [password, setPassword] = useState();
     const [showPassword, setShowPassword] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
     const handleState = () => {
         setShowPassword((showState) => {
             return !showState
         })
     }
-    const [rememberMe, setRememberMe] = useState(false);
+    const handleSetPassword = (value) => {
+        setPassword(value);
+    }
+    const handleSetUsername = (value) => {
+        setUsername(value);
+    }
+    const toast = useToast();
     const toggleRememberMe = (value) => {
         setRememberMe(value);
     };
+    const { login, loading, error } = useLogin(
+        (data) => {
+            setIsLoading(false);
+            AsyncStorage.setItem('jwtToken', data.token);
+            navigation.navigate('List');
+        },
+        (err) => {
+            const errorData = err.response?.data;
+            setIsLoading(false);
+
+            showToaster('Invalid Credentials.')
+           
+        }
+      );
 
     const handleLogin = async () => {
         try {
-            const response = await Endpoints.login({ userName: username, password: password });
-            await AsyncStorage.setItem('jwtToken', response.data.token);
-            navigation.navigate('List');
+            setIsLoading(true);
+            // const response = await Endpoints.login({ userName: username, password: password });
+            login({ userName: username, password: password });
+            setIsLoading(false);
         } catch (error) {
-            alert(error);
+            setIsLoading(false);
+            showToaster(error);
         }
     };
+
+    const isDisabled = () => {
+        return !username || !password || isLoading;
+      };
+
+    const showToaster = (message) => {
+        toast.show({
+            placement: "top right",
+            duration: "2000",
+            render: ({ id }) => {
+              const toastId = "toast-" + id
+              return (
+                <Toast nativeID={toastId} bg='#F31260'>
+                  <ToastDescription color='$white'>
+                      {message}
+                    </ToastDescription>
+                </Toast>
+              )
+            },
+        })
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -45,52 +88,75 @@ const LoginScreen = ({ navigation }) => {
                     style={styles.image}
                     source={require('../assets/opencdx.png')}
                 />
+                
                 <Input
-                    onChangeText={setUsername}
-                    style={styles.input}
+                    style={styles.inputRequired}
                     variant="outlined"
                     size="md"
                 >
-                    <InputField placeholder="Email  " defaultValue={username} />
+                    <InputField 
+                    placeholder="Email Address*" 
+                    defaultValue={username}
+                    onChangeText={handleSetUsername}
+                    />
                 </Input>
                 <Input
-                    onChangeText={setPassword}
-                    style={styles.input}
+                    style={styles.inputRequired}
                     variant="outlined"
                     size="md"
                 >
-                    <InputField type={showPassword ? "text" : "password"} placeholder="Password" defaultValue={password} />
-                    <InputSlot pr="$3" onPress={handleState}>
-                        <InputIcon
-                            as={showPassword ? EyeIcon : EyeOffIcon}
-                            color="$darkBlue500"
-                        />
+                    <InputField 
+                    type={showPassword ? "text" : "password"} 
+                    placeholder="Password*" 
+                    defaultValue={password}
+                    onChangeText={handleSetPassword} 
+                    />
+                    
+                    <InputSlot pr="$3" focusable={true} tabIndex={0} onPress={handleState}>
+                    <Image 
+                    source={ showPassword ? require('../assets/eye.svg') : require('../assets/cross_eye.svg') } 
+                    style={{ width: 20, height: 20 }} 
+                    alt="show password"
+                    />
                     </InputSlot>
                 </Input>
-                <View style={styles.switchWrapper}>
-                    <View style={styles.switch}>
-                        <Switch
-                            value={rememberMe}
-                            onValueChange={(value) => toggleRememberMe(value)}
-
-                        /><Text style={{ marginLeft: 10 }}
-                        >Remember Me</Text></View>
-
-                    <Text style={styles.forget}>
-                        Forget Password </Text>
-                </View>
+                <Button
+                    size="md"
+                    variant="link"
+                    action="primary"
+                    isFocusVisible={false}
+                    style={styles.forget}
+                    onPress={() => navigation.navigate('ForgotPassword')}
+                    >
+                        <ButtonText>Forget Password</ButtonText>
+                    </Button>
             </View>
             <View style={styles.footer}>
-                <Button title="Sign In" onPress={handleLogin} style={styles.button}>
-                    <ButtonText style={styles.buttonText}>Sign In</ButtonText>
+                <Button 
+                title="Sign In" 
+                onPress={() => {
+                    handleLogin();
+                }} 
+                style={styles.button}
+                isDisabled={isDisabled()}
+                >
+                    <ButtonText style={styles.buttonText}>Login</ButtonText>
                 </Button>
                 <View style={styles.center}>
                     <Text style={styles.centerText}>Don't have an account?</Text>
-                    <Text style={styles.signup}>
-                        Sign Up
-                    </Text>
+                    <Button
+                    size="md"
+                    variant="link"
+                    action="primary"
+                    isFocusVisible={false}
+                    style={styles.signup}
+                    onPress={() => navigation.navigate('Signup')}
+                    >
+                        <ButtonText>Sign Up</ButtonText>
+                    </Button>
                 </View>
             </View>
+            <Loader isVisible={isLoading} />
         </SafeAreaView>
     );
 };
@@ -123,19 +189,24 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingTop: 24,
+        paddingTop: 14,
     },
     centerText: {
         marginRight: 5,
     },
-    input: {
-        marginBottom: 24,
+    inputRequired: {
+        marginBottom: 14,
+        height: 50,
+        after: {
+            content: '*',
+            color: 'red',
+        },
     },
     button: {
         marginBottom: 10,
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 68,
+        borderRadius: 8,
         ...Platform.select({
             web: {
                 width: '90%',
@@ -152,8 +223,6 @@ const styles = StyleSheet.create({
     },
     forget: {
         alignItems: 'flex-end',
-        marginBottom: 10,
-        marginTop: 10,
         textAlign: 'right',
         flexDirection: "row",
         justifyContent: "flex-end",
@@ -186,7 +255,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 4,
-        paddingTop: 24,
+        paddingTop: 14,
     },
 });
 

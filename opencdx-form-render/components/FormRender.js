@@ -70,15 +70,8 @@ export default function App({ questionnaire, navigation }) {
             break;
         }
         if (answerIndex >= 0) {
-          // Remove debugger statement
-          field.anfStatementConnector.forEach(anf => {
-            if (anf.operatorValue) {
-              if (parseInt(anf.operatorValue) === answerIndex) {
-                field.anfStatementConnector = [anf];
-                return; // Exit the loop once we've found the matching anf
-              }
-            }
-          });
+          var anfAnswer = field.anfStatementConnector.findIndex(anf => parseInt(anf.operatorValue) === answerIndex);
+          field.anfStatementConnector = [field.anfStatementConnector[anfAnswer]];
         }
       }
 

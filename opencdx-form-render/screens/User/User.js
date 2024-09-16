@@ -27,10 +27,10 @@ const User = ({ navigation }) => {
         const { questionnaires, pagination } = response.data;
         
         // Sort questionnaires by modified date in ascending order
-        const sortedQuestionnaires = questionnaires.sort((a, b) => 
-          new Date(b.modified) - new Date(a.modified)
-        );
-        
+         const sortedQuestionnaires = questionnaires.sort((a, b) => 
+                new Date(b.modified) - new Date(a.modified)
+          );
+                  
         setButtonTitles(sortedQuestionnaires);
         setTotalPages(pagination.totalPages);
         setTotalRecords(pagination.totalRecords);
