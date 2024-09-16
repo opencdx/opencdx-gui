@@ -85,17 +85,8 @@ const ResetPassword = ({ navigation }) => {
 const handleError = (error) => {
     setIsLoading(false); 
     const errorData = error.response?.data;
-
-    const errorCode = errorData.errorCode
-
-    if (errorCode == 401 || errorCode == 404 )
-    {
-        showToaster('User does not exist.')
-    }
-    else
-    {
-        showToaster(errorData.cause.localizedMessage);
-    }
+    showToaster('User does not exist.')
+    
 };
   const { resetPassword, loading, error } = useResetPassword(handleSuccess, handleError);
   const handleSubmit = async () => {

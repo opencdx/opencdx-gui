@@ -40,18 +40,8 @@ const LoginScreen = ({ navigation }) => {
             const errorData = err.response?.data;
             setIsLoading(false);
 
-            const errorCode = errorData.errorCode
-
-            if (errorCode == 401 || errorCode == 404 )
-            {
-                showToaster('Invalid Credentials.')
-            }
-            else
-            {
-                showToaster(errorData.cause.localizedMessage);
-            }
-
-
+            showToaster('Invalid Credentials.')
+           
         }
       );
 
