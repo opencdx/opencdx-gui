@@ -68,7 +68,7 @@ const handleError = (error: AxiosError) => {
   // check the value of all fields in the form, if all fields are filled, the button will be enabled
   const isDisabled = () => {
     return (
-      !username || !password || !firstName || !lastName || !validation.length || !validation.specialChar || !validation.uppercase || !validation.lowercase || !validation.number ||!confirmPasswordMatched || !confirmPassword
+      !username || !isUsernameValid || !password || !firstName || !lastName || !validation.length || !validation.specialChar || !validation.uppercase || !validation.lowercase || !validation.number ||!confirmPasswordMatched || !confirmPassword
     );
   };
 
@@ -93,7 +93,7 @@ const handleError = (error: AxiosError) => {
   };
 
   const isValidEmail = (email: string) => {
-    return email.length > 0;
+
     // email validation logic
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -168,7 +168,7 @@ const handleError = (error: AxiosError) => {
                   isRequired
                   isInvalid={!isUsernameValid && username.length > 0}
                   onValueChange={handleUsernameChange}
-                  errorMessage={t('invalid_email')}
+                  // errorMessage={t('invalid_email')}
                 />
               </div>
             </div>
@@ -285,6 +285,8 @@ const handleError = (error: AxiosError) => {
         isOpen={isOpen} 
         placement={'center'}
         onOpenChange={onOpenChange} 
+        hideCloseButton = {true}
+        radius='none'
       >
         <ModalContent>
           {(onClose) => (
@@ -297,13 +299,14 @@ const handleError = (error: AxiosError) => {
                 
               </ModalBody>
               <ModalFooter>
-                <Button color="primary" variant='bordered' onPress={onClose} aria-label='Cancel' tabIndex={0}>
+                <Button color="primary" variant='bordered' onPress={onClose} aria-label='Cancel' tabIndex={0} size='lg'>
                   Cancel
                 </Button>
                 <Button
                     color="primary"
                     aria-label='Continue to complete signup' 
                     tabIndex={0}
+                    size='lg'
                     onPress={() => {
                       onClose();
                       handleSubmit();
