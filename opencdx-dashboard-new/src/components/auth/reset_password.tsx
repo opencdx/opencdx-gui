@@ -27,8 +27,18 @@ export default function ResetPassword() {
 const handleError = (error: AxiosError) => {
     setIsLoading(false); 
     const errorData = error.response?.data as { cause: { localizedMessage: string } };
-    toast.error(errorData.cause.localizedMessage || t('error_occurred'));
+    const errorCode = error.response?.status 
+
+      if (errorCode === 401 || errorCode === 404)
+      {
+         toast.error( t('reset_password_failed'));
+      }
+      else
+      {
+        toast.error(errorData.cause.localizedMessage || t('error_occurred'));
+      }
 };
+
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const { mutate: resetPassword, error } = useResetPassword(handleSuccess, handleError);
   const t = useTranslations('common');
@@ -177,7 +187,7 @@ const handleError = (error: AxiosError) => {
               <Input
                 className='label-color'
                 id="confirmPassword"
-                label={t('confirm_password_placeholder')}
+                label={t('confirm_new_password_placeholder')}
                 defaultValue=""
                 isRequired
                 variant="bordered"
@@ -199,7 +209,7 @@ const handleError = (error: AxiosError) => {
                   </button>
                 }
               />
-                <div className="validation-container">
+                <div className="validation-container" tabIndex={0} aria-label= {"Password criteria is" + t("password_min_characters") + t("password_special_characters") + t("password_number_characters") + t("password_lower_characters") + t("password_upper_characters")}>
                     <ValidationRow
                     isValid={validation.length}
                     label={t("password_min_characters")}
@@ -249,6 +259,8 @@ const handleError = (error: AxiosError) => {
         isOpen={isOpen} 
         placement={'center'}
         onOpenChange={onOpenChange} 
+        hideCloseButton = {true}
+        radius='none'
       >
         <ModalContent>
           {(onClose) => (
@@ -258,16 +270,16 @@ const handleError = (error: AxiosError) => {
                 <p> 
                 In a production environment, you would receive an email for this step.
                 </p>
-                
               </ModalBody>
               <ModalFooter>
-                <Button color="primary" variant='bordered' onPress={onClose} aria-label='Cancel' tabIndex={0}>
+                <Button color="primary" variant='bordered' onPress={onClose} aria-label='Cancel' tabIndex={0} size='lg'>
                   Cancel
                 </Button>
                 <Button
                     color="primary"
                     aria-label='Continue to reset password' 
                     tabIndex={0}
+                    size='lg'
                     onPress={() => {
                       onClose();
                       handleSubmit();
