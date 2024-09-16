@@ -159,7 +159,7 @@ const handleError = (error) => {
                     onChangeText={handlePasswordChange} 
                     />
                     
-                    <InputSlot pr="$3" onPress={handleIsVisible}>
+                    <InputSlot pr="$3" tabIndex={0} onPress={handleIsVisible}>
                     <Image 
                     source={ isVisible ? require('../assets/eye.svg') : require('../assets/cross_eye.svg') } 
                     style={{ width: 20, height: 20 }} 
@@ -179,7 +179,7 @@ const handleError = (error) => {
                     onChangeText={handleConfirmPasswordChange} 
                     />
                     
-                    <InputSlot pr="$3" onPress={handleIsConfirmVisible}>
+                    <InputSlot pr="$3" tabIndex={0} onPress={handleIsConfirmVisible}>
                     <Image 
                     source={ isConfirmVisible ? require('../assets/eye.svg') : require('../assets/cross_eye.svg') } 
                     style={{ width: 20, height: 20 }} 

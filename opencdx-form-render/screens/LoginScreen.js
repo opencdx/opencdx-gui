@@ -60,6 +60,7 @@ const LoginScreen = ({ navigation }) => {
             setIsLoading(true);
             // const response = await Endpoints.login({ userName: username, password: password });
             login({ userName: username, password: password });
+            setIsLoading(false);
         } catch (error) {
             setIsLoading(false);
             showToaster(error);
@@ -121,7 +122,7 @@ const LoginScreen = ({ navigation }) => {
                     onChangeText={handleSetPassword} 
                     />
                     
-                    <InputSlot pr="$3" onPress={handleState}>
+                    <InputSlot pr="$3" focusable={true} tabIndex={0} onPress={handleState}>
                     <Image 
                     source={ showPassword ? require('../assets/eye.svg') : require('../assets/cross_eye.svg') } 
                     style={{ width: 20, height: 20 }} 

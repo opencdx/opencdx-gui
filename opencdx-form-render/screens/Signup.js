@@ -167,7 +167,7 @@ const showToaster = (message) => {
                     onChangeText={handlePasswordChange} 
                     />
                     
-                    <InputSlot pr="$3" onPress={handleState}>
+                    <InputSlot pr="$3" tabIndex={0} onPress={handleState}>
                     <Image 
                     source={ isVisible ? require('../assets/eye.svg') : require('../assets/cross_eye.svg') } 
                     style={{ width: 20, height: 20 }} 
@@ -187,7 +187,7 @@ const showToaster = (message) => {
                     onChangeText={handleConfirmPasswordChange} 
                     />
                     
-                    <InputSlot pr="$3" onPress={handleConfirmPasswordState}>
+                    <InputSlot pr="$3" tabIndex={0} onPress={handleConfirmPasswordState}>
                     <Image 
                     source={ isConfirmVisible ? require('../assets/eye.svg') : require('../assets/cross_eye.svg') } 
                     style={{ width: 20, height: 20 }} 
