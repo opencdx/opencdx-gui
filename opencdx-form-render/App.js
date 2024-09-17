@@ -7,6 +7,7 @@ import Signup from './screens/Signup';
 import ForgotPassword from './screens/ForgotPassword';
 import ResetPassword from './screens/ResetPassword';
 import ResetPasswordSuccess from './screens/ResetPasswordSuccess';
+import Dashboard from './screens/Dashboard';
 import User from './screens/User/User';
 import ListQuestion from './screens/User/ListQuestion';
 import ListScreen from './screens/ListScreen';
@@ -92,7 +93,7 @@ const App = () => {
   return (
     <GluestackUIProvider config={config}>
       <NavigationContainer styles={styles.container}>
-        <Stack.Navigator initialRouteName={isAuthenticated ? "List" : "Login"}>
+        <Stack.Navigator initialRouteName={isAuthenticated ? "Dashboard" : "Login"}>
           <Stack.Screen name="Login" component={LoginScreen} 
             options={{
               headerShown: false,  
@@ -132,6 +133,21 @@ const App = () => {
                 backgroundColor:'#FFFFFF'
               }
             }}
+          />
+          <Stack.Screen name="Dashboard" component={Dashboard} 
+            options={({ navigation }) => ({
+              headerShown: true,
+              headerRight: () => (
+                <Pressable onPress={() => handleLogout(navigation)}>
+                  <Image
+                    source={require('./assets/logout.svg')}
+                    style={{ width: 20, height: 20, marginRight: 10 }}
+                  />
+                </Pressable>),
+              cardStyle:{
+                backgroundColor:'#FFFFFF'
+              }
+            })}
           />
           <Stack.Screen name="List" component={ListScreen} 
             options={({ navigation }) => ({
