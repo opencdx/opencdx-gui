@@ -200,7 +200,7 @@ export default function ListQuestionnaire() {
           </div>
 
 
-          {!isGrid ? (
+          {isGrid ? (
             <GridView
               questionnaires={data?.data?.questionnaires || []} // Provide default empty array
               onView={(questionnaire) => { setJson(questionnaire); onOpen(); }}

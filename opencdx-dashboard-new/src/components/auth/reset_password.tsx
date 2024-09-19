@@ -160,7 +160,7 @@ const handleError = (error: AxiosError) => {
                 className='label-color'
                 id="password"
                 label={t("new_password_placeholder")}
-                aria-label={"Password criteria to enter" + t("password_min_characters") + t("password_special_characters") + t("password_number_characters") + t("password_lower_characters") + t("password_upper_characters")}
+                aria-label={t("new_password_placeholder")}
                 defaultValue=""
                 isRequired
                 variant="bordered"

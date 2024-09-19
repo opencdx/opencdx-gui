@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "generate-api:iam": "openapi-generator-cli generate -i ./api/json/iam.json -g typescript-axios -o ./api/iam/ --skip-validate-spec --additional-properties=useSingleRequestParameter=true,withoutPrefixEnums=true,enumNameSuffix=,withSeparateModelsAndApi=true,apiPackage=server,modelPackage=model --openapi-normalizer REFACTOR_ALLOF_WITH_PROPERTIES_ONLY=true"
   },
   "dependencies": {
     "@dotlottie/react-player": "^1.6.18",
@@ -21,8 +22,8 @@
     "@react-native-community/slider": "4.4.2",
     "@react-navigation/native": "^6.1.16",
     "@react-navigation/stack": "^6.3.28",
+    "@tanstack/react-query": "^5.55.0",
     "axios": "^1.6.7",
-    "crypto": "^1.0.1",
     "crypto-browserify": "^3.12.0",
     "date-fns": "^3.5.0",
     "deprecated-react-native-prop-types": "^5.0.0",
