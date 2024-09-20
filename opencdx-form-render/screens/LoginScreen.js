@@ -128,7 +128,7 @@ const LoginScreen = ({ navigation }) => {
                     style={styles.forget}
                     onPress={() => navigation.navigate('ForgotPassword')}
                     >
-                        <ButtonText>Forget Password</ButtonText>
+                        <ButtonText>Forgot Password</ButtonText>
                     </Button>
             </View>
             <View style={styles.footer}>
