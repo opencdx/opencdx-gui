@@ -1,6 +1,6 @@
 import React from 'react';
 import {VStack, HStack, Avatar, AvatarFallbackText, AvatarImage, Text   } from '@gluestack-ui/themed';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 
 const AvatarView = (
     { 
@@ -8,7 +8,7 @@ const AvatarView = (
         imageURI,
     }
 ) => {
-    return (
+    return Platform.OS === "web" ? (
         <VStack space="md">
         <HStack style={styles.container} space="sm">
         <Avatar >
@@ -22,7 +22,16 @@ const AvatarView = (
         <Text size="sm" >{name}</Text>
         </HStack>
         </VStack>
-    );
+    ) : (
+        <Avatar >
+            <AvatarFallbackText>{name}</AvatarFallbackText>
+            <AvatarImage
+            source={{
+                uri: imageURI,
+            }}
+            />
+        </Avatar>
+    )
 }
 const styles = StyleSheet.create({
     container: {

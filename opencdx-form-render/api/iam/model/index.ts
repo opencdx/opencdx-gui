@@ -24,7 +24,7 @@ export * from './get-analysis-engine-response';
 export * from './get-iam-user-response';
 export * from './get-organization-details-by-id-response';
 export * from './get-workspace-details-by-id-response';
-export * from './iam-user';
+
 export * from './list-analysis-engines-request';
 export * from './list-analysis-engines-response';
 export * from './list-iam-users-request';
@@ -35,7 +35,7 @@ export * from './login-request';
 export * from './login-response';
 export * from './organization';
 export * from './pagination';
-export * from './phone-number';
+
 export * from './privacy-protection-data';
 export * from './privacy-protection-data-request';
 export * from './real-time-monitoring-data';
@@ -43,7 +43,7 @@ export * from './real-time-monitoring-data-request';
 export * from './reset-password-request';
 export * from './reset-password-response';
 export * from './security-response';
-export * from './sign-up-request';
+
 export * from './sign-up-response';
 export * from './timestamp';
 export * from './update-analysis-engine-request';

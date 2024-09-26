@@ -10,7 +10,7 @@ import {
 import Loader from '../components/Loader';
 // import { Endpoints } from '../utils/axios/apiEndpoints';
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = ({ navigation, onLogin }) => {
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
     const [showPassword, setShowPassword] = useState(false)
@@ -34,14 +34,13 @@ const LoginScreen = ({ navigation }) => {
         (data) => {
             setIsLoading(false);
             AsyncStorage.setItem('jwtToken', data.token);
-            navigation.navigate('List');
+            navigation.navigate('Dashboard');
+            onLogin(data.token);
         },
         (err) => {
             const errorData = err.response?.data;
             setIsLoading(false);
-
-            showToaster('Invalid Credentials.')
-           
+            showToaster('Invalid Credentials.');
         }
       );
 
@@ -50,7 +49,6 @@ const LoginScreen = ({ navigation }) => {
             setIsLoading(true);
             // const response = await Endpoints.login({ userName: username, password: password });
             login({ userName: username, password: password });
-            setIsLoading(false);
         } catch (error) {
             setIsLoading(false);
             showToaster(error);

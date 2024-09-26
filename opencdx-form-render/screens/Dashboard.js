@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Platform, SafeAreaView } from 'react-native';
+import { View, StyleSheet, Platform, SafeAreaView, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useLogin } from '../utils/axios/iam-hooks';
 import {
@@ -18,27 +18,30 @@ import {
 import Loader from '../components/Loader';
 import AvatarView from '../components/AvatarView';
 import { useLayoutEffect } from 'react';
+import { LinearGradient } from 'expo-linear-gradient';
 const Dashboard = ({ navigation }) => {
-    useLayoutEffect(() => {
-        navigation.setOptions({
-          title: 'Dashboard',
-          headerTintColor: '#fff',
-            headerRight: () => (
-                <AvatarView
-                    name="John Doe"
-                    imageURI="../assets/account_circle_myprofile.png"
-                />
-            ),
-        });
-      }, [navigation]);
-    return (
-        <SafeAreaView style={styles.container}>
-            <ScrollView contentContainerStyle={styles.body}>
-                <View style={styles.view_style}>
-                <VStack>
-                    <Text style={styles.title}>Welcome to your dashboard John.</Text>
-                    <Text style={styles.description}>Let's see what is available for you today!</Text>
-                </VStack>
+    const MainContent = () =>
+        (<View style={Platform.OS === 'web' ? styles.view_style : styles.body}>
+                {
+                    Platform.OS === 'web' ? (
+                    <VStack>
+                        <Text style={styles.title}>Welcome to your dashboard John.</Text>
+                        <Text style={styles.description}>Let's see what is available for you today!</Text>
+                    </VStack>
+                    ) : (
+                    <VStack>
+                        <Image
+                            size="md"
+                            resizeMode="contain"
+                            alt="OpenCDX logo"
+                            style={styles.image}
+                            source={require('../assets/opencdx.png')}
+                        />
+                        <Text style={styles.title}>Welcome to your dashboard John.</Text>
+                        <Text style={styles.description}>Let's see what is available for you today!</Text>
+                    </VStack> 
+                    )
+                }
                 <Card borderRadius="20px" maxWidth={400} p="0px" backgroundColor='black'>
                     <Image
                         w={400}
@@ -71,9 +74,42 @@ const Dashboard = ({ navigation }) => {
                     </Button>
                     </VStack>
                 </Card>
-            </View>
-            </ScrollView>
-        </SafeAreaView>
+                {
+                    Platform.OS !== 'web' && (
+                    <VStack style={styles.copyright}>
+                        <Image
+                            size="md"
+                            resizeMode="contain"
+                            alt="OpenCDX logo"
+                            style={styles.image}
+                            source={require('../assets/Tenant.png')}
+                        />
+                        <Text style={styles.copyright}>© 2024 Your Company Name. All rights reserved.</Text>
+                    </VStack> 
+                    )
+                }
+            </View>)
+
+    return (
+                    Platform.OS !== 'web' ? (
+                        <SafeAreaView style={styles.container}>
+                             <LinearGradient
+                            colors={['rgba(255, 255, 255, 1.0)','rgba(255, 255, 255, 1.0)','rgba(0, 24, 49, 1.0)', 'rgba(0, 24, 49, 1.0)', 'rgba(0, 109, 233, 1.0)']}
+                            style={styles.container}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 0, y: 1 }}>
+                        <ScrollView contentContainerStyle={styles.body}>
+                                <MainContent/>
+                            </ScrollView>
+                            </LinearGradient>
+                            </SafeAreaView>
+                    ) : (
+                        <SafeAreaView style={styles.container}>
+                        <ScrollView contentContainerStyle={styles.body}>
+                        <MainContent/>
+                        </ScrollView>
+                        </SafeAreaView>
+                    )
     );
 }
 
@@ -94,11 +130,24 @@ const styles = StyleSheet.create({
     },
     title: {
         w: '100%',
-        justifyContent: 'start',
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: 'black',
-        marginBottom: 8,
+       
+        
+        ...Platform.select({
+            web: {
+                justifyContent: 'start',
+                color: 'black',
+                marginBottom: 8,
+                fontSize: 20,
+                fontWeight: 'bold',
+            },
+            default: {
+                fontSize: 16,
+                fontWeight: 'bold',
+                justifyContent: 'center',
+                color: 'white',
+                marginBottom: 4,
+            }
+        })
       },
       description: {
         w: '100%',
@@ -106,6 +155,14 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: 'black',
         marginBottom: 20,
+      },
+      copyright: {
+        w: '100%',
+        justifyContent: 'center',
+        fontSize: 12,
+        color: 'grey',
+        marginBottom: 30,
+        alignItems: 'center',
       },
     center: {
         flexDirection: 'row',
@@ -142,6 +199,7 @@ const styles = StyleSheet.create({
         width: '100%', // Fixed width
         aspectRatio: 1 / 1, // Aspect ratio of width to height
         resizeMode: 'cover', // Ensures image covers the view
+        marginVertical: 20
       },
     forget: {
         alignItems: 'flex-end',
@@ -184,6 +242,6 @@ const styles = StyleSheet.create({
     },
     view_style: {
         display: 'flex',
-    },
+    }
 });
 export default Dashboard;
