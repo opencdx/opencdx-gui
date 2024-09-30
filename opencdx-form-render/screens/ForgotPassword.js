@@ -145,12 +145,21 @@ const styles = StyleSheet.create({
     })
 },
 backButton: {
-    position: 'absolute', // Absolute positioning
-    top: 16, // Distance from the top edge
-    left: 16, // Distance from the left edge
-    flexDirection: 'row', // Align icon and text horizontally
-    alignItems: 'center', // Center items vertically
-    zIndex: 10, // Ensure it is above other elements
+    ...Platform.select({
+        web: {
+            position: 'absolute', // Absolute positioning
+            top: 16, // Distance from the top edge
+            left: 16, // Distance from the left edge
+            flexDirection: 'row', // Align icon and text horizontally
+            alignItems: 'center', // Center items vertically
+            zIndex: 10, // Ensure it is above other elements
+        },
+        default: {
+            justifyContent: 'top',
+            paddingHorizontal: 14,
+        }
+    })
+    
   },
   backIcon: {
     width: 18,

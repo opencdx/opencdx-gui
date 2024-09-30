@@ -6,7 +6,7 @@ import AlertView from '../components/AlertView';
 import ValidationRow from '../components/ValidationRow';
 import { useResetPassword } from '../utils/axios/iam-hooks';
 import Loader from '../components/Loader';
-import { DatePickerModal } from 'react-native-paper-dates';
+// import { DatePickerModal } from 'react-native-paper-dates';
 const EditProfile = ({ navigation }) => {
     const [bio, setBio] = useState('');
     const [firstName, setFirstName] = useState('');
@@ -97,7 +97,7 @@ const EditProfile = ({ navigation }) => {
                 <Button style={styles.footer}>
                     <ButtonText>Save</ButtonText>
                 </Button>
-                <DatePickerModal
+                {/* <DatePickerModal
                     mode="single"
                     closeIcon='close'
                     calendarIcon='calendar'
@@ -106,7 +106,7 @@ const EditProfile = ({ navigation }) => {
                     onDismiss={onDismissSingle}
                     date={dob}
                     onConfirm={onConfirmSingle}
-                />
+                /> */}
             </View>
         </SafeAreaView>
     </SafeAreaView>

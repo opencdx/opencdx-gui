@@ -3,21 +3,12 @@ import { View, StyleSheet, Platform, SafeAreaView, TouchableOpacity } from 'reac
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useLogin } from '../utils/axios/iam-hooks';
 import {
-    Button, Input, ButtonText, Image, InputField, Text,
-    InputSlot,
-    useToast, Toast, ToastDescription,
-    Icon,
-    Link,
-    LinkText,
+    Button, ButtonText, Image, Text,
     Card,
     Heading,
     VStack,
-    HStack,
     ScrollView,
 } from '@gluestack-ui/themed';
-import Loader from '../components/Loader';
-import AvatarView from '../components/AvatarView';
-import { useLayoutEffect } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 const Dashboard = ({ navigation }) => {
     const MainContent = () =>
@@ -29,12 +20,12 @@ const Dashboard = ({ navigation }) => {
                         <Text style={styles.description}>Let's see what is available for you today!</Text>
                     </VStack>
                     ) : (
-                    <VStack>
+                    <VStack style={styles.center}>
                         <Image
                             size="md"
                             resizeMode="contain"
                             alt="OpenCDX logo"
-                            style={styles.image}
+                            style={styles.logo}
                             source={require('../assets/opencdx.png')}
                         />
                         <Text style={styles.title}>Welcome to your dashboard John.</Text>
@@ -42,15 +33,14 @@ const Dashboard = ({ navigation }) => {
                     </VStack> 
                     )
                 }
-                <Card borderRadius="20px" maxWidth={400} p="0px" backgroundColor='black'>
+                <Card borderRadius={20} maxWidth={400} p={1} backgroundColor='black'>
                     <Image
                         w={400}
                         h={400}
-                        borderTopLeftRadius="20px"
-                        borderTopRightRadius="20px"
-                        source={{
-                        uri: require("../assets/get_care_now.png"),
-                        }}
+                        borderTopLeftRadius={20}
+                        borderTopRightRadius={20}
+                        alt='card image'
+                        source={ require("../assets/get_care_now.png")}
                     />
                     <VStack p="$4">
                     <Heading size="md" fontFamily="$heading" color='white'>
@@ -80,7 +70,7 @@ const Dashboard = ({ navigation }) => {
                         <Image
                             size="md"
                             resizeMode="contain"
-                            alt="OpenCDX logo"
+                            alt="OpenCDX tenent logo"
                             style={styles.image}
                             source={require('../assets/Tenant.png')}
                         />
@@ -92,7 +82,7 @@ const Dashboard = ({ navigation }) => {
 
     return (
                     Platform.OS !== 'web' ? (
-                        <SafeAreaView style={styles.container}>
+                        // <SafeAreaView style={styles.container}>
                              <LinearGradient
                             colors={['rgba(255, 255, 255, 1.0)','rgba(255, 255, 255, 1.0)','rgba(0, 24, 49, 1.0)', 'rgba(0, 24, 49, 1.0)', 'rgba(0, 109, 233, 1.0)']}
                             style={styles.container}
@@ -102,7 +92,7 @@ const Dashboard = ({ navigation }) => {
                                 <MainContent/>
                             </ScrollView>
                             </LinearGradient>
-                            </SafeAreaView>
+                            // </SafeAreaView>
                     ) : (
                         <SafeAreaView style={styles.container}>
                         <ScrollView contentContainerStyle={styles.body}>
@@ -130,8 +120,6 @@ const styles = StyleSheet.create({
     },
     title: {
         w: '100%',
-       
-        
         ...Platform.select({
             web: {
                 justifyContent: 'start',
@@ -144,7 +132,7 @@ const styles = StyleSheet.create({
                 fontSize: 16,
                 fontWeight: 'bold',
                 justifyContent: 'center',
-                color: 'white',
+                color: 'black',
                 marginBottom: 4,
             }
         })
@@ -165,10 +153,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
       },
     center: {
-        flexDirection: 'row',
+        flexDirection: 'coloum',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingTop: 14,
+        marginTop: 14,
     },
     centerText: {
         marginRight: 5,
@@ -186,18 +174,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         // justifyContent: 'center',
         borderRadius: 8,
-        ...Platform.select({
-            web: {
-                width: '100%',
-            },
-            default: {
-                width: '90%',
-            }
-        })
+        width: '100%',
     },
     image: {
         width: '100%', // Fixed width
         aspectRatio: 1 / 1, // Aspect ratio of width to height
+        resizeMode: 'cover', // Ensures image covers the view
+        marginVertical: 20
+      },
+      logo: {
+        width: '100%', // Fixed width
+        aspectRatio: 16 / 9, // Aspect ratio of width to height
         resizeMode: 'cover', // Ensures image covers the view
         marginVertical: 20
       },
@@ -225,9 +212,8 @@ const styles = StyleSheet.create({
                 alignItems: 'center',
             },
             default: {
-                flex: 1,
-                justifyContent: 'center',
-                padding: 24,
+                justifyContent: 'space-between',
+                paddingHorizontal: 10,
             }
         })
     },

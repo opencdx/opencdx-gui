@@ -23,8 +23,8 @@ const AvatarView = (
         </HStack>
         </VStack>
     ) : (
-        <Avatar >
-            <AvatarFallbackText>{name}</AvatarFallbackText>
+        <Avatar style={styles.container} >
+            <AvatarFallbackText style={styles.text}>{name}</AvatarFallbackText>
             <AvatarImage
             source={{
                 uri: imageURI,
@@ -35,10 +35,40 @@ const AvatarView = (
 }
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      justifyContent: 'center', // Align items vertically
-      alignItems: 'center',     // Align items horizontally (optional)
-      marginHorizontal: 10,
+        ...Platform.select({
+            web: {
+                flex: 1,
+                justifyContent: 'center', // Align items vertically
+                alignItems: 'center',     // Align items horizontally (optional)
+                marginHorizontal: 10,
+            },
+            default: {
+                justifyContent: 'space-between',
+                width: 30,
+                height: 30,
+                borderRadius: 15,
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginHorizontal: 10,
+            }
+        })
+      
     },
+    text: {
+        ...Platform.select({
+            web: {
+                flex: 1,
+                justifyContent: 'center', // Align items vertically
+                alignItems: 'center', 
+                fontSize: 16
+            },
+            default: {
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: 14
+            }
+        })
+    }
   });
 export default AvatarView;

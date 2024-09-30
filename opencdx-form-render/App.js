@@ -32,8 +32,6 @@ import HowSlideVirtualConsult from './screens/VirtualConsult/HowSlideVirtualCons
 import ProlongedVirtualConsult from './screens/VirtualConsult/ProlongedVirtualConsult';
 
 import Scan from './screens/Scan';
-import { enGB, registerTranslation } from 'react-native-paper-dates'
-registerTranslation('en-GB', enGB)
 
 import SlideVirtualConsult from './screens/VirtualConsult/SlideVirtualConsult';
 import GetTested from './screens/TakeTest/GetTested';
@@ -50,8 +48,6 @@ import { useEffect, useState } from 'react';
 import Loader from './components/Loader';
 import { View, Alert, Dimensions } from 'react-native';
 import { Image } from '@gluestack-ui/themed'
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
-import { LinearGradient } from 'expo-linear-gradient';
 import LeftPanel from './components/LeftPanel';
 import AvatarView from './components/AvatarView';
 // Define Stack Navigators
@@ -134,10 +130,17 @@ const headerRight = (navigation) =>
                   )
 
 const headerLeft = (navigation) => !isMobile ? null : (
+                                <TouchableOpacity onPress={
+                                  () => {
+                                    navigation.navigate("Profile")
+                                  }
+                                  }>
                                     <AvatarView
                                     name="John Doe"
+                                    style={styles.icon}
                                     imageURI="./assets/account_circle_myprofile.png"
-                                  />)
+                                  />
+                                  </TouchableOpacity>)
   
 const MainNavigator = ({ navigation }) => (
   <Stack.Navigator initialRouteName={isAuthenticated ? "Dashboard" : "Login"}>
@@ -194,13 +197,25 @@ const MainNavigator = ({ navigation }) => (
             })}
           />
           <Stack.Screen name="Profile" component={EditProfile}
-            options={{
-              headerShown: true,
-              cardStyle:{
-                backgroundColor:'#FFFFFF'
-              },
-              headerLeft: null
-            }}
+            options={ () => {
+              if(isMobile) {
+                return {
+                  headerShown: true,
+                  cardStyle:{
+                    backgroundColor:'#FFFFFF'
+                  },
+                }
+            } else {
+              return {
+                headerShown: true,
+                cardStyle:{
+                  backgroundColor:'#FFFFFF'
+                },
+                headerLeft: null
+              }
+              }
+            }
+            }
           />
           <Stack.Screen name="List" component={ListScreen} 
             options={{
@@ -470,12 +485,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    width: 50,
-    height: 50,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginHorizontal: 20
+    ...Platform.select({
+      web: {
+        width: 50,
+        height: 50,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 20
+      },
+      default: {
+          justifyContent: 'space-between',
+          width: 30,
+          height: 30,
+          borderRadius: 15,
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginHorizontal: 10
+      }
+  })
 }
 });
 
