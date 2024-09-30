@@ -1,5 +1,5 @@
 
-import { iamApi, questionnaireApi, classificationApi } from "../api";
+import { iamApi, questionnaireApi, classificationApi, workspaceApi } from "../api";
 import { LoginRequest, SignUpRequest, ChangePasswordRequest, ResetPasswordRequest, SignUpResponse } from "../api/iam";
 
 
@@ -8,6 +8,7 @@ import { RuleSetsRequest } from "@/api/classification";
 
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+
 
 // This hook uses the useMutation hook from react-query
 // to handle the login request
@@ -132,5 +133,15 @@ export const useUpdateQuestionnaire = () => {
 
 export const useUserVerify = (userId: string) => {
     return iamApi.verifyEmailIamUser({id: userId});
+}
+
+
+export const useGetWorkspaces = () => {
+    const { data, isLoading, error } = useQuery({
+        queryKey: ['workspaces'],
+        queryFn: () => workspaceApi.listWorkspaces(),
+        select: (response) => response.data
+    }); 
+    return { data, isLoading, error };
 }
 
