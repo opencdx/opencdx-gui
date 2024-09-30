@@ -102,6 +102,12 @@ export const useGetQuestionnaireList = () => {
     });
 };
 
+export const useGetQuestionnaire = () => {
+
+    return useMutation({
+        mutationFn: (params: any) => questionnaireApi.getQuestionnaire({ id: params.id, updateAnswers: params.updateAnswers })
+    });
+};
 
 export const useDeleteQuestionnaire = () => {
 
