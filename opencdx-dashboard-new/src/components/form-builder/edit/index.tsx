@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 
 import { Modal, Input, Button, ModalHeader, ModalBody, ModalFooter, ModalContent } from 'ui-library';
-import { useGetQuestionnaire } from '@/hooks/iam-hooks';
 import { useQuestionnaireStore } from '@/hooks/questionnaire';
 import { QuestionnaireWrapper } from '@/components/form-builder/edit/edit-questionnaire-wrapper';
 import { Questionnaire } from '@/api/questionnaire/model/questionnaire';
@@ -15,14 +14,10 @@ const Edit: React.FC<{ questionnaireId: string }> = ({ questionnaireId }) => {
   const { control, register, handleSubmit, getValues, setValue } = useForm<Questionnaire>({
     defaultValues: async () => questionnaireData,
   });
-  const { mutate: getQuestionnaire } = useGetQuestionnaire();
   const { questionnaire: questionnaireData, updateQuestionnaireTitle } = useQuestionnaireStore();
   const [formName, setFormName] = useState('');
   const [showModal, setShowModal] = useState(questionnaireId === 'new-questionnaire');
 
-  useEffect(() => {
-    getQuestionnaire({ id: questionnaireId });
-  }, [questionnaireId, getQuestionnaire]);
 
   const handleContinue = () => {
     setValue('title', formName);
