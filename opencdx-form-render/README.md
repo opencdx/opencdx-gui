@@ -1,19 +1,50 @@
-# OpenCDx Form Render
+# Welcome to your Expo app 👋
 
-This project was initialized using [Expo Go Quickstart for React Native](https://reactnative.dev/docs/environment-setup) with [gluestack](https://gluestack.io/) added.
+This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
+## Get started
 
-## Build & Deployment Procedures
-### Prerequisites
-1. [Node.js](https://nodejs.org/en/download/) installed
-2. If running on iOS emulator, [Xcode](https://developer.apple.com/xcode/) installed
-3. If running on Android emulator, [Android Studio](https://developer.android.com/studio) installed. Once installed, open Android Studio and click the three dots on the top right for More Actions. Use the SDK Manager to download the latest numbered API level (e.g. 14). Then use the Device Manager under More Actions to create a device emulator.
-4. If running on physical device, [Expo Go](https://expo.dev/go) installed on the device
+1. Install dependencies
 
-### Running locally
-1. Run `npm install`
-2. Run `npm start`
-3. Follow on screen prompts to open in Android, iOS, web, or on a physical device.
+   ```bash
+   npm install
+   ```
 
-## Using form render
-OpenCDx backend services are required for auth and submitting questionnaire responses (IAM and questionnaire services). After logging in, a list of questionnaire saved from the OpenCDx form builder will be displayed. Selecting one will allow the form to be displayed and allow users to enter and submit the questionnaire.
+2. Start the app
+
+   ```bash
+    npx expo start
+   ```
+
+In the output, you'll find options to open the app in a
+
+- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+
+You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+
+## Get a fresh project
+
+When you're ready, run:
+
+```bash
+npm run reset-project
+```
+
+This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+
+## Learn more
+
+To learn more about developing your project with Expo, look at the following resources:
+
+- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
+- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+
+## Join the community
+
+Join our community of developers creating universal apps.
+
+- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
+- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.

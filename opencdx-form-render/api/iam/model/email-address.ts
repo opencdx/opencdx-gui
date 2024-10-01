@@ -31,10 +31,10 @@ export interface EmailAddress {
      * @type {string}
      * @memberof EmailAddress
      */
-    'type'?: Type;
+    'type'?: EmailAddressType;
 }
 
-export const Type = {
+export const EmailAddressType = {
     EmailTypeNotSpecified: 'EMAIL_TYPE_NOT_SPECIFIED',
     EmailTypePersonal: 'EMAIL_TYPE_PERSONAL',
     EmailTypeWork: 'EMAIL_TYPE_WORK',
@@ -42,6 +42,6 @@ export const Type = {
     Unrecognized: 'UNRECOGNIZED'
 } as const;
 
-export type Type = typeof Type[keyof typeof Type];
+export type EmailAddressType = typeof EmailAddressType[keyof typeof EmailAddressType];
 
 
