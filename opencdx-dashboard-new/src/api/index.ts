@@ -1,8 +1,8 @@
 import { Configuration as IAMConfig, OpenCdxiamUserRestControllerApi } from "./iam";
-import {  OpenCdxiamOrganizationRestControllerApi } from "./iam/server/open-cdxiam-organization-rest-controller-api";
 import { Configuration as QuestionnaireConfig, OpenCdxRestQuestionnaireControllerApi } from "./questionnaire";
 import { Configuration as ClassificationConfig, OpenCdxRestClassificationControllerApi } from "./classification";
-import { OpenCdxiamWorkspaceRestControllerApi } from "./iam/server/open-cdxiam-workspace-rest-controller-api";
+import { Configuration as LogisticsConfig, OpenCdxRestManufacturerControllerApi } from "./logistics";
+
 
 
 const classification = new ClassificationConfig({
@@ -39,10 +39,14 @@ questionnaire.accessToken = async () => {
     return localStorage.getItem('serviceToken') || '';
 }
 
+const logistics = new LogisticsConfig({
+    basePath: (process.env.REACT_APP_API_HOST ?? '') + process.env.REACT_APP_API_PORT + "/logistics"
+});
+logistics.accessToken = async () => {
+    return localStorage.getItem('serviceToken') || '';
+}
 
-
-export const organizationApi = new OpenCdxiamOrganizationRestControllerApi(questionnaire);
-export const workspaceApi = new OpenCdxiamWorkspaceRestControllerApi(questionnaire);
+export const logisticsApi = new OpenCdxRestManufacturerControllerApi(logistics);
 export const classificationApi = new OpenCdxRestClassificationControllerApi(questionnaire);
 export const iamApi = new OpenCdxiamUserRestControllerApi(iam);
 export const questionnaireApi = new OpenCdxRestQuestionnaireControllerApi(questionnaire);

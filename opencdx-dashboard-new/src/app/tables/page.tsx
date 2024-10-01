@@ -140,6 +140,26 @@ const TablesPage: React.FC = () => {
         enableGrouping: true,
         state: { isLoading },
         renderDetailPanel,
+        mantineTableProps: {
+            height: '600px',
+            striped: true,
+            highlightOnHover: true,
+            withColumnBorders: true,
+    
+            sx: {
+                '& tr:nth-of-type(odd)': {
+                    backgroundColor: '#F7FAFE !important',
+                },
+                '& tr:nth-of-type(even)': {
+                    backgroundColor: '#FFFFFF !important',
+                },
+                '& thead tr:nth-of-type(1)': {
+                    backgroundColor: '#E5F0FF !important',
+                },
+            },
+            withBorder: true,
+    
+        },
     });
 
     const organizationOptions = useMemo(() => 
@@ -164,10 +184,10 @@ const TablesPage: React.FC = () => {
     }, [data]);
 
     return (
-        <div className="w-screen overflow-auto">
-            <h1>Organizations and Workspaces</h1>
+        <div className="w-full h-full flex flex-col">
+            <h1 className='text-2xl font-bold mb-4'>Organizations and Workspaces</h1>
             {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>}
-            <div className="flex justify-center w-screen">
+            <div className="flex justify-center w-screen gap-4">
                 <div className="mt-4 w-1/2">
                     <Select
                         label="Select Organization"
@@ -191,7 +211,7 @@ const TablesPage: React.FC = () => {
                     </Select>
                 </div>
             </div>
-            <div className="mt-4 w-screen flex overflow-auto">
+            <div className="h-full w-full">
                 <MantineReactTable table={table} />
             </div>
         </div>
