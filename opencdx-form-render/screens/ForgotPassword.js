@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Platform, SafeAreaView, Pressable, Text } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Button, Image, Card, Input, InputField, ButtonText } from '@gluestack-ui/themed';
-
+import { TextInput } from 'react-native-paper';
 
 const ForgotPassword = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -25,7 +25,7 @@ const ForgotPassword = ({ navigation }) => {
       </Pressable>
     <SafeAreaView style={styles.container}>
         
-        <View style={styles.body}>
+        <View style={styles.body} tabIndex={0} accessibilityLabel = {"Forgot Password" + "Please enter the email address associated with your account."} >
             <Image
                     size="md"
                     resizeMode="contain"
@@ -37,13 +37,21 @@ const ForgotPassword = ({ navigation }) => {
             <Text style={styles.description}>
                 Please enter the email address associated with your account.
             </Text>
-            <Input
-                style={styles.inputRequired}
-                variant="outlined"
-                size="md"
-            >
-                <InputField placeholder="Email Address*" onChangeText={setUsername} />
-            </Input>
+            <TextInput 
+                    label="Email Address*" 
+                    accessibilityLabel = "Email Address" // Label for screen readers
+                    onChangeText={setUsername}
+                    style={styles.textInput}
+                    textColor= "grey"
+                    underlineColor= "transparent"
+                    underlineStyle={{backgroundColor: 'none'}}
+                    theme= {{
+                        colors: {
+                            primary: 'black',       // Changes the label and underline color when focused
+                            placeholder: 'black',   // Changes the color of the placeholder/label when not focused
+                             }
+                    }}
+                />
         </View>
         <View style={styles.footer}>
                 <Button 
@@ -170,6 +178,20 @@ backButton: {
     borderRadius: 4,
     paddingTop: 0,
 },
+textInput: {
+    mode:'flat',
+    backgroundColor: '#ffffff', // White background
+    marginBottom: 16,
+    borderColor: '#e4e4e7', // Border color
+    borderWidth: 2, // Border width 
+    paddingHorizontal: 10, // Horizontal padding
+    paddingVertical: 0, // No vertical padding
+    borderTopLeftRadius: 8, // Top-left corner radius
+    borderTopRightRadius: 8, // Top-right corner radius
+    borderBottomLeftRadius: 8, // Bottom-left corner radius
+    borderBottomRightRadius: 8, // Bottom-right corner radius
+    overflow: 'hidden', // Ensures the content doesn't overflow the rounded corners
+  },
 });
 
 export default ForgotPassword;

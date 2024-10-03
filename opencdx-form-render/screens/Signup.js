@@ -5,10 +5,14 @@ import {
     InputSlot,
     useToast, Toast, HStack, ToastDescription
 } from '@gluestack-ui/themed';
+import { TextInput } from 'react-native-paper';
 import AlertView from '../components/AlertView';
 import ValidationRow from '../components/ValidationRow';
 import { useSignUp } from '../utils/axios/iam-hooks';
 import Loader from '../components/Loader';
+import eyeIcon from '../assets/eye.svg';
+import crossEyeIcon from '../assets/cross_eye.svg';
+
 const SignUp = ({ navigation }) => {
 const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
@@ -29,16 +33,10 @@ const toast = useToast();
     number: false
   });
   
-  const handleState = () => {
-    setIsVisible((showState) => {
-        return !isVisible
-    })
-}
-const handleConfirmPasswordState = () => {
-  setIsConfirmVisible((showState) => {
-      return !isConfirmVisible
-  })
-}
+
+  const handleState = () => setIsVisible(!isVisible);
+  const handleConfirmPasswordState = () => setIsConfirmVisible(!isConfirmVisible);
+
   const validatePassword = (pass) => {
     setValidation({
       length: pass.length >= 8,
@@ -108,7 +106,7 @@ const showToaster = (message) => {
 
   return (
     <SafeAreaView style={styles.container}>
-        <View style={styles.body}>
+        <View style={styles.body}  tabIndex={0}  accessibilityLabel={"Sign Up Form"}>
             <Image
                 size="md"
                 resizeMode="contain"
@@ -120,88 +118,122 @@ const showToaster = (message) => {
                 space="md"
             >
                 <View style={styles.inputLeft} width="50%">
-                <Input
-                    style={styles.inputRequired}
-                    variant="outlined"
-                >
-                    <InputField 
-                    placeholder="First Name*" 
+                <TextInput 
+                    label="First Name*" 
+                    accessibilityLabel = "First Name" // Label for screen readers
                     defaultValue={firstName}
                     onChangeText={setFirstName}
-                    />
-                </Input>
+                    style={styles.textInput}
+                    textColor= "grey"
+                    underlineColor= "transparent"
+                    underlineStyle={{backgroundColor: 'none'}}
+                    theme= {{
+                        colors: {
+                            primary: 'black',       // Changes the label and underline color when focused
+                            placeholder: 'black',   // Changes the color of the placeholder/label when not focused
+                             }
+                    }}
+                />
                 </View>
                 <View style={styles.inputRight} width="50%">
-                <Input
-                    style={styles.inputRequired}
-                    variant="outlined"
-                >
-                    <InputField 
-                    placeholder="Last Name*" 
+                <TextInput 
+                    label="Last Name*" 
+                    accessibilityLabel = "Last Name" // Label for screen readers
                     defaultValue={lastName}
                     onChangeText={setLastName}
-                    />
-                </Input>
+                    style={styles.textInput}
+                    textColor= "grey"
+                    underlineColor= "transparent"
+                    underlineStyle={{backgroundColor: 'none'}}
+                    theme= {{
+                        colors: {
+                            primary: 'black',       // Changes the label and underline color when focused
+                            placeholder: 'black',   // Changes the color of the placeholder/label when not focused
+                             }
+                    }}
+                />
                 </View>
             </HStack>
-            <Input
-                    style={styles.inputRequired}
-                    variant="outlined"
-                    size="md"
-                >
-                    <InputField 
-                    placeholder="Email Address*" 
+                <TextInput 
+                    label="Email Address*" 
+                    accessibilityLabel = "Email Address" // Label for screen readers
                     defaultValue={username}
                     onChangeText={setUsername}
-                    />
-                </Input>
-                <Input
-                    style={styles.inputRequired}
-                    variant="outlined"
-                    size="md"
-                >
-                    <InputField 
-                    type={isVisible ? "text" : "password"} 
-                    placeholder="Password*" 
+                    style={styles.textInput}
+                    textColor= "grey"
+                    underlineColor= "transparent"
+                    underlineStyle={{backgroundColor: 'none'}}
+                    theme= {{
+                        colors: {
+                            primary: 'black',       // Changes the label and underline color when focused
+                            placeholder: 'black',   // Changes the color of the placeholder/label when not focused
+                             }
+                    }}
+                />
+                 <TextInput 
+                    secureTextEntry={!isVisible}
+                    label="Password*" 
+                    accessibilityLabel = "Password" // Label for screen readers
                     defaultValue={password}
                     onChangeText={handlePasswordChange} 
-                    />
-                    
-                    <InputSlot pr="$3" tabIndex={0} onPress={handleState}>
-                    <Image 
-                    source={ isVisible ? require('../assets/eye.svg') : require('../assets/cross_eye.svg') } 
-                    style={{ width: 20, height: 20 }} 
-                    alt="show password"
-                    />
-                    </InputSlot>
-                </Input>
-                <Input
-                    style={styles.inputRequired}
-                    variant="outlined"
-                    size="md"
-                >
-                    <InputField 
-                    type={isConfirmVisible ? "text" : "password"} 
-                    placeholder="Confirm Password*" 
+                    style={styles.textInput}
+                    textColor= "grey"
+                    underlineColor= "transparent"
+                    underlineStyle={{backgroundColor: 'none'}}
+                    right={
+                      <TextInput.Icon
+                        tabIndex={0}
+                        accessibilityLabel={isVisible ? 'hide password toggle' : 'show password toggle'}
+                        icon={isVisible ? eyeIcon : crossEyeIcon}
+                        onPress={handleState}
+                        size={23} // You can set the size of the icon here
+                        color={'#a79f9f'} 
+                        rippleColor={'transparent'}
+                      />
+                    }
+                    theme= {{
+                      colors: {
+                            primary: 'black',       // Changes the label and underline color when focused
+                            placeholder: 'black',   // Changes the color of the placeholder/label when not focused
+                            }
+                    }}
+                />
+                <TextInput 
+                    secureTextEntry={!isConfirmVisible}
+                    label="Confirm Password*" 
+                    accessibilityLabel =  "Confirm Password" // Label for screen readers
                     defaultValue={confirmPassword}
                     onChangeText={handleConfirmPasswordChange} 
-                    />
-                    
-                    <InputSlot pr="$3" tabIndex={0} onPress={handleConfirmPasswordState}>
-                    <Image 
-                    source={ isConfirmVisible ? require('../assets/eye.svg') : require('../assets/cross_eye.svg') } 
-                    style={{ width: 20, height: 20 }} 
-                    alt="show confirm password"
-                    />
-                    </InputSlot>
-                </Input>
+                    style={styles.textInput}
+                    textColor= "grey"
+                    underlineColor= "transparent"
+                    underlineStyle={{backgroundColor: 'none'}}
+                    right={
+                      <TextInput.Icon
+                        tabIndex={0}
+                        accessibilityLabel={isConfirmVisible ? 'hide confirm password toggle' : 'show confirm password toggle'}
+                        icon={isConfirmVisible ? eyeIcon : crossEyeIcon}
+                        onPress={handleConfirmPasswordState}
+                        size={23} // You can set the size of the icon here
+                        color={'#a79f9f'} 
+                        rippleColor={'transparent'}
+                      />
+                    }
+                    theme= {{
+                      colors: {
+                            primary: 'black',       // Changes the label and underline color when focused
+                            placeholder: 'black',   // Changes the color of the placeholder/label when not focused
+                            }
+                    }}
+                />
+
                 {!confirmPasswordMatched && (
                     <Text style={styles.errorDescription}>
                     New password and confirm password do not match
                     </Text>
                 )}
-        <View style={styles.validationContainer}>
-            <View style={styles.item}>
+        <View style={styles.validationContainer}  tabIndex={0}  accessibilityLabel={"Password Criteria" + "At least 8 characters" + "1 Special character" + "1 Number" + "1 Lowercase letter" + "1 Uppercase letter"}>
+            <View style={styles.item} >
                 <ValidationRow
                     isValid={validation.length}
                     label="At least 8 characters"
@@ -420,6 +452,20 @@ errorDescription: {
     justifyContent: 'center',
     borderRadius: 4,
     paddingTop: 0,
+},
+textInput: {
+  mode:'flat',
+  backgroundColor: '#ffffff', // White background
+  marginBottom: 16,
+  borderColor: '#e4e4e7', // Border color
+  borderWidth: 2, // Border width 
+  paddingHorizontal: 10, // Horizontal padding
+  paddingVertical: 0, // No vertical padding
+  borderTopLeftRadius: 8, // Top-left corner radius
+  borderTopRightRadius: 8, // Top-right corner radius
+  borderBottomLeftRadius: 8, // Bottom-left corner radius
+  borderBottomRightRadius: 8, // Bottom-right corner radius
+  overflow: 'hidden', // Ensures the content doesn't overflow the rounded corners
 },
 });
 export default SignUp;

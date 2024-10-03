@@ -7,7 +7,11 @@ import {
     InputSlot,
     useToast, Toast, ToastDescription
 } from '@gluestack-ui/themed';
+import { TextInput } from 'react-native-paper';
 import Loader from '../components/Loader';
+import eyeIcon from '../assets/eye.svg';
+import crossEyeIcon from '../assets/cross_eye.svg';
+
 // import { Endpoints } from '../utils/axios/apiEndpoints';
 
 const LoginScreen = ({ navigation }) => {
@@ -15,11 +19,10 @@ const LoginScreen = ({ navigation }) => {
     const [password, setPassword] = useState();
     const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
-    const handleState = () => {
-        setShowPassword((showState) => {
-            return !showState
-        })
-    }
+
+
+    const handleState = () => setShowPassword(!showPassword);
+
     const handleSetPassword = (value) => {
         setPassword(value);
     }
@@ -89,37 +92,50 @@ const LoginScreen = ({ navigation }) => {
                     source={require('../assets/opencdx.png')}
                 />
                 
-                <Input
-                    style={styles.inputRequired}
-                    variant="outlined"
-                    size="md"
-                >
-                    <InputField 
-                    placeholder="Email Address*" 
+                <TextInput 
+                    label="Email Address*" 
+                    accessibilityLabel = "Email Address" // Label for screen readers
                     defaultValue={username}
                     onChangeText={handleSetUsername}
-                    />
-                </Input>
-                <Input
-                    style={styles.inputRequired}
-                    variant="outlined"
-                    size="md"
-                >
-                    <InputField 
-                    type={showPassword ? "text" : "password"} 
-                    placeholder="Password*" 
+                    style={styles.textInput}
+                    underlineColor='transparent'
+                    textColor='grey'
+                    underlineStyle={{backgroundColor: 'none'}}
+                    theme= {{
+                        colors: {
+                            primary: 'black',       // Changes the label and underline color when focused
+                            placeholder: 'black',   // Changes the color of the placeholder/label when not focused
+                             }
+                    }}
+                />
+                <TextInput 
+                    secureTextEntry={!showPassword}
+                    accessibilityLabel = "Password" // Label for screen readers
+                    label="Password*" 
                     defaultValue={password}
                     onChangeText={handleSetPassword} 
-                    />
-                    
-                    <InputSlot pr="$3" focusable={true} tabIndex={0} onPress={handleState}>
-                    <Image 
-                    source={ showPassword ? require('../assets/eye.svg') : require('../assets/cross_eye.svg') } 
-                    style={{ width: 20, height: 20 }} 
-                    alt="show password"
-                    />
-                    </InputSlot>
-                </Input>
+                    style={styles.textInput}
+                    textColor= "grey"
+                    underlineColor= "transparent"
+                    underlineStyle={{backgroundColor: 'none'}}
+                    right={
+                      <TextInput.Icon
+                        tabIndex={0}
+                        accessibilityLabel={showPassword ? 'hide password toggle' : 'show password toggle'}
+                        icon={showPassword ? eyeIcon : crossEyeIcon}
+                        onPress={handleState}
+                        size={23} // You can set the size of the icon here
+                        color={'#a79f9f'} 
+                        rippleColor={'transparent'}
+                      />
+                    }
+                    theme= {{
+                      colors: {
+                            primary: 'black',       // Changes the label and underline color when focused
+                            placeholder: 'black',   // Changes the color of the placeholder/label when not focused
+                            }
+                    }}
+                />
                 <Button
                     size="md"
                     variant="link"
@@ -129,7 +145,7 @@ const LoginScreen = ({ navigation }) => {
                     onPress={() => navigation.navigate('ForgotPassword')}
                     >
                         <ButtonText>Forgot Password</ButtonText>
-                    </Button>
+                </Button>
             </View>
             <View style={styles.footer}>
                 <Button 
@@ -257,6 +273,20 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         paddingTop: 14,
     },
+    textInput: {
+        mode:'flat',
+        backgroundColor: '#ffffff', // White background
+        marginBottom: 16,
+        borderColor: '#e4e4e7', // Border color
+        borderWidth: 2, // Border width 
+        paddingHorizontal: 10, // Horizontal padding
+        paddingVertical: 0, // No vertical padding
+        borderTopLeftRadius: 8, // Top-left corner radius
+        borderTopRightRadius: 8, // Top-right corner radius
+        borderBottomLeftRadius: 8, // Bottom-left corner radius
+        borderBottomRightRadius: 8, // Bottom-right corner radius
+        overflow: 'hidden', // Ensures the content doesn't overflow the rounded corners
+      },
 });
 
 export default LoginScreen;

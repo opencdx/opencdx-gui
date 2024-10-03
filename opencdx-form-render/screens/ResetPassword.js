@@ -6,6 +6,9 @@ import AlertView from '../components/AlertView';
 import ValidationRow from '../components/ValidationRow';
 import { useResetPassword } from '../utils/axios/iam-hooks';
 import Loader from '../components/Loader';
+import eyeIcon from '../assets/eye.svg';
+import crossEyeIcon from '../assets/cross_eye.svg';
+import { TextInput } from 'react-native-paper';
 
 const ResetPassword = ({ navigation }) => {
     const toast = useToast();
@@ -55,13 +58,8 @@ const ResetPassword = ({ navigation }) => {
     return !username || !emailRegex.test(username) || !password || !confirmPassword || !confirmPasswordMatched || !validation.length || !validation.specialChar || !validation.uppercase || !validation.lowercase || !validation.number;
   };
 
-  const handleIsVisible = () => {
-    setIsVisible(!isVisible);
-    };
-
-    const handleIsConfirmVisible = () => {
-        setIsConfirmVisible(!isConfirmVisible);
-    };
+  const handleState = () => setIsVisible(!isVisible);
+  const handleConfirmPasswordState = () => setIsConfirmVisible(!isConfirmVisible);
 
   const handlePasswordChange = (newPassword) => {
     setPassword(newPassword);
@@ -118,7 +116,7 @@ const handleError = (error) => {
         <Text style={styles.backText}>Back</Text>
       </Pressable>
     <SafeAreaView style={styles.container}>
-        <View style={styles.body}>
+        <View style={styles.body} tabIndex={0}  accessibilityLabel= {"Change Password" + "Please change your password below."}>
             <Image
                     size="md"
                     resizeMode="contain"
@@ -130,60 +128,89 @@ const handleError = (error) => {
             <Text style={styles.description}>
                 Please change your password below.
             </Text>
-            <Input
-                style={styles.inputRequired}
-                variant="outlined"
-                size="md"
-                isReadOnly={true}
-            >
-                <InputField placeholder="Email Address*" defaultValue={username} onChangeText={setUsername} />
-            </Input>
-            <Input
-                    style={styles.inputRequired}
-                    variant="outlined"
-                    size="md"
-                >
-                    <InputField 
-                    type={isVisible ? "text" : "password"} 
-                    placeholder="Password*" 
+
+            <TextInput 
+                    label="Email Address*" 
+                    accessibilityLabel="Email Address" // Label for screen readers
+                    defaultValue={username}
+                    readOnly
+                    onChangeText={setUsername}
+                    style={styles.textInput}
+                    textColor= "grey"
+                    underlineColor= "transparent"
+                    underlineStyle={{backgroundColor: 'none'}}
+                    theme= {{
+                        colors: {
+                            primary: 'black',       // Changes the label and underline color when focused
+                            placeholder: 'black',   // Changes the color of the placeholder/label when not focused
+                             }
+                    }}
+                />
+
+                <TextInput 
+                    secureTextEntry={!isVisible}
+                    label="Password*" 
+                    accessibilityLabel="Password" // Label for screen readers
                     defaultValue={password}
                     onChangeText={handlePasswordChange} 
-                    />
-                    
-                    <InputSlot pr="$3" tabIndex={0} onPress={handleIsVisible}>
-                    <Image 
-                    source={ isVisible ? require('../assets/eye.svg') : require('../assets/cross_eye.svg') } 
-                    style={{ width: 20, height: 20 }} 
-                    alt="show password"
-                    />
-                    </InputSlot>
-                </Input>
-                <Input
-                    style={styles.inputRequired}
-                    variant="outlined"
-                    size="md"
-                >
-                    <InputField 
-                    type={isConfirmVisible ? "text" : "password"} 
-                    placeholder="Confirm Password*" 
-                    defaultValue={confirmPassword}  
+                    style={styles.textInput}
+                    textColor= "grey"
+                    underlineColor= "transparent"
+                    underlineStyle={{backgroundColor: 'none'}}
+                    right={
+                      <TextInput.Icon
+                        tabIndex={0}
+                        accessibilityLabel={isVisible ? 'hide password toggle' : 'show password toggle'}
+                        icon={isVisible ? eyeIcon : crossEyeIcon}
+                        onPress={handleState}
+                        size={23} // You can set the size of the icon here
+                        color={'#a79f9f'} 
+                        rippleColor={'transparent'}
+                      />
+                    }
+                    theme= {{
+                      colors: {
+                            primary: 'black',       // Changes the label and underline color when focused
+                            placeholder: 'black',   // Changes the color of the placeholder/label when not focused
+                            }
+                    }}
+                />  
+
+                <TextInput 
+                    secureTextEntry={!isConfirmVisible}
+                    label="Confirm New Password*" 
+                    accessibilityLabel="Confirm New Password" // Label for screen readers
+                    defaultValue={confirmPassword}
                     onChangeText={handleConfirmPasswordChange} 
-                    />
-                    
-                    <InputSlot pr="$3" tabIndex={0} onPress={handleIsConfirmVisible}>
-                    <Image 
-                    source={ isConfirmVisible ? require('../assets/eye.svg') : require('../assets/cross_eye.svg') } 
-                    style={{ width: 20, height: 20 }} 
-                    alt="show password"
-                    />
-                    </InputSlot>
-                </Input>
+                    style={styles.textInput}
+                    textColor= "grey"
+                    underlineColor= "transparent"
+                    underlineStyle={{backgroundColor: 'none'}}
+                    right={
+                      <TextInput.Icon
+                        tabIndex={0}
+                        accessibilityLabel={isConfirmVisible ? 'hide confirm password toggle' : 'show confirm password toggle'}
+                        icon={isConfirmVisible ? eyeIcon : crossEyeIcon}
+                        onPress={handleConfirmPasswordState}
+                        size={23} // You can set the size of the icon here
+                        color={'#a79f9f'} 
+                        rippleColor={'transparent'}
+                      />
+                    }
+                    theme= {{
+                      colors: {
+                            primary: 'black',       // Changes the label and underline color when focused
+                            placeholder: 'black',   // Changes the color of the placeholder/label when not focused
+                            }
+                    }}
+                />
+
                 {!confirmPasswordMatched && (
                     <Text style={styles.errorDescription}>
                     New password and confirm password do not match
                     </Text>
                 )}
-            <View style={styles.validationContainer}>
+            <View style={styles.validationContainer}  tabIndex={0}  accessibilityLabel={"Password Criteria" + "At least 8 characters" + "1 Special character" + "1 Number" + "1 Lowercase letter" + "1 Uppercase letter"}>
                 <View style={styles.item}>
                     <ValidationRow
                         isValid={validation.length}
@@ -219,14 +246,14 @@ const handleError = (error) => {
         
         <View style={styles.footer}>
                 <Button 
-                title="Continue" 
+                title="Confirm Reset Password" 
                 onPress={() => {
                     setShowAlert(true);
                 }} 
                 style={styles.button}
                 isDisabled={isDisabled()}
                 >
-                    <ButtonText style={styles.buttonText}>Continue</ButtonText>
+                    <ButtonText style={styles.buttonText}>Confirm Reset Password</ButtonText>
                 </Button>
         </View>
         <AlertView
@@ -371,6 +398,21 @@ validationContainer: {
     borderRadius: 4,
     paddingTop: 0,
 },
+textInput: {
+  mode:'flat',
+  backgroundColor: '#ffffff', // White background
+  marginBottom: 16,
+  borderColor: '#e4e4e7', // Border color
+  borderWidth: 2, // Border width 
+  paddingHorizontal: 10, // Horizontal padding
+  paddingVertical: 0, // No vertical padding
+  borderTopLeftRadius: 8, // Top-left corner radius
+  borderTopRightRadius: 8, // Top-right corner radius
+  borderBottomLeftRadius: 8, // Bottom-left corner radius
+  borderBottomRightRadius: 8, // Bottom-right corner radius
+  overflow: 'hidden', // Ensures the content doesn't overflow the rounded corners
+},
+
 });
 
 export default ResetPassword;
