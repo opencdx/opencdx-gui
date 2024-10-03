@@ -1,74 +1,42 @@
 import React from 'react';
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
 
 import {
   ANFStatement
 } from '@/api/questionnaire/model/anfstatement';
-import { QuestionnaireItem } from '@/api/questionnaire/model/questionnaire-item';
 import {
-  Accordion,
-  AccordionItem,
   Button,
-  Card,
-  CardBody,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
-  Snippet,
-  Tab,
-  Tabs,
   useDisclosure,
 } from 'ui-library';
-import { Code, Monitor } from 'lucide-react';
-
-import { AuthorsWrapper } from './anfComponents/authors';
-import { PerformanceCircumstanceWrapper } from './anfComponents/performance-circumstance';
-import { SubjectOfInformationWrapper } from './anfComponents/subject-of-information';
-import { SubjectOfRecordWrapper } from './anfComponents/subject-of-record';
-import { TimeWrapper } from './anfComponents/time';
-import { TopicWrapper } from './anfComponents/topic';
-import { TypeWrapper } from './anfComponents/type';
-
-const TestResultsTable: React.FC = () => {
-  const formData = JSON.parse(
-    localStorage.getItem('questionnaire-store') as string,
-  );
-
-  return (
-    <div style={{ height: '300px', overflow: 'auto', width: 'auto' }}>
-      <table className="w-full table-auto mb-4 text-left">
-        <thead className="border-b border-gray-200">
-          <tr className="text-left">
-            <th className="w-1/2">Question</th>
-            <th className="w-1/2">Action</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-200">
-          {formData?.item.map((item: QuestionnaireItem, index: number) => (
-            <tr key={index} className="border-b border-gray-200">
-              <td className="py-4">{item.text}</td>
-              <td className="py-4">
-                <Snippet color="primary">{`{{REPLACE_${item.linkId})}}`}</Snippet>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-};
-
-export default TestResultsTable;
+import CodeIcon from '@mui/icons-material/Code';
+import MonitorIcon from '@mui/icons-material/Monitor';
+import { AuthorsWrapper } from './authors';
+import { CircumstanceChoice } from './circumstance-choice/index';
+import { SubjectOfInformationWrapper } from './subject-of-information';
+import { SubjectOfRecordWrapper } from './subject-of-record';
+import { TimeWrapper } from './time';
+import { TopicWrapper } from './topic';
+import { TypeWrapper } from './type';
+import { ModalWrapper } from './modal-wrapper';
 const ANFStatementWrapper = ({
   questionnaireItemId,
   anfStatementConnectorId,
+  anfStatement
 }: {
   anfStatement: ANFStatement;
   questionnaireItemId: number;
   anfStatementConnectorId: number;
 }) => {
-  let tabs = [
+  const [activeTab, setActiveTab] = useState('time');
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  const tabs = [
     {
       id: 'time',
       label: 'Time',
@@ -96,6 +64,7 @@ const ANFStatementWrapper = ({
         <AuthorsWrapper
           anfStatementConnectorId={anfStatementConnectorId}
           questionnaireItemId={questionnaireItemId}
+          anfStatement={anfStatement}
         />
       ),
     },
@@ -130,39 +99,50 @@ const ANFStatementWrapper = ({
       ),
     },
     {
-      id: 'performanceCircumstance',
+      id: 'circumstanceChoice',
       label: 'Circumstance Choice',
       content: (
-        <PerformanceCircumstanceWrapper
+        <CircumstanceChoice
           anfStatementConnectorId={anfStatementConnectorId}
           questionnaireItemId={questionnaireItemId}
+          anfStatement={anfStatement}
         />
       ),
     },
   ];
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  const handleTabClick = (e: React.MouseEvent<HTMLButtonElement>, tabId: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setActiveTab(tabId);
+  };
 
   return (
     <>
-      <div className="flex  gap-4 w-full space-x-4 ">
-        <div className="flex items-center gap-4 w-full">
-          <h2 className="text w-[250px]">Anf Statement</h2>
+      <div className="flex  gap-4 w-full space-x-4 p-8">
+        <div className="flex items-start gap-4 w-full flex-col">
+          <h2 className="text font-semibold">Anf Statement</h2>
+          <div className="flex justify-start gap-2">
+            <h3 className="text-sm font-medium">
+            Descriptive sentence of what this section is for goes here.
+            </h3>
+          </div>
         </div>
-        <div className="flex justify-end gap-2 mb-4">
+        <div className="flex justify-start gap-2">
           <Button
             className="mr-2"
-            color="warning"
-            startContent={<Monitor />}
-            variant="solid"
+            color="primary"
+            endContent={<MonitorIcon />}
+            variant='flat'
             onPress={onOpen}
           >
             System Variables
           </Button>
           <Button
             className="mr-2"
-            color="warning"
-            startContent={<Code />}
-            variant="solid"
+            color="primary"
+            endContent={<CodeIcon />}
+            variant="flat"
             onPress={onOpen}
           >
             Code Lookup
@@ -170,18 +150,19 @@ const ANFStatementWrapper = ({
         </div>
       </div>
 
-      <Modal isOpen={isOpen} size="xl" onOpenChange={onOpenChange}>
+      <Modal isOpen={isOpen} size='5xl' hideCloseButton={true}
+       onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
                 System Variables
               </ModalHeader>
-              <ModalBody className="flex flex-col w-full">
-                <TestResultsTable />
+              <ModalBody className="">
+                  <ModalWrapper />
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
+                <Button color="primary"  variant="solid" onPress={onClose}>
                   Close
                 </Button>
               </ModalFooter>
@@ -189,14 +170,27 @@ const ANFStatementWrapper = ({
           )}
         </ModalContent>
       </Modal>
-      <div className="flex w-full flex-col">
-        <Tabs aria-label="Dynamic tabs" items={tabs}>
-          {(item) => (
-            <Tab key={item.id} title={item.label}>
-              {item.content}
-            </Tab>
-          )}
-        </Tabs>
+      
+      <div className="flex w-full flex-col px-8 ">
+        <div className="flex bg-[#99C7FB] px-2 ">
+          {tabs.map((item) => (
+            <button
+              key={item.id}
+              className={cn(
+                'font-small text-sm focus:outline-none transition-colors text-black',
+                activeTab === item.id
+                  ? 'm-1 p-1.5 bg-[#006FEE] text-white'
+                  : 'm-1 p-1.5 text-black hover:bg-blue-100'
+              )}
+              onClick={(e) => handleTabClick(e, item.id)}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+        <div className="border border-[#99C7FB]">
+          {tabs.find(tab => tab.id === activeTab)?.content}
+        </div>
       </div>
     </>
   );

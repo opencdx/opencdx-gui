@@ -1,19 +1,7 @@
 'use client';
 
-import React from 'react';
+import Edit from '@/components/form-builder/edit';
 
-import { EditQuestionnaire } from '@/components/form-builder/edit-questionnaire';
-
-export default function EditQuestionareePage({
-  params,
-}: {
-  params: { slug: string; questionnaire: any };
-}) {
-  const id = params.slug;
-
-  return (
-    <div>
-      <EditQuestionnaire />
-    </div>
-  );
+export default function EditQuestionnairePage({ params }: { params: { slug: string } }) {
+  return <Edit questionnaireId={params.slug} />;
 }

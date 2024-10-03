@@ -1,5 +1,5 @@
 'use client';
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Loading from '@/components/custom/loading';
 import { Button as NButton } from '@nextui-org/button';
@@ -28,10 +28,10 @@ import {
   useDeleteQuestionnaire,
   useGetQuestionnaireList,
 } from '@/hooks/iam-hooks';
-import { useAnfFormStore } from '@/lib/useAnfFormStore';
+import { useQuestionnaireStore } from '@/hooks/questionnaire';
 import { toast, ToastContainer } from 'react-toastify';
-import GridView from './GridView';
-import ListView from './ListView';
+import GridView from './grid-view';
+import ListView from './list-view';
 
 export default function ListQuestionnaire() {
   const { data: currentUser } = useCurrentUser();
@@ -47,7 +47,7 @@ export default function ListQuestionnaire() {
   const [json, setJson] = useState({} as any);
   const router = useRouter();
 
-  const { setFormData } = useAnfFormStore() as { setFormData: any };
+  const { updateQuestionnaire } = useQuestionnaireStore();
   const [isLoading, setIsLoading] = useState(true); // State for loading indicator
 
   useEffect(() => {
@@ -79,58 +79,67 @@ export default function ListQuestionnaire() {
     }
   }, []);
 
-  const handleViewToggle = (key: Key) => {
+  // Memoize callback functions
+  const handleViewToggle = useCallback((key: Key) => {
     setIsGrid(key === 'grid');
-  }
-  const convertDate = (date: Timestamp | undefined) => {
-    if (!date) return ''; // Handle missing dates
+  }, []);
+
+  const convertDate = useCallback((date: Timestamp | undefined) => {
+    if (!date) return '';
     const d = new Date(date as Date);
     return `${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getDate().toString().padStart(2, '0')}/${d.getFullYear()}`;
-};
-  const handleChange = (e: any) => {
-    const file = e.target.files[0];
+  }, []);
 
-    if (!file) {
-      return; // Handle no file selected case
-    }
-    // Check file type using MIME type
-    if (!file.type.match('application/json')) {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !file.type.match('application/json')) {
       toast.error('Please select a valid JSON file.');
       return;
     }
 
     const fileReader = new FileReader();
-    fileReader.readAsText(file, 'UTF-8');
     fileReader.onload = (e) => {
-      const formData = e.target?.result
-        ? JSON.parse(e.target.result as string)
-        : null;
-
-      if (!formData) {
+      try {
+        const formData = JSON.parse(e.target?.result as string);
+        delete formData.id;
+        updateQuestionnaire(formData);
+        router.push('/edit-questionnaire/upload-questionnaire');
+      } catch (error) {
         toast.error('Error parsing the selected file.');
-
-        return;
       }
-
-      // Rest of your code to process the parsed JSON data
-      delete formData.id;
-      setFormData(formData);
-      localStorage.setItem('questionnaire-store', JSON.stringify(formData));
-      const newQuestionnaire = 'new-questionnaire';
-      router.push(`/edit-questionnaire/${newQuestionnaire}`);
     };
-  };
+    fileReader.readAsText(file, 'UTF-8');
+  }, [ updateQuestionnaire, router]);
 
-  const handleDownload = (questionnaire: Questionnaire) => {
-    const data = JSON.stringify(questionnaire);
-    const blob = new Blob([data], { type: 'application/json' });
+  const handleDownload = useCallback((questionnaire: Questionnaire) => {
+    const blob = new Blob([JSON.stringify(questionnaire)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
     link.download = `${questionnaire.title}.json`;
     link.click();
     URL.revokeObjectURL(url);
-  };
+  }, []);
+
+  // Use useCallback for event handlers
+  const handleView = useCallback((questionnaire: Questionnaire) => {
+    setJson(questionnaire);
+    onOpen();
+  }, [onOpen]);
+
+  const handleEdit = useCallback((questionnaire: Questionnaire) => {
+    updateQuestionnaire(questionnaire);
+    router.push(`/edit-questionnaire/${questionnaire.id}`);
+  }, [updateQuestionnaire, router]);
+
+  const handleDelete = useCallback((id: string) => {
+    deleteQuestionnaire(id);
+    if (data?.data?.questionnaires) {
+      data.data.questionnaires = data.data.questionnaires.filter(
+        (item: Questionnaire) => item.id !== id
+      );
+    }
+  }, [deleteQuestionnaire, data]);
 
   return (
     <Suspense fallback={<Loading />}>
@@ -165,7 +174,16 @@ export default function ListQuestionnaire() {
                   </NButton>
                
               </Link>
-              <NButton color="primary">Create New Form <Image src="/images/dynamic_form_transparent.png" alt="Upload" width={20} height={20} /></NButton>
+              <NButton color="primary"
+              onClick={() => {
+                // const newQuestionnaire = {
+                //   title: 'Create New Form',
+                //   item: [],
+                // };
+                // updateQuestionnaire(newQuestionnaire);
+                router.push('/edit-questionnaire/new-questionnaire');
+              }}
+              >Create New Form <Image src="/images/dynamic_form_transparent.png" alt="Upload" width={20} height={20} /></NButton>
 
                 <Button
                   color="primary"
@@ -180,11 +198,14 @@ export default function ListQuestionnaire() {
                     backgroundColor: 'hsl(var(--nextui-primary) / var(--nextui-primary-opacity, var(--tw-bg-opacity)))'
                   }}
                   className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent data-[pressed=true]:scale-[0.97] outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-4 min-w-20 h-10 text-small gap-2 rounded-medium [&>svg]:max-w-[theme(spacing.8)] transition-transform-colors-opacity motion-reduce:transition-none bg-primary text-primary-foreground data-[hover=true]:opacity-hover p-0 h-[40px]"
-                  onChange={handleChange}
-                  data-testid="upload-form"
                 >
                   Upload Form
-                  <input hidden type="file" />
+                  <input
+                    hidden
+                    type="file"
+                    onChange={handleChange}
+                    data-testid="upload-form"
+                  />
                 </Button>
 
               <Tabs
@@ -202,42 +223,20 @@ export default function ListQuestionnaire() {
 
           {isGrid ? (
             <GridView
-              questionnaires={data?.data?.questionnaires || []} // Provide default empty array
-              onView={(questionnaire) => { setJson(questionnaire); onOpen(); }}
+              questionnaires={data?.data?.questionnaires || []}
+              onView={handleView}
               onDownload={handleDownload}
-              onEdit={(questionnaire) => {
-                setFormData(questionnaire);
-                localStorage.setItem('questionnaire-store', JSON.stringify(questionnaire));
-                router.push(`/edit-questionnaire/${questionnaire.id}`);
-              }}
-              onDelete={(id) => {
-                deleteQuestionnaire(id);
-                if (data?.data?.questionnaires) { // Check if questionnaires exist
-                  data.data.questionnaires = data.data.questionnaires.filter(
-                    (item: Questionnaire) => item.id !== id
-                  );
-                }
-              }}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
               convertDate={convertDate}
             />
           ) : (
             <ListView
-              questionnaires={data?.data?.questionnaires || []} // Provide default empty array
-              onView={(questionnaire) => { setJson(questionnaire); onOpen(); }}
+              questionnaires={data?.data?.questionnaires || []}
+              onView={handleView}
               onDownload={handleDownload}
-              onEdit={(questionnaire) => {
-                setFormData(questionnaire);
-                localStorage.setItem('questionnaire-store', JSON.stringify(questionnaire));
-                router.push(`/edit-questionnaire/${questionnaire.id}`);
-              }}
-              onDelete={(id) => {
-                deleteQuestionnaire(id);
-                if (data?.data?.questionnaires) { // Check if questionnaires exist
-                  data.data.questionnaires = data.data.questionnaires.filter(
-                    (item: Questionnaire) => item.id !== id
-                  );
-                }
-              }}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
               convertDate={convertDate}
               pagination={data?.data?.pagination}
             />
