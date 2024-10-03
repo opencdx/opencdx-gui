@@ -44,6 +44,7 @@ const ForgotPassword = ({ navigation }) => {
                     style={styles.textInput}
                     textColor= "grey"
                     underlineColor= "transparent"
+                    underlineStyle={{backgroundColor: 'none'}}
                     theme= {{
                         colors: {
                             primary: 'black',       // Changes the label and underline color when focused

@@ -138,6 +138,7 @@ const handleError = (error) => {
                     style={styles.textInput}
                     textColor= "grey"
                     underlineColor= "transparent"
+                    underlineStyle={{backgroundColor: 'none'}}
                     theme= {{
                         colors: {
                             primary: 'black',       // Changes the label and underline color when focused
@@ -155,6 +156,7 @@ const handleError = (error) => {
                     style={styles.textInput}
                     textColor= "grey"
                     underlineColor= "transparent"
+                    underlineStyle={{backgroundColor: 'none'}}
                     right={
                       <TextInput.Icon
                         tabIndex={0}
@@ -183,6 +185,7 @@ const handleError = (error) => {
                     style={styles.textInput}
                     textColor= "grey"
                     underlineColor= "transparent"
+                    underlineStyle={{backgroundColor: 'none'}}
                     right={
                       <TextInput.Icon
                         tabIndex={0}
