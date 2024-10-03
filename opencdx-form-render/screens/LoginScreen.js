@@ -9,19 +9,20 @@ import {
 } from '@gluestack-ui/themed';
 import { TextInput } from 'react-native-paper';
 import Loader from '../components/Loader';
+import eyeIcon from '../assets/eye.svg';
+import crossEyeIcon from '../assets/cross_eye.svg';
 
 // import { Endpoints } from '../utils/axios/apiEndpoints';
 
 const LoginScreen = ({ navigation }) => {
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
-    const [showPassword, setShowPassword] = useState(true)
+    const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleState = () => {
-        setShowPassword(!showPassword);
-        
-    }
+
+    const handleState = () => setShowPassword(!showPassword);
+
     const handleSetPassword = (value) => {
         setPassword(value);
     }
@@ -97,6 +98,7 @@ const LoginScreen = ({ navigation }) => {
                     onChangeText={handleSetUsername}
                     style={styles.textInput}
                     underlineColor='transparent'
+                    textColor='grey'
                     theme= {{
                         colors: {
                             primary: 'black',       // Changes the label and underline color when focused
@@ -105,15 +107,24 @@ const LoginScreen = ({ navigation }) => {
                     }}
                 />
                 <TextInput 
-                    secureTextEntry={showPassword}
+                    secureTextEntry={!showPassword}
                     label="Password*" 
                     defaultValue={password}
                     onChangeText={handleSetPassword} 
                     style={styles.textInput}
-                    underlineColor='transparent' 
-                     right={
-                        <TextInput.Icon icon = {showPassword ? require('../assets/cross_eye.svg') : require('../assets/eye.svg')} onPress= {handleState} rippleColor={'transparent'}/>
-                     }
+                    textColor= "grey"
+                    underlineColor= "transparent"
+                    right={
+                      <TextInput.Icon
+                        tabIndex={0}
+                        alt={showPassword ? 'hide password' : 'show password'}
+                        icon={showPassword ? eyeIcon : crossEyeIcon}
+                        onPress={handleState}
+                        size={23} // You can set the size of the icon here
+                        color={'#a79f9f'} 
+                        rippleColor={'transparent'}
+                      />
+                    }
                     theme= {{
                       colors: {
                             primary: 'black',       // Changes the label and underline color when focused
@@ -260,13 +271,17 @@ const styles = StyleSheet.create({
     },
     textInput: {
         mode:'flat',
-        backgroundColor: '#ffffff', // Make the background transparent
-        textColor: '#757575',
+        backgroundColor: '#ffffff', // White background
         marginBottom: 16,
-        borderColor: '#e4e4e7',
-        borderWidth: '2px' , 
-        borderRadius: 6, 
-        paddingHorizontal: 10,        
+        borderColor: '#e4e4e7', // Border color
+        borderWidth: 2, // Border width 
+        paddingHorizontal: 10, // Horizontal padding
+        paddingVertical: 0, // No vertical padding
+        borderTopLeftRadius: 8, // Top-left corner radius
+        borderTopRightRadius: 8, // Top-right corner radius
+        borderBottomLeftRadius: 8, // Bottom-left corner radius
+        borderBottomRightRadius: 8, // Bottom-right corner radius
+        overflow: 'hidden', // Ensures the content doesn't overflow the rounded corners
       },
 });
 
