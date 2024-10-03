@@ -7,18 +7,20 @@ import {
     InputSlot,
     useToast, Toast, ToastDescription
 } from '@gluestack-ui/themed';
+import { TextInput } from 'react-native-paper';
 import Loader from '../components/Loader';
+
 // import { Endpoints } from '../utils/axios/apiEndpoints';
 
 const LoginScreen = ({ navigation }) => {
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
-    const [showPassword, setShowPassword] = useState(false)
+    const [showPassword, setShowPassword] = useState(true)
     const [isLoading, setIsLoading] = useState(false);
+
     const handleState = () => {
-        setShowPassword((showState) => {
-            return !showState
-        })
+        setShowPassword(!showPassword);
+        
     }
     const handleSetPassword = (value) => {
         setPassword(value);
@@ -89,37 +91,36 @@ const LoginScreen = ({ navigation }) => {
                     source={require('../assets/opencdx.png')}
                 />
                 
-                <Input
-                    style={styles.inputRequired}
-                    variant="outlined"
-                    size="md"
-                >
-                    <InputField 
-                    placeholder="Email Address*" 
+                <TextInput 
+                    label="Email Address*" 
                     defaultValue={username}
                     onChangeText={handleSetUsername}
-                    />
-                </Input>
-                <Input
-                    style={styles.inputRequired}
-                    variant="outlined"
-                    size="md"
-                >
-                    <InputField 
-                    type={showPassword ? "text" : "password"} 
-                    placeholder="Password*" 
+                    style={styles.textInput}
+                    underlineColor='transparent'
+                    theme= {{
+                        colors: {
+                            primary: 'black',       // Changes the label and underline color when focused
+                            placeholder: 'black',   // Changes the color of the placeholder/label when not focused
+                             }
+                    }}
+                />
+                <TextInput 
+                    secureTextEntry={showPassword}
+                    label="Password*" 
                     defaultValue={password}
                     onChangeText={handleSetPassword} 
-                    />
-                    
-                    <InputSlot pr="$3" focusable={true} tabIndex={0} onPress={handleState}>
-                    <Image 
-                    source={ showPassword ? require('../assets/eye.svg') : require('../assets/cross_eye.svg') } 
-                    style={{ width: 20, height: 20 }} 
-                    alt="show password"
-                    />
-                    </InputSlot>
-                </Input>
+                    style={styles.textInput}
+                    underlineColor='transparent' 
+                     right={
+                        <TextInput.Icon icon = {showPassword ? require('../assets/cross_eye.svg') : require('../assets/eye.svg')} onPress= {handleState} rippleColor={'transparent'}/>
+                     }
+                    theme= {{
+                      colors: {
+                            primary: 'black',       // Changes the label and underline color when focused
+                            placeholder: 'black',   // Changes the color of the placeholder/label when not focused
+                            }
+                    }}
+                />
                 <Button
                     size="md"
                     variant="link"
@@ -129,7 +130,7 @@ const LoginScreen = ({ navigation }) => {
                     onPress={() => navigation.navigate('ForgotPassword')}
                     >
                         <ButtonText>Forgot Password</ButtonText>
-                    </Button>
+                </Button>
             </View>
             <View style={styles.footer}>
                 <Button 
@@ -257,6 +258,16 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         paddingTop: 14,
     },
+    textInput: {
+        mode:'flat',
+        backgroundColor: '#ffffff', // Make the background transparent
+        textColor: '#757575',
+        marginBottom: 16,
+        borderColor: '#e4e4e7',
+        borderWidth: '2px' , 
+        borderRadius: 6, 
+        paddingHorizontal: 10,        
+      },
 });
 
 export default LoginScreen;

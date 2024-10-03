@@ -92,7 +92,7 @@ const App = () => {
   return (
     <GluestackUIProvider config={config}>
       <NavigationContainer styles={styles.container}>
-        <Stack.Navigator initialRouteName={isAuthenticated ? "List" : "Login"}>
+        <Stack.Navigator initialRouteName= "Login">
           <Stack.Screen name="Login" component={LoginScreen} 
             options={{
               headerShown: false,  
