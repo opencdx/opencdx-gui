@@ -94,6 +94,7 @@ const LoginScreen = ({ navigation }) => {
                 
                 <TextInput 
                     label="Email Address*" 
+                    accessibilityLabel = "Email Address" // Label for screen readers
                     defaultValue={username}
                     onChangeText={handleSetUsername}
                     style={styles.textInput}
@@ -108,6 +109,7 @@ const LoginScreen = ({ navigation }) => {
                 />
                 <TextInput 
                     secureTextEntry={!showPassword}
+                    accessibilityLabel = "Password" // Label for screen readers
                     label="Password*" 
                     defaultValue={password}
                     onChangeText={handleSetPassword} 
@@ -117,7 +119,7 @@ const LoginScreen = ({ navigation }) => {
                     right={
                       <TextInput.Icon
                         tabIndex={0}
-                        alt={showPassword ? 'hide password' : 'show password'}
+                        accessibilityLabel={showPassword ? 'hide password toggle' : 'show password toggle'}
                         icon={showPassword ? eyeIcon : crossEyeIcon}
                         onPress={handleState}
                         size={23} // You can set the size of the icon here

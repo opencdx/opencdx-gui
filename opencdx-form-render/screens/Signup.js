@@ -106,7 +106,7 @@ const showToaster = (message) => {
 
   return (
     <SafeAreaView style={styles.container}>
-        <View style={styles.body}>
+        <View style={styles.body}  tabIndex={0}  accessibilityLabel={"Sign Up Form"}>
             <Image
                 size="md"
                 resizeMode="contain"
@@ -120,6 +120,7 @@ const showToaster = (message) => {
                 <View style={styles.inputLeft} width="50%">
                 <TextInput 
                     label="First Name*" 
+                    accessibilityLabel = "First Name" // Label for screen readers
                     defaultValue={firstName}
                     onChangeText={setFirstName}
                     style={styles.textInput}
@@ -136,6 +137,7 @@ const showToaster = (message) => {
                 <View style={styles.inputRight} width="50%">
                 <TextInput 
                     label="Last Name*" 
+                    accessibilityLabel = "Last Name" // Label for screen readers
                     defaultValue={lastName}
                     onChangeText={setLastName}
                     style={styles.textInput}
@@ -152,6 +154,7 @@ const showToaster = (message) => {
             </HStack>
                 <TextInput 
                     label="Email Address*" 
+                    accessibilityLabel = "Email Address" // Label for screen readers
                     defaultValue={username}
                     onChangeText={setUsername}
                     style={styles.textInput}
@@ -167,6 +170,7 @@ const showToaster = (message) => {
                  <TextInput 
                     secureTextEntry={!isVisible}
                     label="Password*" 
+                    accessibilityLabel = "Password" // Label for screen readers
                     defaultValue={password}
                     onChangeText={handlePasswordChange} 
                     style={styles.textInput}
@@ -175,7 +179,7 @@ const showToaster = (message) => {
                     right={
                       <TextInput.Icon
                         tabIndex={0}
-                        alt={isVisible ? 'hide password' : 'show password'}
+                        accessibilityLabel={isVisible ? 'hide password toggle' : 'show password toggle'}
                         icon={isVisible ? eyeIcon : crossEyeIcon}
                         onPress={handleState}
                         size={23} // You can set the size of the icon here
@@ -192,7 +196,8 @@ const showToaster = (message) => {
                 />
                 <TextInput 
                     secureTextEntry={!isConfirmVisible}
-                    label="Password*" 
+                    label="Confirm Password*" 
+                    accessibilityLabel =  "Confirm Password" // Label for screen readers
                     defaultValue={confirmPassword}
                     onChangeText={handleConfirmPasswordChange} 
                     style={styles.textInput}
@@ -201,9 +206,9 @@ const showToaster = (message) => {
                     right={
                       <TextInput.Icon
                         tabIndex={0}
-                        alt={isConfirmVisible ? 'hide confirm password' : 'show confirm password'}
+                        accessibilityLabel={isConfirmVisible ? 'hide confirm password toggle' : 'show confirm password toggle'}
                         icon={isConfirmVisible ? eyeIcon : crossEyeIcon}
-                        onPress={handleState}
+                        onPress={handleConfirmPasswordState}
                         size={23} // You can set the size of the icon here
                         color={'#a79f9f'} 
                         rippleColor={'transparent'}
@@ -222,8 +227,8 @@ const showToaster = (message) => {
                     New password and confirm password do not match
                     </Text>
                 )}
-        <View style={styles.validationContainer}>
-            <View style={styles.item}>
+        <View style={styles.validationContainer}  tabIndex={0}  accessibilityLabel={"Password Criteria" + "At least 8 characters" + "1 Special character" + "1 Number" + "1 Lowercase letter" + "1 Uppercase letter"}>
+            <View style={styles.item} >
                 <ValidationRow
                     isValid={validation.length}
                     label="At least 8 characters"
