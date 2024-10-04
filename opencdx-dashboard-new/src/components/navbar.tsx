@@ -6,7 +6,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { User } from "ui-library";
 import { useLocale } from 'next-intl';
 import {useTransition} from 'react';
-
+import { useEffect } from 'react';
 import {
   NavbarBrand,
   NavbarContent,
@@ -27,6 +27,7 @@ import { ChevronDown, ChevronUp, LogOut } from 'lucide-react';
 import { Locale} from '@/config/locale';
 
 import {setUserLocale} from '@/lib/locale';
+import { logout, handleSessionOut } from '@/hooks/iam-hooks';
 export const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
@@ -64,6 +65,9 @@ export const Navbar = () => {
   const handleClick = () => {
     setIsOpen(!isOpen);
   };
+  useEffect(() => {
+    handleSessionOut();
+  }, []);
   // Convert the Set to an Array and get the first value.
   const selectedOptionValue = Array.from(selectedOption)[0];
 
@@ -99,7 +103,7 @@ export const Navbar = () => {
               selectionMode="single"
                 onAction={(key) => {
                   if (key === 'logout') {
-                    router.push('/');
+                    logout();
                   } else if (key === 'settings') {
                   } else if (key === 'locale') {
                     localeOptions.map((language) => {
