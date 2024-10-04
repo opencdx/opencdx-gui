@@ -134,6 +134,7 @@ const handleError = (error) => {
                     accessibilityLabel="Email Address" // Label for screen readers
                     defaultValue={username}
                     readOnly
+                    value={username}
                     onChangeText={setUsername}
                     style={styles.textInput}
                     textColor= "grey"
