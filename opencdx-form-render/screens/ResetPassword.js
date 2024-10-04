@@ -247,14 +247,14 @@ const handleError = (error) => {
         
         <View style={styles.footer}>
                 <Button 
-                title="Confirm Reset Password" 
+                title="Confirm Password Reset" 
                 onPress={() => {
                     setShowAlert(true);
                 }} 
                 style={styles.button}
                 isDisabled={isDisabled()}
                 >
-                    <ButtonText style={styles.buttonText}>Confirm Reset Password</ButtonText>
+                    <ButtonText style={styles.buttonText}>Confirm Password Reset</ButtonText>
                 </Button>
         </View>
         <AlertView
