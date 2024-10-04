@@ -150,8 +150,8 @@ const handleError = (error) => {
 
                 <TextInput 
                     secureTextEntry={!isVisible}
-                    label="Password*" 
-                    accessibilityLabel="Password" // Label for screen readers
+                    label="New Password*" 
+                    accessibilityLabel="New Password" // Label for screen readers
                     defaultValue={password}
                     onChangeText={handlePasswordChange} 
                     style={styles.textInput}
@@ -247,14 +247,14 @@ const handleError = (error) => {
         
         <View style={styles.footer}>
                 <Button 
-                title="Confirm Reset Password" 
+                title="Confirm Password Reset" 
                 onPress={() => {
                     setShowAlert(true);
                 }} 
                 style={styles.button}
                 isDisabled={isDisabled()}
                 >
-                    <ButtonText style={styles.buttonText}>Confirm Reset Password</ButtonText>
+                    <ButtonText style={styles.buttonText}>Confirm Password Reset</ButtonText>
                 </Button>
         </View>
         <AlertView
