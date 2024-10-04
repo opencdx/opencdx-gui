@@ -140,17 +140,15 @@ export const useUserVerify = (userId: string) => {
     return iamApi.verifyEmailIamUser({id: userId});
 }
 
-export const  logout = () => {
-    const router = useRouter();
+export const logout = (router: ReturnType<typeof useRouter>) => {
     localStorage.removeItem('serviceToken');
     router.replace('/login');
-}
+};
 
-export const handleSessionOut= () => {
-    const router = useRouter();
+export const handleSessionOut = (router: ReturnType<typeof useRouter>) => {
     const isAuthenticated = localStorage.getItem('serviceToken');
-    if (!isAuthenticated || isAuthenticated.length == 0) {
-      router.replace('/login');
+    if (!isAuthenticated || isAuthenticated.length === 0) {
+        router.replace('/login');
     }
-}
+};
 

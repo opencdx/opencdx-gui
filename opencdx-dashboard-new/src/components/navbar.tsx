@@ -66,7 +66,7 @@ export const Navbar = () => {
     setIsOpen(!isOpen);
   };
   useEffect(() => {
-    handleSessionOut();
+    handleSessionOut(router);
   }, []);
   // Convert the Set to an Array and get the first value.
   const selectedOptionValue = Array.from(selectedOption)[0];
@@ -103,7 +103,7 @@ export const Navbar = () => {
               selectionMode="single"
                 onAction={(key) => {
                   if (key === 'logout') {
-                    logout();
+                    logout(router);
                   } else if (key === 'settings') {
                   } else if (key === 'locale') {
                     localeOptions.map((language) => {
