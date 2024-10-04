@@ -150,8 +150,8 @@ const handleError = (error) => {
 
                 <TextInput 
                     secureTextEntry={!isVisible}
-                    label="Password*" 
-                    accessibilityLabel="Password" // Label for screen readers
+                    label="New Password*" 
+                    accessibilityLabel="New Password" // Label for screen readers
                     defaultValue={password}
                     onChangeText={handlePasswordChange} 
                     style={styles.textInput}
