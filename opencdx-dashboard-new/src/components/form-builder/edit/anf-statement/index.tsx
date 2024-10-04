@@ -1,12 +1,13 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { QuestionnaireItem, AnfStatementConnector, AnfStatementType, AnfOperatorType } from '@/api/questionnaire/model';
-import { Button, Divider, Accordion, AccordionItem } from 'ui-library';
+import { Button, Divider, Accordion, AccordionItem, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from 'ui-library';
 import { Plus, Trash } from 'lucide-react';
 import { ANFStatementWrapper } from './anf-statement';
 import { ComponentTypeWrapper } from './component-type';
 import { OperatorWrapper } from './operator';
 import { useFormContext } from 'react-hook-form';
 import Question from './question';
+
 const QuestionnaireItemWrapper: React.FC<{
   item: QuestionnaireItem;
   questionnaireItemId: number;
@@ -14,6 +15,7 @@ const QuestionnaireItemWrapper: React.FC<{
   const [anfStatementConnectorLength, setAnfStatementConnectorLength] = useState(item?.anfStatementConnector?.length ?? 0);
   const [currentComponentType, setCurrentComponentType] = useState<AnfStatementType>(AnfStatementType.AnfStatementTypeUnspecified);
   const { getValues, setValue } = useFormContext();
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const defaultAnfStatement = useMemo(() => ({}), []);
 
@@ -50,13 +52,15 @@ const QuestionnaireItemWrapper: React.FC<{
     setAnfStatementConnectorLength(prev => prev + 1);
   }, [questionnaireItemId, defaultAnfStatement, getValues, setValue]);
 
-  const handleDeleteButtonClick = useCallback((anfStatementConnectorIndex: number) => {
-    const currentItems = getValues(`item[${questionnaireItemId}].anfStatementConnector`) || [];
-    if (currentItems.length > 0) {
-      const updatedItems = currentItems.filter((_: any, index: number) => index !== anfStatementConnectorIndex);
-      setValue(`item[${questionnaireItemId}].anfStatementConnector`, updatedItems);
-      setAnfStatementConnectorLength(prev => prev - 1);
-    }
+  const handleDeleteButtonClick = useCallback(() => {
+    setIsDeleteModalOpen(true);
+  }, []);
+
+  const handleConfirmDelete = useCallback(() => {
+    const currentItems = getValues(`item`) || [];
+    const updatedItems = currentItems.filter((_: any, index: number) => index !== questionnaireItemId);
+    setValue(`item`, updatedItems);
+    setIsDeleteModalOpen(false);
   }, [getValues, setValue, questionnaireItemId]);
 
   const deleteQuestion = useCallback(() => {
@@ -84,7 +88,7 @@ const QuestionnaireItemWrapper: React.FC<{
               color='danger'
               variant='flat'
               endContent={<Trash />}
-              onClick={() => deleteQuestion()}
+              onClick={handleDeleteButtonClick}
             >
               Delete Question
             </Button>
@@ -92,6 +96,23 @@ const QuestionnaireItemWrapper: React.FC<{
         </AccordionItem>
       </Accordion>
 
+      {/* Delete Confirmation Modal */}
+      <Modal isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} radius='none'>
+        <ModalContent>
+          <ModalHeader>Delete this question?</ModalHeader>
+          <ModalBody>
+            Delete {item.text}? This will also delete the associated ANF Statement. This cannot be undone.
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" variant="light" onClick={() => setIsDeleteModalOpen(false)}>
+              Cancel
+            </Button>
+            <Button color="danger" onClick={handleConfirmDelete}>
+              Delete
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
 
       {/* ANF Definition buttons */}
       <div className='border-b border-grey-700 bg-white rounded-lg h-20 flex flex-row p-8 gap-3 items-center ml-2 mr-2'>

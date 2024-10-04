@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { QuestionnaireItem } from '@/api/questionnaire/model/questionnaire-item';
 import { DragDropContext, Droppable, Draggable, DropResult, DroppableProvided, DroppableStateSnapshot, DraggableProvided, DraggableStateSnapshot } from '@hello-pangea/dnd'
-
+import {Tooltip} from "@nextui-org/tooltip";
 import { cn } from '@/lib/utils';
 import { useFormContext } from 'react-hook-form';
 import { QuestionnaireItemWrapper } from '../anf-statement'
@@ -57,11 +57,49 @@ const Questions = () => {
       }
     }
   };
+  // Helper function to render the draggable item
+  const renderDraggableItem = (provided: DraggableProvided, item: QuestionnaireItem, idx: number) => (
+    <div
+      ref={provided.innerRef}
+      {...provided.draggableProps}
+      {...provided.dragHandleProps}
+      className={cn(
+        'flex items-center py-3 px-3 rounded-lg cursor-pointer transition-colors relative overflow-hidden',
+        'hover:border-[#006FEE] hover:border-2 hover:cursor-pointer',
+        activeTab?.idx === idx
+          ? 'bg-[#99C7FB]'
+          : 'bg-white border border-[#E6F1FE]'
+      )}
+      onClick={() => setActiveTab({ item, idx })}
+    >
+      <div className={cn(
+        "w-7 h-6 flex items-center justify-center rounded-full mr-3 text-base font-sm",
+        activeTab?.idx === idx ? "bg-[#006FEE] text-white" : "bg-black text-white",
+        "group-hover:bg-[#006FEE] group-hover:text-white"
+      )}>
+        {idx + 1}
+      </div>
+      <span className={cn(
+        "w-full flex flex-row justify-between text-sm font-small",
+        activeTab?.idx === idx ? "text-[#006FEE]" : "text-black",
+        "group-hover:text-[#006FEE]"
+      )}>
+        {item.text && item.text.length > 40 ? `${item.text.substring(0, 40)}...` : item.text}
+      </span>
+      {activeTab?.idx === idx && (
+        <>
+          <div className="absolute right-0 top-0 bottom-0 w-4 bg-[#006FEE] flex items-center justify-center">
+            <div className="absolute w-4 border-t-[6px] border-t-transparent border-l-[8px] border-l-[#99C7FB] border-b-[6px] border-b-transparent" />
+          </div>
+        </>
+      )}
+    </div>
+  );
 
   return (
     <div className="flex flex-row h-full w-full space-x-4">
       {/*Left Side Questionnaire Items */}
-      <div className='w-3/12 p-7 bg-white rounded-lg h-full'>
+      <div className='w-3/12 p-4 bg-white rounded-lg h-full'>
         <h2 className="text-lg font-medium mb-2">Questions:</h2>
         <p className="text-sm text-gray-600 mb-4">Select a question below to view its details, you can edit or add a question here.</p>
 
@@ -79,41 +117,25 @@ const Questions = () => {
               <div
                 {...provided.droppableProps}
                 ref={provided.innerRef}
-                className="space-y-2 border-dotted border-2 border-[#99C7FB] p-3 rounded-lg h-screen overflow-auto"
+                className="space-y-2 border-dotted border-2 border-[#99C7FB] p-2 rounded-lg h-screen overflow-auto"
               >
                 {fields.map((item: QuestionnaireItem, idx: number) => (
                   <Draggable key={item.linkId || idx.toString()} draggableId={item.linkId || idx.toString()} index={idx}>
                     {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        className={cn(
-                          'flex items-center py-3 px-4 rounded-lg cursor-pointer transition-colors relative overflow-hidden',
-                          activeTab?.idx === idx
-                            ? 'bg-[#E6F1FE]'
-                            : 'bg-white border border-[#E6F1FE]'
-                        )}
-                        onClick={() => setActiveTab({ item, idx })}
-                      >
-                        <div className={cn(
-                          "w-8 h-8 flex items-center justify-center rounded-full mr-3 text-base font-medium",
-                          activeTab?.idx === idx ? "bg-[#006FEE] text-white" : "bg-black text-white"
-                        )}>
-                          {idx + 1}
-                        </div>
-                        <span className={cn(
-                          "flex-grow text-lg font-medium",
-                          activeTab?.idx === idx ? "text-[#006FEE]" : "text-black"
-                        )}>
-                          {item.text && item.text.length > 20 ? `${item.text.substring(0, 20)}...` : item.text}
-                        </span>
-                        {activeTab?.idx === idx && (
-                          <div className="absolute right-0 top-0 bottom-0 w-8 bg-[#006FEE] flex items-center justify-center">
-                            <div className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[8px] border-l-white border-b-[6px] border-b-transparent" />
-                          </div>
-                        )}
-                      </div>
+                      item.text && item.text.length > 40 ? (
+                        <Tooltip 
+                          content={`${idx + 1}. ${item.text}`} 
+                          placement="top"
+                          classNames={{
+                            base: "rounded-md",
+                            content: "bg-gray-900 text-white text-sm max-w-xs break-words"
+                          }}
+                        >
+                          {renderDraggableItem(provided, item, idx)}
+                        </Tooltip>
+                      ) : (
+                        renderDraggableItem(provided, item, idx)
+                      )
                     )}
                   </Draggable>
                 ))}
@@ -177,5 +199,6 @@ const Questions = () => {
     </div>
   );
 };
+
 
 export default Questions;
