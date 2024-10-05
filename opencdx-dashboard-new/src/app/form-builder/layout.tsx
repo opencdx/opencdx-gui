@@ -1,15 +1,21 @@
 'use client';
 
-import '@/styles/globals.css';
-
 import React, { useState } from 'react';
-
 import Image from 'next/image';
 import Link from 'next/link';
-
 import { Sidebar, SidebarBody, SidebarLink } from '@/components/side-nav';
 import { Providers } from '../providers';
 import { Navbar } from '@/components/navbar';
+import { Inter } from 'next/font/google';
+
+// Load the Inter font
+const inter = Inter({ subsets: ['latin'] });
+
+// Preload critical images
+const preloadImages = [
+  { src: '/images/logo-long.png', type: 'image/png' },
+  { src: '/images/logo-short.png', type: 'image/png' },
+];
 
 export const Logo = () => {
   return (
@@ -22,6 +28,7 @@ export const Logo = () => {
         alt="logo"
         width={120}
         height={40}
+        priority
       />
     </Link>
   );
@@ -39,6 +46,7 @@ export const LogoIcon = () => {
         width={120}
         height={120}
         className="rounded-lg"
+        priority
       />
     </Link>
   );
@@ -79,10 +87,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   ];
 
   return (
-    <Providers
-      themeProps={{ attribute: 'className', defaultTheme: 'dark', children }}
-    >
-        <div className="flex h-screen w-screen overflow-hidden bg-neutral-900 transition-all duration-300 ease-in-out">
+    <>
+      {preloadImages.map((image) => (
+        <link
+          key={image.src}
+          rel="preload"
+          as="image"
+          href={image.src}
+          type={image.type}
+        />
+      ))}
+      <Providers
+        themeProps={{ attribute: 'className', defaultTheme: 'dark', children }}
+      >
+        <div className={`flex h-screen w-screen overflow-hidden bg-neutral-900 transition-all duration-300 ease-in-out ${inter.className}`}>
           <Sidebar open={open} setOpen={setOpen}>
             <SidebarBody className="justify-between gap-10">
               <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
@@ -108,6 +126,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </div>
         </div>
-    </Providers>
+      </Providers>
+    </>
   );
 }

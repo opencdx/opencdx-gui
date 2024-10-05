@@ -1,4 +1,3 @@
-
 import { iamApi, questionnaireApi, classificationApi } from "../api";
 import { LoginRequest, SignUpRequest, ChangePasswordRequest, ResetPasswordRequest, SignUpResponse } from "../api/iam";
 
@@ -21,16 +20,19 @@ export const useLogin = (onSuccess: (data: any) => void, onError: (error: any) =
     const router = useRouter();
 
     return useMutation({
-        mutationFn: (credentials: LoginRequest) => iamApi.login({ loginRequest: credentials }),
-        onSuccess: (data) => {
-            const { token } = data.data
+        mutationFn: async (credentials: LoginRequest) => {
+            const response = await iamApi.login({ loginRequest: credentials });
+            return response;
+        },
+        onSuccess: ({ data }) => {
+            const { token } = data;
             localStorage.setItem('serviceToken', token as string);
             router.push('/form-builder');
-            if (onSuccess) onSuccess(data);
+            onSuccess?.(data);
         },
         onError: (error) => {
             console.error('Login failed:', error);
-            if (onError) onError(error);
+            onError?.(error);
         },
     });
 };

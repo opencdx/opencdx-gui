@@ -76,10 +76,13 @@ export default function ListQuestionnaire() {
 
   const handleViewToggle = useCallback((key: Key) => setIsGrid(key === 'grid'), []);
 
-  const convertDate = useCallback((date: Timestamp | undefined) => {
-    if (!date) return '';
-    const d = new Date(date as Date);
-    return `${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getDate().toString().padStart(2, '0')}/${d.getFullYear()}`;
+  // Memoize expensive computations
+  const memoizedConvertDate = useMemo(() => {
+    return (date: Timestamp | undefined) => {
+      if (!date) return '';
+      const d = new Date(date as Date);
+      return `${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getDate().toString().padStart(2, '0')}/${d.getFullYear()}`;
+    };
   }, []);
 
   const handleFileUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -167,6 +170,7 @@ export default function ListQuestionnaire() {
     });
   }, [openModal, deleteQuestionnaire]);
 
+  // Memoize the renderContent
   const renderContent = useMemo(() => (
     <div className="p-4 md:p-8 lg:p-8">
       {/* Header and controls */}
@@ -253,7 +257,7 @@ export default function ListQuestionnaire() {
           onDownload={handleDownload}
           onEdit={handleEdit}
           onDelete={handleDelete}
-          convertDate={convertDate}
+          convertDate={memoizedConvertDate}
         />
       ) : (
         <ListView
@@ -262,7 +266,7 @@ export default function ListQuestionnaire() {
           onDownload={handleDownload}
           onEdit={handleEdit}
           onDelete={handleDelete}
-          convertDate={convertDate}
+          convertDate={memoizedConvertDate}
           pagination={data?.data?.pagination}
         />
       )}
@@ -289,7 +293,7 @@ export default function ListQuestionnaire() {
 
       <ToastContainer />
     </div>
-  ), [isGrid, data, handleView, handleDownload, handleEdit, handleDelete, convertDate, modalConfig, closeModal]);
+  ), [isGrid, data, handleView, handleDownload, handleEdit, handleDelete, memoizedConvertDate, modalConfig, closeModal]);
 
   if (isLoading) {
     return (

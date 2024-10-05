@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { QuestionnaireItem } from '@/api/questionnaire/model/questionnaire-item';
 import { DragDropContext, Droppable, Draggable, DropResult, DroppableProvided, DroppableStateSnapshot, DraggableProvided, DraggableStateSnapshot } from '@hello-pangea/dnd'
 import {Tooltip} from "@nextui-org/tooltip";
@@ -7,7 +7,7 @@ import { useFormContext } from 'react-hook-form';
 import { QuestionnaireItemWrapper } from '../anf-statement'
 import { Modal, Input, Button, ModalHeader, ModalBody, ModalFooter, ModalContent } from 'ui-library';
 
-const Questions = () => {
+const Questions = React.memo(() => {
   const [activeTab, setActiveTab] = useState<{ item: QuestionnaireItem; idx: number } | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [question, setQuestion] = useState('');
@@ -37,28 +37,27 @@ const Questions = () => {
     setQuestion('');
   }, [question, fields, setValue]);
 
-  const onDragEnd = (result: DropResult) => {
-    if (!result.destination) {
-      return;
-    }
+  const onDragEnd = ({ destination, source }: DropResult) => {
+    if (!destination) return;
 
-    const items = Array.from(fields);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
+    const items = [...fields];
+    const [reorderedItem] = items.splice(source.index, 1);
+    items.splice(destination.index, 0, reorderedItem);
 
     setValue('item', items);
     if (activeTab) {
-      const destinationItem = items[result.destination.index];
+      const destinationItem = items[destination.index];
       if (destinationItem) {
         setActiveTab({
           item: destinationItem as QuestionnaireItem,
-          idx: result.destination.index
+          idx: destination.index
         });
       }
     }
   };
+
   // Helper function to render the draggable item
-  const renderDraggableItem = (provided: DraggableProvided, item: QuestionnaireItem, idx: number) => (
+  const renderDraggableItem = useMemo(() => (provided: DraggableProvided, item: QuestionnaireItem, idx: number) => (
     <div
       ref={provided.innerRef}
       {...provided.draggableProps}
@@ -94,7 +93,7 @@ const Questions = () => {
         </>
       )}
     </div>
-  );
+  ), [activeTab]);
 
   return (
     <div className="flex flex-row h-full w-full space-x-4">
@@ -198,7 +197,7 @@ const Questions = () => {
       </Modal>
     </div>
   );
-};
+});
 
 
 export default Questions;

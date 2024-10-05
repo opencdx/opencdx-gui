@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { lazy, Suspense, useState, useCallback, useMemo } from 'react';
 import { QuestionnaireItem, AnfStatementConnector, AnfStatementType, AnfOperatorType } from '@/api/questionnaire/model';
 import { Button, Divider, Accordion, AccordionItem, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from 'ui-library';
 import { Plus, Trash } from 'lucide-react';
@@ -6,7 +6,8 @@ import { ANFStatementWrapper } from './anf-statement';
 import { ComponentTypeWrapper } from './component-type';
 import { OperatorWrapper } from './operator';
 import { useFormContext } from 'react-hook-form';
-import Question from './question';
+const Question = lazy(() => import('./question'));
+
 
 const QuestionnaireItemWrapper: React.FC<{
   item: QuestionnaireItem;
@@ -78,10 +79,12 @@ const QuestionnaireItemWrapper: React.FC<{
           title={'Question: ' + `${questionnaireItemId + 1}. ${item.text}`}
 
         >
-          <Question
-            item={item}
+          <Suspense fallback={<div>Loading...</div>}>
+            <Question
+              item={item}
             questionnaireItemId={questionnaireItemId}
           />
+          </Suspense>
           <div className='flex justify-end'>
             <Button
               className='rounded-lg m-8'
@@ -172,7 +175,7 @@ const QuestionnaireItemWrapper: React.FC<{
                   color='danger'
                   variant='flat'
                   endContent={<Trash />}
-                  onClick={() => handleDeleteButtonClick(id)}
+                  onClick={() => handleDeleteButtonClick()}
                 >
                   Delete ANF
                 </Button>
