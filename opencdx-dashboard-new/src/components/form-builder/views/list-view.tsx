@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react';
-import { Button as NButton } from '@nextui-org/button';
 import TitleIcon from '@mui/icons-material/Title';
 import Image from 'next/image';
 import { Questionnaire } from '@/api/questionnaire/model/questionnaire';
-import { Pagination } from "ui-library";
+import { Pagination, Button, Tooltip } from "ui-library";
 
 interface ListViewProps {
   questionnaires: Questionnaire[];
@@ -77,14 +76,19 @@ const ListView: React.FC<ListViewProps> = ({
                 <td className="px-6 py-4">
                   <div className="flex space-x-2">
                     {[
-                      { action: onView, icon: 'remove_red_eye', alt: 'View' },
-                      { action: onDownload, icon: 'file_download', alt: 'Download' },
-                      { action: onEdit, icon: 'edit_note', alt: 'Edit' },
-                      { action: () => onDelete(questionnaire.id!), icon: 'delete_outline', alt: 'Delete' },
+                      { action: onView, icon: 'remove_red_eye', alt: 'Preview JSON' },
+                      { action: onDownload, icon: 'file_download', alt: 'Download JSON' },
+                      { action: onEdit, icon: 'edit_note', alt: 'Edit Form' },
+                      { action: () => onDelete(questionnaire.id!), icon: 'delete_outline', alt: 'Delete Form' },
                     ].map(({ action, icon, alt }, index) => (
-                      <NButton key={index} isIconOnly variant="bordered" color='primary' onPress={() => action(questionnaire)}>
-                        <Image src={`/images/${icon}.png`} alt={alt} width={24} height={24} className='text-black-500 flex-shrink-0' />
-                      </NButton>
+                      <Tooltip content={alt} placement="top" classNames={{
+                        base: "rounded-md",
+                        content: "bg-gray-900 text-white text-sm max-w-xs break-words"
+                      }}>
+                        <Button key={index} isIconOnly variant="bordered" color='primary' onPress={() => action(questionnaire)}>
+                          <Image src={`/images/${icon}.png`} alt={alt} width={24} height={24} className='text-black-500 flex-shrink-0' />
+                      </Button>
+                      </Tooltip>
                     ))}
                   </div>
                 </td>

@@ -1,11 +1,13 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { QuestionnaireItem, AnfStatementConnector, AnfStatementType, AnfOperatorType } from '@/api/questionnaire/model';
-import { Button, Divider, Accordion, AccordionItem } from 'ui-library';
+import { Button, Divider, Accordion, AccordionItem, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from 'ui-library';
 import { Plus, Trash } from 'lucide-react';
 import { ANFStatementWrapper } from './anf-statement';
 import { ComponentTypeWrapper } from './component-type';
 import { OperatorWrapper } from './operator';
 import { useFormContext } from 'react-hook-form';
+import Question from './question';
+
 const QuestionnaireItemWrapper: React.FC<{
   item: QuestionnaireItem;
   questionnaireItemId: number;
@@ -13,6 +15,7 @@ const QuestionnaireItemWrapper: React.FC<{
   const [anfStatementConnectorLength, setAnfStatementConnectorLength] = useState(item?.anfStatementConnector?.length ?? 0);
   const [currentComponentType, setCurrentComponentType] = useState<AnfStatementType>(AnfStatementType.AnfStatementTypeUnspecified);
   const { getValues, setValue } = useFormContext();
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const defaultAnfStatement = useMemo(() => ({}), []);
 
@@ -20,7 +23,7 @@ const QuestionnaireItemWrapper: React.FC<{
     setCurrentComponentType(value);
   }, []);
   React.useEffect(() => {
-    if(item && (!item.anfStatementConnector || item.anfStatementConnector.length === 0)) {
+    if (item && (!item.anfStatementConnector || item.anfStatementConnector.length === 0)) {
       const newConnector: AnfStatementConnector = {
         anfStatementType:
           AnfStatementType.AnfStatementTypeUnspecified,
@@ -30,7 +33,7 @@ const QuestionnaireItemWrapper: React.FC<{
       };
       setAnfStatementConnectorLength(1);
     }
-   
+
   }, []);
 
   const handleAddButtonClick = useCallback(() => {
@@ -39,7 +42,7 @@ const QuestionnaireItemWrapper: React.FC<{
       anfOperatorType: AnfOperatorType.AnfOperatorTypeUnspecified,
       anfStatement: defaultAnfStatement,
     };
-    
+
     // Get the current items for the specific questionnaireItem
     const currentItems = getValues(`item[${questionnaireItemId}].anfStatementConnector`) || [];
 
@@ -49,13 +52,15 @@ const QuestionnaireItemWrapper: React.FC<{
     setAnfStatementConnectorLength(prev => prev + 1);
   }, [questionnaireItemId, defaultAnfStatement, getValues, setValue]);
 
-  const handleDeleteButtonClick = useCallback((anfStatementConnectorIndex: number) => {
-    const currentItems = getValues(`item[${questionnaireItemId}].anfStatementConnector`) || [];
-    if (currentItems.length > 0) {
-      const updatedItems = currentItems.filter((_: any, index: number) => index !== anfStatementConnectorIndex);
-      setValue(`item[${questionnaireItemId}].anfStatementConnector`, updatedItems);
-      setAnfStatementConnectorLength(prev => prev - 1);
-    }
+  const handleDeleteButtonClick = useCallback(() => {
+    setIsDeleteModalOpen(true);
+  }, []);
+
+  const handleConfirmDelete = useCallback(() => {
+    const currentItems = getValues(`item`) || [];
+    const updatedItems = currentItems.filter((_: any, index: number) => index !== questionnaireItemId);
+    setValue(`item`, updatedItems);
+    setIsDeleteModalOpen(false);
   }, [getValues, setValue, questionnaireItemId]);
 
   const deleteQuestion = useCallback(() => {
@@ -67,23 +72,50 @@ const QuestionnaireItemWrapper: React.FC<{
   return (
     <div>
       {/* Question display */}
-      <div className='mb-4 bg-white rounded-lg h-20 flex flex-grow items-center p-8'>
-        <div><span className='font-medium text-lg'>Question: </span> {`${questionnaireItemId + 1}. ${item.text}`}</div>
-        <div className='flex justify-end'>
-                <Button
-                  className='rounded-lg m-8'
-                  color='danger'
-                  variant='flat'
-                  endContent={<Trash />}
-                  onClick={() => deleteQuestion()}
-                >
-                  Delete Question
-                </Button>
-              </div>
-      </div>
+      <Accordion >
+        <AccordionItem
+          className=' bg-white px-6 mb-4'
+          title={'Question: ' + `${questionnaireItemId + 1}. ${item.text}`}
+
+        >
+          <Question
+            item={item}
+            questionnaireItemId={questionnaireItemId}
+          />
+          <div className='flex justify-end'>
+            <Button
+              className='rounded-lg m-8'
+              color='danger'
+              variant='flat'
+              endContent={<Trash />}
+              onClick={handleDeleteButtonClick}
+            >
+              Delete Question
+            </Button>
+          </div>
+        </AccordionItem>
+      </Accordion>
+
+      {/* Delete Confirmation Modal */}
+      <Modal isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} radius='none'>
+        <ModalContent>
+          <ModalHeader>Delete this question?</ModalHeader>
+          <ModalBody>
+            Delete {item.text}? This will also delete the associated ANF Statement. This cannot be undone.
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" variant="light" onClick={() => setIsDeleteModalOpen(false)}>
+              Cancel
+            </Button>
+            <Button color="danger" onClick={handleConfirmDelete}>
+              Delete
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
 
       {/* ANF Definition buttons */}
-      <div className='border-b border-grey-700 bg-white rounded-lg h-20 flex flex-row p-8 gap-3 items-center'>
+      <div className='border-b border-grey-700 bg-white rounded-lg h-20 flex flex-row p-8 gap-3 items-center ml-2 mr-2'>
         <div className='font-medium text-lg flex-shrink-0 mr-auto'>ANF Definition</div>
         <Button className="rounded-lg justify-content-end" color="primary" variant='bordered'>
           Select a Rule
@@ -105,13 +137,13 @@ const QuestionnaireItemWrapper: React.FC<{
       </div>
 
       {/* ANF Statements */}
-     
-          {item?.anfStatementConnector?.map((connector: AnfStatementConnector, id: number) => (
-            
-            <React.Fragment key={id}>
-               <Accordion  >
-               <AccordionItem  
-               className='shadow-none bg-white px-6' title={id+1+'.'+'ANF Statement'}>
+
+      {item?.anfStatementConnector?.map((connector: AnfStatementConnector, id: number) => (
+
+        <React.Fragment key={id}>
+          <Accordion  >
+            <AccordionItem
+              className='bg-white px-6' title={id + 1 + '. ' + 'ANF Statement'}>
               <ComponentTypeWrapper
                 anfStatementConnectorId={id}
                 currentComponentType={currentComponentType}
@@ -148,11 +180,11 @@ const QuestionnaireItemWrapper: React.FC<{
               {item.anfStatementConnector && id < item.anfStatementConnector.length - 1 && (
                 <Divider className="my-4 border-neutral-700" />
               )}
-              </AccordionItem>
-              </Accordion>
-            </React.Fragment>
-          ))}
-       
+            </AccordionItem>
+          </Accordion>
+        </React.Fragment>
+      ))}
+
     </div>
   );
 };
