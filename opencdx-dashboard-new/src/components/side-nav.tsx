@@ -4,6 +4,7 @@ import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronRight, IceCream } from "lucide-react";
+import { usePathname } from 'next/navigation';
 
 interface Links {
   label: string;
@@ -113,9 +114,10 @@ export const SidebarLink = ({
   link: Links;
   className?: string;
   props?: LinkProps;
-
 }) => {
   const { open, setOpen, animate } = useSidebar();
+  const router = usePathname();
+  const selected = router.includes(link.href);
   return (
     <Link
       href={link.href}
@@ -128,7 +130,7 @@ export const SidebarLink = ({
     >
 
       <div className={cn(
-        link.href === '/form-builder' ? 'bg-gradient-to-r from-blue-800 to-blue-500  px-4 py-2 hover:from-blue-800 hover:to-blue-500 rounded-lg ' : 'py-2 ',
+       selected ? 'bg-gradient-to-r from-blue-800 to-blue-500  px-4 py-2 hover:from-blue-800 hover:to-blue-500 rounded-lg ' : 'py-2 ',
         'flex items-center justify-center pl-2',
       )}>
         <div className="flex items-center justify-center pl-2">

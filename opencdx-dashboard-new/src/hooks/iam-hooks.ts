@@ -1,13 +1,15 @@
 
-import { iamApi, questionnaireApi, classificationApi } from "../api";
+import { iamApi, questionnaireApi, classificationApi, logisticsApi } from "../api";
 import { LoginRequest, SignUpRequest, ChangePasswordRequest, ResetPasswordRequest, SignUpResponse } from "../api/iam";
 
 
 import { GetQuestionnaireListRequest, QuestionnaireRequest } from "@/api/questionnaire";
+import { ManufacturerListRequest, Manufacturer, CountryListRequest } from "@/api/logistics";
 import { RuleSetsRequest } from "@/api/classification";
 
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+
 
 // This hook uses the useMutation hook from react-query
 // to handle the login request
@@ -140,3 +142,25 @@ export const useUserVerify = (userId: string) => {
     return iamApi.verifyEmailIamUser({id: userId});
 }
 
+export const useGetManufacturerList = () => {
+    return useMutation({
+        mutationFn: (params: ManufacturerListRequest) => logisticsApi.listCountries({ manufacturerListRequest: params })
+    });
+};
+export const useAddManufacturer = () => {
+    return useMutation({
+        mutationFn: (params: Manufacturer) => logisticsApi.addManufacturer({ manufacturer: params })
+    });
+};
+
+export const useDeleteManufacturer = () => {
+    return useMutation({
+        mutationFn: (id: string) => logisticsApi.deleteManufacturer({ id: id })
+    });
+};
+
+export const useUpdateManufacturer = () => {
+    return useMutation({
+        mutationFn: (params: Manufacturer) => logisticsApi.updateManufacturer({ manufacturer: params })
+    });
+};
