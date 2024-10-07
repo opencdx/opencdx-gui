@@ -116,7 +116,7 @@ const handleError = (error) => {
         <Text style={styles.backText}>Back</Text>
       </Pressable>
     <SafeAreaView style={styles.container}>
-        <View style={styles.body} tabIndex={0}  accessibilityLabel= {"Change Password" + "Please change your password below."}>
+     <main> <View style={styles.body} tabIndex={0}  accessibilityLabel= {"Change Password" + "Please change your password below."}>
             <Image
                     size="md"
                     resizeMode="contain"
@@ -164,7 +164,7 @@ const handleError = (error) => {
                         accessibilityLabel={isVisible ? 'hide password toggle' : 'show password toggle'}
                         icon={isVisible ? eyeIcon : crossEyeIcon}
                         onPress={handleState}
-                        size={23} // You can set the size of the icon here
+                        size={24} // You can set the size of the icon here
                         color={'#a79f9f'} 
                         rippleColor={'transparent'}
                       />
@@ -243,7 +243,7 @@ const handleError = (error) => {
                     />
                 </View>
             </View>
-        </View>
+        </View> </main> 
         
         <View style={styles.footer}>
                 <Button 

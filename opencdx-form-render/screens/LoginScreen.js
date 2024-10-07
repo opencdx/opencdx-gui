@@ -83,7 +83,7 @@ const LoginScreen = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.body}>
+          <main> <View style={styles.body}>
                 <Image
                     size="md"
                     resizeMode="contain"
@@ -124,7 +124,7 @@ const LoginScreen = ({ navigation }) => {
                         accessibilityLabel={showPassword ? 'hide password toggle' : 'show password toggle'}
                         icon={showPassword ? eyeIcon : crossEyeIcon}
                         onPress={handleState}
-                        size={23} // You can set the size of the icon here
+                        size={24} // You can set the size of the icon here
                         color={'#a79f9f'} 
                         rippleColor={'transparent'}
                       />
@@ -171,7 +171,7 @@ const LoginScreen = ({ navigation }) => {
                         <ButtonText>Sign Up</ButtonText>
                     </Button>
                 </View>
-            </View>
+            </View> </main> 
             <Loader isVisible={isLoading} />
         </SafeAreaView>
     );

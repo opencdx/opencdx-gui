@@ -24,7 +24,7 @@ const ForgotPassword = ({ navigation }) => {
         <Text style={styles.backText}>Back</Text>
       </Pressable>
     <SafeAreaView style={styles.container}>
-        
+      <main>  
         <View style={styles.body} tabIndex={0} accessibilityLabel = {"Forgot Password" + "Please enter the email address associated with your account."} >
             <Image
                     size="md"
@@ -52,7 +52,7 @@ const ForgotPassword = ({ navigation }) => {
                              }
                     }}
                 />
-        </View>
+        </View> </main> 
         <View style={styles.footer}>
                 <Button 
                 title="Continue" 

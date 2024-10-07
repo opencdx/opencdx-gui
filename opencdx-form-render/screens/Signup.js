@@ -106,7 +106,7 @@ const showToaster = (message) => {
 
   return (
     <SafeAreaView style={styles.container}>
-        <View style={styles.body}  tabIndex={0}  accessibilityLabel={"Sign Up Form"}>
+     <main> <View style={styles.body}  tabIndex={0}  accessibilityLabel={"Sign Up Form"}>
             <Image
                 size="md"
                 resizeMode="contain"
@@ -117,7 +117,7 @@ const showToaster = (message) => {
             <HStack
                 space="md"
             >
-                <View style={styles.inputLeft} width="50%">
+              <View style={styles.inputLeft} width="50%"> 
                 <TextInput 
                     label="First Name*" 
                     accessibilityLabel = "First Name" // Label for screen readers
@@ -186,7 +186,7 @@ const showToaster = (message) => {
                         accessibilityLabel={isVisible ? 'hide password toggle' : 'show password toggle'}
                         icon={isVisible ? eyeIcon : crossEyeIcon}
                         onPress={handleState}
-                        size={23} // You can set the size of the icon here
+                        size={24} // You can set the size of the icon here
                         color={'#a79f9f'} 
                         rippleColor={'transparent'}
                       />
@@ -214,7 +214,7 @@ const showToaster = (message) => {
                         accessibilityLabel={isConfirmVisible ? 'hide confirm password toggle' : 'show confirm password toggle'}
                         icon={isConfirmVisible ? eyeIcon : crossEyeIcon}
                         onPress={handleConfirmPasswordState}
-                        size={23} // You can set the size of the icon here
+                        size={24} // You can set the size of the icon here
                         color={'#a79f9f'} 
                         rippleColor={'transparent'}
                       />
@@ -232,6 +232,7 @@ const showToaster = (message) => {
                     New password and confirm password do not match
                     </Text>
                 )}
+
         <View style={styles.validationContainer}  tabIndex={0}  accessibilityLabel={"Password Criteria" + "At least 8 characters" + "1 Special character" + "1 Number" + "1 Lowercase letter" + "1 Uppercase letter"}>
             <View style={styles.item} >
                 <ValidationRow
@@ -264,7 +265,7 @@ const showToaster = (message) => {
                 />
             </View>
         </View>
-      </View>
+      </View> </main>
       <View 
         style={styles.footer}
         >
@@ -292,7 +293,7 @@ const showToaster = (message) => {
                         <ButtonText>Login</ButtonText>
                     </Button>
                 </View>
-            </View>
+          </View>
       <AlertView
         visible={showAlert}
         
