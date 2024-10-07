@@ -35,6 +35,9 @@ export default function SettingScreen() {
         <Button size="md" variant="solid" action="primary" onPress={() => router.navigate("../order/step1")}>
           <ButtonText>Order a Test Kit</ButtonText>
         </Button>
+        <Button size="md" variant="solid" action="primary" onPress={() => router.navigate("../(tabs)")}>
+          <ButtonText>Exit</ButtonText>
+        </Button>
       </ThemedView>
     </SafeAreaView>
   );

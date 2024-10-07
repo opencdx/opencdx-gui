@@ -20,11 +20,11 @@ export default function SettingScreen() {
       <ThemedView style={styles.titleContainer}>
       </ThemedView>
       <ThemedView style={styles.card}>
-      <ThemedText type="title">Scan Test Results</ThemedText>
+        <ThemedText type="title">Scan Test Results</ThemedText>
         <Image size='2xl' source={{ uri: 'https://safe-content-cache-us-west-2-development2-speed.s3.us-west-2.amazonaws.com/LabTestOrderable/CollectionInstruction/Image/774beb8afe374e289f8b166f8affbafd-638043972283696487.png' }} alt='Wash Your Hands' />
         <ThemedText>On a flat surface, scan test cassette. NOTE: Scan within 15 minutes to avoid false negative or false positive results.</ThemedText>
-        <Button size="md" variant="solid" action="primary" onPress={() => router.navigate("../test/step17")}>
-          <ButtonText>Continue</ButtonText>
+        <Button size="md" variant="solid" action="primary" onPress={() => router.navigate("../(tabs)")}>
+          <ButtonText>Exit</ButtonText>
         </Button>
       </ThemedView>
     </SafeAreaView>
