@@ -150,7 +150,8 @@ const ANFStatementWrapper = ({
         </div>
       </div>
 
-      <Modal isOpen={isOpen} size='5xl' hideCloseButton={true}
+      <Modal isOpen={isOpen} size='5xl' hideCloseButton = {true}
+        radius='none'
        onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
