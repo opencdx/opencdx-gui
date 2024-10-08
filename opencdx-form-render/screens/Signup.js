@@ -10,8 +10,8 @@ import AlertView from '../components/AlertView';
 import ValidationRow from '../components/ValidationRow';
 import { useSignUp } from '../utils/axios/iam-hooks';
 import Loader from '../components/Loader';
-import eyeIcon from '../assets/eye.svg';
-import crossEyeIcon from '../assets/cross_eye.svg';
+import eyeIcon from '../assets/eye.png';
+import crossEyeIcon from '../assets/cross_eye.png';
 
 const SignUp = ({ navigation }) => {
 const toast = useToast();
@@ -106,7 +106,7 @@ const showToaster = (message) => {
 
   return (
     <SafeAreaView style={styles.container}>
-     <main> <View style={styles.body}  tabIndex={0}  accessibilityLabel={"Sign Up Form"}>
+        <View style={styles.body}  tabIndex={0}  accessibilityLabel={"Sign Up Form"}>
             <Image
                 size="md"
                 resizeMode="contain"
@@ -117,7 +117,7 @@ const showToaster = (message) => {
             <HStack
                 space="md"
             >
-              <View style={styles.inputLeft} width="50%"> 
+                <View style={styles.inputLeft} width="50%">
                 <TextInput 
                     label="First Name*" 
                     accessibilityLabel = "First Name" // Label for screen readers
@@ -232,7 +232,6 @@ const showToaster = (message) => {
                     New password and confirm password do not match
                     </Text>
                 )}
-
         <View style={styles.validationContainer}  tabIndex={0}  accessibilityLabel={"Password Criteria" + "At least 8 characters" + "1 Special character" + "1 Number" + "1 Lowercase letter" + "1 Uppercase letter"}>
             <View style={styles.item} >
                 <ValidationRow
@@ -265,7 +264,7 @@ const showToaster = (message) => {
                 />
             </View>
         </View>
-      </View> </main>
+      </View>
       <View 
         style={styles.footer}
         >
@@ -293,7 +292,7 @@ const showToaster = (message) => {
                         <ButtonText>Login</ButtonText>
                     </Button>
                 </View>
-          </View>
+            </View>
       <AlertView
         visible={showAlert}
         
@@ -411,13 +410,30 @@ inputRequired: {
     marginTop: 16,
   },
   validationContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop: 10,
+    ...Platform.select({
+      web: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginTop: 10,
+      },
+      default: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginTop: 10,
+      }
+  })
   },
   item: {
-    flexBasis: '33%', // Adjust percentage to fit 3 items in a row
-    marginBottom: 0, // Space between rows
+    ...Platform.select({
+      web: {
+        flexBasis: '33%',
+        marginBottom: 0,
+      },
+      default: {
+        flexBasis: '50%',
+        marginBottom: 0,
+      }
+  })
   },
   button: {
     marginBottom: 10,

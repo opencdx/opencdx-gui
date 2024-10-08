@@ -21,41 +21,39 @@ const ResetPasswordSuccess = ({ navigation }) => {
   };
 
   return (
-    <main>  
-      <View style={[styles.container, isMobile ? styles.mobileContainer : styles.desktopContainer]}>
-        <View
-          style={[styles.card, isMobile && styles.mobileCard]}
-        >
-          <View style={[styles.cardBody]}>
-            <View style={styles.iconContainer}>
-              <Image
-                size="md"
-                alt="Success logo"
-                style={styles.icon}
-                source={require('../assets/reset_pass_success.svg')} // Update with the path to your logo image
-              />
-              <Text style={styles.title}>
-                {"Password Changed"}
-              </Text>
-              <Text style={styles.description}>
-                {"Your password has been changed successfully."}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.mainContent}></View>
-          <View style={styles.footer}>
-            <Button
-              color='primary'
-              onPress={handleSubmit}
-              aria-label={"Proceed to Login"}
-              style={styles.button}
-            >
-              <ButtonText>{"Proceed to Login"}</ButtonText>
-            </Button>
+    <View style={[styles.container, isMobile ? styles.mobileContainer : styles.desktopContainer]}>
+      <View
+        style={[styles.card, isMobile && styles.mobileCard]}
+      >
+        <View style={[styles.cardBody]}>
+          <View style={styles.iconContainer}>
+            <Image
+              size="md"
+              alt="Success logo"
+              style={styles.icon}
+              source={require('../assets/reset_pass_success.png')} // Update with the path to your logo image
+            />
+            <Text style={styles.title}>
+              {"Password Changed"}
+            </Text>
+            <Text style={styles.description}>
+              {"Your password has been changed successfully."}
+            </Text>
           </View>
         </View>
+        <View style={styles.mainContent}></View>
+        <View style={styles.footer}>
+          <Button
+            color='primary'
+            onPress={handleSubmit}
+            aria-label={"Proceed to Login"}
+            style={styles.button}
+          >
+            <ButtonText>{"Proceed to Login"}</ButtonText>
+          </Button>
+        </View>
+      </View>
     </View>
-   </main> 
   );
 };
 

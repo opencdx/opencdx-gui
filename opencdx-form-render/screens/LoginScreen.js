@@ -9,12 +9,12 @@ import {
 } from '@gluestack-ui/themed';
 import { TextInput } from 'react-native-paper';
 import Loader from '../components/Loader';
-import eyeIcon from '../assets/eye.svg';
-import crossEyeIcon from '../assets/cross_eye.svg';
+import eyeIcon from '../assets/eye.png';
+import crossEyeIcon from '../assets/cross_eye.png';
 
 // import { Endpoints } from '../utils/axios/apiEndpoints';
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = ({ navigation, onLogin }) => {
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
     const [showPassword, setShowPassword] = useState(false)
@@ -37,7 +37,8 @@ const LoginScreen = ({ navigation }) => {
         (data) => {
             setIsLoading(false);
             AsyncStorage.setItem('jwtToken', data.token);
-            navigation.navigate('List');
+            navigation.navigate('Dashboard');
+            onLogin(data.token);
         },
         (err) => {
             const errorData = err.response?.data;
@@ -53,7 +54,6 @@ const LoginScreen = ({ navigation }) => {
             setIsLoading(true);
             // const response = await Endpoints.login({ userName: username, password: password });
             login({ userName: username, password: password });
-            setIsLoading(false);
         } catch (error) {
             setIsLoading(false);
             showToaster(error);
@@ -83,7 +83,7 @@ const LoginScreen = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-          <main> <View style={styles.body}>
+           <View style={styles.body}>
                 <Image
                     size="md"
                     resizeMode="contain"
@@ -171,7 +171,7 @@ const LoginScreen = ({ navigation }) => {
                         <ButtonText>Sign Up</ButtonText>
                     </Button>
                 </View>
-            </View> </main> 
+            </View>  
             <Loader isVisible={isLoading} />
         </SafeAreaView>
     );

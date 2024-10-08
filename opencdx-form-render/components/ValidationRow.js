@@ -9,7 +9,7 @@ const ValidationRow = ({ isValid, label }) => (
     <View style={styles.rowContainer}>
     <View style={styles.iconContainer}>
     <Image
-          source={isValid ? require('../assets/tick.svg') : require('../assets/cross.svg') } // Replace with the path to your check icon
+          source={isValid ? require('../assets/tick.png') : require('../assets/cross.png') } // Replace with the path to your check icon
           style={styles.icon}
           alt={isValid ? 'Valid' : 'Invalid'}
         />

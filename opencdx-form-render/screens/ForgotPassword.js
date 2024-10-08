@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Platform, SafeAreaView, Pressable, Text } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Button, Image, Card, Input, InputField, ButtonText } from '@gluestack-ui/themed';
+import { Button, Image, Card, Input, HStack, ButtonText } from '@gluestack-ui/themed';
 import { TextInput } from 'react-native-paper';
 
 const ForgotPassword = ({ navigation }) => {
@@ -20,11 +20,13 @@ const ForgotPassword = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.parentContainer}>
         <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Image source={require('../assets/back.svg')} style={styles.backIcon} alt="back" />
+        <HStack>
+        <Image source={require('../assets/back.png')} style={styles.backIcon} alt="back" />
         <Text style={styles.backText}>Back</Text>
+        </HStack>
       </Pressable>
     <SafeAreaView style={styles.container}>
-      <main>  
+        
         <View style={styles.body} tabIndex={0} accessibilityLabel = {"Forgot Password" + "Please enter the email address associated with your account."} >
             <Image
                     size="md"
@@ -52,7 +54,7 @@ const ForgotPassword = ({ navigation }) => {
                              }
                     }}
                 />
-        </View> </main> 
+        </View>
         <View style={styles.footer}>
                 <Button 
                 title="Continue" 
@@ -153,12 +155,20 @@ const styles = StyleSheet.create({
     })
 },
 backButton: {
-    position: 'absolute', // Absolute positioning
-    top: 16, // Distance from the top edge
-    left: 16, // Distance from the left edge
-    flexDirection: 'row', // Align icon and text horizontally
-    alignItems: 'center', // Center items vertically
-    zIndex: 10, // Ensure it is above other elements
+    ...Platform.select({
+        web: {
+            position: 'absolute', // Absolute positioning
+            top: 16, // Distance from the top edge
+            left: 16, // Distance from the left edge
+            flexDirection: 'row', // Align icon and text horizontally
+            alignItems: 'center', // Center items vertically
+            zIndex: 10, // Ensure it is above other elements
+        },
+        default: {
+            justifyContent: 'top',
+            paddingHorizontal: 14,
+        }
+    })
   },
   backIcon: {
     width: 18,

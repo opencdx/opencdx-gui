@@ -1,12 +1,14 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StyleSheet } from 'react-native'; // Added import statement for StyleSheet module
+import { StyleSheet, Dimensions, Platform, TouchableOpacity } from 'react-native'; // Added import statement for StyleSheet module
 import LoginScreen from './screens/LoginScreen';
 import Signup from './screens/Signup';
 import ForgotPassword from './screens/ForgotPassword';
 import ResetPassword from './screens/ResetPassword';
 import ResetPasswordSuccess from './screens/ResetPasswordSuccess';
+import Dashboard from './screens/Dashboard';
+import EditProfile from './screens/EditProfile';
 import User from './screens/User/User';
 import ListQuestion from './screens/User/ListQuestion';
 import ListScreen from './screens/ListScreen';
@@ -45,9 +47,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Stack = createStackNavigator();
 import { useEffect, useState } from 'react';
 import Loader from './components/Loader';
-import {View, Image, Pressable} from 'react-native';
-
+import {View, Pressable} from 'react-native';
+import { Image, HStack } from '@gluestack-ui/themed'
+import LeftPanel from './components/LeftPanel';
+import AvatarView from './components/AvatarView';
+// Define Stack Navigators
+const { width } = Dimensions.get('window');
+// Define a threshold for mobile width (you can adjust this value as needed)
+const MOBILE_WIDTH_THRESHOLD = 768; 
 const App = () => {
+  const isMobile = width <= MOBILE_WIDTH_THRESHOLD;
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const handleLogout = async (navigation) => {
@@ -55,9 +64,16 @@ const App = () => {
       // Clear JWT token or other authentication data
       await AsyncStorage.removeItem('jwtToken');
       // Navigate to the login screen or any other screen
-      navigation.navigate('Login');
+      setIsAuthenticated(false);
     } catch (error) {
       Alert.alert('Logout failed', 'Unable to log out. Please try again.');
+    }
+  };
+  const handleLogin = async (token) => {
+    try {
+      setIsAuthenticated(true); // Update state on successful login
+    } catch (error) {
+      Alert.alert('Login failed', 'Unable to log in. Please try again.');
     }
   };
   useEffect(() => {
@@ -81,33 +97,69 @@ const App = () => {
 
     checkToken();
   }, []);
+  const LeftPanelView = () => (
+    <LeftPanel onSelect={(navigation, item) =>{
+      navigation.navigate(item.screen);
+      if (item.screen === 'Login') {
+        handleLogout(navigation);
+      }
+    }} 
+    />
+  );
+const headerRight = (navigation) => 
+                      !isMobile ? (
+                      <AvatarView
+                      name="John Doe"
+                      imageURI="./assets/account_circle_myprofile.png"
+                  />
+                  ) : (
+                      <TouchableOpacity onPress={
+                          () => {
+                            handleLogout(navigation)
+                          }
+                          }>
+                          <Image
+                              size="sm"
+                              resizeMode="contain"
+                              alt={"logout"}
+                              style={styles.icon}
+                              source={require('./assets/logout_mobile.png')}
+                            />
+                        </TouchableOpacity>
+                  )
 
-  if (isLoading) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Loader isVisible={true} />
-      </View>
-    );
-  }
-  return (
-    <GluestackUIProvider config={config}>
-      <NavigationContainer styles={styles.container}>
-        <Stack.Navigator initialRouteName= "Login">
-          <Stack.Screen name="Login" component={LoginScreen} 
+const headerLeft = (navigation) => !isMobile ? null : (
+                                <TouchableOpacity onPress={
+                                  () => {
+                                    navigation.navigate("Profile")
+                                  }
+                                  }>
+                                    <AvatarView
+                                    name="John Doe"
+                                    style={styles.icon}
+                                    imageURI="./assets/account_circle_myprofile.png"
+                                  />
+                                  </TouchableOpacity>)
+
+const MainNavigator = ({ navigation }) => (
+  <Stack.Navigator initialRouteName={isAuthenticated ? "Dashboard" : "Login"}>
+          <Stack.Screen name="Login"
             options={{
-              headerShown: false,  
+              headerShown: false,
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               }
             }}
-          />
-          <Stack.Screen name="Signup" component={Signup} 
-            options={{
+            >
+              {(props) => <LoginScreen {...props} onLogin={handleLogin} />}
+            </Stack.Screen>
+            <Stack.Screen name="Signup" component={Signup} 
+            options={({ navigation }) => ({
               headerShown: false,  
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               }
-            }}
+            })}
           />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} 
             options={{
@@ -133,20 +185,44 @@ const App = () => {
               }
             }}
           />
-          <Stack.Screen name="List" component={ListScreen} 
+          <Stack.Screen name="Dashboard" component={Dashboard}
             options={({ navigation }) => ({
               headerShown: true,
-              headerRight: () => (
-                <Pressable onPress={() => handleLogout(navigation)}>
-                  <Image
-                    source={require('./assets/logout.svg')}
-                    style={{ width: 20, height: 20, marginRight: 10 }}
-                  />
-                </Pressable>),
+              cardStyle:{
+                backgroundColor:'#FFFFFF'
+              },
+              headerRight: () => headerRight(navigation),
+              headerLeft: () => headerLeft(navigation)
+            })}
+          />
+          <Stack.Screen name="Profile" component={EditProfile}
+            options={ () => {
+              if(isMobile) {
+                return {
+                  headerShown: true,
+                  cardStyle:{
+                    backgroundColor:'#FFFFFF'
+                  },
+                }
+            } else {
+              return {
+                headerShown: true,
+                cardStyle:{
+                  backgroundColor:'#FFFFFF'
+                },
+                headerLeft: null
+              }
+              }
+            }
+            }
+          />
+          <Stack.Screen name="List" component={ListScreen} 
+            options={{
+              headerShown: false,
               cardStyle:{
                 backgroundColor:'#FFFFFF'
               }
-            })}
+            }}
           />
           <Stack.Screen name="User" component={User}
             options={{
@@ -367,17 +443,67 @@ const App = () => {
               headerTitle: 'Home',
             }}
             />
-        </Stack.Navigator>
+          </Stack.Navigator>
+);
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Loader isVisible={true} />
+      </View>
+    );
+  }
+  return (
+    <GluestackUIProvider config={config}>
+      <NavigationContainer styles={styles.mainContent}>
+        { Platform.OS === 'web' && isAuthenticated ? (
+          <HStack>
+            <LeftPanelView width="30%" />
+            <MainNavigator/>
+          </HStack>
+          ): (
+            <MainNavigator/>
+          )
+        }
       </NavigationContainer>
-    </GluestackUIProvider>
+      </GluestackUIProvider>
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     justifyContent: 'center',
     backgroundColor: '#fff',
+    alignItems: 'center',
   },
+  mainContent: {
+    backgroundColor: '#f0d0e0',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  icon: {
+    ...Platform.select({
+      web: {
+        width: 50,
+        height: 50,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 20
+      },
+      default: {
+          justifyContent: 'space-between',
+          width: 30,
+          height: 30,
+          borderRadius: 15,
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginHorizontal: 10
+      }
+  })
+}
 });
 
 export default App;

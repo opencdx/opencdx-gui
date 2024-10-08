@@ -6,8 +6,8 @@ import AlertView from '../components/AlertView';
 import ValidationRow from '../components/ValidationRow';
 import { useResetPassword } from '../utils/axios/iam-hooks';
 import Loader from '../components/Loader';
-import eyeIcon from '../assets/eye.svg';
-import crossEyeIcon from '../assets/cross_eye.svg';
+import eyeIcon from '../assets/eye.png';
+import crossEyeIcon from '../assets/cross_eye.png';
 import { TextInput } from 'react-native-paper';
 
 const ResetPassword = ({ navigation }) => {
@@ -112,11 +112,13 @@ const handleError = (error) => {
   return (
     <SafeAreaView style={styles.parentContainer}>
         <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Image source={require('../assets/back.svg')} style={styles.backIcon} alt="back" />
+        <HStack>
+        <Image source={require('../assets/back.png')} style={styles.backIcon} alt="back" />
         <Text style={styles.backText}>Back</Text>
+        </HStack>
       </Pressable>
     <SafeAreaView style={styles.container}>
-     <main> <View style={styles.body} tabIndex={0}  accessibilityLabel= {"Change Password" + "Please change your password below."}>
+        <View style={styles.body} tabIndex={0}  accessibilityLabel= {"Change Password" + "Please change your password below."}>
             <Image
                     size="md"
                     resizeMode="contain"
@@ -243,7 +245,7 @@ const handleError = (error) => {
                     />
                 </View>
             </View>
-        </View> </main> 
+        </View> 
         
         <View style={styles.footer}>
                 <Button 
@@ -365,12 +367,20 @@ const styles = StyleSheet.create({
     })
 },
 backButton: {
-    position: 'absolute', // Absolute positioning
-    top: 16, // Distance from the top edge
-    left: 16, // Distance from the left edge
-    flexDirection: 'row', // Align icon and text horizontally
-    alignItems: 'center', // Center items vertically
-    zIndex: 10, // Ensure it is above other elements
+  ...Platform.select({
+    web: {
+        position: 'absolute', // Absolute positioning
+        top: 16, // Distance from the top edge
+        left: 16, // Distance from the left edge
+        flexDirection: 'row', // Align icon and text horizontally
+        alignItems: 'center', // Center items vertically
+        zIndex: 10, // Ensure it is above other elements
+    },
+    default: {
+        justifyContent: 'top',
+        paddingHorizontal: 14,
+    }
+})
   },
   backIcon: {
     width: 18,
@@ -382,13 +392,30 @@ backButton: {
     color: '#006FEE', // Color of the back text
   },
 validationContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop: 10,
+  ...Platform.select({
+    web: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      marginTop: 10,
+    },
+    default: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      marginTop: 10,
+    }
+})
   },
   item: {
-    flexBasis: '33%', // Adjust percentage to fit 3 items in a row
-    marginBottom: 0, // Space between rows
+    ...Platform.select({
+      web: {
+        flexBasis: '33%',
+        marginBottom: 0,
+      },
+      default: {
+        flexBasis: '50%',
+        marginBottom: 0,
+      }
+  })
   },
   footer: {
     alignContent: 'center',
