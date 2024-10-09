@@ -8,7 +8,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useColorScheme, useInitialAndroidBarSync } from '~/lib/useColorScheme';
 import { NAV_THEME } from '~/theme';
 import { useEffect } from 'react';
-
+import { Platform } from 'react-native';
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -18,7 +18,10 @@ export default function RootLayout() {
   useInitialAndroidBarSync();
   const { colorScheme, isDarkColorScheme } = useColorScheme();
   useEffect(() => {
-		document.title = 'OpenCDx Form Render';
+
+    if (Platform.OS === 'web') {
+      document.title = 'OpenCDx Form Render';
+    }
 	}, []);
   return (
     <>

@@ -12,6 +12,7 @@ import ModalComponent from '../../components/ui/modal';
 import { Toast, ToastDescription } from '@gluestack-ui/themed';
 import { useResetPassword } from '../../lib/iam-hooks'
 import { useToast } from '@gluestack-ui/themed';
+import { Platform } from 'react-native';
 // Custom hook for form handling
 const useChangePasswordForm = () => {
     const [username, setUsername] = useState('');
@@ -90,7 +91,9 @@ const ChangePassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
         }, []);
 
     useEffect(() => {
-        document.title = 'Change Password';
+        if (Platform.OS === 'web') {
+            document.title = 'Change Password';
+        }
     }, []);
     const [passwordMismatchError, setPasswordMismatchError] = useState<string | null>(null);
 
@@ -144,135 +147,134 @@ const ChangePassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
         navigation.goBack();
     }, [navigation]);
 
-    return (
-        <ScrollView>
-            <main aria-label="main-layout change-password">
-                <Pressable
-                    className="self-start rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    onPress={handleBack}
-                    role="link"
-                    aria-label="Back"
-                >
-                    <Text className="font-inter text-base font-normal text-blue-600 p-4 flex flex-row items-center gap-2">
-                        <ArrowLeftIcon size={16} aria-label="Back" />
-                        Back
+    const renderContent = () => (
+        <View className="justify-center items-center px-4 sm:pt-12">
+            <View className="w-full max-w-[500px] flex flex-col justify-center items-center gap-4">
+                <View className="items-center justify-center space-y-4">
+                    <Image
+                        source={require('../../assets/opencdx.png')}
+                        
+                        ariaLabel="OpenCDx logo"
+                        alt="OpenCDx logo"
+                    />
+
+                    <Text className="font-inter font-medium text-left w-full text-xl">
+                        Change Password
                     </Text>
-                </Pressable>
-                <View className="justify-center items-center px-4 sm:pt-12">
-                    <View className="w-full max-w-[500px] flex flex-col justify-center items-center gap-4">
-                        <View className="items-center justify-center space-y-4">
-                            <Image
-                                source={require('../../assets/opencdx.png')}
-                                className="w-20 h-20"
-                                ariaLabel="OpenCDx logo"
-                                alt="OpenCDx logo"
-                            />
 
-                            <Text className="font-inter font-medium text-left w-full text-xl">
-                                Change Password
-                            </Text>
+                    <Text className="font-inter text-lg text-left text-gray-600 w-full">
+                        Please change your password below.
+                    </Text>
 
-                            <Text className="font-inter text-lg text-left text-gray-600 w-full">
-                                Please change your password below.
-                            </Text>
+                    <Input
+                        label="Email Address*"
+                        value={username}
+                        onChangeText={setUsername}
+                        className="w-full text-sm"
+                        keyboardType="email-address"
+                    />
 
-                            <Input
-                                label="Email Address*"
-                                value={username}
-                                onChangeText={setUsername}
-                                className="w-full text-sm"
-                                keyboardType="email-address"
-                            />
+                    <Input
+                        label="New Password*"
+                        value={newPassword}
+                        onChangeText={(text) => {
+                            setNewPassword(text);
+                            validatePasswordMatch(text, confirmPassword);
+                        }}
+                        secureTextEntry={!showNewPassword}
+                        rightIcon={
+                            <Pressable
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                onPress={toggleShowNewPassword}
+                                role="button"
+                                aria-label="Toggle new password visibility"
+                            >
+                                {showNewPassword ? <EyeIcon className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Hide new password" color='#a79f9f' size={23} /> : <EyeOffIcon className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Show new password" color='#a79f9f' size={23} />}
+                            </Pressable>
+                        }
+                    />
 
-                            <Input
-                                label="New Password*"
-                                value={newPassword}
-                                onChangeText={(text) => {
-                                    setNewPassword(text);
-                                    validatePasswordMatch(text, confirmPassword);
-                                }}
-                                secureTextEntry={!showNewPassword}
-                                rightIcon={
-                                    <Pressable
-                                        className="absolute right-3 top-1/2 transform -translate-y-1/2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        onPress={toggleShowNewPassword}
-                                        role="button"
-                                        aria-label="Toggle new password visibility"
-                                    >
-                                        {showNewPassword ? <EyeIcon className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Hide new password" color='#a79f9f' size={23} /> : <EyeOffIcon className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Show new password" color='#a79f9f' size={23} />}
-                                    </Pressable>
-                                }
-                            />
+                    <Input
+                        label="Confirm New Password*"
+                        value={confirmPassword}
+                        onChangeText={(text) => {
+                            setConfirmPassword(text);
+                            validatePasswordMatch(newPassword, text);
+                        }}
+                        secureTextEntry={!showConfirmPassword}
+                        rightIcon={
+                            <Pressable
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                onPress={toggleShowConfirmPassword}
+                                role="button"
+                                aria-label="Toggle confirm password visibility"
+                            >
+                                {showConfirmPassword ? <EyeIcon className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Hide confirm password" color='#a79f9f' size={23} /> : <EyeOffIcon className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Show confirm password" color='#a79f9f' size={23} />}
+                            </Pressable>
+                            
+                        }
+                        
+                    />
+                    {passwordMismatchError && (
+                        <Text className="text-xs text-left text-red-500">{passwordMismatchError}</Text>
+                    )}
 
-                            <Input
-                                label="Confirm New Password*"
-                                value={confirmPassword}
-                                onChangeText={(text) => {
-                                    setConfirmPassword(text);
-                                    validatePasswordMatch(newPassword, text);
-                                }}
-                                secureTextEntry={!showConfirmPassword}
-                                rightIcon={
-                                    <Pressable
-                                        className="absolute right-3 top-1/2 transform -translate-y-1/2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        onPress={toggleShowConfirmPassword}
-                                        role="button"
-                                        aria-label="Toggle confirm password visibility"
-                                    >
-                                        {showConfirmPassword ? <EyeIcon className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Hide confirm password" color='#a79f9f' size={23} /> : <EyeOffIcon className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Show confirm password" color='#a79f9f' size={23} />}
-                                    </Pressable>
-                                    
-                                }
-                                
-                            />
-                            {passwordMismatchError && (
-                                <Text className="text-xs text-left text-red-500">{passwordMismatchError}</Text>
-                            )}
-
-                            <View className="w-full">
-                                <View className="flex flex-row flex-wrap">
-                                    <ValidationRow
-                                    isValid={newPassword.length >= 8}
-                                    label="At least 8 characters"
-                                    className="flex-[0_0_calc(33.333%-8px)]"
-                                />
-                                <ValidationRow
-                                    isValid={/[A-Z]/.test(newPassword)}
-                                    label="1 Uppercase letter"
-                                    className="flex-[0_0_calc(33.333%-8px)]"
-                                />
-                                <ValidationRow
-                                    isValid={/[a-z]/.test(newPassword)}
-                                    label="1 Lowercase letter"
-                                    className="flex-[0_0_calc(33.333%-8px)]"
-                                />
-                                <ValidationRow
-                                    isValid={/[0-9]/.test(newPassword)}
-                                    label="1 Number"
-                                    className="flex-[0_0_calc(33.333%-8px)]"
-                                />
-                                <ValidationRow
-                                    isValid={/[^A-Za-z0-9]/.test(newPassword)}
-                                    label="1 Special character"
-                                    className="flex-[0_0_calc(33.333%-8px)]"
-                                />
-                            </View>
-                        </View>
-
-                            <View className="w-full py-4">
-                                <Button
-                                    onPress={() => setShowAlert(true)}
-                                    disabled={isDisabled}
-                                    loading={isLoading}
-                                    className="w-full"
-                                >
-                                    Confirm Password Reset
-                                </Button>
-                            </View>
-                        </View>
+                    <View className="w-full">
+                        <View className="flex flex-row flex-wrap">
+                            <ValidationRow
+                            isValid={newPassword.length >= 8}
+                            label="At least 8 characters"
+                            className="flex-[0_0_calc(33.333%-8px)]"
+                        />
+                        <ValidationRow
+                            isValid={/[A-Z]/.test(newPassword)}
+                            label="1 Uppercase letter"
+                            className="flex-[0_0_calc(33.333%-8px)]"
+                        />
+                        <ValidationRow
+                            isValid={/[a-z]/.test(newPassword)}
+                            label="1 Lowercase letter"
+                            className="flex-[0_0_calc(33.333%-8px)]"
+                        />
+                        <ValidationRow
+                            isValid={/[0-9]/.test(newPassword)}
+                            label="1 Number"
+                            className="flex-[0_0_calc(33.333%-8px)]"
+                        />
+                        <ValidationRow
+                            isValid={/[^A-Za-z0-9]/.test(newPassword)}
+                            label="1 Special character"
+                            className="flex-[0_0_calc(33.333%-8px)]"
+                        />
                     </View>
                 </View>
-            </main>
+
+                    <View className="w-full py-4">
+                        <Button
+                            onPress={() => setShowAlert(true)}
+                            disabled={isDisabled}
+                            loading={isLoading}
+                            className="w-full"
+                        >
+                            Confirm Password Reset
+                        </Button>
+                    </View>
+                </View>
+            </View>
+        </View>
+    );
+
+    return (
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+            {Platform.OS === 'web' ? (
+                <main aria-label="main-layout change-password" className="flex items-center justify-center min-h-screen">
+                    {renderContent()}
+                </main>
+            ) : (
+                <View aria-label="main-layout change-password" className="flex items-center justify-center min-h-screen">
+                    {renderContent()}
+                </View>
+            )}
             <Loader isVisible={isLoading} />
             <ModalComponent
                 visible={showAlert}

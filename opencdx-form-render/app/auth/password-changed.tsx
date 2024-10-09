@@ -1,40 +1,49 @@
 import React, { useEffect } from 'react';
+import { View, Text, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from '../../components/ui/image'
 import { Button } from '../../components/ui/button'
+
 const PasswordChanged: React.FC = () => {
     const navigation = useNavigation();
 
-  const handleProceedToLogin = () => {
-    navigation.navigate('auth/login' as never); // Adjust this path as needed
-  };
-  useEffect(() => {
-    document.title = 'Password Changed';
-}, []);
+    const handleProceedToLogin = () => {
+        navigation.navigate('auth/login' as never);
+    };
 
-  return (
-    <main aria-label="main-layout password-changed">
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <div className="bg-white p-8  text-center">
-        <div className="mb-6 flex justify-center">
-          <Image
-            source={require('../../assets/reset_pass_success.svg')}
-            alt="Success logo"
-            
-          />
-        </div>
-        <h1 className="text-xl font-medium mb-2">Password Changed</h1>
-        <p className="text-gray-600 text-sm mb-6">Your password has been changed successfully.</p>
-        <Button
-          onPress={handleProceedToLogin}
-        >
-          Proceed to Login
-        </Button>
-       
-      </div>
-    </div>
-    </main>
-  );
+    useEffect(() => {
+        document.title = 'Password Changed';
+    }, []);
+
+    const renderContent = () => (
+        <View className="flex flex-col items-center justify-center min-h-screen">
+            <View className="bg-white p-8 text-center">
+                <View className="mb-6 flex justify-center">
+                    <Image
+                        source={require('../../assets/reset_pass_success.svg')}
+                        alt="Success logo"
+                    />
+                </View>
+                <Text className="text-xl font-medium mb-2">Password Changed</Text>
+                <Text className="text-gray-600 text-sm mb-6">Your password has been changed successfully.</Text>
+                <Button onPress={handleProceedToLogin}>
+                    Proceed to Login
+                </Button>
+            </View>
+        </View>
+    );
+
+    return (
+        Platform.OS === 'web' ? (
+            <main aria-label="main-layout password-changed" className="flex items-center justify-center min-h-screen">
+                {renderContent()}
+            </main>
+        ) : (
+            <View aria-label="main-layout password-changed" className="flex items-center justify-center min-h-screen">
+                {renderContent()}
+            </View>
+        )
+    );
 };
 
 export default PasswordChanged;

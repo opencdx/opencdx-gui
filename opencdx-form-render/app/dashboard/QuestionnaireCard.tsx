@@ -18,7 +18,7 @@ const QuestionnaireCard = ({ isMobile }: { isMobile: boolean }) => {
       <Button onPress={() => {
         navigation.navigate('questionnaire/list' as never);
       }} className="w-full">
-        Take Questionnaire
+        <Text className="text-white text-xl font-bold mb-2">Take Questionnaire</Text>
       </Button>
     </View>
     </View>
