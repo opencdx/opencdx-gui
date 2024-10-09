@@ -74,7 +74,7 @@ const ChangePassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
         isDisabled,
         
     } = useChangePasswordForm();
-    useEffect(() => {
+     useEffect(() => {
         const fetchEmail = async () => {
             try {
               const storedEmail = await AsyncStorage.getItem('username');
@@ -103,7 +103,6 @@ const ChangePassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
 }, []);
    
     const onSuccess = (data: any) => {
-        debugger;
         setIsLoading(false); 
         navigation.navigate('auth/password-changed' as never);
     };
@@ -125,28 +124,26 @@ const ChangePassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
       };
       
 
-      const showToaster = (message: any) => {
-          toast.show({
-              placement: "top right",
-              duration: 2000,
-              render: ({ id }) => {
-                  const toastId = "toast-" + id
-                  return (
-                      <Toast nativeID={toastId} className='bg-red-500'>
-                          <ToastDescription color='$white'>
-                              {message}
-                          </ToastDescription>
-                      </Toast>
-                  )
-              },
-          })
-      }
-      if (error) {
-        showToaster(error ?? 'An error occurred');
-      }
-    const handleBack = useCallback(() => {
-        navigation.goBack();
-    }, [navigation]);
+    //   const showToaster = (message: any) => {
+    //       toast.show({
+    //           placement: "top right",
+    //           duration: 2000,
+    //           render: ({ id }) => {
+    //               const toastId = "toast-" + id
+    //               return (
+    //                   <Toast nativeID={toastId} className='bg-red-500'>
+    //                       <ToastDescription color='$white'>
+    //                           {message}
+    //                       </ToastDescription>
+    //                   </Toast>
+    //               )
+    //           },
+    //       })
+    //   }
+    //   if (error) {
+    //     showToaster(error ?? 'An error occurred');
+    //   }
+   
 
     const renderContent = () => (
         <View className="justify-center items-center px-4 sm:pt-12">
@@ -210,7 +207,7 @@ const ChangePassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
                                 role="button"
                                 aria-label="Toggle confirm password visibility"
                             >
-                                {showConfirmPassword ? <EyeIcon className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Hide confirm password" color='#a79f9f' size={23} /> : <EyeOffIcon className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Show confirm password" color='#a79f9f' size={23} />}
+                                {showConfirmPassword ? <MaterialCommunityIcons name="eye" size={23} className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Hide confirm password" color='#a79f9f' /> : <MaterialCommunityIcons name="eye-off" size={23} className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Show confirm password" color='#a79f9f' />}
                             </Pressable>
                             
                         }
@@ -268,11 +265,11 @@ const ChangePassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             {Platform.OS === 'web' ? (
-                <main aria-label="main-layout change-password" className="flex items-center justify-center min-h-screen">
+                <main aria-label="main-layout change-password" className="flex items-center justify-center min-h-screen bg-white">
                     {renderContent()}
                 </main>
             ) : (
-                <View aria-label="main-layout change-password" className="flex items-center justify-center min-h-screen">
+                <View aria-label="main-layout change-password" className="flex items-center justify-center min-h-screen bg-white">
                     {renderContent()}
                 </View>
             )}
@@ -283,9 +280,12 @@ const ChangePassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
                     setShowAlert(false);
                 }}
                 title="Production Note"
-                content="In a production environment, you would receive an email for this step."
+                content="In a production environment, you would receive an email for this step.s"
                 buttonOneText="Cancel"
                 buttonTwoText="Continue"
+                buttonOneColor="bg-red-500"
+                buttonTwoColor="bg-blue-500"
+                backgroundColor="bg-white"
                 onButtonOnePress={() => {
                     setShowAlert(false);
                 }}

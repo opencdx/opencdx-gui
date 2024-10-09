@@ -1,5 +1,5 @@
-import React from 'react';
-import { Image as GlueStackImage } from '@gluestack-ui/themed';
+import React, { useMemo } from 'react';
+import { Image  as NativeImage} from 'react-native';
 
 interface ImageProps {
   source: any;
@@ -8,13 +8,14 @@ interface ImageProps {
   alt?: string;
 }
 
-export const Image: React.FC<ImageProps> = ({ source, className, ariaLabel, alt }) => {
+export const Image: React.FC<ImageProps> = React.memo(({ source, className, ariaLabel, alt }) => {
+
   return (
-    <GlueStackImage
+    <NativeImage
       source={source}
       className={className}
       aria-label={ariaLabel}
       alt={alt}
     />
   );
-};
+});

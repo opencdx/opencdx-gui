@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Image } from '@gluestack-ui/themed';
+import { Image } from 'react-native';
 
 
 

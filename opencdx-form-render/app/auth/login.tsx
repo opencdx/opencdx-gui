@@ -8,6 +8,7 @@ import { Input } from '../../components/ui/input';
 import { Button } from '../../components/ui/button';
 import { Image } from '../../components/ui/image';
 
+
 // Custom hook for form handling
 const useLoginForm = () => {
 	const [username, setUsername] = useState('');
@@ -24,8 +25,7 @@ const Login = () => {
 	const navigation = useNavigation();
 	const { username, setUsername, password, setPassword, showPassword, isDisabled, toggleShowPassword } = useLoginForm();
 	const [isLoading, setIsLoading] = useState(false);
-
-
+	
 	const handleLoginSuccess = useCallback((data: any) => {
 		setIsLoading(false);
 		AsyncStorage.setItem('jwtToken', data.token);
@@ -33,19 +33,11 @@ const Login = () => {
 	}, [navigation]);
 
 	const handleLoginError = useCallback((err: unknown) => {
-		if (err && typeof err === 'object' && 'response' in err) {
-			const errorData = (err as { response?: { data?: unknown } }).response?.data;
-			console.error('Login error:', errorData);
-		} else {
-			console.error('Unexpected login error:', err);
-		}
 		setIsLoading(false);
-		// TODO: Implement proper error handling and user feedback
-		// showToaster('Invalid Credentials.');
-		// showToaster(error);
 	}, []);
 
-	const { login } = useLogin(handleLoginSuccess, handleLoginError);
+	const { login} = useLogin(handleLoginSuccess, handleLoginError);
+
 
 	const handleLogin = useCallback(async () => {
 		try {
@@ -53,8 +45,8 @@ const Login = () => {
 			login({ userName: username, password: password });
 		} catch (error) {
 			setIsLoading(false);
-			// showToaster(error);
-		}
+			//showNewToast('Invalid Credentials.');
+			}
 	}, [username, password, login]);
 
 	const handleSignup = useCallback(() => {
@@ -63,23 +55,23 @@ const Login = () => {
 
 	const renderContent = () => (
 		<View
-			id="main-content"
-			className="flex flex-1 justify-center items-center bg-white max-w-[500px] w-full mx-auto p-4 sm:p-0"
+			
+			className="flex flex-1 justify-center items-center bg-white max-w-[500px] w-full mx-auto p-4 sm:p-0 gap-12 "
 		>
 			<Image
-				source={require('../../assets/opencdx.png')}
-				ariaLabel="OpenCDx logo"
-				alt="OpenCDx logo"
+				source={require('../../assets/login-logo.png')}
+				alt="OpenCDx logo"	
 			/>
 
-			<View className="w-full gap-8 sm:gap-12 items-center">
+			<View className="w-full gap-4 sm:gap-6 items-center">
 				<Input
 					label="Email Address*"
 					value={username}
 					onChangeText={setUsername}
 				/>
-				<Input
-					label="Password*"
+				<View className="w-full gap-2">
+					<Input
+						label="Password*"
 					value={password}
 					onChangeText={setPassword}
 					secureTextEntry={!showPassword}
@@ -92,21 +84,24 @@ const Login = () => {
 						>
 							{showPassword ? <MaterialCommunityIcons name="eye" className='focus:outline-none focus:ring-2 focus:ring-blue-500'  color='#a79f9f' size={23} /> : <MaterialCommunityIcons name="eye-off" className='focus:outline-none focus:ring-2 focus:ring-blue-500'  color='#a79f9f' size={23}  />}
 						</Pressable>
-					}
-				/>
-
-				<Pressable
-					className="self-end mt-1 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-					onPress={() => {navigation.navigate('dashboard/index' as never)}}
+						}
+					/>
+					<Pressable
+					className="self-end  rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+					onPress={() => {navigation.navigate('auth/forgot-password' as never)}}
 					role="link"
 					aria-label="Forgot Password"
 				>
 					<Text className="font-inter text-base font-normal leading-7 text-right text-blue-600">
 						Forgot Password
-					</Text>
-				</Pressable>
+						</Text>
+					</Pressable>
+				</View>
+
+				
 			</View>
 
+			<View className="w-full gap-4 gap-2 items-center">
 			<Button
 				onPress={handleLogin}
 				disabled={isDisabled}
@@ -115,7 +110,7 @@ const Login = () => {
 				Login
 			</Button>
 
-			<View className="flex-row items-center space-x-1">
+			<View className="flex-row items-center  gap-2">
 				<Text className="font-inter text-base font-normal leading-7 text-right text-black">
 					Don't have an account?
 				</Text>
@@ -125,7 +120,8 @@ const Login = () => {
 					aria-label="Sign Up"
 				>
 					<Text className="text-blue-600">Sign Up</Text>
-				</Pressable>
+					</Pressable>
+				</View>
 			</View>
 		</View>
 	);
@@ -133,11 +129,11 @@ const Login = () => {
 	return (
 		<ScrollView contentContainerStyle={{ flexGrow: 1 }}>
 			{Platform.OS === 'web' ? (
-				<main aria-label="main-layout" className="flex items-center justify-center min-h-screen">
+				<main aria-label="main-layout Web" className="flex items-center justify-center min-h-screen">
 					{renderContent()}
 				</main>
 			) : (
-				<View aria-label="main-layout" className="flex items-center justify-center min-h-screen">
+				<View  className="flex items-center justify-center min-h-screen bg-white">
 					{renderContent()}
 				</View>
 			)}

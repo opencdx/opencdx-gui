@@ -101,8 +101,8 @@ const Signup = () => {
             render: ({ id }) => {
                 const toastId = "toast-" + id
                 return (
-                    <Toast nativeID={toastId} className='bg-red-500'>
-                        <ToastDescription color='$white'>
+                    <Toast nativeID={toastId} className='bg-red-500' action='error' bgColor='$red-500' variant='accent'>
+                        <ToastDescription >
                             {message}
                         </ToastDescription>
                     </Toast>

@@ -42,32 +42,18 @@ const ForgotPassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
         navigation.navigate('auth/change-password' as never,);
     }, [email]);
 
-    const handleBackToLogin = useCallback(() => {
-        navigation.navigate('index' as never);
-    }, [navigation]);
-
+   
     const renderContent = () => (
         <ScrollView>
-            <Pressable
-                className="self-start rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onPress={handleBackToLogin}
-                role="link"
-                aria-label="Back to Login"
-            >
-                <Text className="font-inter text-base font-normal text-blue-600 p-4 flex flex-row items-center gap-2">
-                    <MaterialCommunityIcons name="arrow-left" size={16} aria-label="Back to Login" />
-                    Back
-                </Text>
-            </Pressable>
-            <View className="justify-center items-center px-4 sm:pt-12">
-                <View className="w-full max-w-[500px] flex flex-col justify-center items-center gap-4">
+           
+            <View className="justify-center items-center px-4 sm:px-0">
+                <View className="w-full max-w-[500px] flex flex-col justify-center items-center gap-6">
                     <View className="items-center justify-center space-y-4">
                         <Image
                             source={require('../../assets/opencdx.png')}
-                            ariaLabel="OpenCDx logo"
                             alt="OpenCDx logo"
                         />
-
+                        <View className='flex flex-col items-center gap-2'> 
                         <Text className="font-inter  font-medium text-left  w-full text-xl">
                             Forgot Password
                         </Text>
@@ -75,16 +61,17 @@ const ForgotPassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
                         <Text className="font-inter text-lg text-left text-gray-600 w-full">
                             Please enter the email address associated with your account.
                         </Text>
-
+                        </View>
+                        <View className='w-full py-4'>  
                         <Input
                             label="Email Address*"
                             value={email}
                             onChangeText={setEmail}
-                            className="w-full text-sm"
+                            className="w-full text-sm "
                             keyboardType="email-address"
                         />
-
-                        <View className="w-full py-4">
+                        </View>
+                        <View className="w-full py-4 ">
                             <Button
                                 onPress={handleForgotPassword}
                                 disabled={isDisabled}
@@ -103,7 +90,7 @@ const ForgotPassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
     return (
         <>
             {Platform.OS === 'web' ? (
-                <main aria-label="main-layout forgot-password" className="flex items-center justify-center min-h-screen">
+                <main aria-label="main-layout forgot-password" className='bg-white flex flex-1 justify-center items-center'>
                     {renderContent()}
                 </main>
             ) : (

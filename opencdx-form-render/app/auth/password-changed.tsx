@@ -12,13 +12,16 @@ const PasswordChanged: React.FC = () => {
     };
 
     useEffect(() => {
-        document.title = 'Password Changed';
+      if (Platform.OS === 'web') {
+            document.title = 'Password Changed';
+        }
     }, []);
+    
 
     const renderContent = () => (
-        <View className="flex flex-col items-center justify-center min-h-screen">
-            <View className="bg-white p-8 text-center">
-                <View className="mb-6 flex justify-center">
+        <View className="flex flex-col items-center justify-center items-center min-h-screen">
+            <View className="bg-white p-8 text-center items-center">
+                <View className="mb-6 flex justify-center items-center">
                     <Image
                         source={require('../../assets/reset_pass_success.svg')}
                         alt="Success logo"
