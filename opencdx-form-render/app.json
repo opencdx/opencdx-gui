@@ -1,19 +1,33 @@
 {
   "expo": {
-    "name": "FormRenderer",
-    "slug": "FormRenderer",
+    "name": "opencdx-formrender",
+    "slug": "opencdx-formrender",
     "version": "1.0.0",
+
+    "scheme": "opencdx-formrender",
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": ["expo-router"],
+    "experiments": {
+      "typedRoutes": true,
+
+      "tsconfigPaths": true
+    },
+
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+
+    "userInterfaceStyle": "automatic",
+
     "splash": {
-      "image": "./assets/opencdx.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -22,14 +36,6 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "plugins": [
-      "expo-secure-store",
-      "expo-image-picker",
-      "expo-camera"
-    ]
+    }
   }
 }
