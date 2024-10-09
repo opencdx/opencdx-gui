@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Input } from '../../components/ui/input';
 import { Button } from '../../components/ui/button';
 import { Image } from '../../components/ui/image';
-import { ArrowLeftIcon } from 'lucide-react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 // Custom hook for form handling
@@ -55,7 +55,7 @@ const ForgotPassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
                 aria-label="Back to Login"
             >
                 <Text className="font-inter text-base font-normal text-blue-600 p-4 flex flex-row items-center gap-2">
-                    <ArrowLeftIcon size={16} aria-label="Back to Login" />
+                    <MaterialCommunityIcons name="arrow-left" size={16} aria-label="Back to Login" />
                     Back
                 </Text>
             </Pressable>

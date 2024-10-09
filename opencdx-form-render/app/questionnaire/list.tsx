@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Pressable, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 
 interface QuestionnaireItem {
   title: string;
@@ -60,7 +61,7 @@ const QuestionnaireList: React.FC = () => {
         aria-label="Back"
       >
         <Text className="font-inter text-base font-normal text-blue-600 p-4 flex flex-row items-center gap-2">
-          <ArrowLeftIcon size={16} aria-label="Back" />
+          <MaterialCommunityIcons name="arrow-left" size={16} aria-label="Back" />
           Back
         </Text>
       </Pressable>
@@ -84,7 +85,7 @@ const QuestionnaireList: React.FC = () => {
                     <Text className="font-inter text-xl font-medium mb-2">{item.title}</Text>
                     <Text className="font-inter text-gray-600">{item.description}</Text>
                   </View>
-                  <ArrowRightIcon size={24} className="text-blue-600" />
+                  <MaterialCommunityIcons name="arrow-right" size={24} className="text-blue-600" />
                 </View>
               </Pressable>
             ))}

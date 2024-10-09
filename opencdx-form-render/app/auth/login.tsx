@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { View, Text, Pressable, ScrollView, Platform } from 'react-native';
-import { EyeIcon, EyeOffIcon } from 'lucide-react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useLogin } from '../../lib/iam-hooks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -90,7 +90,7 @@ const Login = () => {
 							role="button"
 							aria-label="Toggle password visibility"
 						>
-							{showPassword ? <EyeIcon className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Show password" color='#a79f9f' size={23} /> : <EyeOffIcon className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Hide password" color='#a79f9f' size={23}  />}
+							{showPassword ? <MaterialCommunityIcons name="eye" className='focus:outline-none focus:ring-2 focus:ring-blue-500'  color='#a79f9f' size={23} /> : <MaterialCommunityIcons name="eye-off" className='focus:outline-none focus:ring-2 focus:ring-blue-500'  color='#a79f9f' size={23}  />}
 						</Pressable>
 					}
 				/>

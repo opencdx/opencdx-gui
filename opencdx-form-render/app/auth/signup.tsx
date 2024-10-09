@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { View, Text, Pressable, ScrollView } from 'react-native';
-import { useToast, Toast, ToastDescription } from '@gluestack-ui/themed';
-import { EyeIcon, EyeOffIcon } from 'lucide-react-native';
+import { useToast, Toast, ToastDescription, EyeIcon } from '@gluestack-ui/themed';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSignUp } from '../../lib/iam-hooks';
 import { useNavigation } from '@react-navigation/native';
 import { Input } from '../../components/ui/input';
@@ -180,7 +180,7 @@ const Signup = () => {
                                 role="button"
                                 aria-label="Toggle password visibility"
                             >
-                                {showPassword ? <EyeIcon className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Show password" color='#a79f9f' size={23} /> : <EyeOffIcon className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Hide password" color='#a79f9f' size={23} />}
+                                {showPassword ? <MaterialCommunityIcons name="eye" className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Show password" color='#a79f9f' size={23} /> : <MaterialCommunityIcons name="eye-off" className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Hide password" color='#a79f9f' size={23} />}
                             </Pressable>
                         }
                     />
@@ -196,7 +196,7 @@ const Signup = () => {
                                 role="button"
                                 aria-label="Toggle confirm password visibility"
                             >
-                                {showConfirmPassword ? <EyeIcon className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Show confirm password" color='#a79f9f' size={23} /> : <EyeOffIcon className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Hide confirm password" color='#a79f9f' size={23} />}
+                                {showConfirmPassword ? <MaterialCommunityIcons name="eye" className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Show confirm password" color='#a79f9f' size={23} /> : <MaterialCommunityIcons name="eye-off" className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Hide confirm password" color='#a79f9f' size={23} />}
                             </Pressable>
                         }
                     />

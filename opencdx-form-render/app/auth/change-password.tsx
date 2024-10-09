@@ -4,7 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 import { Input } from '../../components/ui/input';
 import { Button } from '../../components/ui/button';
 import { Image } from '../../components/ui/image';
-import { ArrowLeftIcon, EyeIcon, EyeOffIcon } from 'lucide-react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ValidationRow from '../../components/ui/validate';
 import Loader from '../../components/ui/loading';
@@ -189,7 +190,7 @@ const ChangePassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
                                 role="button"
                                 aria-label="Toggle new password visibility"
                             >
-                                {showNewPassword ? <EyeIcon className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Hide new password" color='#a79f9f' size={23} /> : <EyeOffIcon className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Show new password" color='#a79f9f' size={23} />}
+                                {showNewPassword ? <MaterialCommunityIcons name="eye" size={23} className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Hide new password" color='#a79f9f' /> : <MaterialCommunityIcons name="eye-off" size={23} className='focus:outline-none focus:ring-2 focus:ring-blue-500' aria-label="Show new password" color='#a79f9f' />}
                             </Pressable>
                         }
                     />
