@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Platform, SafeAreaView } from 'react-native';
+import { View, StyleSheet, Platform, SafeAreaView, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useLogin } from '../utils/axios/iam-hooks';
 import {
@@ -83,7 +83,8 @@ const LoginScreen = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-          <main> <View style={styles.body}>
+          <main> 
+            <View style={styles.body}>
                 <Image
                     size="md"
                     resizeMode="contain"
@@ -98,7 +99,6 @@ const LoginScreen = ({ navigation }) => {
                     defaultValue={username}
                     onChangeText={handleSetUsername}
                     style={styles.textInput}
-                    underlineColor='transparent'
                     textColor='grey'
                     underlineStyle={{backgroundColor: 'none'}}
                     theme= {{
@@ -108,42 +108,51 @@ const LoginScreen = ({ navigation }) => {
                              }
                     }}
                 />
+            
+              <View style={{ position: 'relative', width: '100%' }}>
                 <TextInput 
-                    secureTextEntry={!showPassword}
-                    accessibilityLabel = "Password" // Label for screen readers
+                    secureTextEntry={!showPassword}  // Toggle between showing/hiding password
+                    accessibilityLabel="Password"
                     label="Password*" 
                     defaultValue={password}
                     onChangeText={handleSetPassword} 
-                    style={styles.textInput}
-                    textColor= "grey"
-                    underlineColor= "transparent"
+                    style={[styles.textInput, { paddingRight: 40 }]}  // Give padding to the right to avoid overlap with the icon
+                    textColor="grey"
                     underlineStyle={{backgroundColor: 'none'}}
-                    right={
-                      <TextInput.Icon
-                        tabIndex={0}
-                        accessibilityLabel={showPassword ? 'hide password toggle' : 'show password toggle'}
-                        icon={showPassword ? eyeIcon : crossEyeIcon}
-                        onPress={handleState}
-                        size={24} // You can set the size of the icon here
-                        color={'#a79f9f'} 
-                        rippleColor={'transparent'}
-                      />
+                    theme={{
+                    colors: {
+                        primary: 'black',
+                        placeholder: 'black',
                     }
-                    theme= {{
-                      colors: {
-                            primary: 'black',       // Changes the label and underline color when focused
-                            placeholder: 'black',   // Changes the color of the placeholder/label when not focused
-                            }
                     }}
                 />
+                <TouchableOpacity 
+                    onPress={handleState} 
+                    style={{
+                    position: 'absolute', 
+                    right: 15, // Position the icon 10px from the right
+                    top: '40%',  // Center the icon vertically
+                    transform: [{ translateY: -12 }]  // Adjust based on icon height
+                    }}
+                    accessibilityLabel={showPassword ? "Hide password" : "Show password"}
+                >
+                    <Image 
+                    source={showPassword ? eyeIcon : crossEyeIcon} 
+                    style={{ width: 24, height: 24 }} 
+                    alt={showPassword ? "Hide password icon" : "Show password icon"} 
+                    />
+                </TouchableOpacity>
+             </View>
+
                 <Button
                     size="md"
                     variant="link"
                     action="primary"
                     isFocusVisible={false}
-                    style={styles.forget}
+                    style={styles.forget} // Adjust margin for spacing
                     onPress={() => navigation.navigate('ForgotPassword')}
-                    >
+                    accessibilityLabel="Navigate to Forgot Password Screen"
+                 >
                         <ButtonText>Forgot Password</ButtonText>
                 </Button>
             </View>
@@ -161,12 +170,13 @@ const LoginScreen = ({ navigation }) => {
                 <View style={styles.center}>
                     <Text style={styles.centerText}>Don't have an account?</Text>
                     <Button
-                    size="md"
-                    variant="link"
-                    action="primary"
-                    isFocusVisible={false}
-                    style={styles.signup}
-                    onPress={() => navigation.navigate('Signup')}
+                        aria-label="Don't have an account? Signup?"
+                        size="md"
+                        variant="link"
+                        action="primary"
+                        isFocusVisible={false}
+                        style={styles.signup}
+                        onPress={() => navigation.navigate('Signup')}
                     >
                         <ButtonText>Sign Up</ButtonText>
                     </Button>
@@ -244,6 +254,8 @@ const styles = StyleSheet.create({
         justifyContent: "flex-end",
         color: '#0066FF',
         fontWeight: 500,
+        width: 140,
+        marginLeft:300,
     },
     signup: {
         textAlign: 'right',

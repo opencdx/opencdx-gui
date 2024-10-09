@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Platform, SafeAreaView, Pressable, Text } from 'react-native';
+import { View, StyleSheet, Platform, SafeAreaView, Pressable, Text, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Button, Image, InputSlot, Input, InputField, ButtonText, useToast, Toast, HStack, ToastDescription, set } from '@gluestack-ui/themed';
 import AlertView from '../components/AlertView';
@@ -146,65 +146,76 @@ const handleError = (error) => {
                             placeholder: 'black',   // Changes the color of the placeholder/label when not focused
                              }
                     }}
-                />
-
+                /> 
+              <View style={{ position: 'relative', width: '100%' }}>
                 <TextInput 
-                    secureTextEntry={!isVisible}
+                    secureTextEntry={!isVisible}  // Toggle between showing/hiding password
+                    accessibilityLabel="New Password"
                     label="New Password*" 
-                    accessibilityLabel="New Password" // Label for screen readers
                     defaultValue={password}
                     onChangeText={handlePasswordChange} 
-                    style={styles.textInput}
-                    textColor= "grey"
-                    underlineColor= "transparent"
+                    style={[styles.textInput, { paddingRight: 40 }]}  // Give padding to the right to avoid overlap with the icon
+                    textColor="grey"
                     underlineStyle={{backgroundColor: 'none'}}
-                    right={
-                      <TextInput.Icon
-                        tabIndex={0}
-                        accessibilityLabel={isVisible ? 'hide password toggle' : 'show password toggle'}
-                        icon={isVisible ? eyeIcon : crossEyeIcon}
-                        onPress={handleState}
-                        size={24} // You can set the size of the icon here
-                        color={'#a79f9f'} 
-                        rippleColor={'transparent'}
-                      />
+                    theme={{
+                    colors: {
+                        primary: 'black',
+                        placeholder: 'black',
                     }
-                    theme= {{
-                      colors: {
-                            primary: 'black',       // Changes the label and underline color when focused
-                            placeholder: 'black',   // Changes the color of the placeholder/label when not focused
-                            }
-                    }}
-                />  
-
-                <TextInput 
-                    secureTextEntry={!isConfirmVisible}
-                    label="Confirm New Password*" 
-                    accessibilityLabel="Confirm New Password" // Label for screen readers
-                    defaultValue={confirmPassword}
-                    onChangeText={handleConfirmPasswordChange} 
-                    style={styles.textInput}
-                    textColor= "grey"
-                    underlineColor= "transparent"
-                    underlineStyle={{backgroundColor: 'none'}}
-                    right={
-                      <TextInput.Icon
-                        tabIndex={0}
-                        accessibilityLabel={isConfirmVisible ? 'hide confirm password toggle' : 'show confirm password toggle'}
-                        icon={isConfirmVisible ? eyeIcon : crossEyeIcon}
-                        onPress={handleConfirmPasswordState}
-                        size={23} // You can set the size of the icon here
-                        color={'#a79f9f'} 
-                        rippleColor={'transparent'}
-                      />
-                    }
-                    theme= {{
-                      colors: {
-                            primary: 'black',       // Changes the label and underline color when focused
-                            placeholder: 'black',   // Changes the color of the placeholder/label when not focused
-                            }
                     }}
                 />
+                <TouchableOpacity 
+                    onPress={handleState} 
+                    style={{
+                    position: 'absolute', 
+                    right: 15, // Position the icon 10px from the right
+                    top: '40%',  // Center the icon vertically
+                    transform: [{ translateY: -12 }]  // Adjust based on icon height
+                    }}
+                    accessibilityLabel={isVisible ? "Hide password" : "Show password"}
+                >
+                    <Image 
+                    source={isVisible ? eyeIcon : crossEyeIcon} 
+                    style={{ width: 24, height: 24 }} 
+                    alt={isVisible ? "Hide password icon" : "Show password icon"} 
+                    />
+                </TouchableOpacity>
+             </View>
+
+             <View style={{ position: 'relative', width: '100%' }}>
+                <TextInput 
+                    secureTextEntry={!isConfirmVisible}  // Toggle between showing/hiding password
+                    accessibilityLabel="Confirm New Password"
+                    label="Confirm New Password*" 
+                    defaultValue={confirmPassword}
+                    onChangeText={handleConfirmPasswordChange} 
+                    style={[styles.textInput, { paddingRight: 40 }]}  // Give padding to the right to avoid overlap with the icon
+                    textColor="grey"
+                    underlineStyle={{backgroundColor: 'none'}}
+                    theme={{
+                    colors: {
+                        primary: 'black',
+                        placeholder: 'black',
+                    }
+                    }}
+                />
+                <TouchableOpacity 
+                    onPress={handleConfirmPasswordState} 
+                    style={{
+                    position: 'absolute', 
+                    right: 15, // Position the icon 10px from the right
+                    top: '40%',  // Center the icon vertically
+                    transform: [{ translateY: -12 }]  // Adjust based on icon height
+                    }}
+                    accessibilityLabel={isConfirmVisible ? "Hide password" : "Show password"}
+                >
+                    <Image 
+                    source={isConfirmVisible ? eyeIcon : crossEyeIcon} 
+                    style={{ width: 24, height: 24 }} 
+                    alt={isConfirmVisible ? "Hide password icon" : "Show password icon"} 
+                    />
+                </TouchableOpacity>
+             </View>
 
                 {!confirmPasswordMatched && (
                     <Text style={styles.errorDescription}>
