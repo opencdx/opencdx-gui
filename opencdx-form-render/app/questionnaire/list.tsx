@@ -7,8 +7,6 @@ import { Questionnaire } from '../../api/questionnaire/model/questionnaire';
 import { useGetQuestionnaireList } from '../../lib/iam-hooks';
 
 
-
-
 const QuestionnaireList: React.FC = () => {
   const { mutate: getQuestionnaireDataList, error, data } = useGetQuestionnaireList();
 

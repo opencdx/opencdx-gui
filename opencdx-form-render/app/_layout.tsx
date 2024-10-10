@@ -12,7 +12,6 @@ import { useColorScheme, useInitialAndroidBarSync } from '~/lib/useColorScheme';
 import { NAV_THEME } from '~/theme';
 import { useEffect } from 'react';
 import { Platform, Pressable, Text, View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -60,52 +59,36 @@ export default function RootLayout() {
                 title: 'Signup',
                 contentStyle: { backgroundColor: 'white' },
               }} />
-
               <Stack.Screen name="auth/forgot-password" options={{
-                headerShown: true,
-                headerStyle: { backgroundColor: 'white', }, // Added borderBottomWidth: 0
-                headerTitleStyle: { color: 'black' },
-                headerTintColor: 'black',
-                headerShadowVisible: false,
-                headerTransparent: true,
-                headerTitle: () => null,
-                headerLeft: () => (
-                  <View className='flex flex-row items-center gap-2 pl-4' >
-                    <Pressable
-                      className='flex flex-row items-center gap-2 text-blue-600'
-                      role='button'
-                      onPress={() =>
-                        navigation.navigate('auth/login' as never)
-
-                      }>
-                      <MaterialCommunityIcons name="arrow-left" size={16} color='blue' />
-                      <Text className='text-blue-600'>Back</Text>
-                    </Pressable>
-                  </View>
-                ),
+                headerShown: false,
+                title: 'Forgot Password',
+                contentStyle: { backgroundColor: 'white' },
               }} />
+
+             
               <Stack.Screen name="auth/change-password" options={{
-                headerShown: true,
+                headerShown: false,
                 headerStyle: { backgroundColor: 'white', }, // Added borderBottomWidth: 0
                 headerTitleStyle: { color: 'black' },
                 headerTintColor: 'black',
                 headerShadowVisible: false,
                 headerTransparent: true,
+                title: 'Change Password',
                 headerTitle: () => null,
-                headerLeft: () => (
-                  <View className='flex flex-row items-center gap-2 pl-4' role='button'>
-                    <Pressable
-                      className='flex flex-row items-center gap-2 text-blue-600'
-                      role='button'
-                      onPress={() =>
-                        navigation.navigate('auth/forgot-password' as never)
+                // headerLeft: () => (
+                //   <View className='flex flex-row items-center gap-2 pl-4' role='button'>
+                //     <Pressable
+                //       className='flex flex-row items-center gap-2 text-blue-600'
+                //       role='button'
+                //       onPress={() =>
+                //         navigation.navigate('auth/forgot-password' as never)
 
-                      }>
-                      <MaterialCommunityIcons name="arrow-left" size={16} color='blue' />
-                      <Text className='text-blue-600'>Back</Text>
-                    </Pressable>
-                  </View>
-                ),
+                //       }>
+                //       <MaterialCommunityIcons name="arrow-left" size={16} color='blue' />
+                //       <Text className='text-blue-600'>Back</Text>
+                //     </Pressable>
+                //   </View>
+                // ),
               }} />
               <Stack.Screen name="auth/password-changed" options={{
                 headerShown: false,
