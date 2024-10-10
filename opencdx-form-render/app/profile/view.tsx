@@ -1,6 +1,7 @@
 import React from 'react';
-import { Image } from 'react-native';
-import { Input } from '~/components/ui/input';
+import {  Image, Text, View } from 'react-native';
+import { Input, InputField } from '@gluestack-ui/themed';
+import { Button } from '../../components/ui/button';
 
 interface ProfileData {
   firstName: string;
@@ -47,9 +48,13 @@ const ProfileView: React.FC = () => {
         <ProfileField label="Date of Birth" value={profileData.dateOfBirth} />
       </div>
 
-      <button className="w-full bg-gray-200 text-black py-2 rounded-md mt-6 font-semibold">
-        Save
-      </button>
+        <Button
+          onPress={() => { }}
+          disabled={false}
+          loading={false}
+          children="Save"
+          className="w-full bg-gray-200 text-black py-2 rounded-md mt-6 font-semibold"
+        />
     </div>
   );
 };
@@ -62,13 +67,15 @@ interface ProfileFieldProps {
 
 const ProfileField: React.FC<ProfileFieldProps> = ({ label, value, required }) => (
   <div>
-    
+    <Text>{label}</Text>
     <Input
-      label={label}
-      value={value}
-      className="w-full border-gray-300 rounded-md shadow-sm"
-      onChangeText={() => {}}
-    />
+
+      variant="underlined"
+
+    >
+      <InputField placeholder={label} defaultValue={value} onChangeText={() => { }} />
+
+    </Input>
   </div>
 );
 

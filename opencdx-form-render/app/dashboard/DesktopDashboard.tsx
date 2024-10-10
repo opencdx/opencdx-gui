@@ -21,13 +21,14 @@ const DesktopDashboard = ({ links }: { links: any }) => (
       <View className="flex flex-row justify-end items-center bg-white p-4  rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900">
         <View className="flex flex-row items-center">
           <View className="bg-blue-200 rounded-full w-8 h-8 flex items-center justify-center mr-2">
-            <Text className="text-white">JG</Text>
-          </View>
+            <Image source={require('../../assets/profile-small.png')} className="w-6  h-6" />
+            </View>
           <Text className="text-gray-800">John</Text>
+          <Image source={require('../../assets/arrow-down.png')} className="w-4 h-4" />
         </View>
       </View>
 
-      <View className="flex bg-[#F8F9FB] flex-row justify-between items-center  p-6">
+      <View className="flex bg-[#F4F9FF] flex-row justify-between items-center  p-6">
         <View>
           <Text className="text-xl font-bold text-gray-800">Welcome to your dashboard John.</Text>
           <Text className="text-gray-600">Let's see what is available for you today!</Text>
@@ -53,10 +54,10 @@ const DesktopDashboard = ({ links }: { links: any }) => (
                 { label: 'Lorem Ipsum', image: require('../../assets/product1.png') },
                 { label: 'Lorem Ipsum', image: require('../../assets/product2.png') },
               ].map((item, index) => (
-                <View key={index} className="aspect-square bg-gray-800 rounded-lg ">
+                <View key={index} className="aspect-square rounded-lg ">
                   <View className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-2 ">
                     <Image source={item.image} className="w-full h-full object-cover" />
-                    <Text className="text-white text-xs ">{item.label}</Text>
+                    <Text className="text-white text-xs mt-2">{item.label}</Text>
                   </View>
                 </View>
               ))}
@@ -91,7 +92,12 @@ const DesktopDashboard = ({ links }: { links: any }) => (
             </View>
           </View>
         </View>
+        
       </View>
+      <View className="flex justify-center items-center bg-[#F4F9FF]">
+        <Image source={require('../../assets/footer.png')} className="w-full justify-center items-center" />
+      </View>
+
     </View>
   </View>
 );
