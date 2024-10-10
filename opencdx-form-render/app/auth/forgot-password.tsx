@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
-import { View, Text, Pressable, ScrollView } from 'react-native';
+import { View, Text, Pressable, ScrollView, useWindowDimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Input } from '../../components/ui/input';
 import { Button } from '../../components/ui/button';
@@ -8,6 +8,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 // Custom hook for form handling
+
+
 const useForgotPasswordForm = () => {
     const [email, setEmail] = useState('');
     
@@ -28,6 +30,9 @@ const withLoading = (WrappedComponent: React.ComponentType<any>) => {
 };
 
 const ForgotPassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIsLoading: (isLoading: boolean) => void }) => {
+    const { width } = useWindowDimensions();
+    const isMobile = width <= 768 || Platform.OS=='ios' || Platform.OS=='android';
+
     const navigation = useNavigation();
     const { email, setEmail, isDisabled } = useForgotPasswordForm();
 
@@ -89,7 +94,7 @@ const ForgotPassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
 
     return (
         <>
-            {Platform.OS === 'web' ? (
+            {!isMobile ? (
                 <main aria-label="main-layout forgot-password" className='bg-white flex flex-1 justify-center items-center'>
                     {renderContent()}
                 </main>

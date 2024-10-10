@@ -7,7 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Platform } from 'react-native';
 const Dashboard = () => {
   const { width } = useWindowDimensions();
-  const isMobile = width <= 768;
+  const isMobile = width <= 768 || Platform.OS=='ios' || Platform.OS=='android';
 
   const links = [
     { label: 'Dashboard', href: '/dashboard', icon: <MaterialCommunityIcons name="view-dashboard" size={20} className="text-white"   /> },
@@ -22,7 +22,7 @@ const Dashboard = () => {
   }, []);
   return (
     
-    Platform.OS=='web' || !isMobile ? <main aria-label="main-layout dashboard" > <DesktopDashboard links={links} /> </main> : <MobileDashboard />
+    !isMobile ? <main aria-label="main-layout dashboard" > <DesktopDashboard links={links} /> </main> : <MobileDashboard />
   
   );
 };

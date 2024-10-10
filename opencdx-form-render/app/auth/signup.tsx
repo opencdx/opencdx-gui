@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
-import { View, Text, Pressable, ScrollView } from 'react-native';
+import { View, Text, Pressable, ScrollView, useWindowDimensions } from 'react-native';
 import { useToast, Toast, ToastDescription, EyeIcon } from '@gluestack-ui/themed';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSignUp } from '../../lib/iam-hooks';
@@ -11,6 +11,8 @@ import ValidationRow from '../../components/ui/validate';
 import ModalComponent from '../../components/ui/modal';
 import Loader from '../../components/ui/loading';
 import { Platform } from 'react-native';
+
+
 // Custom hook for form handling
 const useSignupForm = () => {
 
@@ -67,6 +69,9 @@ const useSignupForm = () => {
 };
 
 const Signup = () => {
+    const { width } = useWindowDimensions();
+    const isMobile = width <= 768 || Platform.OS=='ios' || Platform.OS=='android';
+
     const navigation = useNavigation();
     const {
         formData,
@@ -265,7 +270,7 @@ const Signup = () => {
 
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-            {Platform.OS === 'web' ? (
+            {!isMobile ? (
                 <main aria-label="main-layout-signup" className="flex items-center justify-center min-h-screen">
                     {renderContent()}
                 </main>

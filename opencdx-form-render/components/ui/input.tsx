@@ -25,7 +25,8 @@ export const Input: React.FC<InputProps> = ({ label, value, onChangeText, secure
         textColor='black'
         aria-label={label}
         underlineStyle={{backgroundColor: 'none'}}
-        contentStyle={{ backgroundColor: 'bg-white', borderRadius: 1, borderWidth: 1, borderColor: 'black' }}
+        contentStyle={{ backgroundColor: 'bg-white' }}
+        style={{ backgroundColor: 'bg-white' }}
         theme={{
           colors: {
             primary: 'black',
