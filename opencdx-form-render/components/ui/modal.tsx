@@ -58,7 +58,7 @@ const ModalComponent = React.memo(({
               <Text className={contentColor}>{content}</Text>
             </ModalBody>
             <ModalFooter>
-              <View className='flex flex-row justify-end space-x-2 gap-2'>
+              <View className='flex flex-col-reverse md:flex-row md:justify-end md:space-x-2 gap-2 w-full'>
               <Button
                 onPress={() => {
                   onButtonOnePress();
