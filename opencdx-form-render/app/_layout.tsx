@@ -6,6 +6,7 @@ import { ThemeProvider as NavThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { useColorScheme, useInitialAndroidBarSync } from '~/lib/useColorScheme';
 import { NAV_THEME } from '~/theme';
@@ -21,6 +22,7 @@ export default function RootLayout() {
   useInitialAndroidBarSync();
   const { colorScheme, isDarkColorScheme } = useColorScheme();
   const navigation = useNavigation();
+  const queryClient = new QueryClient();
   useEffect(() => {
 
     if (Platform.OS === 'web') {
@@ -37,6 +39,7 @@ export default function RootLayout() {
 
       <GestureHandlerRootView style={{ flex: 1 }}>
         <GluestackUIProvider config={config}>
+        <QueryClientProvider client={queryClient}>
 
           <NavThemeProvider value={NAV_THEME[colorScheme]}>
             <Stack >
@@ -126,6 +129,7 @@ export default function RootLayout() {
               }} />
             </Stack>
           </NavThemeProvider>
+        </QueryClientProvider>
         </GluestackUIProvider>
 
       </GestureHandlerRootView>

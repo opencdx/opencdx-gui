@@ -2,41 +2,34 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Pressable, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Questionnaire } from '../../api/questionnaire/model/questionnaire';
+
+import { useGetQuestionnaireList } from '../../lib/iam-hooks';
 
 
-interface QuestionnaireItem {
-  title: string;
-  description: string;
-  route: string;
-}
 
-const questionnaires: QuestionnaireItem[] = [
-  {
-    title: "Medical History Form",
-    description: "Short descriptive text should go here, describing the questionnaire.",
-    route: "medical-history",
-  },
-  {
-    title: "Reporting At-home Test Kit results",
-    description: "Short descriptive text should go here, describing the questionnaire.",
-    route: "at-home-test-kit",
-  },
-  {
-    title: "LIDR",
-    description: "Short descriptive text should go here, describing the questionnaire.",
-    route: "lidr",
-  },
-  {
-    title: "LIDR E2E",
-    description: "Short descriptive text should go here, describing the questionnaire.",
-    route: "lidr-e2e",
-  },
-];
 
 const QuestionnaireList: React.FC = () => {
+  const { mutate: getQuestionnaireDataList, error, data } = useGetQuestionnaireList();
+
   const navigation = useNavigation();
   const [isWeb, setIsWeb] = useState(false);
+  useEffect(() => {
+    const fetchQuestionnaires = async () => {
+      try {
+        await getQuestionnaireDataList({
+          pagination: { pageSize: 300, sortAscending: true },
+          updateAnswers: true,
+        });
+      } catch (err) {
+        console.error('Error fetching data:', err);
+      } finally {
+        // setIsLoading(false);
+      }
+    };
 
+    fetchQuestionnaires();
+  }, [getQuestionnaireDataList]);
   useEffect(() => {
     if (Platform.OS === 'web') {
       document.title = 'Questionnaires';
@@ -49,7 +42,7 @@ const QuestionnaireList: React.FC = () => {
   };
 
   const handleQuestionnaireSelect = (route: string) => {
-    navigation.navigate(route as never);
+    //navigation.navigate(route as never);
   };
 
   const content = (
@@ -74,11 +67,11 @@ const QuestionnaireList: React.FC = () => {
             Select one of the options below and begin answering a short series of questions.
           </Text>
           <View className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
-            {questionnaires.map((item, index) => (
+            {data?.data?.questionnaires?.map((item: Questionnaire, index: number) => (
               <Pressable
                 key={index}
                 className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onPress={() => handleQuestionnaireSelect(item.route)}
+                //onPress={() => handleQuestionnaireSelect(item.route ?? '')}
               >
                 <View className="flex flex-row justify-between items-center">
                   <View className="flex-1">

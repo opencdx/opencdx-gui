@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { iamApi } from '../api';
+import { iamApi , questionnaireApi} from '../api';
+import { useMutation } from '@tanstack/react-query';
+
+import { GetQuestionnaireListRequest, QuestionnaireRequest } from "../api/questionnaire";
+
 import { LoginRequest, SignUpRequest, ResetPasswordRequest, SignUpResponse } from '../api/iam';
 /**
  * Custom hook to handle user login
@@ -108,3 +112,10 @@ export const useResetPassword = (onSuccess: (arg0: any) => void, onError: (arg0:
         error,
     };
 }
+
+export const useGetQuestionnaireList = () => {
+
+    return useMutation({
+        mutationFn: (params: GetQuestionnaireListRequest) => questionnaireApi.getQuestionnaires({ getQuestionnaireListRequest: params })
+    });
+};

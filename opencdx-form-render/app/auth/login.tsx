@@ -49,14 +49,15 @@ const Login = () => {
 		})
 	}
 	const handleLoginSuccess = useCallback((data: any) => {
-		AsyncStorage.setItem('jwtToken', data.token);
+		AsyncStorage.setItem('serviceToken', data.token);
 		navigation.navigate('dashboard/index' as never);
 		showToaster('Login successful.', 'success');
 	}, [navigation]);
 
 	const handleLoginError = useCallback((err: any) => {
 		const errorData = err.response?.data;
-		showToaster(errorData.cause.localizedMessage, 'error');
+		const errorMessage = errorData?.cause?.localizedMessage || 'Login failed. Please try again.';
+		showToaster(errorMessage, 'error');
 	}, []);
 
 	const { login, loading } = useLogin(handleLoginSuccess, handleLoginError);

@@ -53,7 +53,7 @@ const DesktopDashboard = ({ links }: { links: any }) => (
                 { label: 'Lorem Ipsum', image: require('../../assets/product1.png') },
                 { label: 'Lorem Ipsum', image: require('../../assets/product2.png') },
               ].map((item, index) => (
-                <View key={index} className="aspect-square bg-gray-800 rounded-lg overflow-hidden">
+                <View key={index} className="aspect-square bg-gray-800 rounded-lg ">
                   <View className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-2 ">
                     <Image source={item.image} className="w-full h-full object-cover" />
                     <Text className="text-white text-xs ">{item.label}</Text>
