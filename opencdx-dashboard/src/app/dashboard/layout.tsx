@@ -1,56 +1,16 @@
 'use client';
 
 import '@/styles/globals.css';
-
 import React, { useState } from 'react';
-
-import Image from 'next/image';
-import Link from 'next/link';
-
 import { Sidebar, SidebarBody, SidebarLink } from '@/components/side-nav';
-import { Providers } from '../providers';
 import { Navbar } from '@/components/navbar';
+import { links } from '@/config/sidebar-links';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(true);
-
-  const links = [
-    {
-      label: 'Dashboard',
-      href: '/dashboard',
-      icon: (
-        <Image src="/images/space_dashboard.png" alt="" width={20} height={20} />
-      ),
-    },
-    {
-      label: 'Forms Builder',
-      href: '/form-builder',
-      icon: (
-        <Image src="/images/dynamic_form_left.png" alt="" width={20} height={20} />
-      ),
-    },
-    {
-      label: 'Maps',
-      href: '/maps',
-      icon: (
-        <Image src="/images/map.png" alt="" width={20} height={20} />
-      ),
-    },
-    {
-      label: 'My Profile',
-      href: '/profile',
-      icon: (
-        <Image src="/images/person.png" alt="" width={20} height={20} />
-      ),
-    },
-  ];
-
   return (
-    <Providers
-      themeProps={{ attribute: 'className', defaultTheme: 'dark', children }}
-    >
-        <div className="flex h-screen w-screen overflow-hidden bg-neutral-900 transition-all duration-300 ease-in-out">
-          <Sidebar open={open} setOpen={setOpen}>
+    <div className="flex h-screen w-screen overflow-hidden bg-neutral-900 transition-all duration-300 ease-in-out">
+      <Sidebar open={open} setOpen={setOpen}>
             <SidebarBody className="justify-between gap-10">
               <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
                 <div className=" flex flex-col gap-4">
@@ -73,6 +33,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </div>
         </div>
-    </Providers>
   );
 }
