@@ -1,6 +1,7 @@
 {
   "resourceType": "Questionnaire",
   "title": "Systolic Measurement",
+  "description": "A form for reporting COVID-19 cases, including patient information, symptoms, exposure history, and test results",
   "status": "draft",
   "item": [
     {

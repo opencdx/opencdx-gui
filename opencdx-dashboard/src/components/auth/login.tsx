@@ -106,9 +106,9 @@ const handleError = (error: AxiosError) => {
               className='label-color'
               id="email"
               variant="bordered"
+              type="email"
               label={t('email_usename_placeholder')}
               isRequired
-              type="userName"
               onValueChange={setUsername}
             />
           <div className="w-full flex flex-col m-0 gap-0">

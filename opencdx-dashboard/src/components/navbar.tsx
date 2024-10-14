@@ -20,11 +20,10 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-  Image,
 } from 'ui-library';
 
-import { ChevronDown, ChevronUp, LogOut } from 'lucide-react';
 import { Locale} from '@/config/locale';
+import Image from 'next/image';
 
 import {setUserLocale} from '@/lib/locale';
 import { logout, handleSessionOut } from '@/hooks/iam-hooks';
@@ -72,23 +71,25 @@ export const Navbar = () => {
   const selectedOptionValue = Array.from(selectedOption)[0];
 
   return (
-    <NextUINavbar maxWidth="full" className=" rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full" position="sticky">
+    <NextUINavbar maxWidth="full" className=" rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full" position="sticky" aria-label='Navbar'>
       <NavbarContent
         justify="end"
+        aria-label='User Dropdown'
       >
-        <NavbarItem className="hidden md:flex">
+        <NavbarItem className="hidden md:flex" aria-label='User'>
             <Dropdown>
               <DropdownTrigger>
                 <Button
                   variant="light"
                   onClick={handleClick}
                   disableAnimation
+                  role='link'
                   className="w-full p-0"
                   endContent={
                     isOpen ? (
-                      <ChevronUp />
+                      <Image src="/images/arrow-down.png" alt="Arrow Down" width={24} height={24} priority />
                     ) : (
-                      <ChevronDown />
+                      <Image src="/images/arrow-down.png" alt="Arrow Up" width={24} height={24} priority />
                     )
                   }
                 >

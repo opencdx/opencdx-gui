@@ -2,6 +2,7 @@
   "resourceType": "Questionnaire",
   "title": "BP-POC",
   "status": "draft",
+  "description": "A form for reporting COVID-19 cases, including patient information, symptoms, exposure history, and test results",
   "item": [
     {
       "type": "integer",

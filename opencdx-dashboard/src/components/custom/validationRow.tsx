@@ -40,7 +40,7 @@ const ValidationRow = ({ isValid, label }: { isValid: boolean, label: string }) 
         </svg>
         </div>
       )}
-      <p className='text-gray-400 text-small' style={{ fontSize: '0.65rem' }}>{label}</p>
+      <p className='background: var(--colors-base-default-500, #71717A); text-small' style={{ fontSize: '0.65rem' }}>{label}</p>
     </div>
   );
 

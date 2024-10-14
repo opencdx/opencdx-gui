@@ -1,8 +1,9 @@
 {
   "resourceType": "Questionnaire",  
   "title": "COVID 19 Simple Sep4",
+  "description": "A form for reporting COVID-19 cases, including patient information, symptoms, exposure history, and test results",
   "status": "draft",
-  "purpose": "To capture user symptoms ",
+  "purpose": "To capture user symptoms and other information related to COVID-19",
   "item": [
     {
       "type": "integer",

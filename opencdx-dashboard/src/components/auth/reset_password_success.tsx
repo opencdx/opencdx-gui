@@ -31,45 +31,45 @@ export default function ResetPasswordSuccessPage() {
         shadow='none'
       >
         <CardBody className={`grid gap-2`}>
-        <div className={`flex-1 ${isMobile ? 'justify-between' : ''}`}>
-            <div className="align-items: top">
-          <svg
-            width="100"
-            height="100"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            style={{ display: 'block', margin: '20px auto' }}
-            tabIndex={0}
-            aria-label='Success logo'
-          >
-            <circle cx="12" cy="12" r="10" fill="none" stroke="#006FEF" strokeWidth="2" />
-            <path d="M7 12l3 3 7-7" stroke="#006FEF" strokeWidth="2" fill="none" />
-          </svg>
-          
-          <p className="text-center text-black-500 text-lg" tabIndex={0}>
-            {t('password_changed')}
-          </p>
-          <p className="text-center text-gray-500 text-sm" tabIndex={0}>
-            {t('password_change_success')}
-          </p>
+          <div className={`flex-1 ${isMobile ? 'justify-between' : ''}`}>
+            <div className="align-items: top gap-2">
+              <svg
+                width="100"
+                height="100"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                style={{ display: 'block', margin: '20px auto' }}
+                tabIndex={0}
+                aria-label='Success logo'
+              >
+                <circle cx="12" cy="12" r="10" fill="none" stroke="#006FEF" strokeWidth="2" />
+                <path d="M7 12l3 3 7-7" stroke="#006FEF" strokeWidth="2" fill="none" />
+              </svg>
+
+              <div className="text-center text-black-500 text-lg" tabIndex={0}>
+                {t('password_changed')}
+              </div>
+              <div className="text-center text-gray-500 text-sm p-1" tabIndex={0}>
+                {t('password_change_success')}
+              </div>
+            </div>
           </div>
-          </div>
-          
+
         </CardBody>
-        
+
         <CardFooter className="flex justify-center">
-            <Button
-                className="w-full"
-                color={'primary'}
-                type="submit"
-                onClick={handleSubmit}
-                aria-label={t('proceed_to_login')}
-            >
-                {t('proceed_to_login')}
-            </Button>
+          <Button
+            className="w-full"
+            color={'primary'}
+            type="submit"
+            onClick={handleSubmit}
+            aria-label={t('proceed_to_login')}
+          >
+            {t('proceed_to_login')}
+          </Button>
         </CardFooter>
       </Card>
-      
+
     </div>
   );
 }

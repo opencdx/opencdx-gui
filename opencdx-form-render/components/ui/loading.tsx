@@ -3,7 +3,7 @@ import { View, ActivityIndicator, Modal } from 'react-native';
 
 
 interface LoaderProps {
-  isVisible: boolean;
+  isVisible?: boolean;
 }
 
 const Loading: React.FC<LoaderProps> = ({ isVisible }) => {

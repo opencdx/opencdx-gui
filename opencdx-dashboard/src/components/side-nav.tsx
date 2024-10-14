@@ -3,7 +3,9 @@ import { cn } from "@/lib/utils";
 import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { usePathname } from 'next/navigation';
 import { ChevronRight, IceCream } from "lucide-react";
+import Image from 'next/image';
 
 interface Links {
   label: string;
@@ -71,35 +73,67 @@ export const Sidebar = ({
   );
 };
 
-export const SidebarBody = (props: React.ComponentProps<typeof motion.div>) => {
-  return (
-    <>
-      <DesktopSidebar {...props} />
-    </>
-  );
-};
-
-export const DesktopSidebar = ({
+export const SidebarBody = ({
   className,
   children,
   ...props
-}: React.ComponentProps<typeof motion.div>) => {
+}: React.ComponentProps<typeof motion.div> & { children?: React.ReactNode }) => {
   const { open, setOpen, animate } = useSidebar();
 
   return (
     <>
-
       <motion.div
         className={cn(
-          "h-full px-4 py-4   md:flex md:flex-col h-screen bg-[#020B2D] bg-gradient-to-b from-[#020B2D] from-70% via-[#0A2A88] to-[#0D47E9] w-[260px] flex-shrink-0",
+          "h-full px-4 py-4 md:flex md:flex-col h-screen bg-[#020B2D] bg-gradient-to-b from-[#020B2D] from-70% via-[#0A2A88] to-[#0D47E9] w-[260px] flex-shrink-0",
+          className
         )}
         animate={{
-          width: animate ? (open ? "220px" : "60px") : "220px",
+          width: animate ? (open ? "220px" : "72px") : "220px",
         }}
-
         {...props}
       >
-        {children}
+        <div className="flex flex-col h-full">
+          <div className="mb-8 flex justify-between items-center">
+            {open ? (
+              <Link href="#" className="flex items-center">
+                <Image
+                  src="/images/logo-long.png"
+                  alt="OpenCDx"
+                  width={120}
+                  height={40}
+                />
+              </Link>
+            ) : (
+              <Link href="#" className="flex items-center">
+                <Image
+                  src="/images/logo-short.png"
+                  alt="OpenCDx"
+                  width={40}
+                  height={40}
+                  className="rounded-lg"
+                />
+              </Link>
+            )}
+            
+            <button 
+              onClick={() => setOpen(!open)} 
+              className={cn(
+                "flex items-center justify-center mt-8 -mr-6 z-50",
+               
+              )}
+            >
+              <Image
+                src={open ? "/images/collapse_icon.png" : "/images/expand_icon.png"}
+                alt={open ? "Collapse" : "Expand"}
+                width={20}
+                height={20}
+              />
+            </button>
+          </div>
+          <div className="flex-1 overflow-y-auto">
+            {children}
+          </div>
+        </div>
       </motion.div>
     </>
   );
@@ -116,32 +150,31 @@ export const SidebarLink = ({
 
 }) => {
   const { open, setOpen, animate } = useSidebar();
+  const pathname = usePathname();
+  const selected = pathname === link.href;
   return (
     <Link
       href={link.href}
       className={cn(
-        "flex items-center justify-start gap-2  group/sidebar py-2 rounded-lg",
-        'py-2 ',
+        "flex items-center justify-start group/sidebar rounded-lg",
         className
       )}
       {...props}
     >
-
       <div className={cn(
-        link.href === '/form-builder' ? 'bg-gradient-to-r from-blue-800 to-blue-500  px-4 py-2 hover:from-blue-800 hover:to-blue-500 rounded-lg ' : 'py-2 ',
-        'flex items-center justify-center pl-2',
+        selected ? 'bg-gradient-to-r from-blue-800 to-blue-500 hover:from-blue-800 hover:to-blue-500 rounded-lg' : '',
+        open ? 'px-6' : 'px-2',
+        'flex items-start justify-start py-2',
       )}>
-        <div className="flex items-center justify-center pl-2">
+        <div className="flex items-start justify-start">
           {link.icon}
-          <div className="text-white dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block pl-2">
-            {link.label}
-          </div>
+          {open && (
+            <div className="text-white dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block pl-2">
+              {link.label}
+            </div>
+          )}
         </div>
       </div>
-
-
-
     </Link>
   );
 };
-
