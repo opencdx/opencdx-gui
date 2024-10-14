@@ -11,39 +11,6 @@ import { Sidebar, SidebarBody, SidebarLink } from '@/components/side-nav';
 import { Providers } from '../providers';
 import { Navbar } from '@/components/navbar';
 
-export const Logo = () => {
-  return (
-    <Link
-      href="#"
-      className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
-    >
-      <Image
-        src="/images/logo-long.png"
-        alt="logo"
-        width={120}
-        height={40}
-      />
-    </Link>
-  );
-};
-
-export const LogoIcon = () => {
-  return (
-    <Link
-      href="#"
-      className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
-    >
-      <Image
-        src="/images/logo-short.png"
-        alt="logo"
-        width={120}
-        height={120}
-        className="rounded-lg"
-      />
-    </Link>
-  );
-};
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(true);
 
@@ -86,13 +53,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Sidebar open={open} setOpen={setOpen}>
             <SidebarBody className="justify-between gap-10">
               <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-                {open ? <Logo /> : <LogoIcon />}
-                <div className="mt-8 flex flex-col gap-4">
+                <div className=" flex flex-col gap-4">
                   {links.map((link, idx) => (
                     <SidebarLink 
                       key={idx} 
                       link={link} 
-                      
                     />
                   ))}
                 </div>
