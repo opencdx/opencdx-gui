@@ -24,8 +24,10 @@ const QuestionnaireItemWrapper: React.FC<{
   }, []);
   useEffect(() => {
     const currentItems = getValues(`item[${questionnaireItemId}].anfStatementConnector`) || [];
-    setCurrentComponentType(currentItems[0].anfStatementType);
-  }, []);
+    if (currentItems.length > 0 && currentItems[0]) {
+      setCurrentComponentType(currentItems[0].anfStatementType);
+    }
+  }, [getValues, questionnaireItemId]);
   React.useEffect(() => {
     if (item && (!item.anfStatementConnector || item.anfStatementConnector.length === 0)) {
       const newConnector: AnfStatementConnector = {
