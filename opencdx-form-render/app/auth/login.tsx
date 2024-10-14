@@ -49,8 +49,8 @@ const Login = () => {
   }, [navigation]);
 
   const handleLoginError = useCallback((err: any) => {
-    const errorMessage = err.response?.data?.cause?.localizedMessage || 'Login failed. Please try again.';
-    showToaster(errorMessage, 'error');
+    // const errorMessage = err.response?.data?.cause?.localizedMessage || 'Login failed. Please try again.';
+    showToaster('Invalid credentials.', 'error');
   }, []);
 
   const { login, loading } = useLogin(handleLoginSuccess, handleLoginError);

@@ -123,8 +123,8 @@ const ChangePassword = () => {
     }, [navigation]);
 
     const onError = useCallback((error: any) => {
-        const errorMessage = error.response?.data?.cause?.localizedMessage || 'An error occurred';
-        showToaster(errorMessage, 'error');
+        // const errorMessage = error.response?.data?.cause?.localizedMessage || 'An error occurred';
+        showToaster('User does not exist.', 'error');
     }, []);
 
     const { resetPassword, loading } = useResetPassword(onSuccess, onError);
