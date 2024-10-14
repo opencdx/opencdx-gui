@@ -12,7 +12,7 @@ const Dashboard = () => {
   const links = [
     { label: 'Dashboard', href: '/dashboard', icon: <MaterialCommunityIcons name="view-dashboard" size={20} className="text-white"   /> },
     { label: 'My Profile', href: '/profile/view', icon: <MaterialCommunityIcons name="account" size={20} className="text-white"  /> },
-    { label: 'Logout', href: '/logout', icon: <MaterialCommunityIcons name="logout" size={20} className="text-white"  /> },
+    { label: 'Logout', href: '/auth/login', icon: <MaterialCommunityIcons name="logout" size={20} className="text-white"  /> },
   ];
 
   useEffect(() => {
