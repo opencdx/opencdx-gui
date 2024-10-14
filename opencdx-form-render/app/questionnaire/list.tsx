@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, ScrollView, Pressable, Platform } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Questionnaire } from '../../api/questionnaire/model/questionnaire';
 
-import { useGetQuestionnaireList } from '../../lib/iam-hooks';
+import { Image } from '../../components/ui/image'
 
+import { useGetQuestionnaireList } from '../../lib/iam-hooks';
+import { useNavigation } from 'expo-router';
+import Loading from '../../components/ui/loading';
 
 const QuestionnaireList: React.FC = () => {
-  const { mutate: getQuestionnaireDataList, error, data } = useGetQuestionnaireList();
+  const { mutate: getQuestionnaireDataList, data } = useGetQuestionnaireList();
 
   const navigation = useNavigation();
-  const [isWeb, setIsWeb] = useState(false);
+  const [isWeb, setIsWeb] = useState(Platform.OS === 'web');
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const fetchQuestionnaires = async () => {
       try {
@@ -22,37 +25,36 @@ const QuestionnaireList: React.FC = () => {
       } catch (err) {
         console.error('Error fetching data:', err);
       } finally {
-        // setIsLoading(false);
+        setIsLoading(false);
       }
     };
 
     fetchQuestionnaires();
-  }, [getQuestionnaireDataList]);
-  useEffect(() => {
-    if (Platform.OS === 'web') {
+
+    if (isWeb) {
       document.title = 'Questionnaires';
-      setIsWeb(true);
     }
-  }, []);
+  }, [getQuestionnaireDataList, isWeb]);
 
-  const handleBack = () => {
-    navigation.goBack();
-  };
+  const handleBack = useCallback(() => navigation.goBack(), [navigation]);
 
-  const handleQuestionnaireSelect = (route: string) => {
-    //navigation.navigate(route as never);
-  };
+  const handleQuestionnaireSelect = useCallback(() => {
+    navigation.navigate('questionnaire/take-questionnaire' as never);
+  }, [navigation]);
 
   const content = (
     <>
       <Pressable
-        className="self-start rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="self-start rounded focus:outline-none focus:ring-2 focus:ring-blue-500 flex flex-row items-center p-2"
         onPress={handleBack}
         role="link"
         aria-label="Back"
       >
-        <Text className="font-inter text-base font-normal text-blue-600 p-4 flex flex-row items-center gap-2">
-          <MaterialCommunityIcons name="arrow-left" size={16} aria-label="Back" />
+        <Image
+          source={require('../../assets/back.png')}
+          alt="Select Questionnaire"
+        />
+        <Text className="font-inter text-base font-normal text-blue-600 pl-1 flex flex-row items-center gap-2">
           Back
         </Text>
       </Pressable>
@@ -65,18 +67,21 @@ const QuestionnaireList: React.FC = () => {
             Select one of the options below and begin answering a short series of questions.
           </Text>
           <View className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
-            {data?.data?.questionnaires?.map((item: Questionnaire, index: number) => (
+          {data?.data?.questionnaires?.map((item: Questionnaire, index: number) => (
               <Pressable
                 key={index}
                 className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                //onPress={() => handleQuestionnaireSelect(item.route ?? '')}
+                onPress={() => handleQuestionnaireSelect()}
               >
                 <View className="flex flex-row justify-between items-center">
                   <View className="flex-1">
                     <Text className="font-inter text-xl font-medium mb-2">{item.title}</Text>
                     <Text className="font-inter text-gray-600">{item.description}</Text>
                   </View>
-                  <MaterialCommunityIcons name="arrow-right" size={24} className="text-blue-600" />
+                  <Image
+                    source={require('../../assets/arrow-right.png')}
+                    alt="Select Questionnaire"
+                  />
                 </View>
               </Pressable>
             ))}
@@ -90,10 +95,10 @@ const QuestionnaireList: React.FC = () => {
     <ScrollView>
       {isWeb ? (
         <main aria-label="main-layout questionnaire-list">
-          {content}
+          {isLoading?<Loading isVisible={isLoading} />:content}
         </main>
       ) : (
-        content
+        isLoading?<Loading isVisible={isLoading}/>:content
       )}
     </ScrollView>
   );

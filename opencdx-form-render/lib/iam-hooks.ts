@@ -15,7 +15,6 @@ import { LoginRequest, SignUpRequest, ResetPasswordRequest, SignUpResponse } fro
 export const useLogin = (onSuccess: (arg0: any) => void, onError: (arg0: unknown) => void) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const navigation = useNavigation();
 
     const login = async (credentials: LoginRequest) => {
         setLoading(true);
@@ -113,9 +112,14 @@ export const useResetPassword = (onSuccess: (arg0: any) => void, onError: (arg0:
     };
 }
 
-export const useGetQuestionnaireList = () => {
-
+export const useGetQuestionnaireList = (onLoading?: (isLoading: boolean) => void) => {
     return useMutation({
-        mutationFn: (params: GetQuestionnaireListRequest) => questionnaireApi.getQuestionnaires({ getQuestionnaireListRequest: params })
+        mutationFn: (params: GetQuestionnaireListRequest) => questionnaireApi.getQuestionnaires({ getQuestionnaireListRequest: params }),
+        onMutate: () => {
+            if (onLoading) onLoading(true);
+        },
+        onSettled: () => {
+            if (onLoading) onLoading(false);
+        },
     });
 };

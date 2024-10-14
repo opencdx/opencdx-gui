@@ -41,7 +41,14 @@ export default function ListQuestionnaire() {
   const router = useRouter();
   const { updateQuestionnaire } = useQuestionnaireStore();
 
-  const [isGrid, setIsGrid] = useState(true);
+  const [isGrid, setIsGrid] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const storedIsGrid = localStorage.getItem('isGrid');
+      return storedIsGrid ? JSON.parse(storedIsGrid) : true;
+    }
+    return true;
+  });
+
   const [isLoading, setIsLoading] = useState(true);
   const [modalConfig, setModalConfig] = useState({
     isOpen: false,
@@ -58,23 +65,31 @@ export default function ListQuestionnaire() {
   }, [currentUser]);
 
   useEffect(() => {
-    const fetchQuestionnaires = async () => {
-      try {
-        await getQuestionnaireDataList({
-          pagination: { pageSize: 300, sortAscending: true },
-          updateAnswers: true,
-        });
-      } catch (err) {
-        console.error('Error fetching data:', err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    localStorage.setItem('isGrid', JSON.stringify(isGrid));
+  }, [isGrid]);
 
-    fetchQuestionnaires();
+  const fetchQuestionnaires = useCallback(async () => {
+    try {
+      await getQuestionnaireDataList({
+        pagination: { pageSize: 300, sortAscending: true },
+        updateAnswers: true,
+      });
+    } catch (err) {
+      console.error('Error fetching data:', err);
+    } finally {
+      setIsLoading(false);
+    }
   }, [getQuestionnaireDataList]);
 
-  const handleViewToggle = useCallback((key: Key) => setIsGrid(key === 'grid'), []);
+  useEffect(() => {
+    fetchQuestionnaires();
+  }, [fetchQuestionnaires]);
+
+  const handleViewToggle = useCallback((key: Key) => {
+    const newIsGrid = key === 'grid';
+    setIsGrid(newIsGrid);
+    localStorage.setItem('isGrid', JSON.stringify(newIsGrid));
+  }, []);
 
   const convertDate = useCallback((date: Timestamp | undefined) => {
     if (!date) return '';
@@ -113,21 +128,22 @@ export default function ListQuestionnaire() {
     URL.revokeObjectURL(url);
   }, []);
 
-  const openModal = useCallback((config: any) => {
-    setModalConfig({ ...config, isOpen: true, height: config.height || 'md:h-5/6 lg:h-5/6' });
-  }, []);
-
-  const closeModal = useCallback(() => {
-    setModalConfig((prev) => ({ ...prev, isOpen: false }));
-  }, []);
+  const modalActions = useMemo(() => ({
+    openModal: (config: any) => {
+      setModalConfig({ ...config, isOpen: true, height: config.height || 'md:h-5/6 lg:h-5/6' });
+    },
+    closeModal: () => {
+      setModalConfig((prev) => ({ ...prev, isOpen: false }));
+    },
+  }), []);
 
   const handleView = useCallback((questionnaire: Questionnaire) => {
-    openModal({
+    modalActions.openModal({
       title: `Preview JSON: ${questionnaire.title}`,
       content: <JsonView data={questionnaire} shouldExpandNode={allExpanded} style={defaultStyles} />,
-      footer: <NButton color="primary" variant="solid" onPress={closeModal}>Close</NButton>,
+      footer: <NButton color="primary" variant="solid" onPress={modalActions.closeModal}>Close</NButton>,
     });
-  }, [openModal]);
+  }, [modalActions]);
 
   const handleEdit = useCallback((questionnaire: Questionnaire) => {
     updateQuestionnaire(questionnaire);
@@ -135,13 +151,13 @@ export default function ListQuestionnaire() {
   }, [updateQuestionnaire, router]);
 
   const handleDelete = useCallback((id: string) => {
-    openModal({
+    modalActions.openModal({
       title: 'Delete this form?',
       height: 'md:h-2/8 lg:h-2/8',
       content: <p>Are you sure you want to delete this form? This action cannot be undone.</p>,
       footer: (
         <>
-          <NButton color="primary" variant='bordered' onPress={closeModal} aria-label='Cancel' tabIndex={0} size='lg'>
+          <NButton color="primary" variant='bordered' onPress={modalActions.closeModal} aria-label='Cancel' tabIndex={0} size='lg'>
             Cancel
           </NButton>
           <NButton
@@ -150,13 +166,11 @@ export default function ListQuestionnaire() {
             tabIndex={0}
             size='lg'
             onPress={() => {
-              closeModal();
+              modalActions.closeModal();
               deleteQuestionnaire(id);
               if (data?.data?.questionnaires) {
-                const index = data.data.questionnaires.findIndex((q: Questionnaire) => q.id === id);
-                if (index !== -1) {
-                  data.data.questionnaires.splice(index, 1);
-                }
+                const updatedQuestionnaires = data.data.questionnaires.filter((q: Questionnaire) => q.id !== id);
+                
               }
             }}
           >
@@ -165,87 +179,89 @@ export default function ListQuestionnaire() {
         </>
       ),
     });
-  }, [openModal, deleteQuestionnaire]);
+  }, [modalActions, deleteQuestionnaire, data]);
+
+  const renderHeader = useMemo(() => (
+    <div className="flex flex-row justify-between items-center bg-white dark:bg-neutral-800 p-4 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700">
+      <div className="flex items-center  justify-center space-x-4 align-center ">
+        <Image src="/images/dynamic_form.png" alt="Dynamic Form" width={48} height={48} priority />
+        <div className="flex flex-col space-y-1">
+          <h1 className="text-base font-semibold">Forms Builder</h1>
+          <Breadcrumbs className="mb-4" separator="/" >
+            <BreadcrumbItem href="/form-builder" >Dashboard</BreadcrumbItem>
+            <BreadcrumbItem>Forms Builder</BreadcrumbItem>
+          </Breadcrumbs>
+        </div>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Link href="/form-builder">
+          <NButton
+            className="mr-4"
+            color="primary"
+            variant="bordered"
+          >
+            <ArrowBackIcon className="w-4 h-4 inline" />
+            Back
+          </NButton>
+        </Link>
+        <Tooltip content="Start New Form Builder" placement="top"
+          classNames={{
+            base: "rounded-md",
+            content: "bg-gray-900 text-white text-sm max-w-xs break-words"
+          }}
+        >
+          <NButton color="primary"
+            onClick={() => {
+              router.push('/edit-questionnaire/new-questionnaire');
+            }}
+          >Create New Form <Image src="/images/dynamic_form_transparent.png" alt="Upload" width={20} height={20} priority /></NButton>
+        </Tooltip>
+        <Tooltip content="Upload Form" placement="top"
+          classNames={{
+            base: "rounded-md",
+            content: "bg-gray-900 text-white text-sm max-w-xs break-words"
+          }}
+        >
+          <Button
+            color="primary"
+            component="label"
+            endIcon={<Image src="/images/file_upload_transparent.png" alt="Upload" width={20} height={20} priority />}
+            variant="contained"
+            size="small"
+            aria-label="Upload Form"
+            style={{
+              width: '175px',
+              borderRadius: '12px',
+              backgroundColor: 'hsl(var(--nextui-primary) / var(--nextui-primary-opacity, var(--tw-bg-opacity)))'
+            }}
+            className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent data-[pressed=true]:scale-[0.97] outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-4 min-w-20 h-10 text-small gap-2 rounded-medium [&>svg]:max-w-[theme(spacing.8)] transition-transform-colors-opacity motion-reduce:transition-none bg-primary text-primary-foreground data-[hover=true]:opacity-hover p-0 h-[40px]"
+          >
+            Upload Form
+            <input
+              hidden
+              type="file"
+              onChange={handleFileUpload}
+              data-testid="upload-form"
+            />
+          </Button>
+        </Tooltip>
+        <Tabs
+          aria-label="View options"
+          color="primary"
+          variant='solid'
+          onSelectionChange={handleViewToggle}
+          selectedKey={isGrid ? 'grid' : 'list'}
+        >
+          <Tab key="list" title="List View" />
+          <Tab key="grid" title="Grid View" />
+        </Tabs>
+      </div>
+    </div>
+  ), [router, handleFileUpload, handleViewToggle, isGrid]);
 
   const renderContent = useMemo(() => (
     <div className="p-4 md:p-8 lg:p-8">
-      {/* Header and controls */}
-      <div className="flex flex-row justify-between items-center bg-white dark:bg-neutral-800 p-4 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700">
-        <div className="flex items-center  justify-center space-x-4 align-center ">
-          <Image src="/images/dynamic_form.png" alt="Dynamic Form" width={48} height={48} />
-          <div className="flex flex-col space-y-1">
-            <h1 className="text-base font-semibold">Forms Builder</h1>
-            <Breadcrumbs className="mb-4" separator="/" >
-              <BreadcrumbItem href="/form-builder" >Dashboard</BreadcrumbItem>
-              <BreadcrumbItem>Forms Builder</BreadcrumbItem>
-            </Breadcrumbs>
-          </div>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Link href="/form-builder">
-            <NButton
-              className="mr-4"
-              color="primary"
-              variant="bordered"
-            >
-              <ArrowBackIcon className="w-4 h-4 inline" />
-              Back
-            </NButton>
-          </Link>
-          <Tooltip content="Start New Form Builder" placement="top"
-            classNames={{
-              base: "rounded-md",
-              content: "bg-gray-900 text-white text-sm max-w-xs break-words"
-            }}
-          >
-            <NButton color="primary"
-              onClick={() => {
-                router.push('/edit-questionnaire/new-questionnaire');
-              }}
-            >Create New Form <Image src="/images/dynamic_form_transparent.png" alt="Upload" width={20} height={20} /></NButton>
-          </Tooltip>
-          <Tooltip content="Upload Form" placement="top"
-            classNames={{
-              base: "rounded-md",
-              content: "bg-gray-900 text-white text-sm max-w-xs break-words"
-            }}
-          >
-            <Button
-              color="primary"
-              component="label"
-              endIcon={<Image src="/images/file_upload_transparent.png" alt="Upload" width={20} height={20} />}
-              variant="contained"
-              size="small"
-              aria-label="Upload Form"
-              style={{
-                width: '175px',
-                borderRadius: '12px',
-                backgroundColor: 'hsl(var(--nextui-primary) / var(--nextui-primary-opacity, var(--tw-bg-opacity)))'
-              }}
-              className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent data-[pressed=true]:scale-[0.97] outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-4 min-w-20 h-10 text-small gap-2 rounded-medium [&>svg]:max-w-[theme(spacing.8)] transition-transform-colors-opacity motion-reduce:transition-none bg-primary text-primary-foreground data-[hover=true]:opacity-hover p-0 h-[40px]"
-            >
-              Upload Form
-              <input
-                hidden
-                type="file"
-                onChange={handleFileUpload}
-                data-testid="upload-form"
-              />
-            </Button>
-          </Tooltip>
-          <Tabs
-            aria-label="View options"
-            color="primary"
-            variant='solid'
-            onSelectionChange={handleViewToggle}
-          >
-            <Tab key="list" title="List View" />
-            <Tab key="grid" title="Grid View" />
-          </Tabs>
-        </div>
-      </div>
-
-      {/* Grid or List View */}
+      {renderHeader}
       {isGrid ? (
         <GridView
           questionnaires={data?.data?.questionnaires || []}
@@ -266,12 +282,10 @@ export default function ListQuestionnaire() {
           pagination={data?.data?.pagination}
         />
       )}
-
-      {/* Modal */}
       <Modal 
         isOpen={modalConfig.isOpen} 
         placement="auto"
-        onOpenChange={closeModal}
+        onOpenChange={modalActions.closeModal}
         hideCloseButton={true}
         radius="none"
         className={`w-full md:w-11/12 lg:w-4/5 ${modalConfig.height} overflow-auto`}
@@ -286,10 +300,9 @@ export default function ListQuestionnaire() {
           )}
         </ModalContent>
       </Modal>
-
       <ToastContainer />
     </div>
-  ), [isGrid, data, handleView, handleDownload, handleEdit, handleDelete, convertDate, modalConfig, closeModal]);
+  ), [isGrid, data, handleView, handleDownload, handleEdit, handleDelete, convertDate, modalConfig, modalActions]);
 
   if (isLoading) {
     return (

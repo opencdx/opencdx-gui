@@ -68,27 +68,8 @@ export default function RootLayout() {
              
               <Stack.Screen name="auth/change-password" options={{
                 headerShown: false,
-                headerStyle: { backgroundColor: 'white', }, // Added borderBottomWidth: 0
-                headerTitleStyle: { color: 'black' },
-                headerTintColor: 'black',
-                headerShadowVisible: false,
-                headerTransparent: true,
                 title: 'Change Password',
-                headerTitle: () => null,
-                // headerLeft: () => (
-                //   <View className='flex flex-row items-center gap-2 pl-4' role='button'>
-                //     <Pressable
-                //       className='flex flex-row items-center gap-2 text-blue-600'
-                //       role='button'
-                //       onPress={() =>
-                //         navigation.navigate('auth/forgot-password' as never)
-
-                //       }>
-                //       <MaterialCommunityIcons name="arrow-left" size={16} color='blue' />
-                //       <Text className='text-blue-600'>Back</Text>
-                //     </Pressable>
-                //   </View>
-                // ),
+                contentStyle: { backgroundColor: 'white' },
               }} />
               <Stack.Screen name="auth/password-changed" options={{
                 headerShown: false,
@@ -101,6 +82,11 @@ export default function RootLayout() {
                 contentStyle: { backgroundColor: 'white' },
               }} />
               <Stack.Screen name="questionnaire/list" options={{
+                headerShown: false,
+                title: 'Questionnaire',
+                contentStyle: { backgroundColor: 'white' },
+              }} />
+              <Stack.Screen name="questionnaire/take-questionnaire" options={{
                 headerShown: false,
                 title: 'Questionnaire',
                 contentStyle: { backgroundColor: 'white' },

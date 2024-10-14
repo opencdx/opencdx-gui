@@ -79,7 +79,7 @@ export default function ForgotPassword() {
               variant="bordered"
               id="email"
               label={t('email_usename_placeholder')}
-              type="userName"
+              type="email"
               isRequired
               onValueChange={setUsername}
             />

@@ -902,5 +902,6 @@
   
   "title": "COVID 19",
   "status": "draft",
-  "purpose": "To capture user symptoms "
+  "description": "A form for reporting COVID-19 cases, including patient information, symptoms, exposure history, and test results",
+  "purpose": "To capture user symptoms and other information related to COVID-19"
 }

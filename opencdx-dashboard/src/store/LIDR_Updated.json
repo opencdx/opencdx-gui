@@ -2,7 +2,7 @@
     "resourceType": "Questionnaire",
     "title": "Reporting At-Home Test Kit Results LiDR",
     "status": "active",
-    "description": "",
+    "description": "A form for reporting COVID-19 cases, including patient information, symptoms, exposure history, and test results",
     "item": [
         {
           "type": "choice",
