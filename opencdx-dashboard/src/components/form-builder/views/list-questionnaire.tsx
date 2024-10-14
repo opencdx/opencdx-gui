@@ -11,13 +11,11 @@ import {
   ModalFooter,
   ModalHeader,
   useDisclosure,
-  Button as NButton,
+  Button ,
   Tooltip
 } from 'ui-library';
 import { Link, Tab, Tabs } from 'ui-library';
 import { allExpanded, defaultStyles, JsonView } from 'react-json-view-lite';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import { Button } from '@mui/material';
 import 'react-json-view-lite/dist/index.css';
 import Image from 'next/image';
 import { Key } from 'react';
@@ -141,7 +139,7 @@ export default function ListQuestionnaire() {
     modalActions.openModal({
       title: `Preview JSON: ${questionnaire.title}`,
       content: <JsonView data={questionnaire} shouldExpandNode={allExpanded} style={defaultStyles} />,
-      footer: <NButton color="primary" variant="solid" onPress={modalActions.closeModal}>Close</NButton>,
+      footer: <Button color="primary" variant="solid" onPress={modalActions.closeModal}>Close</Button>,
     });
   }, [modalActions]);
 
@@ -157,10 +155,10 @@ export default function ListQuestionnaire() {
       content: <p>Are you sure you want to delete this form? This action cannot be undone.</p>,
       footer: (
         <>
-          <NButton color="primary" variant='bordered' onPress={modalActions.closeModal} aria-label='Cancel' tabIndex={0} size='lg'>
+          <Button color="primary" variant='bordered' onPress={modalActions.closeModal} aria-label='Cancel' tabIndex={0} size='lg'>
             Cancel
-          </NButton>
-          <NButton
+          </Button>
+          <Button
             color="danger"
             aria-label='Delete'
             tabIndex={0}
@@ -175,7 +173,7 @@ export default function ListQuestionnaire() {
             }}
           >
             Delete
-          </NButton>
+          </Button>
         </>
       ),
     });
@@ -195,26 +193,26 @@ export default function ListQuestionnaire() {
       </div>
       <div className="flex items-center space-x-2">
         <Link href="/form-builder">
-          <NButton
+          <Button
             className="mr-4"
             color="primary"
             variant="bordered"
           >
-            <ArrowBackIcon className="w-4 h-4 inline" />
+            <Image src="/images/arrow-back.png" alt="" width={20} height={20} priority />
             Back
-          </NButton>
+          </Button>
         </Link>
-        <Tooltip content="Start New Form Builder" placement="top"
+        <Tooltip content="Start a new Form Builder" placement="top"
           classNames={{
             base: "rounded-md",
             content: "bg-gray-900 text-white text-sm max-w-xs break-words"
           }}
         >
-          <NButton color="primary"
+          <Button color="primary"
             onClick={() => {
               router.push('/edit-questionnaire/new-questionnaire');
             }}
-          >Create New Form <Image src="/images/dynamic_form_transparent.png" alt="Upload" width={20} height={20} priority /></NButton>
+          >Create New Form <Image src="/images/dynamic_form_transparent.png" alt="Upload" width={20} height={20} priority /></Button>
         </Tooltip>
         <Tooltip content="Upload Form" placement="top"
           classNames={{
@@ -222,31 +220,22 @@ export default function ListQuestionnaire() {
             content: "bg-gray-900 text-white text-sm max-w-xs break-words"
           }}
         >
-          <Button
-            color="primary"
-            component="label"
-            endIcon={<Image src="/images/file_upload_transparent.png" alt="Upload" width={20} height={20} priority />}
-            variant="contained"
-            size="small"
-            aria-label="Upload Form"
-            style={{
-              width: '175px',
-              borderRadius: '12px',
-              backgroundColor: 'hsl(var(--nextui-primary) / var(--nextui-primary-opacity, var(--tw-bg-opacity)))'
-            }}
-            className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent data-[pressed=true]:scale-[0.97] outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-4 min-w-20 h-10 text-small gap-2 rounded-medium [&>svg]:max-w-[theme(spacing.8)] transition-transform-colors-opacity motion-reduce:transition-none bg-primary text-primary-foreground data-[hover=true]:opacity-hover p-0 h-[40px]"
-          >
-            Upload Form
+          <label             className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent data-[pressed=true]:scale-[0.97] outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-4 min-w-20 h-10 text-small gap-2 rounded-medium [&>svg]:max-w-[theme(spacing.8)] transition-transform-colors-opacity motion-reduce:transition-none bg-primary text-primary-foreground data-[hover=true]:opacity-hover p-0 h-[40px]"
+          >  
+            
             <input
               hidden
               type="file"
               onChange={handleFileUpload}
               data-testid="upload-form"
             />
-          </Button>
+            Upload Form
+            <Image src="/images/file_upload_transparent.png" alt="Upload" width={20} height={20} priority />
+
+          </label>
+         
         </Tooltip>
         <Tabs
-          aria-label="View options"
           color="primary"
           variant='solid'
           onSelectionChange={handleViewToggle}
@@ -279,7 +268,14 @@ export default function ListQuestionnaire() {
           onEdit={handleEdit}
           onDelete={handleDelete}
           convertDate={convertDate}
-          pagination={data?.data?.pagination}
+          pagination={{
+            totalPages: data?.data?.pagination?.totalPages ?? 0,
+            totalRecords: data?.data?.pagination?.totalRecords ?? 0,
+            pageSize: data?.data?.pagination?.pageSize ?? 0
+          }}
+          onPageChange={(page) => {
+            console.log('Page changed to:', page);
+          }}
         />
       )}
       <Modal 

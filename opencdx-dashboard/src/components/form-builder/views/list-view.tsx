@@ -2,7 +2,9 @@ import React, { useMemo } from 'react';
 import TitleIcon from '@mui/icons-material/Title';
 import Image from 'next/image';
 import { Questionnaire } from '@/api/questionnaire/model/questionnaire';
-import { Pagination, Button, Tooltip } from "ui-library";
+import {  Button, Tooltip } from "ui-library";
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 interface ListViewProps {
   questionnaires: Questionnaire[];
@@ -11,7 +13,13 @@ interface ListViewProps {
   onEdit: (questionnaire: Questionnaire) => void;
   onDelete: (id: string) => void;
   convertDate: (date: any) => string;
-  pagination: any;
+  pagination: {
+    totalPages: number;
+    totalRecords: number;
+    pageSize: number;
+  };
+
+  onPageChange: (page: number) => void;
 }
 
 const ListView: React.FC<ListViewProps> = ({
@@ -22,6 +30,7 @@ const ListView: React.FC<ListViewProps> = ({
   onDelete,
   convertDate,
   pagination,
+  onPageChange,
 }) => {
   const tableHeaders = useMemo(() => [
     { icon: <TitleIcon className="w-6 h-6 mr-2 text-black-500 flex-shrink-0" />, label: 'Form Title' },
@@ -37,6 +46,21 @@ const ListView: React.FC<ListViewProps> = ({
       case 'retired': return 'bg-gray-500';
       default: return 'bg-red-500';
     }
+  };
+
+  const paginationButtonStyle = {
+    width: '24px',
+    height: '24px',
+    padding: '2px 0',
+    borderRadius: '2px',
+    fontSize: '14px',
+    minWidth: '24px',
+    border: '1px solid var(--colors-base-primary, #006FEE)',
+  };
+
+  const activeButtonStyle = {
+    ...paginationButtonStyle,
+    background: 'var(--colors-base-primary-50, #E6F1FE)',
   };
 
   return (
@@ -97,9 +121,28 @@ const ListView: React.FC<ListViewProps> = ({
           </tbody>
         </table>
       </div>
-      <div className="flex justify-between items-center p-4 bg-white dark:bg-gray-800 dark:border-gray-700">
-        <>Displaying {pagination?.totalPages} of {pagination?.totalRecords} rows</>
-        <Pagination showControls total={pagination?.totalPages} initialPage={pagination?.pageNumber} />
+      <div className="flex justify-between items-center p-8 bg-white dark:bg-gray-800 dark:border-gray-700">
+        <div>Displaying {pagination?.totalPages} of {pagination?.totalRecords} rows</div>
+        <div className="flex">
+          {[...Array(pagination?.totalPages || 0)].map((_, index) => (
+            <Button
+              key={index}
+              variant="bordered"
+              color="primary"
+              onPress={() => onPageChange(index + 1)}
+              className={`
+                w-6 h-6 min-w-[24px] p-0.5 text-sm
+                border border-[#006FEE] 
+                ${pagination?.currentPage === index + 1 ? 'bg-[#E6F1FE]' : 'bg-white'}
+                ${index === 0 ? 'rounded-l-sm' : ''}
+                ${index === pagination?.totalPages - 1 ? 'rounded-r-sm' : ''}
+                ${index !== 0 ? '-ml-px' : ''}
+              `}
+            >
+              {index + 1}
+            </Button>
+          ))}
+        </div>
       </div>
     </>
   );

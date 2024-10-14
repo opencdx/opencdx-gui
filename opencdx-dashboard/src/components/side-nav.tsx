@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { usePathname } from 'next/navigation';
 import { ChevronRight, IceCream } from "lucide-react";
 
 interface Links {
@@ -116,19 +117,20 @@ export const SidebarLink = ({
 
 }) => {
   const { open, setOpen, animate } = useSidebar();
+  const pathname = usePathname();
+  const selected = pathname === link.href;
   return (
     <Link
       href={link.href}
       className={cn(
-        "flex items-center justify-start gap-2  group/sidebar py-2 rounded-lg",
-        'py-2 ',
+        "flex items-center justify-start   group/sidebar rounded-lg",
         className
       )}
       {...props}
     >
 
       <div className={cn(
-        link.href === '/form-builder' ? 'bg-gradient-to-r from-blue-800 to-blue-500  px-4 py-2 hover:from-blue-800 hover:to-blue-500 rounded-lg ' : 'py-2 ',
+       selected ? 'bg-gradient-to-r from-blue-800 to-blue-500  px-12 py-4 hover:from-blue-800 hover:to-blue-500 rounded-lg ' : 'py-2 ',
         'flex items-center justify-center pl-2',
       )}>
         <div className="flex items-center justify-center pl-2">
