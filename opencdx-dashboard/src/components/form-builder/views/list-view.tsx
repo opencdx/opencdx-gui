@@ -100,16 +100,16 @@ const ListView: React.FC<ListViewProps> = ({
                 <td className="px-6 py-4">
                   <div className="flex space-x-2">
                     {[
-                      { action: onView, icon: 'remove_red_eye', alt: 'Preview JSON' },
-                      { action: onDownload, icon: 'file_download', alt: 'Download JSON' },
-                      { action: onEdit, icon: 'edit_note', alt: 'Edit Form' },
-                      { action: () => onDelete(questionnaire.id!), icon: 'delete_outline', alt: 'Delete Form' },
-                    ].map(({ action, icon, alt }, index) => (
+                      { action: onView, icon: 'remove_red_eye', alt: 'Preview JSON', dataTestId: 'preview-json'   },
+                      { action: onDownload, icon: 'file_download', alt: 'Download JSON', dataTestId: 'download-json' },
+                      { action: onEdit, icon: 'edit_note', alt: 'Edit Form', dataTestId: 'edit-form' },
+                      { action: () => onDelete(questionnaire.id!), icon: 'delete_outline', alt: 'Delete Form', dataTestId: 'delete-form' },
+                    ].map(({ action, icon, alt ,dataTestId}, index) => (
                       <Tooltip content={alt} placement="top" classNames={{
                         base: "rounded-md",
                         content: "bg-gray-900 text-white text-sm max-w-xs break-words"
                       }}>
-                        <Button key={index} isIconOnly variant="bordered" color='primary' onPress={() => action(questionnaire)}>
+                        <Button key={index} isIconOnly variant="bordered" color='primary' onPress={() => action(questionnaire)} data-testid={dataTestId}>
                           <Image src={`/images/${icon}.png`} alt={alt} width={24} height={24} className='text-black-500 flex-shrink-0' />
                       </Button>
                       </Tooltip>
@@ -133,7 +133,7 @@ const ListView: React.FC<ListViewProps> = ({
               className={`
                 w-6 h-6 min-w-[24px] p-0.5 text-sm
                 border border-[#006FEE] 
-                ${pagination?.currentPage === index + 1 ? 'bg-[#E6F1FE]' : 'bg-white'}
+                ${1 === index + 1 ? 'bg-[#E6F1FE]' : 'bg-white'}
                 ${index === 0 ? 'rounded-l-sm' : ''}
                 ${index === pagination?.totalPages - 1 ? 'rounded-r-sm' : ''}
                 ${index !== 0 ? '-ml-px' : ''}
