@@ -178,13 +178,13 @@ const Signup = () => {
                     )}
                 </View>
 
-                <View className={`w-full ${isMobile ? 'flex-row flex-wrap' : 'grid grid-cols-3'}`}>
+                <View className={`flex flex-row flex-wrap gap-2`}>
                     {passwordValidations.map((validation, index) => (
                         <ValidationRow
                             key={index}
                             isValid={validation.isValid}
                             label={validation.label}
-                            className={`${isMobile ? 'w-1/2' : ''}`}
+                            className={`flex-[0_0_calc(33.333%-8px)]`}   
                         />
                     ))}
                 </View>
