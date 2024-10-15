@@ -15,7 +15,7 @@ const ValidationRow: React.FC<ValidationRowProps> = ({ isValid, label, className
     <View className="w-4 h-4 mr-2 justify-center items-center">
       <Image
         source={isValid ? require('../../assets/tick.png') : require('../../assets/cross.png')}
-        className="w-4 h-4"
+        className="w-6 h-6"
         alt={isValid ? 'Valid' : 'Invalid'}
       />
     </View>
