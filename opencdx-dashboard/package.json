@@ -12,8 +12,7 @@
     "generate:api": "npm run generate-api:iam && npm run generate-api:questionnaire",
     "generate-api:classification": "openapi-generator-cli generate -i ./src/api/json/classification.json -g typescript-axios -o ./src/api/classification/ --skip-validate-spec --additional-properties=useSingleRequestParameter=true,withoutPrefixEnums=true,enumNameSuffix=,withSeparateModelsAndApi=true,apiPackage=server,modelPackage=model --openapi-normalizer REFACTOR_ALLOF_WITH_PROPERTIES_ONLY=true",
     "generate-api:iam": "openapi-generator-cli generate -i ./src/api/json/iam.json -g typescript-axios -o ./src/api/iam/ --skip-validate-spec --additional-properties=useSingleRequestParameter=true,withoutPrefixEnums=true,enumNameSuffix=,withSeparateModelsAndApi=true,apiPackage=server,modelPackage=model --openapi-normalizer REFACTOR_ALLOF_WITH_PROPERTIES_ONLY=true",
-    "generate-api:questionnaire": "openapi-generator-cli generate -i ./src/api/json/questionnaire.json -g typescript-axios -o ./src/api/questionnaire/ --skip-validate-spec --additional-properties=useSingleRequestParameter=true,withoutPrefixEnums=true,enumNameSuffix=,withSeparateModelsAndApi=true,apiPackage=server,modelPackage=model --openapi-normalizer REFACTOR_ALLOF_WITH_PROPERTIES_ONLY=true",
-    "lighthouse": "node --experimental-modules lighthouse.mjs"
+    "generate-api:questionnaire": "openapi-generator-cli generate -i ./src/api/json/questionnaire.json -g typescript-axios -o ./src/api/questionnaire/ --skip-validate-spec --additional-properties=useSingleRequestParameter=true,withoutPrefixEnums=true,enumNameSuffix=,withSeparateModelsAndApi=true,apiPackage=server,modelPackage=model --openapi-normalizer REFACTOR_ALLOF_WITH_PROPERTIES_ONLY=true"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -67,7 +66,6 @@
     "framer-motion": "~11.1.1",
     "immer": "^10.1.1",
     "intl-messageformat": "^10.5.0",
-    "lighthouse": "^12.1.0",
     "lucide-react": "^0.395.0",
     "next": "14.2.14",
     "next-intl": "^3.17.2",
@@ -91,6 +89,7 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.5.0",
+    "@playwright/test": "^1.48.0",
     "@storybook/addon-essentials": "^8.1.10",
     "@storybook/addon-interactions": "^8.1.10",
     "@storybook/addon-links": "^8.1.10",
