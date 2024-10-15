@@ -104,7 +104,7 @@ const ForgotPassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
     const renderMobileContent = () => (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View aria-label="main-layout forgot-password" className="flex items-center justify-between min-h-screen bg-white w-full mx-auto p-4">
-                <View className={'w-full flex flex-col justify-between items-center gap-6 px-4'}>
+                <View className={'w-full flex flex-col justify-between items-center gap-6 px-4 mt-8'}>
                     {renderBackButton()}
                     <View className='w-full flex flex-col justify-between mt-12'>
                         {renderContent()}
