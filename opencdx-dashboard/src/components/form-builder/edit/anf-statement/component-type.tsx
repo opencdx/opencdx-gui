@@ -43,7 +43,6 @@ const ComponentTypeWrapper = ({
     { value: AnfStatementType.AnfStatementUserQuestion, label: "User Question", description: "User Provided Data" },
     { value: AnfStatementType.AnfStatementTypeNotApplicable, label: "Not Applicable", description: "Component marked as non ANF type." },
   ];
-
   return (
     <div className='p-8'>
       <Controller
@@ -54,7 +53,7 @@ const ComponentTypeWrapper = ({
             {...field}
             label="Select Component Type"
             orientation="horizontal"
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               field.onChange(e.target.value);
               const formData = getValues();
               localStorage.setItem('questionnaire-store', JSON.stringify(formData));

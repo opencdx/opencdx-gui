@@ -1,26 +1,37 @@
+'use client';
+
 import '@/styles/globals.css';
+import React, { useState } from 'react';
+import { Sidebar, SidebarBody, SidebarLink } from '@/components/side-nav';
+import { Navbar } from '@/components/navbar';
+import { links } from '@/config/sidebar-links';
 
-import { Providers } from '../providers';
-import SideNav from '@/components/side-nav';
-
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const [open, setOpen] = useState(true);
   return (
-    <Providers themeProps={{ attribute: 'class', defaultTheme: 'light' }}>
-      <div className="flex">
-        <SideNav />
-        <div className="w-full overflow-x-auto">
-          <div className="sm:h-[calc(99vh-60px)] overflow-auto ">
-            <div className="w-full flex justify-center mx-auto   overflow-auto h-[calc(100vh - 120px)] overflow-y-auto relative">
-              <div className="w-full md:max-w-6xl">{children}</div>
+    <div className="flex h-screen w-screen overflow-hidden bg-neutral-900 transition-all duration-300 ease-in-out">
+      <Sidebar open={open} setOpen={setOpen}>
+            <SidebarBody className="justify-between gap-10">
+              <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+                <div className=" flex flex-col gap-4">
+                  {links.map((link, idx) => (
+                    <SidebarLink 
+                      key={idx} 
+                      link={link} 
+                    />
+                  ))}
+                </div>
+              </div>
+            </SidebarBody>
+          </Sidebar>
+          <div className="flex flex-col flex-1">
+            <Navbar />
+            <div className="bg-white w-full h-screen overflow-x-auto">
+              <div className="h-auto  bg-[#F4F9FF] dark:bg-[#1a1a1a]">
+                    {children}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </Providers>
   );
 }

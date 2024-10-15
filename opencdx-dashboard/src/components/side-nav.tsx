@@ -11,6 +11,7 @@ interface Links {
   label: string;
   href: string;
   icon: React.JSX.Element | React.ReactNode;
+  selectedIcon: React.JSX.Element | React.ReactNode;
   onClick?: () => void;
 }
 
@@ -101,6 +102,7 @@ export const SidebarBody = ({
                   alt="OpenCDx"
                   width={120}
                   height={40}
+                  priority
                 />
               </Link>
             ) : (
@@ -111,6 +113,7 @@ export const SidebarBody = ({
                   width={40}
                   height={40}
                   className="rounded-lg"
+                  priority
                 />
               </Link>
             )}
@@ -125,8 +128,9 @@ export const SidebarBody = ({
               <Image
                 src={open ? "/images/collapse_icon.png" : "/images/expand_icon.png"}
                 alt={open ? "Collapse" : "Expand"}
-                width={20}
-                height={20}
+                width={26}
+                height={26}
+                priority
               />
             </button>
           </div>
@@ -167,7 +171,7 @@ export const SidebarLink = ({
         'flex items-start justify-start py-2',
       )}>
         <div className="flex items-start justify-start">
-          {link.icon}
+          {selected ? link.selectedIcon : link.icon}
           {open && (
             <div className="text-white dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block pl-2">
               {link.label}

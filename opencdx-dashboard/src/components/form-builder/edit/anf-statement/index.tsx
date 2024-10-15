@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { QuestionnaireItem, AnfStatementConnector, AnfStatementType, AnfOperatorType } from '@/api/questionnaire/model';
 import { Button, Divider, Accordion, AccordionItem, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from 'ui-library';
 import { Plus, Trash } from 'lucide-react';
@@ -22,6 +22,12 @@ const QuestionnaireItemWrapper: React.FC<{
   const handleComponentTypeChange = useCallback((value: AnfStatementType) => {
     setCurrentComponentType(value);
   }, []);
+  useEffect(() => {
+    const currentItems = getValues(`item[${questionnaireItemId}].anfStatementConnector`) || [];
+    if (currentItems.length > 0 && currentItems[0]) {
+      setCurrentComponentType(currentItems[0].anfStatementType);
+    }
+  }, [getValues, questionnaireItemId]);
   React.useEffect(() => {
     if (item && (!item.anfStatementConnector || item.anfStatementConnector.length === 0)) {
       const newConnector: AnfStatementConnector = {
@@ -172,7 +178,7 @@ const QuestionnaireItemWrapper: React.FC<{
                   color='danger'
                   variant='flat'
                   endContent={<Trash />}
-                  onClick={() => handleDeleteButtonClick(id)}
+                  onClick={() => handleDeleteButtonClick()}
                 >
                   Delete ANF
                 </Button>
