@@ -1,7 +1,7 @@
 import { Configuration as IAMConfig, OpenCdxiamUserRestControllerApi } from "./iam";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const REACT_APP_API_HOST = 'https://ec2-3-13-148-183.us-east-2.compute.amazonaws.com:';
-const REACT_APP_API_PORT = '8080';
+const REACT_APP_API_HOST = 'https://api.dev-1.opencdx.io';
+const REACT_APP_API_PORT = '';
 
 const iam = new IAMConfig({
     basePath: (REACT_APP_API_HOST ?? '') + REACT_APP_API_PORT + "/iam"
