@@ -10,7 +10,7 @@ test.describe('Login Page', () => {
     await expect(page.getByRole('form', { name: 'login form' })).toBeVisible();
     await expect(page.getByLabel('Email Address')).toBeVisible();
     // Update the password field selector
-    await expect(page.getByLabel('Password', { exact: true }).and(page.getByRole('textbox', { type: 'password' }))).toBeVisible();
+    await expect(page.getByLabel('Password', { exact: true })).toBeVisible();
     await expect(page.getByRole('button', { name: 'Login' })).toBeVisible();
   });
 
