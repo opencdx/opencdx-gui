@@ -8,6 +8,7 @@ import { Button } from '../../components/ui/button';
 import { Image } from '../../components/ui/image';
 import { useToast, Toast, ToastDescription } from '@gluestack-ui/themed';
 import Loader from '../../components/ui/loading';
+import { useShowToast } from '~/lib/toast';
 
 const useLoginForm = () => {
   const [username, setUsername] = useState('');
@@ -25,33 +26,17 @@ const Login = () => {
   const isMobile = width <= 768 || Platform.OS === 'ios' || Platform.OS === 'android';
   const navigation = useNavigation();
   const { username, setUsername, password, setPassword, showPassword, isDisabled, toggleShowPassword } = useLoginForm();
-  const toast = useToast();
-
-  const showToaster = (message: string, type: 'success' | 'error') => {
-    toast.show({
-      placement: "top right",
-      duration: 2000,
-      render: ({ id }) => {
-        const toastId = "toast-" + id;
-        return (
-          <Toast nativeID={toastId} className={type === 'error' ? 'bg-red-500' : 'bg-green-500'} action={type} variant='accent'>
-            <ToastDescription>{message}</ToastDescription>
-          </Toast>
-        );
-      },
-    });
-  };
+  const showToast = useShowToast();
 
   const handleLoginSuccess = useCallback((data: { token: string }) => {
     AsyncStorage.setItem('serviceToken', data.token);
     navigation.navigate('dashboard/index' as never);
-    showToaster('Login successful.', 'success');
-  }, [navigation]);
+    showToast({ message: 'Login successful.', type: 'success' });
+  }, [navigation, showToast]);
 
   const handleLoginError = useCallback((err: any) => {
-    // const errorMessage = err.response?.data?.cause?.localizedMessage || 'Login failed. Please try again.';
-    showToaster('Invalid credentials.', 'error');
-  }, []);
+    showToast({ message: 'Invalid credentials.', type: 'error' });
+  }, [showToast]);
 
   const { login, loading } = useLogin(handleLoginSuccess, handleLoginError);
 

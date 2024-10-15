@@ -8,9 +8,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ValidationRow from '../../components/ui/validate';
 import Loader from '../../components/ui/loading';
 import ModalComponent from '../../components/ui/modal';
-import { Toast, ToastDescription, useToast } from '@gluestack-ui/themed';
 import { useResetPassword } from '../../lib/iam-hooks';
 import { Platform } from 'react-native';
+import { useShowToast } from '~/lib/toast';
 
 const useChangePasswordForm = () => {
     const [formData, setFormData] = useState({
@@ -69,7 +69,7 @@ const ChangePassword = () => {
     const { width } = useWindowDimensions();
     const isMobile = width <= 768 || Platform.OS === 'ios' || Platform.OS === 'android';
     const navigation = useNavigation();
-    const toast = useToast();
+    const showToast = useShowToast();
     const [showAlert, setShowAlert] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const {
@@ -105,14 +105,7 @@ const ChangePassword = () => {
     }, []);
 
     const showToaster = (message: string, type: 'success' | 'error') => {
-        toast.show({
-            placement: "top right",
-            render: ({ id }) => (
-                <Toast nativeID={`toast-${id}`} action={type} variant='accent'>
-                    <ToastDescription>{message}</ToastDescription>
-                </Toast>
-            ),
-        });
+        showToast({ message, type });
     };
 
     const onSuccess = useCallback(() => {
@@ -120,12 +113,12 @@ const ChangePassword = () => {
         setTimeout(() => {
             navigation.navigate('auth/password-changed' as never);
         }, 1000);
-    }, [navigation]);
+    }, [navigation, showToaster]);
 
     const onError = useCallback((error: any) => {
         // const errorMessage = error.response?.data?.cause?.localizedMessage || 'An error occurred';
         showToaster('User does not exist.', 'error');
-    }, []);
+    }, [showToaster]);
 
     const { resetPassword, loading } = useResetPassword(onSuccess, onError);
 
