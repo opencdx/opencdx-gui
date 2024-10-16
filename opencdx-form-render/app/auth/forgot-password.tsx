@@ -1,11 +1,15 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
-import { View, Text, Pressable, ScrollView, useWindowDimensions, SafeAreaView } from 'react-native';
+import { View, Text, Pressable, ScrollView, useWindowDimensions, SafeAreaView, StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Input } from '../../components/ui/input';
 import { Button } from '../../components/ui/button';
 import { Image } from '../../components/ui/image';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
+
+// Conditionally assign padding based on the platform
+const paddingTop = Platform.OS === 'android' ? Math.ceil(StatusBar.currentHeight || 0) : 0;
+
 
 const useForgotPasswordForm = () => {
     const [email, setEmail] = useState('');
@@ -104,7 +108,7 @@ const ForgotPassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
     const renderMobileContent = () => (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View aria-label="main-layout forgot-password" className="flex items-center justify-between min-h-screen bg-white w-full mx-auto p-4">
-                <View className={'w-full flex flex-col justify-between items-center gap-6 px-4 mt-8'}>
+                <View className={'w-full flex flex-col justify-between items-center gap-6 px-4'}>
                     {renderBackButton()}
                     <View className='w-full flex flex-col justify-between mt-12'>
                         {renderContent()}
@@ -115,7 +119,7 @@ const ForgotPassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
     );
 
     return (
-        <SafeAreaView className="flex-1 bg-white">
+        <SafeAreaView style={{ paddingTop }} className={`flex-1 bg-white`}>
             {!isMobile ? renderWebContent() : renderMobileContent()}
         </SafeAreaView>
     );
