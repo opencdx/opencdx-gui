@@ -97,7 +97,7 @@ const Login = () => {
 
       <View className="w-full gap-4 items-center">
         <Button
-          onPress={isMobile ? () => navigation.navigate('dashboard/index' as never) : handleLogin}
+          onPress={handleLogin}
           disabled={isDisabled}
           loading={loading}
         >
