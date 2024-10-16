@@ -19,7 +19,7 @@ const ValidationRow: React.FC<ValidationRowProps> = ({ isValid, label, className
         alt={isValid ? 'Valid' : 'Invalid'}
       />
     </View>
-    <Text className=" text-xs leading-4 pl-1">{label}</Text>
+    <Text className="text-gray-500 text-xs leading-4 pl-1">{label}</Text>
   </View>
 );
 

@@ -1,11 +1,15 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
-import { View, Text, Pressable, ScrollView, useWindowDimensions, SafeAreaView } from 'react-native';
+import { View, Text, Pressable, ScrollView, useWindowDimensions, SafeAreaView, StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Input } from '../../components/ui/input';
 import { Button } from '../../components/ui/button';
 import { Image } from '../../components/ui/image';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
+
+// Conditionally assign padding based on the platform
+const paddingTop = Platform.OS === 'android' ? Math.ceil(StatusBar.currentHeight || 0) : 0;
+
 
 const useForgotPasswordForm = () => {
     const [email, setEmail] = useState('');
@@ -115,7 +119,7 @@ const ForgotPassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
     );
 
     return (
-        <SafeAreaView className="flex-1 bg-white">
+        <SafeAreaView style={{ paddingTop }} className={`flex-1 bg-white`}>
             {!isMobile ? renderWebContent() : renderMobileContent()}
         </SafeAreaView>
     );

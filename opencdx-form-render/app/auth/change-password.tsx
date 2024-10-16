@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
-import { View, Text, Pressable, ScrollView, useWindowDimensions, SafeAreaView } from 'react-native';
+import { View, Text, Pressable, ScrollView, useWindowDimensions, SafeAreaView, StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Input } from '../../components/ui/input';
 import { Button } from '../../components/ui/button';
@@ -11,6 +11,9 @@ import ModalComponent from '../../components/ui/modal';
 import { useResetPassword } from '../../lib/iam-hooks';
 import { Platform } from 'react-native';
 import { useShowToast } from '~/lib/toast';
+
+// Conditionally assign padding based on the platform
+const paddingTop = Platform.OS === 'android' ? Math.ceil(StatusBar.currentHeight || 0) : 0;
 
 const useChangePasswordForm = () => {
     const [formData, setFormData] = useState({
@@ -154,7 +157,7 @@ const ChangePassword = () => {
     );
 
     const renderBackButton = () => (
-        <Pressable onPress={() => navigation.navigate('auth/login' as never)} className="self-start mb-4">
+        <Pressable onPress={() => navigation.navigate('auth/forgot-password' as never)} className="self-start mb-4">
             <View className="flex-row items-center md:p-4">
                 <Image source={require('../../assets/back.png')} alt="Back" className="w-4 h-4" />
                 <Text className={`ml-2 text-base text-blue-500`}>Back</Text>
@@ -182,13 +185,13 @@ const ChangePassword = () => {
                 {passwordMismatchError && (
                     <Text className="text-xs text-red-500">{passwordMismatchError}</Text>
                 )}
-                <View className={`flex flex-row flex-wrap gap-2`}>
+                <View className={`w-full ${isMobile ? 'flex-row flex-wrap gap-y-3' : 'grid grid-cols-3 gap-y-3'}`}>
                     {passwordValidations.map((validation, index) => (
                         <ValidationRow
                             key={index}
                             isValid={validation.isValid}
                             label={validation.label}
-                            className={`flex-[0_0_calc(33.333%-8px)]`}   
+                            className={`${isMobile ? 'w-1/2' : ''}`}
                         />
                     ))}
                 </View>
@@ -231,7 +234,8 @@ const ChangePassword = () => {
     );
 
     return (
-        <SafeAreaView className="flex-1 bg-white">
+
+        <SafeAreaView style={{ paddingTop }} className={`flex-1 bg-white`}>
             {!isMobile ? renderWebContent() : renderMobileContent()}
             <Loader isVisible={isLoading || loading} />
             <ModalComponent
