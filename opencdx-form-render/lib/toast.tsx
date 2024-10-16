@@ -16,8 +16,8 @@ export function useShowToast() {
       render: ({ id }) => {
         const toastId = "toast-" + id;
         return (
-          <Toast nativeID={toastId} bg={type === 'error' ? '#F31260' : '#107E4F'}>
-            <ToastDescription color='$white'>
+          <Toast nativeID={toastId} bg={type === 'error' ? '#F31260' : '#A2E9C1'} width={278} height={52} alignContent='center' justifyContent='center' borderRadius={2} >
+            <ToastDescription color='#FEE7EF' fontSize={16} fontWeight='medium' padding={5}>
               {message}
             </ToastDescription>
           </Toast>

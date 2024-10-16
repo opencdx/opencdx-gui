@@ -35,7 +35,7 @@ const Login = () => {
   }, [navigation, showToast]);
 
   const handleLoginError = useCallback((err: any) => {
-    showToast({ message: 'Invalid credentials.', type: 'error' });
+    showToast({ message: 'Invalid Credentials.', type: 'error' });
   }, [showToast]);
 
   const { login, loading } = useLogin(handleLoginSuccess, handleLoginError);
