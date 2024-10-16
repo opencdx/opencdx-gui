@@ -22,10 +22,10 @@ const GridView: React.FC<GridViewProps> = ({
   convertDate,
 }) => {
   const actionButtons = useMemo(() => [
-    { text: "Preview JSON", icon: "/images/remove_red_eye.png", action: onView },
-    { text: "Download JSON", icon: "/images/file_download.png", action: onDownload },
-    { text: "Edit Form", icon: "/images/edit_note.png", action: onEdit },
-    { text: "Delete Form", icon: "/images/delete_outline.png", action: (q: Questionnaire) => onDelete(q.id!) },
+    { text: "Preview JSON", icon: "/images/remove_red_eye.png", action: onView, dataTestId: "preview-json" },
+    { text: "Download JSON", icon: "/images/file_download.png", action: onDownload, dataTestId: "download-json" },
+    { text: "Edit Form", icon: "/images/edit_note.png", action: onEdit, dataTestId: "edit-form" },
+    { text: "Delete Form", icon: "/images/delete_outline.png", action: (q: Questionnaire) => onDelete(q.id!), dataTestId: "delete-form" },
   ], [onView, onDownload, onEdit, onDelete]);
 
   const renderQuestionnaireCard = useMemo(() => (questionnaire: Questionnaire) => (
@@ -60,12 +60,13 @@ const GridView: React.FC<GridViewProps> = ({
       </CardBody>
       <CardFooter className="justify-center px-6 py-4 border-t border-neutral-200 dark:border-neutral-700">
         <div className="flex justify-center w-full gap-2">
-          {actionButtons.map(({ text, icon, action }) => (
+          {actionButtons.map(({ text, icon, action, dataTestId }) => (
             <ActionButton
               key={text}
               text={text}
               icon={icon}
               onClick={() => action(questionnaire)}
+              dataTestId={dataTestId}
             />
           ))}
         </div>
@@ -103,14 +104,15 @@ interface ActionButtonProps {
   icon: string;
   onClick: () => void;
   text: string;
+  dataTestId: string;
 }
 
-const ActionButton: React.FC<ActionButtonProps> = ({ text, icon, onClick }) => (
+const ActionButton: React.FC<ActionButtonProps> = ({ text, icon, onClick, dataTestId }) => (
   <Tooltip content={text} placement="top" classNames={{
     base: "rounded-md",
     content: "bg-gray-900 text-white text-sm max-w-xs break-words"
   }}>
-    <Button isIconOnly variant="bordered" color="primary" onPress={onClick}>
+    <Button isIconOnly variant="bordered" color="primary" onPress={onClick} data-testid={dataTestId}>
       <Image src={icon} alt="Action" width={24} height={24} />
     </Button>
   </Tooltip>

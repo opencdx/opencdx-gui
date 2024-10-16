@@ -11,15 +11,15 @@ interface ValidationRowProps {
 }
 
 const ValidationRow: React.FC<ValidationRowProps> = ({ isValid, label, className }) => (
-  <View className={`flex-row items-start ${className}`}>
-    <View className="w-4 h-4 mr-2 justify-center items-center">
+  <View className={`flex-row items-start items-center ${className}`}>
+    <View className="gap-1 justify-center items-center align-middle">
       <Image
-        source={isValid ? require('../../assets/tick.png') : require('../../assets/cross.png')}
-        className="w-6 h-6"
+        source={isValid ? require('../../assets/tick.png') : require('../../assets/close.png')}
+        className="w-6 h-6 "
         alt={isValid ? 'Valid' : 'Invalid'}
       />
     </View>
-    <Text className="text-gray-400 text-xs leading-4 pl-1">{label}</Text>
+    <Text className="text-gray-500 text-xs leading-4 pl-1">{label}</Text>
   </View>
 );
 

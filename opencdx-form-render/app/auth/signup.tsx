@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { View, Text, Pressable, ScrollView, useWindowDimensions, Platform } from 'react-native';
-import { useToast, Toast, ToastDescription } from '@gluestack-ui/themed';
 import { useSignUp } from '../../lib/iam-hooks';
 import { useNavigation } from '@react-navigation/native';
 import { Input } from '../../components/ui/input';
@@ -9,6 +8,7 @@ import { Image } from '../../components/ui/image';
 import ValidationRow from '../../components/ui/validate';
 import ModalComponent from '../../components/ui/modal';
 import Loader from '../../components/ui/loading';
+import { useShowToast } from '~/lib/toast';
 
 const useSignupForm = () => {
     const [formData, setFormData] = useState({
@@ -82,7 +82,7 @@ const Signup = () => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
-    const toast = useToast();
+    const showToast = useShowToast();
 
     useEffect(() => {
         if (Platform.OS === 'web') {
@@ -90,27 +90,17 @@ const Signup = () => {
         }
     }, []);
 
-    const showToaster = (message: string) => {
-        toast.show({
-            placement: "top right",
-            render: ({ id }) => (
-                <Toast nativeID={`toast-${id}`} action='error' variant='accent'>
-                    <ToastDescription>{message}</ToastDescription>
-                </Toast>
-            ),
-        });
-    };
-
     const onSuccess = useCallback(() => {
         setIsLoading(false);
         navigation.navigate('auth/login' as never);
-    }, [navigation]);
+        showToast({ message: 'Signup successful.', type: 'success' });
+    }, [navigation, showToast]);
 
     const onError = useCallback((error: any) => {
         setIsLoading(false);
         const errorMessage = error.response?.data?.cause?.localizedMessage || 'An error occurred';
-        showToaster(errorMessage);
-    }, []);
+        showToast({ message: errorMessage, type: 'error' });
+    }, [showToast]);
 
     const { signup } = useSignUp(onSuccess, onError);
 

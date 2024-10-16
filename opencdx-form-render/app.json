@@ -8,7 +8,7 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/long.png"
+      "favicon": "./assets/logo-mobile.png"
     },
     "plugins": ["expo-router"],
     "experiments": {
@@ -18,12 +18,12 @@
     },
 
     "orientation": "portrait",
-    "icon": "./assets/long.png",
+    "icon": "./assets/login-logo.png",
 
     "userInterfaceStyle": "light",
 
     "splash": {
-      "image": "./assets/long.png",
+      "image": "./assets/login-logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -33,7 +33,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/long.png",
+        "foregroundImage": "./assets/logo-long.png",
         "backgroundColor": "#ffffff"
       }
     }

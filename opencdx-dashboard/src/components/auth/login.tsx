@@ -20,8 +20,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useLogin } from '@/hooks/iam-hooks';
 import { useTranslations } from 'next-intl';
 import { Button, Input } from 'ui-library';
-import { AxiosError, HttpStatusCode } from 'axios';
-import { set } from 'cypress/types/lodash';
+import { AxiosError } from 'axios';
 
 export default function Login() {
   // Define success and error callback functions
