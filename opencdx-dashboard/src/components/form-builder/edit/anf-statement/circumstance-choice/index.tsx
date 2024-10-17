@@ -19,7 +19,7 @@ const CircumstanceChoice = ({ anfStatementConnectorId, questionnaireItemId, anfS
     const circumstanceComponents = {
         performanceCircumstance: PerformanceCircumstance,
         requestCircumstance: RequestCircumstance,
-        // narrativeCircumstance: NarrativeCircumstance,
+        narrativeCircumstance: NarrativeCircumstance,
     };
 
     const CircumstanceComponent = circumstanceComponents[tabName as keyof typeof circumstanceComponents];
