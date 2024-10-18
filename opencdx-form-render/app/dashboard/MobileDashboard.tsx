@@ -4,12 +4,29 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import QuestionnaireCard from './QuestionnaireCard';
 import HistoryCard from './HistoryCard';
 import { LinearGradient } from 'expo-linear-gradient';
-
-const MobileDashboard = () => (
-  <SafeAreaView>
+import CustomHeader from '~/components/ui/CustomHeader';
+import { useNavigation } from '@react-navigation/native';
+const MobileDashboard = () => {
+  const navigation = useNavigation();
+  const currentDate = new Date().toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+});
+  return (<SafeAreaView>
+    <CustomHeader title={currentDate} rightButton={{
+      imageSource: require('~/assets/logout_mobile.png'),
+      onPress: () => {navigation.navigate("auth/login")},
+    }}
+    leftButton={{
+      imageSource: require('~/assets/profile.png'),
+      onPress: () => {navigation.navigate("auth/login")},
+    }}
+    titleStyle={{ fontSize: 12, color: 'lightblue', fontWeight: 'bold' }}
+    />
     <ImageBackground source={require('../../assets/background.png')} className="h-screen w-full"> 
       <ScrollView className="flex flex-col h-screen">
-        <View className="flex bg-[#F8F9FB] p-6">
+        <View className="flex p-6">
           <View className={`flex flex-col gap-2`}>
             {/* Column 1: Take Specific Questionnaire */}
             <View className="bg-black rounded-xl p-4 flex-1">
@@ -39,5 +56,6 @@ const MobileDashboard = () => (
     </ImageBackground>
   </SafeAreaView>
 );
+  }
 
 export default MobileDashboard;
