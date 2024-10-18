@@ -12,27 +12,35 @@ const PasswordChanged: React.FC = () => {
     };
 
     useEffect(() => {
-      if (Platform.OS === 'web') {
+       if (Platform.OS === 'web') {
             document.title = 'Password Changed';
         }
     }, []);
-    
 
     const renderContent = () => (
-        <View className="flex flex-col items-center justify-center items-center min-h-screen">
+        <View className="flex flex-col items-center justify-center min-h-screen">
             <View className="bg-white p-8 text-center items-center">
                 <View className="mb-6 flex justify-center items-center">
                     <Image
-                        source={require('../../assets/reset_pass_success.svg')}
+                        source={require('../../assets/reset_pass_success.png')}
                         alt="Success logo"
                     />
                 </View>
                 <Text className="text-xl font-medium mb-2">Password Changed</Text>
                 <Text className="text-gray-600 text-sm mb-6">Your password has been changed successfully.</Text>
+            </View>
+
+            {Platform.OS === 'ios' || Platform.OS === 'android' ? (
+                <View style={{ position: 'absolute', bottom: 20, width: '100%', paddingHorizontal: 20 }}>
+                    <Button onPress={handleProceedToLogin}>
+                        Proceed to Login
+                    </Button>
+                </View>
+            ) : (
                 <Button onPress={handleProceedToLogin}>
                     Proceed to Login
                 </Button>
-            </View>
+            )}
         </View>
     );
 
@@ -42,7 +50,7 @@ const PasswordChanged: React.FC = () => {
                 {renderContent()}
             </main>
         ) : (
-            <View aria-label="main-layout password-changed" className="flex items-center justify-center min-h-screen">
+            <View aria-label="main-layout password-changed" className="flex items-center justify-center min-h-screen relative">
                 {renderContent()}
             </View>
         )
