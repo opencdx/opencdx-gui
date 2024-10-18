@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Button, Modal, Input, Select, SelectItem, ModalContent, ModalHeader, ModalBody, ModalFooter } from '@nextui-org/react';
 import { Country, Continent } from '@/api/logistics/model/country';
 import { MantineReactTable, useMantineReactTable, type MRT_ColumnDef } from 'mantine-react-table';

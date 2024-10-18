@@ -32,7 +32,7 @@ const TablesPage: React.FC = () => {
                 {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('serviceToken')}`,
+                        'Authorization': `Bearer ${window.localStorage.getItem('serviceToken')}`,
                         'Accept': 'application/json',
                     }
                 }
@@ -50,7 +50,7 @@ const TablesPage: React.FC = () => {
                         {
                             headers: {
                                 'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${localStorage.getItem('serviceToken')}`,
+                                'Authorization': `Bearer ${window.localStorage.getItem('serviceToken')}`,
                                 'Accept': 'application/json',
                             }
                         }

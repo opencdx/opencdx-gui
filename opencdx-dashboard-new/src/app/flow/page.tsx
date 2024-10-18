@@ -30,16 +30,18 @@ const FlowPage: React.FC = () => {
       setManufacturers(data.data.manufacturers ?? []);
     }});
   }, []);
+
   const cardData = [
     { icon: <AdminPanelSettingsIcon fontSize="large" />, title: 'Admin', value: '5', ref: 'admin', url: '/flow/admin' },
     { icon: <PublicIcon fontSize="large" />, title: 'Country', value: countries.length.toString(), ref: 'country', url: '/flow/country' },
     { icon: <DescriptionIcon fontSize="large" />, title: 'Template', value: '10', ref: 'template', url: '/flow/template' },
-      { icon: <FactoryIcon fontSize="large" />, title: 'Manufacturers', value: manufacturers.length.toString() ?? '0', ref: 'manufacturers', url: '/flow/manufacturers' },
+    { icon: <FactoryIcon fontSize="large" />, title: 'Manufacturers', value: manufacturers.length.toString() ?? '0', ref: 'manufacturers', url: '/flow/manufacturers' },
     { icon: <StorefrontIcon fontSize="large" />, title: 'Vendors', value: vendors.length.toString(), ref: 'vendors', url: '/flow/vendors' },
     { icon: <SmartphoneIcon fontSize="large" />, title: 'Devices', value: '1000', ref: 'devices', url: '/flow/devices' },
     { icon: <ScienceIcon fontSize="large" />, title: 'Tests', value: '200', ref: 'tests', url: '/flow/tests' },
     { icon: <WorkspacesIcon fontSize="large" />, title: 'Organization & Workspace', value: organizations.length.toString(), ref: 'organization', url: '/flow/organization' },
   ];
+
 
   return (
     <div className="p-4">

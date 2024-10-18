@@ -1,13 +1,11 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { Button, Modal, Input, ModalContent, ModalHeader, ModalBody, ModalFooter, Select, SelectItem } from '@nextui-org/react';
+import React, { useState } from 'react';
+import { Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Select, SelectItem } from '@nextui-org/react';
 import { Vendor } from '@/api/logistics/model/vendor';
 import { MantineReactTable, useMantineReactTable, type MRT_ColumnDef } from 'mantine-react-table';
 import { Delete, Edit, ArrowLeft } from 'lucide-react';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { Country } from '@/api/logistics/model/country';
 import { useForm, Controller } from 'react-hook-form';
 import { ControlledInput } from '@/components/flow/ControlledInput';
 import { useFetchVendors, useHandleFormSubmit, useDeleteVendor } from '@/hooks/manufacturers-hooks';
