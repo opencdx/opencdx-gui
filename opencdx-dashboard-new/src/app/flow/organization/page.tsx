@@ -3,10 +3,12 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { MantineReactTable, useMantineReactTable, type MRT_ColumnDef } from 'mantine-react-table';
 import axios from 'axios';
-import { Select, SelectItem } from '@nextui-org/react';
+import { Select, SelectItem, Button } from '@nextui-org/react';
 
-import type { Organization } from '../../api/iam/model/organization';
-import type { Workspace } from '../../api/iam/model/workspace';
+import type { Organization } from '@/api/iam/model/organization';
+import type { Workspace } from '@/api/iam/model/workspace';
+import { ArrowBack } from '@mui/icons-material';
+import { useRouter } from 'next/navigation';
 
 type OrganizationData = Organization & {
     workspaces: WorkspaceData[];
@@ -15,6 +17,7 @@ type OrganizationData = Organization & {
 type WorkspaceData = Workspace;
 
 const TablesPage: React.FC = () => {
+    const router = useRouter();
     const [data, setData] = useState<OrganizationData[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -24,7 +27,7 @@ const TablesPage: React.FC = () => {
         setError(null);
         try {
             const orgResponse = await axios.post(
-                'https://ec2-3-13-148-183.us-east-2.compute.amazonaws.com:8080/iam/organization/list',
+                'https://api.dev-1.opencdx.io/iam/organization/list',
                 { pagination: { pageNumber: 1, pageSize: 100, sortAscending: true } },
                 {
                     headers: {
@@ -39,7 +42,7 @@ const TablesPage: React.FC = () => {
             const organizationsWithWorkspaces = await Promise.all(
                 organizations.map(async (org: any) => {
                     const workspaceResponse = await axios.post(
-                        'https://ec2-3-13-148-183.us-east-2.compute.amazonaws.com:8080/iam/workspace/list',
+                        'https://api.dev-1.opencdx.io/iam/workspace/list',
                         {
                             pagination: { pageNumber: 1, pageSize: 100, sortAscending: true },
                             organizationId: org.id
@@ -185,7 +188,17 @@ const TablesPage: React.FC = () => {
 
     return (
         <div className="w-full h-full flex flex-col">
-            <h1 className='text-2xl font-bold mb-4'>Organizations and Workspaces</h1>
+            <div className='flex flex-start'>
+        <Button 
+        onClick={()=>{
+            router.push('/flow');
+        }}
+        variant='bordered'
+        color='primary'
+        startContent={<ArrowBack />}
+        >Back</Button>
+      <h1 className="pl-4 text-2xl font-bold mb-4">Organizations and Workspaces</h1>
+      </div>
             {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>}
             <div className="flex justify-center w-screen gap-4">
                 <div className="mt-4 w-1/2">

@@ -4,7 +4,6 @@ import { LoginRequest, SignUpRequest, ChangePasswordRequest, ResetPasswordReques
 
 
 import { GetQuestionnaireListRequest, QuestionnaireRequest } from "@/api/questionnaire";
-import { ManufacturerListRequest, Manufacturer, CountryListRequest } from "@/api/logistics";
 import { RuleSetsRequest } from "@/api/classification";
 
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -27,7 +26,7 @@ export const useLogin = (onSuccess: (data: any) => void, onError: (error: any) =
         onSuccess: (data) => {
             const { token } = data.data
             localStorage.setItem('serviceToken', token as string);
-            router.push('/form-builder');
+            router.push('/flow');
             if (onSuccess) onSuccess(data);
         },
         onError: (error) => {
@@ -135,26 +134,3 @@ export const useUpdateQuestionnaire = () => {
 export const useUserVerify = (userId: string) => {
     return iamApi.verifyEmailIamUser({id: userId});
 }
-
-export const useGetManufacturerList = () => {
-    return useMutation({
-        mutationFn: (params: ManufacturerListRequest) => logisticsApi.listCountries({ manufacturerListRequest: params })
-    });
-};
-export const useAddManufacturer = () => {
-    return useMutation({
-        mutationFn: (params: Manufacturer) => logisticsApi.addManufacturer({ manufacturer: params })
-    });
-};
-
-export const useDeleteManufacturer = () => {
-    return useMutation({
-        mutationFn: (id: string) => logisticsApi.deleteManufacturer({ id: id })
-    });
-};
-
-export const useUpdateManufacturer = () => {
-    return useMutation({
-        mutationFn: (params: Manufacturer) => logisticsApi.updateManufacturer({ manufacturer: params })
-    });
-};

@@ -1,4 +1,10 @@
-import Login from '@/components/auth/login';
+import React, { Suspense, lazy } from 'react';
+const Login = lazy(() => import('@/components/auth/login'));
+
 export default function LoginPage() {
-  return <Login />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Login />
+    </Suspense>
+  );
 }

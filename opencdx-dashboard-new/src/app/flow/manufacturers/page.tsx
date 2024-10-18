@@ -2,12 +2,11 @@
 
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { MantineReactTable, useMantineReactTable, type MRT_ColumnDef, type MRT_Row } from 'mantine-react-table';
-import { Input, Button, Textarea, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from 'ui-library';
-import { IconEdit, IconTrash } from '@tabler/icons-react';
-
-import { Manufacturer } from '../../api/logistics/model/manufacturer';
-import { useGetManufacturerList, useAddManufacturer, useDeleteManufacturer, useUpdateManufacturer } from '../../hooks/iam-hooks';
-
+import { Input, Button, Textarea, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from '@nextui-org/react';
+import { Edit, Delete, ArrowBack } from '@mui/icons-material';
+import { useRouter } from 'next/navigation';
+import { Manufacturer } from '@/api/logistics/model/manufacturer';
+import { useGetManufacturerList, useAddManufacturer, useDeleteManufacturer, useUpdateManufacturer } from '@/hooks/manufacturers-hooks';
 
 
 const ManufacturersPage: React.FC = () => {
@@ -22,11 +21,11 @@ const ManufacturersPage: React.FC = () => {
   const [onOpenChange, setOnOpenChange] = useState(false);
   const [row, setRow] = useState<Manufacturer | null>(null);
   const [isEdit, setIsEdit] = useState(false);
-
+  const router = useRouter();
   const [formData, setFormData] = useState<Omit<Manufacturer, 'id'>>({
     name: '',
     manufacturerAddress: {
-      countryId: '66faed240e1b22662c798775',
+      countryId: '671125dddbd1c863d41b2730',
       addressPurpose: 'SECONDARY',
       address1: '',
       city: '',
@@ -167,10 +166,10 @@ const ManufacturersPage: React.FC = () => {
                 setFormData(row.original);
                 setIsEdit(true);
             }}
-            >{<IconEdit />}</Button>
+            >{<Edit />}</Button>
             <Button isIconOnly variant='light' color='danger'
             onClick={() => openDeleteConfirmModal(row)}
-            >{<IconTrash />}</Button>
+            >{<Delete />}</Button>
         </span>
        
       ),
@@ -198,10 +197,20 @@ const ManufacturersPage: React.FC = () => {
   });
 
   return (
-    <div className="w-full h-full flex flex-col p-4">
-      <h1 className="text-2xl font-bold mb-4">Manufacturers</h1>
+    <div className="w-screen h-full flex flex-col p-4">
+        <div className='flex flex-start'>
+        <Button 
+        onClick={()=>{
+            router.push('/flow');
+        }}
+        variant='bordered'
+        color='primary'
+        startContent={<ArrowBack />}
+        >Back</Button>
+      <h1 className="pl-4 text-2xl font-bold mb-4">Manufacturers</h1>
+      </div>
       {error && <div className="text-red-500 mb-4">{error}</div>}
-      
+
       <form onSubmit={handleSubmit} className="mb-8 grid grid-cols-2 gap-4 w-full">
         <Input
           label="Name"

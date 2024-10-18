@@ -98,6 +98,7 @@ const handleError = (error: AxiosError) => {
                 aria-label="opencdx logos"
                 radius="none"
                 src="/login-logo.png"
+                loading="lazy"
               />
             </div>
           </CardHeader>
@@ -129,9 +130,9 @@ const handleError = (error: AxiosError) => {
                     onClick={toggleVisibility}
                   >
                     {isVisible ? (
-                      <Image alt="nextui logo" src="/eye.svg" />
+                      <Image alt="nextui logo" src="/eye.svg" loading="lazy" />
                     ) : (
-                      <Image alt="nextui logo" src="/cross_eye.svg" />
+                      <Image alt="nextui logo" src="/cross_eye.svg" loading="lazy" />
                     )}
                   </button>
                 }

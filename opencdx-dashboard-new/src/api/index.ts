@@ -6,13 +6,13 @@ import { Configuration as LogisticsConfig, OpenCdxRestManufacturerControllerApi 
 
 
 const classification = new ClassificationConfig({
-    basePath: (process.env.REACT_APP_API_HOST ?? '') + process.env.REACT_APP_API_PORT + "/classification"
+    basePath: "https://api.dev-1.opencdx.io/classification"
 });
 classification.accessToken = async () => {
     return localStorage.getItem('serviceToken') || '';
 }
 const iam = new IAMConfig({
-    basePath: (process.env.REACT_APP_API_HOST ?? '') + process.env.REACT_APP_API_PORT + "/iam",
+    basePath: "https://api.dev-1.opencdx.io/iam",
     baseOptions: {
         headers: {
             'Content-Type': 'application/json',
@@ -33,14 +33,14 @@ iam.baseOptions = {
 
 
 const questionnaire = new QuestionnaireConfig({
-    basePath: (process.env.REACT_APP_API_HOST ?? '') + process.env.REACT_APP_API_PORT + "/questionnaire"
+    basePath: "https://api.dev-1.opencdx.io/questionnaire"
 });
 questionnaire.accessToken = async () => {
     return localStorage.getItem('serviceToken') || '';
 }
 
 const logistics = new LogisticsConfig({
-    basePath: (process.env.REACT_APP_API_HOST ?? '') + process.env.REACT_APP_API_PORT + "/logistics"
+    basePath: "https://api.dev-1.opencdx.io/logistics"
 });
 logistics.accessToken = async () => {
     return localStorage.getItem('serviceToken') || '';

@@ -6,6 +6,7 @@ import { fontSans } from '@/config/fonts';
 import { SiteConfig } from '@/config/site';
 import clsx from 'clsx';
 
+import React, { Suspense } from 'react'; // Added import for React and Suspense
 
 import { Providers } from './providers';
 import {NextIntlClientProvider} from 'next-intl';
@@ -34,6 +35,9 @@ export default async function RootLayout({
 }) {
   const locale = await getLocale();
   const messages = await getMessages();
+
+  // Lazy load the component
+
   return (
     <html suppressHydrationWarning lang={locale}>
       <head />
@@ -50,10 +54,12 @@ export default async function RootLayout({
         >
           <div className="relative flex flex-col h-screen">
             <main>
-            <NextIntlClientProvider messages={messages}>
-              {children}
+              <NextIntlClientProvider messages={messages}>
+                <Suspense fallback={<div>Loading...</div>}> {/* Added Suspense for lazy loading */}
+                  {children}
+                </Suspense>
               </NextIntlClientProvider>
-              </main>
+            </main>
           </div>
         </Providers>
         
@@ -68,4 +74,3 @@ const locales = ['en', 'es'];
 export function generateStaticParams() {
   return locales.map((locale) => ({locale}));
 }
-

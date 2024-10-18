@@ -1,8 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { Manufacturer } from '@/api/logistics';
-import { Card, Button } from 'ui-library';
+import React, { Suspense, useEffect, useState } from 'react';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import PublicIcon from '@mui/icons-material/Public';
 import DescriptionIcon from '@mui/icons-material/Description';
@@ -10,78 +8,38 @@ import FactoryIcon from '@mui/icons-material/Factory';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import ScienceIcon from '@mui/icons-material/Science';
-import EditIcon from '@mui/icons-material/Edit';
 import WorkspacesIcon from '@mui/icons-material/Workspaces';
 import { useRouter } from 'next/navigation';
-import { useGetManufacturerList } from '../../hooks/iam-hooks';
-interface InfoCardProps {
-  icon: React.ReactNode;
-  title: string;
-  value: string;
-  onViewDetails: () => void;
-  onEdit: () => void;
-}
-
-const InfoCard: React.FC<InfoCardProps> = ({ icon, title, value, onViewDetails, onEdit }) => {
-  return (
-    <Card className="w-full h-48 flex flex-col items-center justify-between p-4 relative">
-      <button onClick={onEdit} className="absolute top-2 right-2 text-gray-400 hover:text-gray-600">
-        <EditIcon fontSize="small" />
-      </button>
-      <div className="text-4xl mb-2">{icon}</div>
-      <div className="text-sm text-gray-600 mb-1">{title}</div>
-      <div className="text-lg font-semibold mb-4">{value}</div>
-      <Button variant="shadow" onClick={onViewDetails} className="text-blue-500 hover:text-blue-700">
-        View Details
-      </Button>
-    </Card>
-  );
-};
+import { useGetManufacturerList, useFetchCountries, useFetchVendors, useFetchOrganizations } from '@/hooks/manufacturers-hooks';
+import { Manufacturer } from '@/api/logistics/model/manufacturer';
+// Lazy load InfoCard
+const InfoCard = React.lazy(() => import('@/components/flow/InfoCard'));
 
 const FlowPage: React.FC = () => {
   const router = useRouter();
-    const { data: manufacturersListData, isError: isErrorList, mutate: mutateManufacturersList } = useGetManufacturerList();
-    const [manufacturers, setManufacturers] = useState<Manufacturer[]>([]);
-
+  const { data: manufacturersList=[] , mutate: mutateManufacturersList } = useGetManufacturerList();
+  const { data: countries = [] } = useFetchCountries();
+  const { data: vendors = [] } = useFetchVendors();
+  const { data: organizations = [] } = useFetchOrganizations();
+  const [manufacturers, setManufacturers] = useState<Manufacturer[]>([]);
+ 
+  console.log('Manufacturers list:', manufacturersList);
+  
   useEffect(() => {
     mutateManufacturersList({pagination: {pageNumber: 0, pageSize: 100, sortAscending: true}}, {onSuccess: (data) => {
-      setManufacturers(data?.data?.manufacturers || []);
+      setManufacturers(data.data.manufacturers ?? []);
     }});
-  }, [mutateManufacturersList, isErrorList]);
+  }, []);
   const cardData = [
-    { icon: <AdminPanelSettingsIcon fontSize="large" />, title: 'Admin', value: '5' , ref: 'admin'},
-    { icon: <PublicIcon fontSize="large" />, title: 'Country', value: '25' , ref: 'country'},
-    { icon: <DescriptionIcon fontSize="large" />, title: 'Template', value: '10' , ref: 'template'},
-    { icon: <FactoryIcon fontSize="large" />, title: 'Manufacturers', value: manufacturers?.length?.toString() ?? '0', ref: 'manufacturers'},
-    { icon: <StorefrontIcon fontSize="large" />, title: 'Vendors', value: '100' , ref: 'vendors'},
-    { icon: <SmartphoneIcon fontSize="large" />, title: 'Devices', value: '1000' , ref: 'devices'},
-    { icon: <ScienceIcon fontSize="large" />, title: 'Tests', value: '200' , ref: 'tests'},
-    { icon: <WorkspacesIcon fontSize="large" />, title: 'Organization & Workspace', value: '200', ref: 'organization' },
+    { icon: <AdminPanelSettingsIcon fontSize="large" />, title: 'Admin', value: '5', ref: 'admin', url: '/flow/admin' },
+    { icon: <PublicIcon fontSize="large" />, title: 'Country', value: countries.length.toString(), ref: 'country', url: '/flow/country' },
+    { icon: <DescriptionIcon fontSize="large" />, title: 'Template', value: '10', ref: 'template', url: '/flow/template' },
+      { icon: <FactoryIcon fontSize="large" />, title: 'Manufacturers', value: manufacturers.length.toString() ?? '0', ref: 'manufacturers', url: '/flow/manufacturers' },
+    { icon: <StorefrontIcon fontSize="large" />, title: 'Vendors', value: vendors.length.toString(), ref: 'vendors', url: '/flow/vendors' },
+    { icon: <SmartphoneIcon fontSize="large" />, title: 'Devices', value: '1000', ref: 'devices', url: '/flow/devices' },
+    { icon: <ScienceIcon fontSize="large" />, title: 'Tests', value: '200', ref: 'tests', url: '/flow/tests' },
+    { icon: <WorkspacesIcon fontSize="large" />, title: 'Organization & Workspace', value: organizations.length.toString(), ref: 'organization', url: '/flow/organization' },
   ];
-
-  const handleViewDetails = (ref: string) => {
-    if (ref === 'organization') {
-      router.push('/tables');
-    } 
-    else if (ref === 'manufacturers') {
-      router.push('/manufacturers');
-    }
-    else {
-      console.log(`View details for ${ref}`);
-    }
-  };
-
-  const handleEdit = (ref: string) => {
-    if (ref === 'organization') {
-      router.push('/tables');
-    } 
-    else if (ref === 'manufacturers') {
-      router.push('/manufacturers');
-    }
-    else {
-      console.log(`Edit ${ref}`);
-    }
-  };
 
   return (
     <div className="p-4">
@@ -93,16 +51,18 @@ const FlowPage: React.FC = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-        {cardData.map((card, index) => (
-          <InfoCard
-            key={index}
-            icon={card.icon}
-            title={card.title}
-            value={card.value}
-            onViewDetails={() => handleViewDetails(card.ref)}
-            onEdit={() => handleEdit(card.ref)}
-          />
-        ))}
+        <Suspense fallback={<div>Loading...</div>}>
+          {cardData.map((card, index) => (
+            <InfoCard
+              key={index}
+              icon={card.icon}
+              title={card.title}
+              value={card.value}
+              onViewDetails={() => router.push(card.url)}
+              onEdit={() => router.push(card.url)}
+            />
+          ))}
+        </Suspense>
       </div>
     </div>
   );
