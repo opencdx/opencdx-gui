@@ -49,7 +49,7 @@ const Login = () => {
   }, [navigation]);
 
   const renderContent = () => (
-    <View className="flex flex-1 justify-between items-center bg-white max-w-[500px] w-full mx-auto p-8 gap-8" >
+    <View className="flex flex-1 justify-between items-center bg-white max-w-[500px] w-full mx-auto p-8 gap-8" style={{ height: height - 40 }}>
       {/* Logo */}
 
       <Image
