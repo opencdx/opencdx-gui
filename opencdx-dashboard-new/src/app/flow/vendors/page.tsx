@@ -104,12 +104,14 @@ const VendorPage: React.FC = () => {
                     name="vendorAddress.city"
                     label="City"
                 />
+               <div className=" flex items-center gap-4 w-full">
+               <label className="text w-[250px]">State</label>
                 <Controller
                     control={control}
                     name="vendorAddress.state"
                     render={({ field }) => (
                         <Select
-                            className="max-w-xs mb-4 mt-2 mr-4 ml-4 bg-white"
+                            className="  bg-white"
                             label="State"
                             variant='bordered'
                             radius='sm'
@@ -119,6 +121,7 @@ const VendorPage: React.FC = () => {
                         </Select>
                     )}
                 />
+                </div>
                 <ControlledInput
                     control={control}
                     name="vendorAddress.postalCode"

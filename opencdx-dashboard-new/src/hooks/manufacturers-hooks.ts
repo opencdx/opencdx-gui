@@ -194,7 +194,7 @@ export const useFetchOrganizations = () => {
         queryFn: async () => {
             const response = await axios.post(
                 'https://api.dev-1.opencdx.io/iam/organization/list',
-                { pagination: { pageNumber: 1, pageSize: 100, sortAscending: true } },
+                { pagination: { pageNumber: 0, pageSize: 100, sortAscending: true } },
                 { headers }
             );
             return response.data.organizations;
@@ -217,7 +217,6 @@ export const useFetchWorkspaces = (organizationId: string | null) => {
             );
             return response.data.workspaces;
         },
-        enabled: !!organizationId, // Only run the query if organizationId is truthy
     });
 };
 

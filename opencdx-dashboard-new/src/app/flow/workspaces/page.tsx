@@ -1,44 +1,26 @@
 'use client';
 
 import React, { useState, useCallback, useEffect } from 'react';
-import { Input, Button, Textarea } from '@nextui-org/react';
+import { Input, Button, Textarea, Select, SelectItem } from '@nextui-org/react';
 import { ArrowBack } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import ControlledTable from '@/components/flow/ControlledTable';
+import { Organization } from '@/api/iam/model/organization';
 import { Workspace } from '@/api/iam/model/workspace';
+import { useFetchOrganizations, useFetchWorkspaces } from '@/hooks/manufacturers-hooks';
+
 
 const WorkspacesPage: React.FC = () => {
     const router = useRouter();
     const [isEdit, setIsEdit] = useState(false);
-    const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [formData, setFormData] = useState<Omit<Workspace, 'id'>>(initialFormData);
+    const { data: organizations = [] } = useFetchOrganizations();
+    const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
 
-    const fetchWorkspaces = useCallback(async () => {
-        setIsLoading(true);
-        setError(null);
-        try {
-            const response = await axios.post(
-                'https://api.dev-1.opencdx.io/iam/workspace/list',
-                { pagination: { pageNumber: 1, pageSize: 100, sortAscending: true } },
-                {
-                    headers: getHeaders(),
-                }
-            );
-            setWorkspaces(response.data.workspaces);
-        } catch (err) {
-            console.error('Error fetching workspaces:', err);
-            setError('An error occurred while fetching workspaces. Please try again.');
-        } finally {
-            setIsLoading(false);
-        }
-    }, []);
 
-    useEffect(() => {
-        fetchWorkspaces();
-    }, [fetchWorkspaces]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -56,8 +38,7 @@ const WorkspacesPage: React.FC = () => {
             const url = 'https://api.dev-1.opencdx.io/iam/workspace';
             const method = isEdit ? 'put' : 'post';
             await axios[method](url, wrappedFormData, { headers: getHeaders() });
-            
-            fetchWorkspaces();
+
             setFormData(initialFormData);
             setIsEdit(false);
         } catch (err) {
@@ -84,6 +65,40 @@ const WorkspacesPage: React.FC = () => {
                 </Button>
                 <h1 className="pl-4 text-2xl font-bold mb-4">Workspaces</h1>
             </div>
+            <Select
+                label="Organization"
+                name="organizationId"
+                variant='bordered'
+                className='bg-white mb-4'
+                radius='sm'
+                selectionMode="single"
+                selectedKeys={formData.organizationId}
+                onSelectionChange={async (keys) => {
+                    const selectedKeys = Array.from(keys as Set<string>);
+
+                    try {
+                        const response = await axios.post(
+                            'https://api.dev-1.opencdx.io/iam/workspace/list',
+                            {
+                                pagination: { pageNumber: 0, pageSize: 100, sortAscending: true },
+                                organizationId: selectedKeys[0]
+                            },
+                            { headers: getHeaders() }
+                        );
+                        const workspaces = response.data.workspaces;
+                        setWorkspaces(workspaces);
+                        setFormData(prev => ({ ...prev, organizationId: selectedKeys[0] }));
+                    } catch (error) {
+                        console.error('Error fetching workspaces:', error);
+                        setError('Failed to fetch workspaces. Please try again.');
+                    }
+                }}
+                required
+            >
+                {organizations.map((organization: Organization) => (
+                    <SelectItem key={organization.id ?? ''} value={organization.id ?? ''}>{organization.name}</SelectItem>
+                ))}
+            </Select>
 
             <form onSubmit={handleSubmit} className="mb-8 grid grid-cols-2 gap-4 w-full">
                 <Input
@@ -160,7 +175,7 @@ const WorkspacesPage: React.FC = () => {
                 <ControlledTable
                     data={workspaces}
                     columns={tableColumns}
-                    onDelete={()=>{}}
+                    onDelete={() => { }}
                     onEdit={handleEdit}
                     isDelete={false}
                     isLoading={isLoading}
@@ -205,4 +220,3 @@ const tableColumns = [
 ];
 
 export default WorkspacesPage;
-
