@@ -10,7 +10,7 @@ import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import ScienceIcon from '@mui/icons-material/Science';
 import WorkspacesIcon from '@mui/icons-material/Workspaces';
 import { useRouter } from 'next/navigation';
-import { useGetManufacturerList, useFetchCountries, useFetchVendors, useFetchOrganizations, useFetchDevices, useFetchTests } from '@/hooks/manufacturers-hooks';
+import { useGetManufacturerList, useFetchCountries, useFetchVendors, useFetchOrganizations, useFetchDevices, useFetchTests, useFetchEmailTemplates, useFetchUsers } from '@/hooks/manufacturers-hooks';
 import { Manufacturer } from '@/api/logistics/model/manufacturer';
 // Lazy load InfoCard
 const InfoCard = React.lazy(() => import('@/components/flow/InfoCard'));
@@ -24,6 +24,8 @@ const FlowPage: React.FC = () => {
   const [manufacturers, setManufacturers] = useState<Manufacturer[]>([]);
   const { data: devices = [] } = useFetchDevices();
   const { data: tests=[]} = useFetchTests()
+  const { data: emailTemplates = [] } = useFetchEmailTemplates();
+  const { data: adminUsers = [] } = useFetchUsers();
  
   console.log('Manufacturers list:', manufacturersList);
   
@@ -41,8 +43,8 @@ const FlowPage: React.FC = () => {
     { icon: <WorkspacesIcon fontSize="large" />, title: 'Workspace', value: organizations.length.toString(), ref: 'workspaces', url: '/flow/workspaces' },
     { icon: <SmartphoneIcon fontSize="large" />, title: 'Devices', value: devices.length.toString(), ref: 'devices', url: '/flow/devices' },
     { icon: <ScienceIcon fontSize="large" />, title: 'Tests', value: tests.length.toString(), ref: 'tests', url: '/flow/tests' },
-    { icon: <DescriptionIcon fontSize="large" />, title: 'Template', value: '10', ref: 'template', url: '/flow/email' },
-    { icon: <AdminPanelSettingsIcon fontSize="large" />, title: 'Admin', value: '5', ref: 'admin', url: '/flow/admin' },
+    { icon: <DescriptionIcon fontSize="large" />, title: 'Template', value: emailTemplates.length.toString(), ref: 'template', url: '/flow/email' },
+    { icon: <AdminPanelSettingsIcon fontSize="large" />, title: 'Admin', value: adminUsers.length.toString(), ref: 'admin', url: '/flow/admin' },
 
   ];
 
