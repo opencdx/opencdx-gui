@@ -84,7 +84,7 @@ const CountryPage: React.FC = () => {
   ];
 
   return (
-    <div className="w-screen h-screen flex flex-col p-4">
+    <div className="w-full h-screen flex flex-col p-4">
       <div className='flex flex-start'>
         <Button 
           onClick={() => router.push('/flow')}

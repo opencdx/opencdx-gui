@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { Button, Select, SelectItem } from '@nextui-org/react';
 import { Vendor } from '@/api/logistics/model/vendor';
 import { ArrowBack } from '@mui/icons-material';
@@ -10,24 +10,8 @@ import { ControlledInput } from '@/components/flow/ControlledInput';
 import { useFetchVendors, useHandleFormSubmit, useDeleteVendor } from '@/hooks/manufacturers-hooks';
 import ControlledTable from '@/components/flow/ControlledTable';
 import ConfirmationModal from '@/components/flow/ConfirmationModal';
+import {STATES } from '@/lib/constant';
 
-const STATES = {
-    Alabama: 'AL',
-    Alaska: 'AK',
-    Arizona: 'AZ',
-    Arkansas: 'AR',
-    California: 'CA',
-    Colorado: 'CO',
-    Connecticut: 'CT',
-    Delaware: 'DE',
-    Florida: 'FL',
-    Georgia: 'GA',
-    Hawaii: 'HI',
-    Idaho: 'ID',
-    SouthAmerica: 'SOUTH_AMERICA',
-    Unrecognized: 'UNRECOGNIZED'
-} as const;
-export type State = typeof STATES[keyof typeof STATES];
 
 const VendorPage: React.FC = () => {
     const { control, handleSubmit, setValue, reset } = useForm<Omit<Vendor, 'id'>>({});
@@ -35,35 +19,50 @@ const VendorPage: React.FC = () => {
     const [selectedVendor, setSelectedVendor] = useState<Vendor | null>(null);
     const [isEdit, setIsEdit] = useState(false);
     const router = useRouter();
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
 
     const { data: vendorsData = [], refetch: fetchVendors } = useFetchVendors();
     const { mutate: handleFormSubmit } = useHandleFormSubmit(isEdit, fetchVendors, reset);
     const { mutate: handleDelete } = useDeleteVendor(fetchVendors);
 
-    const columns = [
-        { header: 'Name', accessorKey: 'name' },
-        { header: 'Description', accessorKey: 'description' },
-    ];
+    const columns = useMemo(() => [
+        { header: 'Name', accessorKey: 'vendorName' },
+        { header: 'Description', accessorKey: 'vendorDescription' },
+        { header: 'Address', accessorKey: 'vendorAddress.address1' },
+        { header: 'City', accessorKey: 'vendorAddress.city' },
+        { header: 'State', accessorKey: 'vendorAddress.state' },
+        { header: 'Postal Code', accessorKey: 'vendorAddress.postalCode' },
+        { header: 'Website', accessorKey: 'vendorWebsite' },
+    ], []);
 
-    const onSubmit = (data: Omit<Vendor, 'id'>) => {
+    const onSubmit = useCallback((data: Omit<Vendor, 'id'>) => {
         handleFormSubmit(data);
-    };
+    }, [handleFormSubmit]);
 
-    const handleEdit = (vendor: Vendor) => {
+    const handleEdit = useCallback((vendor: Vendor) => {
         setSelectedVendor(vendor);
         setIsEdit(true);
-        // Populate form fields with vendor data
-        Object.entries(vendor).forEach(([key, value]) => {
-            setValue(key as any, value);
+        Object.keys(vendor).forEach((key) => {
+            setValue(key as any, vendor[key as keyof Vendor]);
         });
-    };
+    }, [setValue]);
 
-    const handleDeleteConfirmation = (vendor: Vendor) => {
+    const handleDeleteConfirmation = useCallback((vendor: Vendor) => {
         setSelectedVendor(vendor);
-    };
+        setIsDeleteModalOpen(true);
+    }, []);
+
+    const stateOptions = useMemo(() => 
+        Object.keys(STATES).map((state) => (
+            <SelectItem key={state} value={STATES[state as keyof typeof STATES]}>
+                {state}
+            </SelectItem>
+        ))
+    , []);
 
     return (
-        <div className="w-screen h-screen flex flex-col p-4">
+        <div className="w-full h-screen flex flex-col p-4">
             <div className='flex flex-start'>
                 <Button
                     onClick={() => router.push('/flow')}
@@ -75,7 +74,6 @@ const VendorPage: React.FC = () => {
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)} className="mb-8 grid grid-cols-2 gap-4 w-full">
-
                 <ControlledInput
                     control={control}
                     name="vendorName"
@@ -101,36 +99,40 @@ const VendorPage: React.FC = () => {
                     name="vendorAddress.address3"
                     label="Address Line 3"
                 />
+                <ControlledInput
+                    control={control}
+                    name="vendorAddress.city"
+                    label="City"
+                />
                 <Controller
                     control={control}
                     name="vendorAddress.state"
                     render={({ field }) => (
-                        <>
-                            <Select
-                                className="max-w-xs mb-4 mt-2 mr-4 ml-4 bg-white"
-                                label="State"
-                                variant='bordered'
-                                radius='sm'
-                                {...field}
-                            >
-                                {Object.keys(STATES).map((state) => (
-                                    <SelectItem key={state} value={state}>
-                                        {state}
-                                    </SelectItem>
-                                ))}
-                            </Select>
-                        </>
+                        <Select
+                            className="max-w-xs mb-4 mt-2 mr-4 ml-4 bg-white"
+                            label="State"
+                            variant='bordered'
+                            radius='sm'
+                            {...field}
+                        >
+                            {stateOptions}
+                        </Select>
                     )}
-                />
-                <ControlledInput
-                    control={control}
-                    name="vendorAddress.countryId"
-                    label="Country"
                 />
                 <ControlledInput
                     control={control}
                     name="vendorAddress.postalCode"
                     label="Postal Code"
+                />
+                <ControlledInput
+                    control={control}
+                    name="vendorWebsite"
+                    label="Website"
+                />
+                <ControlledInput
+                    control={control}
+                    name="vendorAddress.countryId"
+                    label="Country ID"
                 />
                 <Button type="submit" color="primary" disabled={isLoading} className="w-fit mt-4">
                     {isLoading ? 'Saving...' : isEdit ? 'Update Vendor' : 'Add Vendor'}
@@ -148,14 +150,11 @@ const VendorPage: React.FC = () => {
             </div>
 
             <ConfirmationModal
-                isOpen={!!selectedVendor}
-                onClose={() => setSelectedVendor(null)}
+                isOpen={isDeleteModalOpen}
+                onClose={() => setIsDeleteModalOpen(false)}
                 onConfirm={() => {
-                    if (selectedVendor?.id) {
-                        handleDelete(selectedVendor.id);
-                    }
-                    setSelectedVendor(null);
-                    setIsEdit(false);
+                    selectedVendor?.id && handleDelete(selectedVendor.id);
+                    setIsDeleteModalOpen(false);
                 }}
                 title="Delete Vendor"
                 message={`Are you sure you want to delete this vendor ${selectedVendor?.vendorName}?`}

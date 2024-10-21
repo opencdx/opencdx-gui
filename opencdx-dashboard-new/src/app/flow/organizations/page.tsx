@@ -72,7 +72,7 @@ const OrganizationsPage: React.FC = () => {
     };
 
     return (
-        <div className="w-screen h-full flex flex-col p-4">
+        <div className="w-full h-full flex flex-col p-4">
             <div className='flex flex-start'>
                 <Button
                     onClick={() => router.push('/flow')}

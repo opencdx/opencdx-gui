@@ -252,3 +252,21 @@ export const systemVariables = {
         }
     ]
 };
+
+export const STATES = {
+    Alabama: 'AL',
+    Alaska: 'AK',
+    Arizona: 'AZ',
+    Arkansas: 'AR',
+    California: 'CA',
+    Colorado: 'CO',
+    Connecticut: 'CT',
+    Delaware: 'DE',
+    Florida: 'FL',
+    Georgia: 'GA',
+    Hawaii: 'HI',
+    Idaho: 'ID',
+    SouthAmerica: 'SOUTH_AMERICA',
+    Unrecognized: 'UNRECOGNIZED'
+} as const;
+export type State = typeof STATES[keyof typeof STATES];
