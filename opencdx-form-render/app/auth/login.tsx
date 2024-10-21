@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import { View, Text, Pressable, ScrollView, Platform, useWindowDimensions } from 'react-native';
+import { View, Text, Pressable, ScrollView, Platform, useWindowDimensions, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useLogin } from '../../lib/iam-hooks';
@@ -22,7 +22,7 @@ const useLoginForm = () => {
 };
 
 const Login = () => {
-  const { width } = useWindowDimensions();
+  const { height, width } = useWindowDimensions();
   const isMobile = width <= 768 || Platform.OS === 'ios' || Platform.OS === 'android';
   const navigation = useNavigation();
   const { username, setUsername, password, setPassword, showPassword, isDisabled, toggleShowPassword } = useLoginForm();
@@ -49,12 +49,16 @@ const Login = () => {
   }, [navigation]);
 
   const renderContent = () => (
-    <View className="flex flex-1 justify-center items-center bg-white max-w-[500px] w-full mx-auto p-4 sm:p-0 gap-12">
+    <View className="flex flex-1 justify-between items-center bg-white max-w-[500px] w-full mx-auto p-8 gap-8" >
+      {/* Logo */}
+
       <Image
         source={require('../../assets/login-logo.png')}
         alt="OpenCDx logo"
+        className='mt-10'
       />
 
+      {/* Input Fields */}
       <View className="w-full gap-4 sm:gap-6 items-center">
         <Input
           label="Email Address*"
@@ -95,33 +99,66 @@ const Login = () => {
         </View>
       </View>
 
-      <View className="w-full gap-4 items-center">
-        <Button
-          onPress={handleLogin}
-          disabled={isDisabled}
-          loading={loading}
-        >
-          Login
-        </Button>
+      {Platform.OS === 'ios' || Platform.OS === 'android' ? (
+                <View className="w-full gap-4 items-center">
+                <Button
+                  onPress={handleLogin}
+                  disabled={isDisabled}
+                  loading={loading}
+                >
+                  Login
+                </Button>
+        
+                <View className="flex-row items-center gap-1 justify-center mt-0">
+                  <Text className="font-inter text-base font-normal leading-7 text-black">
+                    Don't have an account?
+                  </Text>
+                  <Pressable
+                    onPress={handleSignup}
+                    role="link"
+                    aria-label="Sign Up"
+                  >
+                    <Text className="text-blue-600">Sign Up</Text>
+                  </Pressable>
+                </View>
+              </View> 
+            ) : 
+            
+            (
+              <View className="w-full gap-4 items-center">
+                <Button
+                  onPress={handleLogin}
+                  disabled={isDisabled}
+                  loading={loading}
+                >
+                  Login
+                </Button>
+        
+                <View className="flex-row items-center gap-2">
+                    <Text className="font-inter text-base font-normal leading-7 text-right text-black">
+                      Don't have an account?
+                    </Text>
+                    <Pressable
+                      onPress={handleSignup}
+                      role="link"
+                      aria-label="Sign Up"
+                    >
+                      <Text className="text-blue-600">Sign Up</Text>
+                    </Pressable>
+                </View>
+            </View>
+            )}
 
-        <View className="flex-row items-center gap-2">
-          <Text className="font-inter text-base font-normal leading-7 text-right text-black">
-            Don't have an account?
-          </Text>
-          <Pressable
-            onPress={handleSignup}
-            role="link"
-            aria-label="Sign Up"
-          >
-            <Text className="text-blue-600">Sign Up</Text>
-          </Pressable>
-        </View>
-      </View>
+
+
+     
+
+      
     </View>
   );
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       {!isMobile ? (
         <main aria-label="main-layout Web" className="flex items-center justify-center min-h-screen">
           {renderContent()}
@@ -132,7 +169,7 @@ const Login = () => {
         </View>
       )}
       <Loader isVisible={loading} />
-    </ScrollView>
+    </SafeAreaView>
   );
 };
 
