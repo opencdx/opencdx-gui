@@ -444,7 +444,7 @@ export const useHandleMessageTemplateFormSubmit = (isEdit: boolean, fetchMessage
 export const useDeleteMessageTemplate = (fetchMessageTemplates: () => void) => {
     return useMutation({
         mutationFn: async (id: string) => {
-            const response = await axios.delete(`https://api.dev-1.opencdx.io/communications/email/${id}`, { headers });
+            const response = await axios.delete(`https://api.dev-1.opencdx.io/communications/message/${id}`, { headers });
             if (response.status === 200) {
                 fetchMessageTemplates();
             }
@@ -492,7 +492,7 @@ export const useHandleSMSTemplateFormSubmit = (isEdit: boolean, fetchSMSTemplate
 export const useDeleteSMSTemplate = (fetchSMSTemplates: () => void) => {
     return useMutation({
         mutationFn: async (id: string) => {
-            const response = await axios.delete(`https://api.dev-1.opencdx.io/communications/email/${id}`, { headers });
+            const response = await axios.delete(`https://api.dev-1.opencdx.io/communications/sms/${id}`, { headers });
             if (response.status === 200) {
                 fetchSMSTemplates();
             }
@@ -540,7 +540,7 @@ export const useHandleEventTemplateFormSubmit = (isEdit: boolean, fetchEventTemp
 export const useDeleteEventTemplate = (fetchEventTemplates: () => void) => {
     return useMutation({
         mutationFn: async (id: string) => {
-            const response = await axios.delete(`https://api.dev-1.opencdx.io/communications/email/${id}`, { headers });
+            const response = await axios.delete(`https://api.dev-1.opencdx.io/communications/event/${id}`, { headers });
             if (response.status === 200) {
                 fetchEventTemplates();
             }
