@@ -1,6 +1,7 @@
 import { logisticsApi } from "@/api";
 import { ManufacturerListRequest, Manufacturer, Country, Vendor, Device } from "@/api/logistics";
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { SignUpRequest } from '@/api/iam/model';
 import axios from 'axios';
 import {
     listCountries,
@@ -304,6 +305,54 @@ export const useFetchTests = () => {
                 { headers }
             );
             return response.data.testCases;
+        }
+    });
+};
+
+export const useFetchUsers = () => {
+    return useQuery({
+        queryKey: ['users'],
+        queryFn: async () => {
+            const response = await axios.post(
+                'https://api.dev-1.opencdx.io/iam/user/list',
+                { pagination: { pageNumber: 0, pageSize: 100, sortAscending: true } },
+                { headers }
+            );
+            return response.data.iamUsers;
+        }
+    });
+};
+
+export const useHandleUserFormSubmit = (isEdit: boolean, fetchUsers: () => void, reset: () => void) => {
+    return useMutation({
+        mutationFn: async (data: Omit<SignUpRequest, 'id'>) => {
+            debugger;
+            const url = isEdit ? 'https://api.dev-1.opencdx.io/iam/user' : 'https://api.dev-1.opencdx.io/iam/user/signup';
+            const method = isEdit ? 'put' : 'post';
+
+            const cleanData = JSON.parse(JSON.stringify(data));
+
+            const response = await axios({
+                method,
+                url,
+                data: cleanData,
+                headers
+            });
+            if (response.status === 200 || response.status === 201) {
+                fetchUsers();
+                reset();
+            }
+        }
+    });
+};
+
+export const useDeleteUser = (fetchUsers: () => void) => {
+    return useMutation({
+        mutationFn: async (id: string) => {
+            const response = await axios.delete(`https://api.dev-1.opencdx.io/iam/user/${id}`, { headers });
+            if (response.status === 200) {
+                fetchUsers();
+            }
         }
     });
 };

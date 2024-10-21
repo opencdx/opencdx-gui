@@ -14,7 +14,8 @@
     "generate-api:iam": "openapi-generator-cli generate -i ./src/api/json/iam.json -g typescript-axios -o ./src/api/iam/ --skip-validate-spec --additional-properties=useSingleRequestParameter=true,withoutPrefixEnums=true,enumNameSuffix=,withSeparateModelsAndApi=true,apiPackage=server,modelPackage=model --openapi-normalizer REFACTOR_ALLOF_WITH_PROPERTIES_ONLY=true",
     "generate-api:questionnaire": "openapi-generator-cli generate -i ./src/api/json/questionnaire.json -g typescript-axios -o ./src/api/questionnaire/ --skip-validate-spec --additional-properties=useSingleRequestParameter=true,withoutPrefixEnums=true,enumNameSuffix=,withSeparateModelsAndApi=true,apiPackage=server,modelPackage=model --openapi-normalizer REFACTOR_ALLOF_WITH_PROPERTIES_ONLY=true",
     "generate-api:logistics": "openapi-generator-cli generate -i ./src/api/json/logistics.json -g typescript-axios -o ./src/api/logistics/ --skip-validate-spec --additional-properties=useSingleRequestParameter=true,withoutPrefixEnums=true,enumNameSuffix=,withSeparateModelsAndApi=true,apiPackage=server,modelPackage=model --openapi-normalizer REFACTOR_ALLOF_WITH_PROPERTIES_ONLY=true",
-    "lighthouse": "node --experimental-modules lighthouse.mjs"
+    "lighthouse": "node --experimental-modules lighthouse.mjs",
+    "generate-api:communications": "openapi-generator-cli generate -i ./src/api/json/communications.json -g typescript-axios -o ./src/api/communications/ --skip-validate-spec --additional-properties=useSingleRequestParameter=true,withoutPrefixEnums=true,enumNameSuffix=,withSeparateModelsAndApi=true,apiPackage=server,modelPackage=model --openapi-normalizer REFACTOR_ALLOF_WITH_PROPERTIES_ONLY=true"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
