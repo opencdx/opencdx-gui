@@ -356,3 +356,50 @@ export const useDeleteUser = (fetchUsers: () => void) => {
         }
     });
 };
+
+export const useFetchEmailTemplates = () => {
+    return useQuery({
+        queryKey: ['emailTemplates'],
+        queryFn: async () => {
+            const response = await axios.post(
+                'https://api.dev-1.opencdx.io/communications/email/list',
+                { pagination: { pageNumber: 0, pageSize: 100, sortAscending: true } },
+                { headers }
+            );
+            return response.data.templates;
+        }
+    });
+};
+
+export const useHandleEmailTemplateFormSubmit = (isEdit: boolean, fetchEmailTemplates: () => void, reset: () => void) => {
+    return useMutation({
+        mutationFn: async (data: Omit<any, 'id'>) => {
+            const url = isEdit ? 'https://api.dev-1.opencdx.io/communications/email' : 'https://api.dev-1.opencdx.io/communications/email';
+            const method = isEdit ? 'put' : 'post';
+
+            const cleanData = JSON.parse(JSON.stringify(data));
+
+            const response = await axios({
+                method,
+                url,
+                data: cleanData,
+                headers
+            });
+            if (response.status === 200 || response.status === 201) {
+                fetchEmailTemplates();
+                reset();
+            };
+        }
+    });
+};
+
+export const useDeleteEmailTemplate = (fetchEmailTemplates: () => void) => {
+    return useMutation({
+        mutationFn: async (id: string) => {
+            const response = await axios.delete(`https://api.dev-1.opencdx.io/communications/email/${id}`, { headers });
+            if (response.status === 200) {
+                fetchEmailTemplates();
+            }
+        }
+    });
+};
