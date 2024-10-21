@@ -10,7 +10,7 @@ import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import ScienceIcon from '@mui/icons-material/Science';
 import WorkspacesIcon from '@mui/icons-material/Workspaces';
 import { useRouter } from 'next/navigation';
-import { useGetManufacturerList, useFetchCountries, useFetchVendors, useFetchOrganizations, useFetchDevices, useFetchTests, useFetchEmailTemplates, useFetchUsers } from '@/hooks/manufacturers-hooks';
+import { useGetManufacturerList, useFetchCountries, useFetchVendors, useFetchOrganizations, useFetchDevices, useFetchTests, useFetchEmailTemplates, useFetchUsers, useFetchEventTemplates, useFetchSMSTemplates, useFetchMessageTemplates } from '@/hooks/manufacturers-hooks';
 import { Manufacturer } from '@/api/logistics/model/manufacturer';
 // Lazy load InfoCard
 const InfoCard = React.lazy(() => import('@/components/flow/InfoCard'));
@@ -26,6 +26,10 @@ const FlowPage: React.FC = () => {
   const { data: tests=[]} = useFetchTests()
   const { data: emailTemplates = [] } = useFetchEmailTemplates();
   const { data: adminUsers = [] } = useFetchUsers();
+  const { data: eventTemplates = [] } = useFetchEventTemplates();
+  const { data: smsTemplates = [] } = useFetchSMSTemplates();
+  const { data: messageTemplates = [] } = useFetchMessageTemplates();
+
  
   console.log('Manufacturers list:', manufacturersList);
   
@@ -43,7 +47,12 @@ const FlowPage: React.FC = () => {
     { icon: <WorkspacesIcon fontSize="large" />, title: 'Workspace', value: organizations.length.toString(), ref: 'workspaces', url: '/flow/workspaces' },
     { icon: <SmartphoneIcon fontSize="large" />, title: 'Devices', value: devices.length.toString(), ref: 'devices', url: '/flow/devices' },
     { icon: <ScienceIcon fontSize="large" />, title: 'Tests', value: tests.length.toString(), ref: 'tests', url: '/flow/tests' },
-    { icon: <DescriptionIcon fontSize="large" />, title: 'Template', value: emailTemplates.length.toString(), ref: 'template', url: '/flow/email' },
+    { icon: <DescriptionIcon fontSize="large" />, title: 'Email Templates', value: emailTemplates.length.toString(), ref: 'template', url: '/flow/email' },
+    { icon: <DescriptionIcon fontSize="large" />, title: 'Event Templates', value: eventTemplates.length.toString(), ref: 'event', url: '/flow/event' },
+    { icon: <DescriptionIcon fontSize="large" />, title: 'SMS Templates', value: smsTemplates.length.toString(), ref: 'sms', url: '/flow/sms' },
+    { icon: <DescriptionIcon fontSize="large" />, title: 'Message Templates', value: messageTemplates.length.toString(), ref: 'message', url: '/flow/message' },
+
+
     { icon: <AdminPanelSettingsIcon fontSize="large" />, title: 'Admin', value: adminUsers.length.toString(), ref: 'admin', url: '/flow/admin' },
 
   ];

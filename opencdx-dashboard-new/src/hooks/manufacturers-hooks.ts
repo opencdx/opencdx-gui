@@ -403,3 +403,147 @@ export const useDeleteEmailTemplate = (fetchEmailTemplates: () => void) => {
         }
     });
 };
+
+
+export const useFetchMessageTemplates = () => {
+    return useQuery({
+        queryKey: ['messageTemplates'],
+        queryFn: async () => {
+            const response = await axios.post(
+                'https://api.dev-1.opencdx.io/communications/message/list',
+                { pagination: { pageNumber: 0, pageSize: 100, sortAscending: true } },
+                { headers }
+            );
+            return response.data.templates;
+        }
+    });
+};
+
+export const useHandleMessageTemplateFormSubmit = (isEdit: boolean, fetchMessageTemplates: () => void, reset: () => void) => {
+    return useMutation({
+        mutationFn: async (data: Omit<any, 'id'>) => {
+            const url = isEdit ? 'https://api.dev-1.opencdx.io/communications/message' : 'https://api.dev-1.opencdx.io/communications/message';
+            const method = isEdit ? 'put' : 'post';
+
+            const cleanData = JSON.parse(JSON.stringify(data));
+
+            const response = await axios({
+                method,
+                url,
+                data: cleanData,
+                headers
+            });
+            if (response.status === 200 || response.status === 201) {
+                fetchMessageTemplates();
+                reset();
+            };
+        }
+    });
+};
+
+export const useDeleteMessageTemplate = (fetchMessageTemplates: () => void) => {
+    return useMutation({
+        mutationFn: async (id: string) => {
+            const response = await axios.delete(`https://api.dev-1.opencdx.io/communications/email/${id}`, { headers });
+            if (response.status === 200) {
+                fetchMessageTemplates();
+            }
+        }
+    });
+};
+
+
+export const useFetchSMSTemplates = () => {
+    return useQuery({
+        queryKey: ['smsTemplates'],
+        queryFn: async () => {
+            const response = await axios.post(
+                'https://api.dev-1.opencdx.io/communications/sms/list',
+                { pagination: { pageNumber: 0, pageSize: 100, sortAscending: true } },
+                { headers }
+            );
+            return response.data.templates;
+        }
+    });
+};
+
+export const useHandleSMSTemplateFormSubmit = (isEdit: boolean, fetchSMSTemplates: () => void, reset: () => void) => {
+    return useMutation({
+        mutationFn: async (data: Omit<any, 'id'>) => {
+            const url = isEdit ? 'https://api.dev-1.opencdx.io/communications/sms' : 'https://api.dev-1.opencdx.io/communications/sms';
+            const method = isEdit ? 'put' : 'post';
+
+            const cleanData = JSON.parse(JSON.stringify(data));
+
+            const response = await axios({
+                method,
+                url,
+                data: cleanData,
+                headers
+            });
+            if (response.status === 200 || response.status === 201) {
+                fetchSMSTemplates();
+                reset();
+            };
+        }
+    });
+};
+
+export const useDeleteSMSTemplate = (fetchSMSTemplates: () => void) => {
+    return useMutation({
+        mutationFn: async (id: string) => {
+            const response = await axios.delete(`https://api.dev-1.opencdx.io/communications/email/${id}`, { headers });
+            if (response.status === 200) {
+                fetchSMSTemplates();
+            }
+        }
+    });
+};
+
+
+export const useFetchEventTemplates = () => {
+    return useQuery({
+        queryKey: ['eventTemplates'],
+        queryFn: async () => {
+            const response = await axios.post(
+                'https://api.dev-1.opencdx.io/communications/event/list',
+                { pagination: { pageNumber: 0, pageSize: 100, sortAscending: true } },
+                { headers }
+            );
+            return response.data.templates;
+        }
+    });
+};
+
+export const useHandleEventTemplateFormSubmit = (isEdit: boolean, fetchEventTemplates: () => void, reset: () => void) => {
+    return useMutation({
+        mutationFn: async (data: Omit<any, 'id'>) => {
+            const url = isEdit ? 'https://api.dev-1.opencdx.io/communications/event' : 'https://api.dev-1.opencdx.io/communications/event';
+            const method = isEdit ? 'put' : 'post';
+
+            const cleanData = JSON.parse(JSON.stringify(data));
+
+            const response = await axios({
+                method,
+                url,
+                data: cleanData,
+                headers
+            });
+            if (response.status === 200 || response.status === 201) {
+                fetchEventTemplates();
+                reset();
+            };
+        }
+    });
+};
+
+export const useDeleteEventTemplate = (fetchEventTemplates: () => void) => {
+    return useMutation({
+        mutationFn: async (id: string) => {
+            const response = await axios.delete(`https://api.dev-1.opencdx.io/communications/email/${id}`, { headers });
+            if (response.status === 200) {
+                fetchEventTemplates();
+            }
+        }
+    });
+};
