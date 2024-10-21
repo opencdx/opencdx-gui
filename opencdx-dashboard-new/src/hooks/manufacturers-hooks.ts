@@ -1,5 +1,5 @@
 import { logisticsApi } from "@/api";
-import { ManufacturerListRequest, Manufacturer, Country, Vendor } from "@/api/logistics";
+import { ManufacturerListRequest, Manufacturer, Country, Vendor, Device } from "@/api/logistics";
 import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import {
@@ -78,6 +78,20 @@ export const useFetchVendors = () => {
                 { headers }
             );
             return response.data.vendors;
+        }
+    });
+};
+
+export const useFetchDevices = () => {
+    return useQuery({
+        queryKey: ['devices'],
+        queryFn: async () => {
+            const response = await axios.post(
+                'https://api.dev-1.opencdx.io/logistics/device/list',
+                { pagination: { pageNumber: 0, pageSize: 100, sortAscending: true } },
+                { headers }
+            );
+            return response.data.device;
         }
     });
 };
@@ -208,3 +222,89 @@ export const useFetchWorkspaces = (organizationId: string | null) => {
 };
 
 // Add other hooks as needed for handling organizations and workspaces
+
+export const useHandleDeviceFormSubmit = (isEdit: boolean, fetchDevices: () => void, reset: () => void) => {
+    return useMutation({
+        mutationFn: async (data: Omit<Device, 'id'>) => {
+            const url = 'https://api.dev-1.opencdx.io/logistics/device';
+            const method = isEdit ? 'put' : 'post';
+
+            const cleanData = JSON.parse(JSON.stringify(data));
+
+            const response = await axios({
+                method,
+                url,
+                data: cleanData,
+                headers
+            });
+            if (response.status === 200 || response.status === 201) {
+                fetchDevices();
+                reset();
+            }
+        }
+    });
+};
+
+export const useDeleteDevice = (fetchDevices: () => void) => {
+    return useMutation({
+        mutationFn: async (id: string) => {
+            const response = await axios.delete(
+                `https://api.dev-1.opencdx.io/logistics/device/${id}`,
+                { headers }
+            );
+            if (response.status === 200) {
+                fetchDevices();
+            }
+        }
+    });
+};
+
+export const useHandleTestFormSubmit = (isEdit: boolean, fetchTests: () => void, reset: () => void) => {
+    return useMutation({
+        mutationFn: async (data: Omit<Device, 'id'>) => {
+            const url = 'https://api.dev-1.opencdx.io/logistics/testcase';
+            const method = isEdit ? 'put' : 'post';
+
+            const cleanData = JSON.parse(JSON.stringify(data));
+
+            const response = await axios({
+                method,
+                url,
+                data: cleanData,
+                headers
+            });
+            if (response.status === 200 || response.status === 201) {
+                fetchTests();
+                reset();
+            }
+        }
+    });
+};
+
+export const useDeleteTest = (fetchTests: () => void) => {
+    return useMutation({
+        mutationFn: async (id: string) => {
+            const response = await axios.delete(
+                `https://api.dev-1.opencdx.io/logistics/testcase/${id}`,
+                { headers }
+            );
+            if (response.status === 200) {
+                fetchTests();
+            }
+        }
+    });
+};
+
+export const useFetchTests = () => {
+    return useQuery({
+        queryKey: ['tests'],
+        queryFn: async () => {
+            const response = await axios.post(
+                'https://api.dev-1.opencdx.io/logistics/testcase/list',
+                { pagination: { pageNumber: 0, pageSize: 100, sortAscending: true } },
+                { headers }
+            );
+            return response.data.testCases;
+        }
+    });
+};
