@@ -2,27 +2,28 @@ import React from 'react';
 import { MantineReactTable, useMantineReactTable, type MRT_ColumnDef } from 'mantine-react-table';
 import { Button } from '@nextui-org/react';
 import { Edit, Delete } from '@mui/icons-material';
-import { Manufacturer } from '@/api/logistics/model/manufacturer';
 
-interface ManufacturersTableProps {
-  manufacturers: Manufacturer[];
+interface ControlledTableProps {
+  data: any[];
   isLoading: boolean;
-  onEdit: (manufacturer: Manufacturer) => void;
-  onDelete: (manufacturer: Manufacturer) => void;
-  columns: MRT_ColumnDef<Manufacturer>[];
+  onEdit: (manufacturer: any) => void;
+  onDelete: (manufacturer: any) => void;
+  columns: MRT_ColumnDef<any>[];
+  isDelete?: boolean;
 }
 
-const ManufacturersTable: React.FC<ManufacturersTableProps> = ({
-  manufacturers,
+const ControlledTable: React.FC<ControlledTableProps> = ({
+  data,
   isLoading,
   onEdit,
   onDelete,
   columns,
+  isDelete = true,
 }) => {
   
   const table = useMantineReactTable({
     columns: columns,
-    data: manufacturers,
+    data: data,
     initialState: { showColumnFilters: true, density: 'xs' },
     enableColumnFilters: true,
     enableSorting: true,
@@ -40,9 +41,11 @@ const ManufacturersTable: React.FC<ManufacturersTableProps> = ({
         <Button isIconOnly variant='light' color='primary' onClick={() => onEdit(row.original)}>
           <Edit />
         </Button>
-        <Button isIconOnly variant='light' color='danger' onClick={() => onDelete(row.original)}>
-          <Delete />
-        </Button>
+        {isDelete && (  
+          <Button isIconOnly variant='light' color='danger' onClick={() => onDelete(row.original)}>
+            <Delete />
+          </Button>
+        )}
       </span>
     ),
     mantineTableProps: {
@@ -68,4 +71,4 @@ const ManufacturersTable: React.FC<ManufacturersTableProps> = ({
   return <MantineReactTable table={table} />;
 };
 
-export default ManufacturersTable;
+export default ControlledTable;

@@ -1,15 +1,14 @@
 'use client';
 
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { MantineReactTable, useMantineReactTable, type MRT_ColumnDef } from 'mantine-react-table';
-import { Input, Button, Textarea, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from '@nextui-org/react';
-import { Edit, Delete, ArrowBack } from '@mui/icons-material';
+import { type MRT_ColumnDef } from 'mantine-react-table';
+import { Input, Button, Textarea } from '@nextui-org/react';
+import { ArrowBack } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import { Manufacturer } from '@/api/logistics/model/manufacturer';
 import { useGetManufacturerList, useAddManufacturer, useDeleteManufacturer, useUpdateManufacturer } from '@/hooks/manufacturers-hooks';
-import ManufacturersTable from '@/components/flow/ManufacturersTable';
+import ControlledTable from '@/components/flow/ControlledTable';
 import ConfirmationModal from '@/components/flow/ConfirmationModal';
-
 
 const ManufacturersPage: React.FC = () => {
     const [manufacturers, setManufacturers] = useState<Manufacturer[]>([]);
@@ -22,9 +21,6 @@ const ManufacturersPage: React.FC = () => {
     const { mutate: mutateAddManufacturer } = useAddManufacturer();
     const { mutate: mutateDeleteManufacturer } = useDeleteManufacturer();
     const { mutate: mutateUpdateManufacturer } = useUpdateManufacturer();
-    const [isOpen, setIsOpen] = useState(false);
-    const [onOpenChange, setOnOpenChange] = useState(false);
-    const [row, setRow] = useState<Manufacturer | null>(null);
     const [isEdit, setIsEdit] = useState(false);
     const router = useRouter();
     const [formData, setFormData] = useState<Omit<Manufacturer, 'id'>>({
@@ -94,18 +90,9 @@ const ManufacturersPage: React.FC = () => {
             setIsLoading(false);
             setIsEdit(false);
             setFormData({
-                name: '',
                 manufacturerAddress: {
                     countryId: '671125dddbd1c863d41b2730',
-                    addressPurpose: 'SECONDARY',
-                    address1: '',
-                    city: '',
-                    state: '',
-                    postalCode: '',
                 },
-                manufacturerWebsite: '',
-                manufacturerDescription: '',
-                manufacturerCertifications: [],
             });
 
 
@@ -151,7 +138,7 @@ const ManufacturersPage: React.FC = () => {
         }
     }, [manufacturerToDelete, mutateDeleteManufacturer, mutateManufacturersList, setManufacturers]);
 
-    const columns = React.useMemo<MRT_ColumnDef<Manufacturer>[]>(
+    const columns = React.useMemo<MRT_ColumnDef<any>[]>(
         () => [
           { accessorKey: 'name', header: 'Name' },
           { accessorKey: 'manufacturerAddress.address1', header: 'Address' },
@@ -288,8 +275,8 @@ const ManufacturersPage: React.FC = () => {
                 ) : manufacturers.length === 0 ? (
                     <div className="text-gray-500 mb-4">No manufacturers found.</div>
                 ) : (
-                    <ManufacturersTable
-                        manufacturers={manufacturers}
+                    <ControlledTable
+                        data={manufacturers}
                         isLoading={isLoading}
                         onEdit={handleEdit}
                         onDelete={handleDelete}
