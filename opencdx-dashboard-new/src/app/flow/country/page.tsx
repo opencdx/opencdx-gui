@@ -11,7 +11,6 @@ import ConfirmationModal from '@/components/flow/ConfirmationModal';
 
 const CountryPage: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [editingCountry, setEditingCountry] = useState<Country | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
   const [isEdit, setIsEdit] = useState(false);
@@ -51,36 +50,13 @@ const CountryPage: React.FC = () => {
     setSelectedCountry(country);
     setIsOpen(true);
   }, []);
-  useEffect(() => {
-    console.log('selectedCountry updated:', selectedCountry);
-  }, [selectedCountry]);
+ 
 
   const columns = [
     { header: 'Name', accessorKey: 'name' },
     { header: 'ISO2', accessorKey: 'iso2' },
     { header: 'ISO3', accessorKey: 'iso3' },
     { header: 'Continent', accessorKey: 'continent' },
-    {
-      header: 'Actions',
-      cell: ({ row }: { row: any }) => (
-        <span className='flex flex-col gap-2'>
-          <Button isIconOnly variant='light' color='primary'
-            onClick={() => {
-              setSelectedCountry(row.original);
-              setFormData(row.original);
-              setIsEdit(true);
-              setIsModalVisible(true);
-            }}
-          >{<Edit />}</Button>
-          <Button isIconOnly variant='light' color='danger'
-            onClick={() => {
-              setIsOpen(true);
-              setSelectedCountry(row.original);
-            }}
-          >{<Delete />}</Button>
-        </span>
-      ),
-    },
   ];
 
   return (

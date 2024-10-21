@@ -1,4 +1,4 @@
-import { Card, Button } from "@nextui-org/react";
+import { Card, Button, Divider, CardHeader } from "@nextui-org/react";
 import React, { Suspense } from 'react';
 
 // Lazy load the EditIcon
@@ -14,18 +14,23 @@ interface InfoCardProps {
 
 const InfoCard: React.FC<InfoCardProps> = ({ icon, title, value, onViewDetails, onEdit }) => {
     return (
-      <Card className="w-full h-48 flex flex-col items-center justify-between p-4 relative">
-        <button onClick={onEdit} className="absolute top-2 right-2 text-gray-400 hover:text-gray-600">
+      <Card className="w-full h-48 flex flex-col items-center justify-between relative">
+        <div className="flex flex-row items-center justify-end w-full">
+                 <div className="text-4xl mb-2 mr-12 align-middle justify-center ">{icon}</div>
+        <Button isIconOnly variant='light' color='primary' onClick={onEdit}>
+
           <Suspense fallback={<div>Loading...</div>}>
             <LazyEditIcon fontSize="small" />
-          </Suspense>
-        </button>
-        <div className="text-4xl mb-2">{icon}</div>
+            
+            </Suspense>
+          </Button>
+        </div>
+
         <div className="text-sm text-gray-600 mb-1">{title}</div>
         <div className="text-lg font-semibold mb-4">{value}</div>
-        <Button variant="shadow" onClick={onViewDetails} className="text-blue-500 hover:text-blue-700">
+        <div onClick={onViewDetails} className="text-white  p-4 align-middle text-center w-full bg-blue-500 hover:text-blue-700">
           View Details
-        </Button>
+        </div>
       </Card>
     );
 };
