@@ -7,10 +7,15 @@ import { Edit, Delete, ArrowBack } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import { Manufacturer } from '@/api/logistics/model/manufacturer';
 import { useGetManufacturerList, useAddManufacturer, useDeleteManufacturer, useUpdateManufacturer } from '@/hooks/manufacturers-hooks';
+import ManufacturersTable from '@/components/flow/ManufacturersTable';
+import ConfirmationModal from '@/components/flow/ConfirmationModal';
 
 
 const ManufacturersPage: React.FC = () => {
     const [manufacturers, setManufacturers] = useState<Manufacturer[]>([]);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [manufacturerToDelete, setManufacturerToDelete] = useState<Manufacturer | null>(null);
+
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const { data: manufacturersList = [], isError: isErrorList, mutate: mutateManufacturersList } = useGetManufacturerList();
@@ -91,7 +96,7 @@ const ManufacturersPage: React.FC = () => {
             setFormData({
                 name: '',
                 manufacturerAddress: {
-                    countryId: '66faed240e1b22662c798775',
+                    countryId: '671125dddbd1c863d41b2730',
                     addressPurpose: 'SECONDARY',
                     address1: '',
                     city: '',
@@ -107,96 +112,65 @@ const ManufacturersPage: React.FC = () => {
         }
     }, [formData, isEdit, mutateAddManufacturer, mutateUpdateManufacturer, mutateManufacturersList]);
 
-    const columns = useMemo<MRT_ColumnDef<Manufacturer>[]>(
+    const handleEdit = useCallback((manufacturer: Manufacturer) => {
+        setFormData(manufacturer);
+        setIsEdit(true);
+    }, []);
+
+    const handleDelete = useCallback((manufacturer: Manufacturer) => {
+        console.log('Deleting manufacturer:', manufacturer);
+        setManufacturerToDelete(manufacturer);
+        setIsDeleteModalOpen(true);
+    }, []);
+    useEffect(() => {
+        console.log('manufacturerToDelete updated:', manufacturerToDelete);
+    }, [manufacturerToDelete]);
+
+    const handleConfirmDelete = useCallback(() => {
+        if (manufacturerToDelete && manufacturerToDelete.id) {
+            mutateDeleteManufacturer(manufacturerToDelete.id, {
+                onSuccess: () => {
+                    setManufacturers(prev => prev.filter(manufacturer => manufacturer.id !== manufacturerToDelete.id));
+                    mutateManufacturersList({ pagination: { pageNumber: 0, pageSize: 100, sortAscending: true } }, {
+                        onSuccess: (data) => {
+                            setManufacturers(data?.data?.manufacturers || []);
+                        }
+                    });
+                    setManufacturerToDelete(null);
+                    setIsDeleteModalOpen(false);
+                    setError(null);
+                },
+                onError: (error) => {
+                    console.error('Error deleting manufacturer:', error);
+                    setError('Failed to delete manufacturer. Please try again.');
+                }
+            });
+        } else {
+            console.error('No manufacturer selected for deletion or missing ID');
+            setError('No manufacturer selected for deletion or missing ID');
+        }
+    }, [manufacturerToDelete, mutateDeleteManufacturer, mutateManufacturersList, setManufacturers]);
+
+    const columns = React.useMemo<MRT_ColumnDef<Manufacturer>[]>(
         () => [
-            { accessorKey: 'name', header: 'Name' },
-            { accessorKey: 'manufacturerAddress.address1', header: 'Address' },
-            { accessorKey: 'manufacturerAddress.city', header: 'City' },
-            { accessorKey: 'manufacturerAddress.state', header: 'State' },
-            { accessorKey: 'manufacturerAddress.postalCode', header: 'Postal Code' },
-            { accessorKey: 'manufacturerWebsite', header: 'Website' },
-            { accessorKey: 'manufacturerDescription', header: 'Description' },
-            {
-                accessorKey: 'manufacturerCertifications',
-                header: 'Certifications',
-                Cell: ({ cell }) => cell.getValue<string[]>().join(', '),
-            },
+          { accessorKey: 'name', header: 'Name' },
+          { accessorKey: 'manufacturerAddress.address1', header: 'Address' },
+          { accessorKey: 'manufacturerAddress.city', header: 'City' },
+          { accessorKey: 'manufacturerAddress.state', header: 'State' },
+          { accessorKey: 'manufacturerAddress.postalCode', header: 'Postal Code' },
+          { accessorKey: 'manufacturerWebsite', header: 'Website' },
+          { accessorKey: 'manufacturerDescription', header: 'Description' },
+          {
+            accessorKey: 'manufacturerCertifications',
+            header: 'Certifications',
+            Cell: ({ cell }) => cell.getValue<string[]>().join(', '),
+          },
         ],
         []
-    );
-
+      );
     useEffect(() => {
-        if (isErrorList) {
-            setError('Error fetching manufacturers. Please try again.');
-        }
-    }, [isErrorList]);
-    const openDeleteConfirmModal = (row: Manufacturer) => {
-        setIsOpen(true);
-        setOnOpenChange(true);
-        setRow(row);
-        return
-    }
-
-
-    const table = useMantineReactTable({
-        columns,
-        data: manufacturers,
-        initialState: { showColumnFilters: true, density: 'xs' },
-        enableColumnFilters: true,
-        enableSorting: true,
-        enablePagination: true,
-        enableColumnResizing: true,
-        enableColumnActions: true,
-        enableRowActions: true,
-        enableRowSelection: true,
-        enableGrouping: true,
-        enableEditing: true,
-
-        state: { isLoading },
-        getRowId: (row) => row.id,
-        // onEditingRowSave: (row)=>{
-        //    setFormData(row.values);
-        // },
-        renderRowActions: ({ row, table }) => (
-
-            <span className='flex flex-col gap-2'>
-                <Button isIconOnly variant='light' color='primary'
-                    onClick={() => {
-                        setFormData(row.original);
-                        setIsEdit(true);
-                    }}
-                >{<Edit />}</Button>
-                <Button isIconOnly variant='light' color='danger'
-                    onClick={() => openDeleteConfirmModal(row)}
-                >{<Delete />}</Button>
-            </span>
-
-        ),
-        mantineTableProps: {
-            height: '500px',
-            striped: true,
-            highlightOnHover: true,
-            withColumnBorders: true,
-
-            sx: {
-                '& tr:nth-of-type(odd)': {
-                    backgroundColor: '#F7FAFE !important',
-                },
-                '& tr:nth-of-type(even)': {
-                    backgroundColor: '#FFFFFF !important',
-                },
-                '& thead tr:nth-of-type(1)': {
-                    backgroundColor: '#E5F0FF !important',
-                },
-            },
-            withBorder: true,
-
-        },
-
-    });
-
- 
-
+        console.log('manufacturerToDelete updated:', manufacturerToDelete);
+    }, [manufacturerToDelete]);
     return (
         <div className="w-screen h-full flex flex-col p-4">
             <div className='flex flex-start'>
@@ -308,64 +282,28 @@ const ManufacturersPage: React.FC = () => {
                     {isLoading ? 'Saving...' : isEdit ? 'Update Manufacturer' : 'Add Manufacturer'}
                 </Button>
             </form>
-            <div className=' h-full w-full'>
-                {
-                    isErrorList ? <div className="text-red-500 mb-4">Error fetching manufacturers. Please try again.</div> :
-                        manufacturers.length === 0 ? <div className="text-gray-500 mb-4">No manufacturers found.</div> :
-                            <MantineReactTable table={table} />
-                }
-
+            <div className='h-full w-full'>
+                {isErrorList ? (
+                    <div className="text-red-500 mb-4">Error fetching manufacturers. Please try again.</div>
+                ) : manufacturers.length === 0 ? (
+                    <div className="text-gray-500 mb-4">No manufacturers found.</div>
+                ) : (
+                    <ManufacturersTable
+                        manufacturers={manufacturers}
+                        isLoading={isLoading}
+                        onEdit={handleEdit}
+                        onDelete={handleDelete}
+                        columns={columns}
+                    />
+                )}
             </div>
-            <Modal
-                isOpen={isOpen}
-                placement={'center'}
-                hideCloseButton={true}
-                radius='none'
-            >
-                <ModalContent>
-                    {(onClose) => (
-                        <>
-                            <ModalHeader className="flex flex-col gap-1">Delete Manufacturer</ModalHeader>
-                            <ModalBody>
-                                <p>
-                                    Are you sure you want to delete this manufacturer {row?.name}?
-                                </p>
-                            </ModalBody>
-                            <ModalFooter>
-                                <Button color="primary" variant='bordered' onPress={() => {
-                                    onClose();
-                                    setRow(null);
-                                    setIsOpen(false);
-                                    setError(null);
-                                }} aria-label='Cancel' tabIndex={0} size='lg'>
-                                    Cancel
-                                </Button>
-                                <Button
-                                    color="danger"
-                                    aria-label='Continue to delete manufacturer'
-                                    tabIndex={0}
-                                    size='lg'
-                                    onPress={() => {
-                                        onClose();
-                                        mutateDeleteManufacturer(row?.id || '');
-                                        setManufacturers(prev => prev.filter(manufacturer => manufacturer.id !== row?.id));
-                                        mutateManufacturersList({ pagination: { pageNumber: 0, pageSize: 100, sortAscending: true } }, {
-                                            onSuccess: (data) => {
-                                                setManufacturers(data?.data?.manufacturers || []);
-                                            }
-                                        });
-                                        setRow(null);
-                                        setIsOpen(false);
-                                        setError(null);
-                                    }}
-                                >
-                                    Continue
-                                </Button>
-                            </ModalFooter>
-                        </>
-                    )}
-                </ModalContent>
-            </Modal>
+            <ConfirmationModal
+                isOpen={isDeleteModalOpen}
+                onClose={() => setIsDeleteModalOpen(false)}
+                onConfirm={handleConfirmDelete}
+                title="Delete Manufacturer"
+                message={`Are you sure you want to delete this manufacturer ${manufacturerToDelete?.name}?`}
+            />
         </div>
     );
 };

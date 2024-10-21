@@ -19,7 +19,7 @@ export default function ResetPasswordSuccessPage() {
   }, []);
 
   function handleSubmit() {
-    router.push('/login');
+    router.push('/auth/login');
   }
 
   return (

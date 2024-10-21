@@ -26,7 +26,7 @@ export default function ForgotPassword() {
  
   const handleSubmit = async () => {
     localStorage.setItem('username', username);
-    router.push('/reset-password');
+    router.push('/auth/reset-password');
   };
 
   const handleBack = () => {

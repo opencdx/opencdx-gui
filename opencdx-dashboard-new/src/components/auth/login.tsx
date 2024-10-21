@@ -147,7 +147,7 @@ const handleError = (error: AxiosError) => {
             <Link
               className="text-center cursor-pointer"
               color="primary"
-              onPress={() => router.push('/forgot-password')}
+              onPress={() => router.push('/auth/forgot-password')}
             >
               {t('forgot_password_label')}
             </Link>
@@ -171,7 +171,7 @@ const handleError = (error: AxiosError) => {
             <Link
               className="text-center cursor-pointer"
               color="primary"
-              onPress={() => router.push('/signup')}
+              onPress={() => router.push('/auth/signup')}
               aria-label= {t('dont_have_account') + t('sign_up_label')} 
             >
               {t('sign_up_label')}

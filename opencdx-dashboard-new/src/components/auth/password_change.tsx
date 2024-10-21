@@ -2,11 +2,6 @@
 
 import React, { useState } from 'react';
 
-
-
-
-
-
 import { Card, CardBody, CardFooter, CardHeader, Image } from 'ui-library';
 import { toast, ToastContainer } from 'react-toastify';
 
