@@ -59,7 +59,7 @@ const FlowPage: React.FC = () => {
 
 
   return (
-    <div className="p-4">
+    <div className="p-4 w-screen">
       <div className="bg-gradient-to-r from-blue-600 to-blue-300 text-white p-4 rounded-lg mb-4 flex items-center">
         <img src="/images/person.png" alt="Profile" className="w-12 h-12 rounded-full mr-4" />
         <div>
