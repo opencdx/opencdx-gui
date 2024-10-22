@@ -5,6 +5,8 @@ import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronRight, IceCream } from "lucide-react";
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
+import { TableChart, NotificationImportant, Announcement, ContentPasteGo } from '@mui/icons-material';
 
 interface Links {
   label: string;
@@ -146,3 +148,116 @@ export const SidebarLink = ({
   );
 };
 
+export const Logo = () => {
+  return (
+    <Link
+      href="#"
+      className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
+    >
+      <Image
+        src="/images/logo-long.png"
+        alt="logo"
+        width={120}
+        height={40}
+      />
+    </Link>
+  );
+};
+
+export const LogoIcon = () => {
+  return (
+    <Link
+      href="#"
+      className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
+    >
+      <Image
+        src="/images/logo-short.png"
+        alt="logo"
+        width={120}
+        height={120}
+        className="rounded-lg"
+      />
+    </Link>
+  );
+};
+
+export const SideNavigation = () => {
+  const [open, setOpen] = useState(true);
+
+  const links = [
+    {
+      label: 'Dashboard',
+      href: '/pages/dashboard',
+      icon: (
+        <Image src="/images/space_dashboard.png" alt="dashboard" width={20} height={20} />
+      ),
+    },
+    {
+      label: 'Forms Builder',
+      href: '/pages/form-builder',
+      icon: (
+        <Image src="/images/dynamic_form_left.png" alt="form-builder" width={20} height={20} />
+      ),
+    },
+    {
+      label: 'Maps',
+      href: '/pages/maps',
+      icon: (
+        <Image src="/images/map.png" alt="map" width={20} height={20} />
+      ),
+    },
+    {
+      label: 'My Profile',
+      href: '/pages/profile',
+      icon: (
+        <Image src="/images/person.png" alt="profile" width={20} height={20} />
+      ),
+    },
+    {
+      label: 'Functional Flow',
+      href: '/pages/flow',
+      icon: (
+        <TableChart className="text-white" />
+      ),
+    },
+    {
+      label: 'Templates',
+      href: '/pages/templates',
+      icon: (
+        <ContentPasteGo className="text-white" />
+      ),
+    },
+    {
+      label: 'Communication',
+      href: '/pages/communication',
+      icon: (
+        <Announcement className="text-white" />
+      ),
+    },
+    {
+      label: 'Notifications',
+      href: '/pages/notifications',
+      icon: (
+        <NotificationImportant className="text-white" />
+      ),
+    }
+  ];
+
+  return (
+    <Sidebar open={open} setOpen={setOpen}>
+      <SidebarBody className="justify-between gap-10">
+        <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+          {open ? <Logo /> : <LogoIcon />}
+          <div className="mt-8 flex flex-col gap-4">
+            {links.map((link, idx) => (
+              <SidebarLink 
+                key={idx} 
+                link={link} 
+              />
+            ))}
+          </div>
+        </div>
+      </SidebarBody>
+    </Sidebar>
+  );
+};

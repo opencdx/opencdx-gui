@@ -26,7 +26,7 @@ export const useLogin = (onSuccess: (data: any) => void, onError: (error: any) =
         onSuccess: (data) => {
             const { token } = data.data
             localStorage.setItem('serviceToken', token as string);
-            router.push('/flow');
+            router.push('/pages/flow');
             if (onSuccess) onSuccess(data);
         },
         onError: (error) => {
