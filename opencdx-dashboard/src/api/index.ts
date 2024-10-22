@@ -4,13 +4,13 @@ import { Configuration as ClassificationConfig, OpenCdxRestClassificationControl
 
 
 const classification = new ClassificationConfig({
-    basePath: (process.env.REACT_APP_API_HOST ?? '') + process.env.REACT_APP_API_PORT + "/classification"
+    basePath: (process.env.NEXT_PUBLIC_API_HOST ?? 'https://localhost') + (process.env.NEXT_PUBLIC_API_PORT ?? ':8080' ) + "/classification"
 });
 classification.accessToken = async () => {
     return localStorage.getItem('serviceToken') || '';
 }
 const iam = new IAMConfig({
-    basePath: (process.env.REACT_APP_API_HOST ?? '') + process.env.REACT_APP_API_PORT + "/iam"
+    basePath: (process.env.NEXT_PUBLIC_API_HOST ?? 'https://localhost') + (process.env.NEXT_PUBLIC_API_PORT ?? ':8080' ) + "/iam"
 });
 iam.accessToken = async () => {
     return localStorage.getItem('serviceToken') || '';
@@ -19,7 +19,7 @@ iam.accessToken = async () => {
 
 
 const questionnaire = new QuestionnaireConfig({
-    basePath: (process.env.REACT_APP_API_HOST ?? '') + process.env.REACT_APP_API_PORT + "/questionnaire"
+    basePath: (process.env.NEXT_PUBLIC_API_HOST ?? 'https://localhost') + (process.env.NEXT_PUBLIC_API_PORT ?? ':8080' ) + "/questionnaire"
 });
 questionnaire.accessToken = async () => {
     return localStorage.getItem('serviceToken') || '';
