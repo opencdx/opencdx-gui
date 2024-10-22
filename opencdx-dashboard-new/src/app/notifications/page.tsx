@@ -40,15 +40,7 @@ const FlowPage: React.FC = () => {
   }, []);
 
   const cardData = [
-    { icon: <FactoryIcon fontSize="large" />, title: 'Manufacturers', value: manufacturers.length.toString() ?? '0', ref: 'manufacturers', url: '/flow/manufacturers' },
-    { icon: <PublicIcon fontSize="large" />, title: 'Country', value: countries.length.toString(), ref: 'country', url: '/flow/country' },
-    { icon: <StorefrontIcon fontSize="large" />, title: 'Vendors', value: vendors.length.toString(), ref: 'vendors', url: '/flow/vendors' },
-    { icon: <WorkspacesIcon fontSize="large" />, title: 'Organization', value: organizations.length.toString(), ref: 'organizations', url: '/flow/organizations' },
-    { icon: <WorkspacesIcon fontSize="large" />, title: 'Workspace', value: organizations.length.toString(), ref: 'workspaces', url: '/flow/workspaces' },
-    { icon: <SmartphoneIcon fontSize="large" />, title: 'Devices', value: devices.length.toString(), ref: 'devices', url: '/flow/devices' },
-    { icon: <ScienceIcon fontSize="large" />, title: 'Tests', value: tests.length.toString(), ref: 'tests', url: '/flow/tests' },
-    { icon: <AdminPanelSettingsIcon fontSize="large" />, title: 'Admin', value: adminUsers.length.toString(), ref: 'admin', url: '/flow/admin' },
-
+    { icon: <DescriptionIcon fontSize="large" />, title: 'Event Templates', value: eventTemplates.length.toString(), ref: 'event', url: '/notifications/event' },
   ];
 
 
