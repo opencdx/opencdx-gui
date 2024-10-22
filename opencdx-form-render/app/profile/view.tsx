@@ -32,13 +32,13 @@ const ProfileView: React.FC = () => {
           className="rounded-full mb-2"
         />
         <div className="flex items-center">
-          <Text className="text-xl font-semibold mr-2">{profileData.firstName}</Text>
+          <span className="text-xl font-semibold mr-2">{profileData.firstName}</span>
           <button className="text-blue-500 text-sm">Edit</button>
         </div>
       </div>
 
-      <Text className="text-2xl font-bold mb-2">My Profile</Text>
-      <Text className="text-gray-600 mb-6">This information is used for...</Text>
+      <h1 className="text-2xl font-bold mb-2">My Profile</h1>
+      <p className="text-gray-600 mb-6">This information is used for...</p>
 
       <div className="space-y-4 w-[500px]">
         <ProfileField label="First Name*" value={profileData.firstName} required />
