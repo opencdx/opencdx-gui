@@ -31,7 +31,6 @@ const Login = () => {
   const handleLoginSuccess = useCallback((data: { token: string }) => {
     AsyncStorage.setItem('serviceToken', data.token);
     navigation.navigate('dashboard/index' as never);
-    showToast({ message: 'Login successful.', type: 'success' });
   }, [navigation, showToast]);
 
   const handleLoginError = useCallback((err: any) => {

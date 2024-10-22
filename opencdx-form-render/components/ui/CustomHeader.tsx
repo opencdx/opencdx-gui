@@ -21,7 +21,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({
   titleStyle,
 }) => {
   return (
-    <View className="flex-row items-center p-0">
+    <View className="flex-row items-center p-2">
       {leftButton && (
         <TouchableOpacity onPress={leftButton.onPress} className="mr-8">
           {leftButton.imageSource ? (
@@ -37,7 +37,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({
       {rightButton && (
         <TouchableOpacity onPress={rightButton.onPress} className="ml-8">
           {rightButton.imageSource ? (
-            <Image source={rightButton.imageSource} style={{ width: 34, height: 34 }} />
+            <Image source={rightButton.imageSource} style={{ width: 30, height: 30 }} />
           ) : (
             <Text className="text-blue-500">{rightButton.title}</Text>
           )}

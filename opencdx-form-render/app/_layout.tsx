@@ -96,6 +96,11 @@ export default function RootLayout() {
                 title: 'Profile',
                 contentStyle: { backgroundColor: 'white' },
               }} />
+              <Stack.Screen name="profile/mobileView" options={{
+                headerShown: false,
+                title: 'Edit Profile',
+                contentStyle: { backgroundColor: 'white' },
+              }} />
             </Stack>
           </NavThemeProvider>
         </QueryClientProvider>
