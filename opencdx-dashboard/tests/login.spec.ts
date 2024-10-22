@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import path from 'path';
 
 test.describe('Login Page', () => {
   test.beforeEach(async ({ page }) => {
@@ -30,11 +31,12 @@ test.describe('Login Page', () => {
       await route.fulfill({ status: 200, body: JSON.stringify({ success: true }) });
     });
 
-    await page.getByLabel('Email Address').fill('Test@1.com');
-    await page.getByLabel('Password', { exact: true }).fill('Password123');
+    await page.getByLabel('Email Address').fill('admin@opencdx.org');
+    await page.getByLabel('Password', { exact: true }).fill('password');
     await page.getByRole('button', { name: 'Login' }).click();
 
     // Assert successful login (e.g., redirect to dashboard)
+    await page.waitForTimeout(3000);
     await expect(page).toHaveURL('/form-builder');
   });
 
@@ -73,11 +75,50 @@ test.describe('Login Page', () => {
 
   test('should navigate to forgot password page', async ({ page }) => {
     await page.getByRole('link', { name: 'Forgot Password', exact: true }).click();
+    await page.waitForTimeout(3000);
     await expect(page).toHaveURL('/forgot-password');
   });
 
   test('should navigate to signup page', async ({ page }) => {
     await page.getByRole('link', { name: "Sign Up" }).click();
+    await page.waitForTimeout(3000);
     await expect(page).toHaveURL('/signup');
+  });
+
+  test('upload form and save', async ({ page }) => {
+    const loginButton = page.getByRole('button', { name: 'Login' });
+    await expect(loginButton).toBeDisabled();
+
+    await page.getByLabel('Email Address').fill('admin@opencdx.org');
+    await page.getByLabel('Password', { exact: true }).fill('password');
+    await page.getByRole('button', { name: 'Login' }).click();
+
+    // Save the file in variable to be uploaded
+    const jsonFilePath = path.join(__dirname, 'file', 'alpha.json');
+
+    // Locate the file input element
+    const fileInput = await page.locator('input[type="file"]');
+
+    // Upload the JSON file
+    await fileInput.setInputFiles(jsonFilePath);
+
+    await page.getByRole('button', { name: 'Add ANF Statement' }).click();
+    // await page.locator('#riu').click();
+
+    await page.locator('span:has-text("ANF Statement")').click();
+    
+    await page.locator('span:has-text("User Question")').click();
+
+    await page.getByRole('button', { name: 'Submit Form' }).click();
+
+    await page.waitForTimeout(3000);
+  });
+
+  test.afterEach(async ( { page} ) => {
+    await page.close();
+  });
+
+  test.afterAll(async ( { browser }) => {
+    await browser.close();
   });
 });
