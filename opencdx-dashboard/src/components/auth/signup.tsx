@@ -262,7 +262,7 @@ const handleError = (error: AxiosError) => {
             <Link
               className="text-center cursor-pointer"
               color="primary"
-              onPress={() => router.push('/')}
+              onPress={() => router.push('/auth/login')}
               aria-label= {t('already_have_account_placeholder') + t('login_up_label')} 
             >
               {t('login_up_label')}

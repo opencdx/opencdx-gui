@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DashboardPage from '@/app/dashboard/page';
+import DashboardPage from '@/app/pages/dashboard/page';
 
 import '@/styles/globals.css';
 

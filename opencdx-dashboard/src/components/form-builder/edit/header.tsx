@@ -11,7 +11,7 @@ const Header = ({formTitle}: {formTitle: string}) => {
     const [showReport, setShowReport] = useState(false);
 
     const handleBack = () => {
-        router.push('/form-builder');
+        router.push('/pages/form-builder');
     };
 
     return (
