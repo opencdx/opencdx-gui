@@ -3,11 +3,9 @@ import { cn } from "@/lib/utils";
 import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronRight, IceCream } from "lucide-react";
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
-import { TableChart, NotificationImportant, Announcement, ContentPasteGo } from '@mui/icons-material';
-
+import { TableChart, NotificationImportant, Announcement, ContentPasteGo, VerifiedUser, AssuredWorkload, PermMedia, ToggleOff } from '@mui/icons-material';
 interface Links {
   label: string;
   href: string;
@@ -96,7 +94,7 @@ export const DesktopSidebar = ({
           "h-full px-4 py-4   md:flex md:flex-col h-screen bg-[#020B2D] bg-gradient-to-b from-[#020B2D] from-70% via-[#0A2A88] to-[#0D47E9] w-[260px] flex-shrink-0",
         )}
         animate={{
-          width: animate ? (open ? "220px" : "60px") : "220px",
+          width: animate ? (open ? "220px" : "72px") : "220px",
         }}
 
         {...props}
@@ -159,6 +157,7 @@ export const Logo = () => {
         alt="logo"
         width={120}
         height={40}
+        priority
       />
     </Link>
   );
@@ -176,6 +175,7 @@ export const LogoIcon = () => {
         width={120}
         height={120}
         className="rounded-lg"
+        priority
       />
     </Link>
   );
@@ -239,6 +239,34 @@ export const SideNavigation = () => {
       href: '/pages/notifications',
       icon: (
         <NotificationImportant className="text-white" />
+      ),
+    },
+    {
+      label: 'Audit',
+      href: '/pages/audit',
+      icon: (
+        <VerifiedUser className="text-white" />
+      ),
+    },
+    {
+      label: 'Logistics',
+      href: '/pages/logistics',
+      icon: (
+        <AssuredWorkload className="text-white" />
+      ),
+    },
+    {
+      label: 'Media',
+      href: '/pages/media',
+      icon: (
+        <PermMedia className="text-white" />
+      ),
+    },
+    {
+      label: 'Toggle',
+      href: '/pages/toggle',
+      icon: (
+        <ToggleOff className="text-white" />
       ),
     }
   ];

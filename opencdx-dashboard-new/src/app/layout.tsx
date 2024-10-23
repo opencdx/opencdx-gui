@@ -40,7 +40,11 @@ export default async function RootLayout({
 
   return (
     <html suppressHydrationWarning lang={locale}>
-      <head />
+      <head>
+        {/* Preload critical assets */}
+        <link rel="preload" href="/images/logo-long.png" as="image" />
+        <link rel="preload" href="/images/logo-short.png" as="image" />
+      </head>
       <title>{'OpenCdx: Dashboard'}</title>
       <body
         className={clsx(
