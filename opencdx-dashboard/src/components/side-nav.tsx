@@ -7,6 +7,11 @@ import { usePathname } from 'next/navigation';
 import { ChevronRight, IceCream } from "lucide-react";
 import Image from 'next/image';
 
+import collapseIcon from '../../public/images/collapse_icon.png';
+import expandIcon from '../../public/images/expand_icon.png';
+import logoLong from '../../public/images/logo-long.png';
+import logoShort from '../../public/images/logo-short.png';
+
 interface Links {
   label: string;
   href: string;
@@ -98,7 +103,7 @@ export const SidebarBody = ({
             {open ? (
               <Link href="#" className="flex items-center">
                 <Image
-                  src="/images/logo-long.png"
+                  src={logoLong.src}
                   alt="OpenCDx"
                   width={120}
                   height={40}
@@ -108,7 +113,7 @@ export const SidebarBody = ({
             ) : (
               <Link href="#" className="flex items-center">
                 <Image
-                  src="/images/logo-short.png"
+                  src={logoShort.src}
                   alt="OpenCDx"
                   width={40}
                   height={40}
@@ -126,7 +131,7 @@ export const SidebarBody = ({
               )}
             >
               <Image
-                src={open ? "/images/collapse_icon.png" : "/images/expand_icon.png"}
+                src={open ? collapseIcon.src : expandIcon.src}
                 alt={open ? "Collapse" : "Expand"}
                 width={26}
                 height={26}
