@@ -108,7 +108,7 @@ export default function ListQuestionnaire() {
         const formData = JSON.parse(event.target?.result as string);
         delete formData.id;
         updateQuestionnaire(formData);
-        router.push('/edit-questionnaire/upload-questionnaire');
+        router.push('/pages/edit-questionnaire/upload-questionnaire');
       } catch (error) {
         toast.error('Error parsing the selected file.');
       }
@@ -145,7 +145,7 @@ export default function ListQuestionnaire() {
 
   const handleEdit = useCallback((questionnaire: Questionnaire) => {
     updateQuestionnaire(questionnaire);
-    router.push(`/edit-questionnaire/${questionnaire.id}`);
+    router.push(`/pages/edit-questionnaire/${questionnaire.id}`);
   }, [updateQuestionnaire, router]);
 
   const handleDelete = useCallback((id: string) => {
@@ -210,7 +210,7 @@ export default function ListQuestionnaire() {
         >
           <Button color="primary"
             onClick={() => {
-              router.push('/edit-questionnaire/new-questionnaire');
+              router.push('/pages/edit-questionnaire/new-questionnaire');
             }}
           >Create New Form <Image src="/images/dynamic_form_transparent.png" alt="Upload" width={20} height={20} priority /></Button>
         </Tooltip>

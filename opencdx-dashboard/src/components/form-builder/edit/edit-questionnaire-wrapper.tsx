@@ -74,7 +74,7 @@ const QuestionnaireWrapper = ({ questionnaire }: { questionnaire: Questionnaire 
       toast.success('Successfully saved', { position: 'top-right', autoClose: 500 });
       const timer = setTimeout(() => {
         localStorage.removeItem('questionnaire-store');
-        router.push('/form-builder');
+        router.push('/pages/form-builder');
       }, 500);
       return () => clearTimeout(timer);
     }

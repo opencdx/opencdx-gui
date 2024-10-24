@@ -31,7 +31,7 @@ export function Navbar() {
         logout(router);
         break;
       case 'change_password':
-        router.push('/password-change');
+        router.push('/auth/password-change');
         break;
       case 'locale':
         const otherLocale = localeOptions.find(option => option.key !== locale)?.key;

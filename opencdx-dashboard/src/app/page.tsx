@@ -2,5 +2,5 @@
 import {redirect} from 'next/navigation';
 
 export default function IndexPage() {
-  redirect('/login');
+  redirect('/auth/login');
 }
