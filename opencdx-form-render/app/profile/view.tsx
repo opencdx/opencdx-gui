@@ -1,7 +1,8 @@
-import React from 'react';
-import {  Image, Text, View } from 'react-native';
-import { Input, InputField } from '@gluestack-ui/themed';
+import React, { useState } from 'react';
+import { Image, Text, View } from 'react-native';
+import { Input } from '../../components/ui/input';
 import { Button } from '../../components/ui/button';
+
 
 interface ProfileData {
   firstName: string;
@@ -12,71 +13,84 @@ interface ProfileData {
 }
 
 const ProfileView: React.FC = () => {
-  // This would typically come from an API or state management
-  const profileData: ProfileData = {
+  const [profileData, setProfileData] = useState<ProfileData>({
     firstName: 'John',
     lastName: 'Doe',
     email: 'jdoe@email.com',
     phoneNumber: '555-555-5555',
     dateOfBirth: 'Sep 23, 1978',
+  });
+
+  const handleInputChange = (field: keyof ProfileData, value: string) => {
+    setProfileData({ ...profileData, [field]: value });
   };
 
   return (
-    <div className="max-w-md mx-auto p-4">
-      <div className="flex flex-col items-center mb-6">
+    <View className="flex flex-1 justify-center items-center bg-white max-w-[500px] w-full mx-auto p-4 sm:p-0">
+      <View className="items-center mb-6">
         <Image
           source={require('../../assets/profile.png')}
-          alt="Profile"
-          width={80}
-          height={80}
-          className="rounded-full mb-2"
+          className="w-20 h-20 rounded-full mb-2"
         />
-        <div className="flex items-center">
-          <span className="text-xl font-semibold mr-2">{profileData.firstName}</span>
-          <button className="text-blue-500 text-sm">Edit</button>
-        </div>
-      </div>
+        <Button onPress={() => {}}  className="bg-blue-500 text-white" >
+           Edit
+        </Button>
+      </View>
 
-      <h1 className="text-2xl font-bold mb-2">My Profile</h1>
-      <p className="text-gray-600 mb-6">This information is used for...</p>
-
-      <div className="space-y-4 w-[500px]">
-        <ProfileField label="First Name*" value={profileData.firstName} required />
-        <ProfileField label="Last Name*" value={profileData.lastName} required />
-        <ProfileField label="Email Address*" value={profileData.email} required />
-        <ProfileField label="Phone Number" value={profileData.phoneNumber} />
-        <ProfileField label="Date of Birth" value={profileData.dateOfBirth} />
-      </div>
-
-        <Button
-          onPress={() => { }}
-          disabled={false}
-          loading={false}
-          children="Save"
-          className="w-full bg-gray-200 text-black py-2 rounded-md mt-6 font-semibold"
+      {/* Heading */}
+      <View className="w-full">
+            <Text className="text-2xl font-semibold mb-3">My Profile</Text>
+            <Text className="text-gray-500 mb-8">This information is used for...</Text>
+      </View>
+    
+      <View className="w-full mb-2 gap-2" style={{marginLeft:-10}}>
+        <Input
+          label="First Name*"
+          value={profileData.firstName}
+          onChangeText={(text) => handleInputChange('firstName', text)}
+          variant='underline'
         />
-    </div>
+
+        <Input
+          label="Last Name*"
+          value={profileData.lastName}
+          onChangeText={(text) => handleInputChange('lastName', text)}
+          variant='underline'
+        />
+
+        <Input
+          label="Email Address*"
+          value={profileData.email}
+          onChangeText={(text) => handleInputChange('email', text)}
+         // className=" p-2 mb-2"
+          variant='underline'
+          keyboardType="email-address"
+        />
+
+        <Input
+          label="Phone Number"
+          value={profileData.phoneNumber}
+          onChangeText={(text) => handleInputChange('phoneNumber', text)}
+          //className=" p-2 mb-4"
+          variant='underline'
+          keyboardType="phone-pad"
+        />
+
+        <Input
+          label="Date of Birth"
+          value={profileData.dateOfBirth}
+          onChangeText={(text) => handleInputChange('dateOfBirth', text)}
+          //className="border-b border-gray-300 p-2 mb-4"
+          variant='underline'
+          
+        />
+      </View>
+
+      <Button onPress={() => {}}  className="w-full bg-blue-500 text-white py-2 mt-6 rounded-lg" >
+            Save
+        </Button>
+    </View>
   );
 };
-
-interface ProfileFieldProps {
-  label: string;
-  value: string;
-  required?: boolean;
-}
-
-const ProfileField: React.FC<ProfileFieldProps> = ({ label, value, required }) => (
-  <div>
-    <Text>{label}</Text>
-    <Input
-
-      variant="underlined"
-
-    >
-      <InputField placeholder={label} defaultValue={value} onChangeText={() => { }} />
-
-    </Input>
-  </div>
-);
 
 export default ProfileView;
