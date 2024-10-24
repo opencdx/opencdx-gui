@@ -59,8 +59,7 @@ const AuthorsWrapper = ({
       />
       {index !== authors.length - 1 && (
         <>
-          <Divider className='bg-[#99C7FB]' />
-          <Divider className='h-[16px]' />
+          <Divider className='bg-[#99C7FB] h-[16px] my-4' />
         </>
       )}
     </div>

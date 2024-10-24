@@ -16,15 +16,31 @@ export const AssociatedStatementComponent: React.FC<AssociatedStatementProps> = 
     questionnaireItemId,
     tabName,
 }) => {
-    const baseFieldName = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.${tabName}`;
 
     return (
-        <div className="p-4">
-            <h3 className="text-lg font-semibold mb-4">{label}</h3>
-            <div className="space-y-4">
+        <div >
+            <div className='flex flex-col gap-4' >
                 <ControlledInput
-                    label="ID"
-                    name={`${baseFieldName}.id.reference`}
+                    label="ID Reference"
+                    name={`${tabName}.id.id`}
+                    //placeholder="Enter reference ID"
+                />
+                <Divider className="my-4" />
+                <ControlledInput
+                    label="Display"
+                    name={`${tabName}.id.display`}
+                    //placeholder="Enter reference ID"
+                />
+                <Divider className="my-4" />
+                <ControlledInput
+                    label="Reference"
+                    name={`${tabName}.id.reference`}
+                    //placeholder="Enter reference ID"
+                />
+                <Divider className="my-4" />
+                <ControlledInput
+                    label="URI"
+                    name={`${tabName}.id.uri`}
                     //placeholder="Enter reference ID"
                 />
                 <Divider className="my-4" />
@@ -33,7 +49,7 @@ export const AssociatedStatementComponent: React.FC<AssociatedStatementProps> = 
                     label='Semantic' 
                     anfStatementConnectorId={anfStatementConnectorId} 
                     questionnaireItemId={questionnaireItemId} 
-                    tabName={`${baseFieldName}.semantic`} 
+                    tabName={`${tabName}.semantic`} 
                 />
             </div>
         </div>

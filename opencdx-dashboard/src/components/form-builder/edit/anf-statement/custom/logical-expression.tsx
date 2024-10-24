@@ -20,7 +20,7 @@ const LogicalExpressionComponent: React.FC<LogicalExpressionComponentProps> = ({
     // );
 
     return (
-        <div className='p-4'>
+        <div >
             <ControlledInput 
                 label={label} 
                 name={`${tabName}.expression`} 

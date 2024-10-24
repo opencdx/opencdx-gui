@@ -1,50 +1,62 @@
 import React, { useMemo } from 'react';
-import { Divider } from 'ui-library';
+
+import {
+  Divider} from 'ui-library';
 import { ANFStatement } from '@/api/questionnaire/model/anfstatement';
 import { ControlledInput } from '../custom/controlled-input';
 import { MeasureComponent } from '../custom/measure';
-import { LogicalExpressionComponent } from '../custom/logical-expression';
+import ControlledAccordion from '../custom/controlled-accordian';
+import { PurposeComponent } from '../custom/purpose';
 
-interface NarrativeCircumstanceProps {
-    anfStatementConnectorId: number;
-    questionnaireItemId: number;
-    anfStatement: ANFStatement;
+interface AccordionSectionProps {
+  title: string;
+  isTitleBold?: boolean;
+  children: React.ReactNode;
 }
 
-const NarrativeCircumstance: React.FC<NarrativeCircumstanceProps> = ({
-    anfStatementConnectorId,
-    questionnaireItemId,
-    anfStatement
-}) => {
-    const tabName = 'narrativeCircumstance';
+const AccordionSection: React.FC<AccordionSectionProps> = ({ title, isTitleBold = false, children }) => (
+  <>
+    <Divider className='bg-[#99C7FB]' />
+    <ControlledAccordion title={title} isTitleBold={isTitleBold}>
+      {children}
+    </ControlledAccordion>
+  </>
+);
 
-    const baseFieldName = useMemo(() => 
-        `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.${tabName}`,
-        [questionnaireItemId, anfStatementConnectorId, tabName]
-    );
+const NarrativeCircumstance: React.FC<{
+  anfStatementConnectorId: number;
+  questionnaireItemId: number;
+  anfStatement: ANFStatement;   
+}> = ({ anfStatementConnectorId, questionnaireItemId, anfStatement }) => {
+  const tabName = 'narrativeCircumstance';
 
-    return (
-        <>
-            <Divider className='bg-[#99C7FB]' />
-            <div className='p-4'>
-                <ControlledInput label="Text" name={`${baseFieldName}.text`} />
-            </div>
-            <Divider className='bg-[#99C7FB]' />
-            <MeasureComponent 
-                label='Timing' 
-                anfStatementConnectorId={anfStatementConnectorId} 
-                questionnaireItemId={questionnaireItemId} 
-                tabName={`${tabName}.timing`} 
-            />
-            <Divider className='bg-[#99C7FB]' />
-            <LogicalExpressionComponent 
-                label='Purpose' 
-                anfStatementConnectorId={anfStatementConnectorId} 
-                questionnaireItemId={questionnaireItemId} 
-                tabName={`${tabName}.purpose`} 
-            />
-        </>
-    );
+  const baseFieldName = useMemo(() => 
+    `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.${tabName}`,
+    [questionnaireItemId, anfStatementConnectorId, tabName]
+  );
+
+  return (
+    <>
+    
+
+     
+
+     
+
+      <AccordionSection title="Timing" isTitleBold>
+        <MeasureComponent anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.timing`} />
+      </AccordionSection>
+
+      <AccordionSection title="Purpose" isTitleBold>
+            <PurposeComponent anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.purpose`} />
+      </AccordionSection>
+
+      <AccordionSection title="Health Risk">
+        <ControlledInput placeholder="Health Risk" name={`${baseFieldName}.healthRisk.expression`} />
+      </AccordionSection>
+      <Divider className='bg-white' />
+    </>
+  );
 };
 
 export { NarrativeCircumstance };

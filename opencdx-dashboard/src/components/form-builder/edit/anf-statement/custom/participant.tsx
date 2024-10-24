@@ -9,13 +9,16 @@ const ParticipantComponent = ({
   label,
   anfStatementConnectorId,
   questionnaireItemId,
-  anfStatement
+  anfStatement,
+  tabName,
+  addLabel
 }: {
-  label: string;
+  label?: string;
   anfStatementConnectorId: number;
   questionnaireItemId: number;
   anfStatement: ANFStatement;
   tabName: string;
+  addLabel?: string;
 }) => {
   const [participants, setParticipants] = useState<Participant[]>([]);
 
@@ -35,29 +38,28 @@ const ParticipantComponent = ({
   }, []);
 
   const renderParticipantFields = useCallback((participant: Participant, index: number) => {
-    const baseFieldName = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.participant[${index}]`;
+    const baseFieldName = `${tabName}.participant[${index}]`;
     
     return (
       <div key={index} className={index !== 0 ? 'border border-t-[#99C7FB] border-solid border-b-0 border-r-0 border-l-0' : ''}>
-        <ControlledInput label="ID" className='p-4 pt-8' name={`${baseFieldName}.id`} />
-        <Divider className='bg-[#99C7FB]' />
+        <ControlledInput label="ID" className='pb-8' name={`${baseFieldName}.id`} />
+        <Divider className="my-2" />
         <div className='flex flex-col gap-4'>
-          <div className='text-sm pl-4 pt-4'>Practitioner Value:</div>
+          <div className='text-sm '>Practitioner Value:</div>
           {['identifier', 'display', 'reference', 'uri'].map((field) => (
             <React.Fragment key={field}>
               <ControlledInput
                 label={field.charAt(0).toUpperCase() + field.slice(1)}
-                className='p-4'
                 name={`${baseFieldName}.practitionerValue.${field}`}
               />
-              <div className='px-4'><Divider /></div>
+              <Divider className="my-2" />
             </React.Fragment>
           ))}
         </div>
-        <ControlledInput label="Code" className='p-4' name={`${baseFieldName}.code.expression`} />
+        <ControlledInput label="Code"  name={`${baseFieldName}.code.expression`} />
         {index < participants.length - 1 && (
           <>
-            <Divider className='bg-[#99C7FB]' />
+            <Divider className='mt-2 bg-[#99C7FB]' />
             <Divider className='h-[16px]' />
           </>
         )}
@@ -66,7 +68,7 @@ const ParticipantComponent = ({
   }, [anfStatementConnectorId, questionnaireItemId, participants.length]);
 
   const AddParticipantButton = useCallback(() => (
-    <div className='p-4'>
+    <div className='pt-4'>
       <Button
         variant='flat'
         color='primary'
@@ -74,7 +76,7 @@ const ParticipantComponent = ({
         onClick={handleAddParticipant}
         endContent={<PlusIcon size={16} />}
       >
-        Add Participant
+        {addLabel || 'Add Participant'}
       </Button>
     </div>
   ), [handleAddParticipant]);
