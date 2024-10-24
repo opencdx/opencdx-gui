@@ -38,7 +38,7 @@ const ParticipantComponent = ({
   }, []);
 
   const renderParticipantFields = useCallback((participant: Participant, index: number) => {
-    const baseFieldName = `${tabName}.participant[${index}]`;
+    const baseFieldName = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.participant[${index}]`;
     
     return (
       <div key={index} className={index !== 0 ? 'border border-t-[#99C7FB] border-solid border-b-0 border-r-0 border-l-0' : ''}>

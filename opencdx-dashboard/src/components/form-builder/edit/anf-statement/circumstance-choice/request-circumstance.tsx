@@ -68,7 +68,7 @@ const RequestCircumstance: React.FC<{
                             label={`Conditional Trigger ${index + 1}`}
                             anfStatementConnectorId={anfStatementConnectorId}
                             questionnaireItemId={questionnaireItemId}
-                            tabName={`${tabName}.conditionalTrigger[${index}]`}
+                            tabName={`${baseFieldName}.conditionalTrigger[${index}]`}
                         />
                         {index !== conditionalTriggerFields.length - 1 && <>
                             <Divider className='bg-[#99C7FB] h-[16px] my-4' />
@@ -98,7 +98,7 @@ const RequestCircumstance: React.FC<{
             </AccordionSection>
 
             <AccordionSection title="Requested Result" isTitleBold>
-                <MeasureComponent label='Requested Result' anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.requestedResult`} />
+                <MeasureComponent anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.requestedResult`} />
             </AccordionSection>
             <AccordionSection title="Repetition" isTitleBold>
                 <RepetitionComponent

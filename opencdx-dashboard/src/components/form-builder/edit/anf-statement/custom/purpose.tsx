@@ -33,7 +33,7 @@ export const PurposeComponent: React.FC<PurposeComponentProps> = ({
                 <div key={field.id} className='flex flex-row items-center gap-2 mb-4'>
                     <ControlledInput className='w-full'
                         placeholder='Add Purpose'
-                        name={`${baseFieldName}.purpose.${index}`} />
+                        name={`${baseFieldName}.purpose.${index}.expression`} />
                     <Button
                         className='rounded-lg'
                         color='danger'

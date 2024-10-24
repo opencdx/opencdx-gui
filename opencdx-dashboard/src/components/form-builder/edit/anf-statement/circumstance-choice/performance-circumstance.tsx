@@ -53,7 +53,7 @@ const PerformanceCircumstance: React.FC<{
       </AccordionSection>
 
       <AccordionSection title="Results" isTitleBold>
-        <MeasureComponent label='Results' anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.result`} />
+        <MeasureComponent anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.result`} />
       </AccordionSection>
 
       <AccordionSection title="Health Risk">
@@ -61,11 +61,11 @@ const PerformanceCircumstance: React.FC<{
       </AccordionSection>
 
       <AccordionSection title="Normal Range" isTitleBold>
-        <MeasureComponent label='Normal Range' anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.normalRange`} />
+        <MeasureComponent anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.normalRange`} />
       </AccordionSection>
 
       <AccordionSection title="Timing" isTitleBold>
-        <MeasureComponent label='Timing' anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.timing`} />
+        <MeasureComponent anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.timing`} />
       </AccordionSection>
 
       <AccordionSection title="Participant" isTitleBold>

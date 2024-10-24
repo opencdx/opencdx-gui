@@ -22,7 +22,7 @@ export const AssociatedStatementComponent: React.FC<AssociatedStatementProps> = 
             <div className='flex flex-col gap-4' >
                 <ControlledInput
                     label="ID Reference"
-                    name={`${tabName}.id.id`}
+                    name={`${tabName}.id.identifier`}
                 />
                 <Divider className="my-4" />
                 <ControlledInput

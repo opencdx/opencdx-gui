@@ -43,11 +43,11 @@ const NarrativeCircumstance: React.FC<{
             </AccordionSection>
 
             <AccordionSection title="Purpose" isTitleBold>
-                <PurposeComponent anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.purpose`} />
+                <PurposeComponent anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={tabName} />
             </AccordionSection>
 
-            <AccordionSection title="Health Risk">
-                <ControlledInput placeholder="Health Risk" name={`${baseFieldName}.healthRisk.expression`} />
+            <AccordionSection title="Text">
+                <ControlledInput placeholder="Text" name={`${baseFieldName}.text`} />
             </AccordionSection>
             <Divider className='bg-white' />
         </>
