@@ -106,7 +106,7 @@ export interface Classification {
      * @type {string}
      * @memberof Classification
      */
-    'type'?: Type;
+    'type'?: ClassificationType;
     /**
      * 
      * @type {DiagnosisCode}
@@ -115,7 +115,7 @@ export interface Classification {
     'diagnosis'?: DiagnosisCode;
 }
 
-export const Type = {
+export const ClassificationType = {
     UnspecifiedClassificationType: 'UNSPECIFIED_CLASSIFICATION_TYPE',
     Bacterial: 'BACTERIAL',
     Viral: 'VIRAL',
@@ -123,6 +123,6 @@ export const Type = {
     Unrecognized: 'UNRECOGNIZED'
 } as const;
 
-export type Type = typeof Type[keyof typeof Type];
+export type ClassificationType = typeof ClassificationType[keyof typeof ClassificationType];
 
 

@@ -31,7 +31,7 @@ export interface Duration {
      * @type {string}
      * @memberof Duration
      */
-    'type'?: Type;
+    'type'?: DurationType;
 }
 
 export const Type = {
@@ -47,6 +47,6 @@ export const Type = {
     Unrecognized: 'UNRECOGNIZED'
 } as const;
 
-export type Type = typeof Type[keyof typeof Type];
+export type DurationType = typeof Type[keyof typeof Type];
 
 

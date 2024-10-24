@@ -32,6 +32,11 @@ import { toast, ToastContainer } from 'react-toastify';
 import GridView from './grid-view';
 import ListView from './list-view';
 
+import dynamicForm from '../../../../public/images/dynamic_form.png';
+import dynamicFormTransparent from '../../../../public/images/dynamic_form_transparent.png';
+import fileUploadTransparent from '../../../../public/images/file_upload_transparent.png';
+import arrowBack from '../../../../public/images/arrow-back.png';
+
 export default function ListQuestionnaire() {
   const { data: currentUser } = useCurrentUser();
   const { mutate: deleteQuestionnaire } = useDeleteQuestionnaire();
@@ -182,7 +187,7 @@ export default function ListQuestionnaire() {
   const renderHeader = useMemo(() => (
     <div className="flex flex-row justify-between items-center bg-white dark:bg-neutral-800 p-4 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700">
       <div className="flex items-center  justify-center space-x-4 align-center ">
-        <Image src="/images/dynamic_form.png" alt="Dynamic Form" width={48} height={48} priority />
+        <Image src={dynamicForm.src} alt="Dynamic Form" width={48} height={48} priority />
         <div className="flex flex-col space-y-1">
           <h1 className="text-base font-semibold">Forms Builder</h1>
           <Breadcrumbs className="mb-4" separator="/" >
@@ -198,7 +203,7 @@ export default function ListQuestionnaire() {
             color="primary"
             variant="bordered"
           >
-            <Image src="/images/arrow-back.png" alt="" width={20} height={20} priority />
+            <Image src={arrowBack.src} alt="" width={20} height={20} priority />
             Back
           </Button>
         </Link>
@@ -212,7 +217,7 @@ export default function ListQuestionnaire() {
             onClick={() => {
               router.push('/pages/edit-questionnaire/new-questionnaire');
             }}
-          >Create New Form <Image src="/images/dynamic_form_transparent.png" alt="Upload" width={20} height={20} priority /></Button>
+          >Create New Form <Image src={dynamicFormTransparent.src} alt="Upload" width={20} height={20} priority /></Button>
         </Tooltip>
         <Tooltip content="Upload Form" placement="top"
           classNames={{
@@ -230,7 +235,7 @@ export default function ListQuestionnaire() {
               data-testid="upload-form"
             />
             Upload Form
-            <Image src="/images/file_upload_transparent.png" alt="Upload" width={20} height={20} priority />
+            <Image src={fileUploadTransparent.src} alt="Upload" width={20} height={20} priority />
 
           </label>
          

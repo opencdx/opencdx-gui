@@ -25,7 +25,7 @@ export interface SignUpRequest {
      * @type {string}
      * @memberof SignUpRequest
      */
-    'type'?: Type;
+    'type'?: SignUpType;
     /**
      * 
      * @type {string}
@@ -71,7 +71,7 @@ export interface SignUpRequest {
 
 }
 
-export const Type = {
+export const SignUpType = {
     IamUserTypeUnspecified: 'IAM_USER_TYPE_UNSPECIFIED',
     IamUserTypeRegular: 'IAM_USER_TYPE_REGULAR',
     IamUserTypeSystem: 'IAM_USER_TYPE_SYSTEM',
@@ -79,6 +79,6 @@ export const Type = {
     Unrecognized: 'UNRECOGNIZED'
 } as const;
 
-export type Type = typeof Type[keyof typeof Type];
+export type SignUpType = typeof SignUpType[keyof typeof SignUpType];
 
 

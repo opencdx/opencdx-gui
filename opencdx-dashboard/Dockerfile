@@ -8,14 +8,8 @@ WORKDIR /app
 # Install dependencies based on the preferred package manager
 
 # Rebuild the source code only when needed
-COPY ../../ui-library /app/ui-library
-COPY ../../opencdx-gui/opencdx-dashboard /app/opencdx-gui/opencdx-dashboard
 
-WORKDIR /app/ui-library
-RUN npm install
-
-WORKDIR /app/opencdx-gui/opencdx-dashboard
-RUN npm install
+COPY . .
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
@@ -24,7 +18,6 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 # Production image, copy all the files and run next
 FROM base AS runner
-WORKDIR /app/opencdx-gui/opencdx-dashboard
 
 ENV NODE_ENV=test
 # Uncomment the following line in case you want to disable telemetry during runtime.
@@ -44,4 +37,4 @@ ENV PORT=3005
 
 # server.js is created by next build from the standalone output
 # https://nextjs.org/docs/pages/api-reference/next-config-js/output
-CMD npm run startDev
+CMD npm run startStatic
