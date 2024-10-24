@@ -18,7 +18,7 @@ describe('Register Test', () => {
       // so we must tell it to visit our website with the `cy.visit()` command.
       // Since we want to visit the same URL at the start of all our tests,
       // we include it in our beforeEach function so that it runs before each test
-      cy.visit('http://localhost:3000/')
+      cy.visit('http://localhost:3000/dashboard')
     })
   
     it('verify register page components', () => {
@@ -40,6 +40,6 @@ describe('Register Test', () => {
       cy.get('.text-center.text-gray-500').contains('Already have an account?').should('exist')
       cy.get('[role="link"]').contains('Login').click()
       // cy.wait(10000)
-      // cy.url().should('include', 'http://localhost:3000/login')
+      // cy.url().should('include', 'http://localhost:3000/dashboard/login')
     })
   })
