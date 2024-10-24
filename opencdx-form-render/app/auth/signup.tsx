@@ -188,32 +188,32 @@ const Signup = () => {
                 />
             ))}
         </View>
-
-        
-    </View>
+     </View>
     </View>)
-    const renderFooter = () => (<View className="w-full gap-4 items-center">
-    <Button
-            onPress={() => setShowAlert(true)}
-            disabled={isDisabled}
-            loading={isLoading}
-            className="w-full"
-        >
-            Sign Up
-        </Button>
+    
+    const renderFooter = () => (
+        <View className={`w-full gap-4 items-center ${isMobile ? 'px-4' : ''}`}>
+            <Button
+                    onPress={() => setShowAlert(true)}
+                    disabled={isDisabled}
+                    loading={isLoading}
+                    className="w-full"
+                >
+                    Sign Up
+            </Button>
 
-        <View className="flex-row items-center space-x-1">
-            <Text className="font-inter text-base font-normal leading-7 text-right text-black">
-                Already have an account?
-            </Text>
-            <Pressable
-                onPress={() => navigation.navigate('auth/login' as never)}
-                role="link"
-                aria-label="Login"
-            >
-                <Text className="text-blue-600 pl-1">Login</Text>
-            </Pressable>
-    </View>
+            <View className="flex-row items-center space-x-1">
+                    <Text className="font-inter text-base font-normal leading-7 text-right text-black">
+                        Already have an account?
+                    </Text>
+                    <Pressable
+                        onPress={() => navigation.navigate('auth/login' as never)}
+                        role="link"
+                        aria-label="Login"
+                    >
+                        <Text className="text-blue-600 pl-1">Login</Text>
+                    </Pressable>
+            </View>
         </View>)
 
     const renderContent = () => (

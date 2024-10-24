@@ -57,8 +57,21 @@ const ForgotPassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
         </Pressable>
     );
 
+    const renderFooter = () => (
+        <View className={`w-full mt-12`}>
+            <Button
+                onPress={handleForgotPassword}
+                disabled={isDisabled}
+                loading={isLoading}
+                className="w-full"
+            >
+                Continue
+            </Button>
+        </View>
+    )
+
     const renderContent = () => (
-        <View className="w-full items-center flex-1">
+        <View className="w-full items-center">
             <Image
                 source={require('../../assets/login-logo.png')}
                 alt="OpenCDx logo"
@@ -81,29 +94,9 @@ const ForgotPassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
                     keyboardType="email-address"
                 />
             </View>
-    
-            {/* Button Container */}
-            {Platform.OS === 'ios' || Platform.OS === 'android' ? (
-                <View style={{ position: 'absolute', bottom: 20, width: '100%', paddingHorizontal: 5 }}>
-                    <Button onPress={handleForgotPassword} disabled={isDisabled} loading={isLoading}>
-                        Continue
-                    </Button>
-                </View>
-            ) : (
-                <View className={`w-full mt-12`}>
-                    <Button
-                        onPress={handleForgotPassword}
-                        disabled={isDisabled}
-                        loading={isLoading}
-                        className="w-full"
-                    >
-                      Continue
-                   </Button>
-                </View>
-            )}
+            
         </View>
     );
-    
 
     const renderWebContent = () => (
         <main aria-label="main-layout forgot-password">
@@ -112,21 +105,25 @@ const ForgotPassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
                 <View className={`w-full flex flex-col justify-center items-center gap-6 max-w-[500px]`}>
                     {renderContent()}
                 </View>
+                <View className={`w-full max-w-[500px]`}>
+                {renderFooter()}
+                </View>
             </View>
         </main>
     );
 
     const renderMobileContent = () => (
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-            <View aria-label="main-layout forgot-password" className="flex items-center justify-between min-h-screen bg-white w-full mx-auto p-4">
-             <View className={'w-full flex flex-col justify-between items-center gap-6 px-4 flex-1'}>
+        <View aria-label="main-layout forgot-password" className={`flex flex-1 justify-between  items-center bg-white max-w-[500px] w-full mx-auto gap-6 px-4`}>
+             <View className={'w-full flex gap-6 px-4'}>
                 {renderBackButton()}
-                <View className='w-full flex flex-col justify-between mt-12 relative flex-1'>
-                    {renderContent()}
-                </View>
              </View>
+            <View className={'w-full flex gap-6 px-4'}>
+                {renderContent()}
             </View>
-        </ScrollView>
+            <View style={{ marginBottom: 25}} className={'w-full flex gap-6 px-4'}>
+                {renderFooter()}
+            </View>
+        </View>
     );
 
     return (
