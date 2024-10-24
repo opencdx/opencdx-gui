@@ -49,8 +49,8 @@ const RequestCircumstance: React.FC<{
 
     return (
         <>
-                <AccordionSection title="Device ID">
-                <DeviceIdComponent  
+            <AccordionSection title="Device ID">
+                <DeviceIdComponent
                     anfStatementConnectorId={anfStatementConnectorId}
                     questionnaireItemId={questionnaireItemId}
                     tabName={tabName}
@@ -58,7 +58,7 @@ const RequestCircumstance: React.FC<{
             </AccordionSection>
 
             <AccordionSection title="Timing" isTitleBold>
-                <MeasureComponent  anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.timing`} />
+                <MeasureComponent anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.timing`} />
             </AccordionSection>
 
             <AccordionSection title="Conditional Trigger" isTitleBold>
@@ -71,7 +71,7 @@ const RequestCircumstance: React.FC<{
                             tabName={`${tabName}.conditionalTrigger[${index}]`}
                         />
                         {index !== conditionalTriggerFields.length - 1 && <>
-                            <Divider className='bg-[#99C7FB] h-[16px] my-4'  />
+                            <Divider className='bg-[#99C7FB] h-[16px] my-4' />
                         </>}
                     </div>
                 ))}
@@ -82,13 +82,13 @@ const RequestCircumstance: React.FC<{
                     radius='sm' onClick={() => appendConditionalTrigger({})} endContent={<PlusIcon size={18} />}>Add Conditional Trigger</Button>      </AccordionSection>
 
             <AccordionSection title="Requested Participant" isTitleBold>
-            <ParticipantComponent anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} anfStatement={anfStatement} tabName={tabName} addLabel="Add Requested Participant" />
+                <ParticipantComponent anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} anfStatement={anfStatement} tabName={tabName} addLabel="Add Requested Participant" />
             </AccordionSection>
 
             <AccordionSection title="Priority">
                 <ControlledInput placeholder="Priority" name={`${baseFieldName}.priority.expression`} />
             </AccordionSection>
-           
+
             <AccordionSection title="Purpose">
                 <PurposeComponent
                     anfStatementConnectorId={anfStatementConnectorId}
@@ -101,13 +101,13 @@ const RequestCircumstance: React.FC<{
                 <MeasureComponent label='Requested Result' anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.requestedResult`} />
             </AccordionSection>
             <AccordionSection title="Repetition" isTitleBold>
-            <RepetitionComponent
-                anfStatementConnectorId={anfStatementConnectorId}
-                questionnaireItemId={questionnaireItemId}
+                <RepetitionComponent
+                    anfStatementConnectorId={anfStatementConnectorId}
+                    questionnaireItemId={questionnaireItemId}
                     tabName={`${tabName}.repetition`}
                 />
             </AccordionSection>
-            <Divider  />
+            <Divider />
 
         </>
     );

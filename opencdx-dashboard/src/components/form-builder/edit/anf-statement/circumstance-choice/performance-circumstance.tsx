@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 
 import {
-  Divider} from 'ui-library';
+  Divider
+} from 'ui-library';
 import { ANFStatement } from '@/api/questionnaire/model/anfstatement';
 import { ControlledInput } from '../custom/controlled-input';
 import { MeasureComponent } from '../custom/measure';
@@ -32,7 +33,7 @@ const PerformanceCircumstance: React.FC<{
 }> = ({ anfStatementConnectorId, questionnaireItemId, anfStatement }) => {
   const tabName = 'performanceCircumstance';
 
-  const baseFieldName = useMemo(() => 
+  const baseFieldName = useMemo(() =>
     `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.${tabName}`,
     [questionnaireItemId, anfStatementConnectorId, tabName]
   );

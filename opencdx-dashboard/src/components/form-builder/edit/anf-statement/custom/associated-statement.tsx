@@ -23,33 +23,29 @@ export const AssociatedStatementComponent: React.FC<AssociatedStatementProps> = 
                 <ControlledInput
                     label="ID Reference"
                     name={`${tabName}.id.id`}
-                    //placeholder="Enter reference ID"
                 />
                 <Divider className="my-4" />
                 <ControlledInput
                     label="Display"
                     name={`${tabName}.id.display`}
-                    //placeholder="Enter reference ID"
                 />
                 <Divider className="my-4" />
                 <ControlledInput
                     label="Reference"
                     name={`${tabName}.id.reference`}
-                    //placeholder="Enter reference ID"
                 />
                 <Divider className="my-4" />
                 <ControlledInput
                     label="URI"
                     name={`${tabName}.id.uri`}
-                    //placeholder="Enter reference ID"
                 />
                 <Divider className="my-4" />
-               
-                 <LogicalExpressionComponent 
-                    label='Semantic' 
-                    anfStatementConnectorId={anfStatementConnectorId} 
-                    questionnaireItemId={questionnaireItemId} 
-                    tabName={`${tabName}.semantic`} 
+
+                <LogicalExpressionComponent
+                    label='Semantic'
+                    anfStatementConnectorId={anfStatementConnectorId}
+                    questionnaireItemId={questionnaireItemId}
+                    tabName={`${tabName}.semantic`}
                 />
             </div>
         </div>
