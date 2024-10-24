@@ -2,13 +2,9 @@ import { Card, CardBody, BreadcrumbItem, Breadcrumbs, Button, Image, Switch } fr
 import { ChevronLeft} from '@mui/icons-material'
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { Report } from './report';
-
-
 
 const Header = ({formTitle}: {formTitle: string}) => {
     const router = useRouter();
-    const [showReport, setShowReport] = useState(false);
 
     const handleBack = () => {
         router.push('/pages/form-builder');
@@ -26,8 +22,8 @@ const Header = ({formTitle}: {formTitle: string}) => {
                                     Edit Form: <strong>{formTitle}</strong>
                                 </h1>
                                 <Breadcrumbs separator="/">
-                                    <BreadcrumbItem href="/form-builder">Dashboard</BreadcrumbItem>
-                                    <BreadcrumbItem href="/form-builder">Form Builder</BreadcrumbItem>
+                                    <BreadcrumbItem href="/pages/form-builder">Dashboard</BreadcrumbItem>
+                                    <BreadcrumbItem href="/pages/form-builder">Form Builder</BreadcrumbItem>
                                     <BreadcrumbItem>Edit Form: {formTitle}</BreadcrumbItem>
                                 </Breadcrumbs>
                             </div>
@@ -50,15 +46,6 @@ const Header = ({formTitle}: {formTitle: string}) => {
                     </div>
                 </CardBody>
             </Card>
-            <Switch
-                aria-label="Show Report"
-                className="mr-4 mb-4"
-                isSelected={showReport}
-                onValueChange={setShowReport}
-            >
-                Show Report
-            </Switch>
-            {showReport && <Report />}
         </div>
     );
 };

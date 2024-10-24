@@ -14,12 +14,12 @@ interface CircumstanceChoiceProps {
 
 const CircumstanceChoice = ({ anfStatementConnectorId, questionnaireItemId, anfStatement }: CircumstanceChoiceProps) => {
     const { control } = useFormContext();
-    const [tabName, setTabName] = useState('performanceCircumstance');
+    const [tabName, setTabName] = useState('requestCircumstance');
 
     const circumstanceComponents = {
         performanceCircumstance: PerformanceCircumstance,
         requestCircumstance: RequestCircumstance,
-        // narrativeCircumstance: NarrativeCircumstance,
+        narrativeCircumstance: NarrativeCircumstance,
     };
 
     const CircumstanceComponent = circumstanceComponents[tabName as keyof typeof circumstanceComponents];
@@ -30,7 +30,7 @@ const CircumstanceChoice = ({ anfStatementConnectorId, questionnaireItemId, anfS
                 <label className="text w-[200px]">Circumstance Type</label>
                 <Controller
                     control={control}
-                    name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.performanceCircumstance.type`}
+                    name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.requestCircumstance.type`}
                     render={({ field }) => (
                         <RadioGroup
                             orientation='horizontal'

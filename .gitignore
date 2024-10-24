@@ -68,3 +68,5 @@ Thumbs.db
 /last_docker_compose_filename.txt
 /docker/generated-docker-compose.yaml
 /version.txt
+
+.early.coverage

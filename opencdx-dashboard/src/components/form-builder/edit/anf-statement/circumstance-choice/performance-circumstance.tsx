@@ -1,121 +1,78 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import {
-  Divider,
-  Button,
-  Input
+  Divider
 } from 'ui-library';
 import { ANFStatement } from '@/api/questionnaire/model/anfstatement';
 import { ControlledInput } from '../custom/controlled-input';
-import { PlusIcon, TrashIcon } from 'lucide-react';
 import { MeasureComponent } from '../custom/measure';
 import { ParticipantComponent } from '../custom/participant';
-import { useFormContext } from 'react-hook-form';
+import { DeviceIdComponent } from '../custom/deviceid';
+import ControlledAccordion from '../custom/controlled-accordian';
 
-export const values = [
-  { key: 'performance', label: 'Performance Circumstance' },
-  { key: 'request', label: 'Request Circumstance' },
-  { key: 'narrative', label: 'Narrative Circumstance' },
-];
+
+interface AccordionSectionProps {
+  title: string;
+  isTitleBold?: boolean;
+  children: React.ReactNode;
+}
+
+const AccordionSection: React.FC<AccordionSectionProps> = ({ title, isTitleBold = false, children }) => (
+  <>
+    <Divider className='bg-[#99C7FB]' />
+    <ControlledAccordion title={title} isTitleBold={isTitleBold}>
+      {children}
+    </ControlledAccordion>
+  </>
+);
 
 const PerformanceCircumstance: React.FC<{
   anfStatementConnectorId: number;
   questionnaireItemId: number;
   anfStatement: ANFStatement;
 }> = ({ anfStatementConnectorId, questionnaireItemId, anfStatement }) => {
-  const [deviceIds, setDeviceIds] = useState<string[]>([]);
-  const { setValue } = useFormContext();
   const tabName = 'performanceCircumstance';
 
-  useEffect(() => {
-    setDeviceIds(anfStatement.performanceCircumstance?.deviceid || []);
-  }, [anfStatement]);
-
-  const baseFieldName = useMemo(() => 
+  const baseFieldName = useMemo(() =>
     `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.${tabName}`,
     [questionnaireItemId, anfStatementConnectorId, tabName]
   );
 
-  const handleDeviceIdChange = useCallback((index: number, value: string) => {
-    setDeviceIds(prevIds => {
-      const newIds = [...prevIds];
-      newIds[index] = value;
-      setValue(`${baseFieldName}.deviceid`, newIds);
-      return newIds;
-    });
-  }, [setValue, baseFieldName]);
-
-  const handleAddDeviceId = useCallback(() => {
-    setDeviceIds(prevIds => [...prevIds, '']);
-  }, []);
-
-  const handleRemoveDeviceId = useCallback((index: number) => {
-    setDeviceIds(prevIds => {
-      const newIds = prevIds.filter((_, i) => i !== index);
-      setValue(`${baseFieldName}.deviceid`, newIds);
-      return newIds;
-    });
-  }, [setValue, baseFieldName]);
-
-  const renderDeviceIdInputs = useCallback(() => (
-    <>
-      <label className='text-sm font-normal text-black'>Device ID:</label>
-      {deviceIds.map((id, index) => (
-        <div key={index} className='flex items-center gap-2'>
-          <Input
-            className='w-full'
-            placeholder='Add Device ID'
-            variant="bordered"
-            radius='sm'
-            value={id}
-            onChange={(e) => handleDeviceIdChange(index, e.target.value)}
-          />
-          <Button
-            variant='flat'
-            color='danger'
-            radius='sm'
-            onClick={() => handleRemoveDeviceId(index)}
-            endContent={<TrashIcon size={18} />}
-          />
-        </div>
-      ))}
-      <Button
-        className='w-fit'
-        variant='flat'
-        size='sm'
-        color='primary'
-        radius='sm'
-        onClick={handleAddDeviceId}
-        endContent={<PlusIcon size={18} />}
-      >
-        Add Device ID
-      </Button>
-    </>
-  ), [deviceIds, handleDeviceIdChange, handleRemoveDeviceId, handleAddDeviceId]);
-
   return (
     <>
-      <Divider className='bg-[#99C7FB]' />
-      <div className='p-4'>
-        <ControlledInput label="Status" name={`${baseFieldName}.status.expression`} />
-      </div>
-      <Divider className='bg-[#99C7FB]' />
-      <div className='p-4 flex flex-col gap-4'>
-        {renderDeviceIdInputs()}
-      </div>
-      <Divider className='bg-[#99C7FB]' />
-      <MeasureComponent label='Results' anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.result`} />
-      <Divider className='bg-[#99C7FB]' />
-      <ControlledInput className='p-4' label="Health Risk" name={`${baseFieldName}.healthRisk.expression`} />
-      <Divider className='bg-[#99C7FB]' />
-      <MeasureComponent label='Normal Range' anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.normalRange`} />
-      <Divider className='bg-[#99C7FB]' />
-      <MeasureComponent label='Timing' anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.timing`} />
-      <Divider className='bg-[#99C7FB]' />
-      <ParticipantComponent label='Participant' anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} anfStatement={anfStatement} tabName={tabName} />
+      <AccordionSection title="Status">
+        <ControlledInput placeholder="Status" name={`${baseFieldName}.status.expression`} />
+      </AccordionSection>
 
+      <AccordionSection title="Device ID">
+        <DeviceIdComponent
+          anfStatementConnectorId={anfStatementConnectorId}
+          questionnaireItemId={questionnaireItemId}
+          tabName={tabName}
+        />
+      </AccordionSection>
+
+      <AccordionSection title="Results" isTitleBold>
+        <MeasureComponent anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.result`} />
+      </AccordionSection>
+
+      <AccordionSection title="Health Risk">
+        <ControlledInput placeholder="Health Risk" name={`${baseFieldName}.healthRisk.expression`} />
+      </AccordionSection>
+
+      <AccordionSection title="Normal Range" isTitleBold>
+        <MeasureComponent anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.normalRange`} />
+      </AccordionSection>
+
+      <AccordionSection title="Timing" isTitleBold>
+        <MeasureComponent anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.timing`} />
+      </AccordionSection>
+
+      <AccordionSection title="Participant" isTitleBold>
+        <ParticipantComponent anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} anfStatement={anfStatement} tabName={tabName} />
+      </AccordionSection>
+      <Divider className='bg-white' />
     </>
-
   );
 };
 
