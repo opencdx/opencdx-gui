@@ -146,59 +146,63 @@ const Signup = () => {
         />
     );
 
-    const renderContent = () => (
-        <View className="flex flex-1 justify-center items-center bg-white max-w-[500px] w-full mx-auto p-4 sm:p-0">
-            <View className="w-full gap-8 items-center">
-                <Image source={require('../../assets/opencdx.png')} alt="OpenCDx logo" />
+    const renderForm = () => (
+    <View className="flex flex-1 justify-center items-center bg-white max-w-[500px] w-full mx-auto p-4 sm:p-0">
+     <View className="w-full gap-8 items-center">
+        <Image source={require('../../assets/opencdx.png')} alt="OpenCDx logo" />
 
-                <View className="w-full gap-4">
-                    <View className="flex flex-row gap-4 w-full">
-                        <Input
-                            label="First Name*"
-                            value={formData.firstName}
-                            onChangeText={(value) => updateFormField('firstName', value)}
-                            className="flex-1"
-                        />
-                        <Input
-                            label="Last Name*"
-                            value={formData.lastName}
-                            onChangeText={(value) => updateFormField('lastName', value)}
-                            className="flex-1"
-                        />
-                    </View>
-                    <Input
-                        label="Email Address*"
-                        value={formData.username}
-                        onChangeText={(value) => updateFormField('username', value)}
-                    />
-                    {renderPasswordInput('password', 'Password*')}
-                    {renderPasswordInput('confirmPassword', 'Confirm Password*')}
-                    {passwordMismatchError && (
-                        <Text className="text-xs text-red-500">{passwordMismatchError}</Text>
-                    )}
-                </View>
+        <View className="w-full gap-4">
+            <View className="flex flex-row gap-4 w-full">
+                <Input
+                    label="First Name*"
+                    value={formData.firstName}
+                    onChangeText={(value) => updateFormField('firstName', value)}
+                    className="flex-1"
+                />
+                <Input
+                    label="Last Name*"
+                    value={formData.lastName}
+                    onChangeText={(value) => updateFormField('lastName', value)}
+                    className="flex-1"
+                />
+            </View>
+            <Input
+                label="Email Address*"
+                value={formData.username}
+                onChangeText={(value) => updateFormField('username', value)}
+            />
+            {renderPasswordInput('password', 'Password*')}
+            {renderPasswordInput('confirmPassword', 'Confirm Password*')}
+            {passwordMismatchError && (
+                <Text className="text-xs text-red-500">{passwordMismatchError}</Text>
+            )}
+        </View>
 
-                <View className={`w-full ${isMobile ? 'flex-row flex-wrap gap-y-3' : 'grid grid-cols-3 gap-y-3'}`}>
-                    {passwordValidations.map((validation, index) => (
-                        <ValidationRow
-                            key={index}
-                            isValid={validation.isValid}
-                            label={validation.label}
-                            className={`${isMobile ? 'w-1/2' : ''}`}
-                        />
-                    ))}
-                </View>
-
-                <Button
+        <View className={`w-full ${isMobile ? 'flex-row flex-wrap gap-y-3' : 'grid grid-cols-3 gap-y-3'}`}>
+            {passwordValidations.map((validation, index) => (
+                <ValidationRow
+                    key={index}
+                    isValid={validation.isValid}
+                    label={validation.label}
+                    className={`${isMobile ? 'w-1/2' : ''}`}
+                />
+            ))}
+        </View>
+     </View>
+    </View>)
+    
+    const renderFooter = () => (
+        <View className={`w-full gap-4 items-center ${isMobile ? 'px-4' : ''}`}>
+            <Button
                     onPress={() => setShowAlert(true)}
                     disabled={isDisabled}
                     loading={isLoading}
                     className="w-full"
                 >
                     Sign Up
-                </Button>
+            </Button>
 
-                <View className="flex-row items-center space-x-1">
+            <View className="flex-row items-center space-x-1">
                     <Text className="font-inter text-base font-normal leading-7 text-right text-black">
                         Already have an account?
                     </Text>
@@ -209,9 +213,14 @@ const Signup = () => {
                     >
                         <Text className="text-blue-600 pl-1">Login</Text>
                     </Pressable>
-                </View>
             </View>
-        </View>
+        </View>)
+
+    const renderContent = () => (
+        <View className={`flex flex-1 ${isMobile ? 'justify-between' : 'justify-center'} items-center bg-white max-w-[500px] w-full mx-auto p-4 sm:p-0 gap-12`}>
+      {renderForm()}
+      {renderFooter()}
+    </View>
     );
 
     return (
@@ -221,11 +230,12 @@ const Signup = () => {
                     {renderContent()}
                 </main>
             ) : (
-                <View aria-label="main-layout-signup" className="flex items-center justify-center min-h-screen">
+                <View aria-label="main-layout-signup" className="flex items-center justify-between min-h-screen">
                     {renderContent()}
                 </View>
             )}
             <Loader isVisible={isLoading} />
+
             <ModalComponent
                 visible={showAlert}
                 onClose={() => setShowAlert(false)}

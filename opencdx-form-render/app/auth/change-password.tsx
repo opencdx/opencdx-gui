@@ -165,6 +165,18 @@ const ChangePassword = () => {
         </Pressable>
     );
 
+    const renderFooter = () => (
+        <View className={`w-full mt-8`}>
+                <Button
+                    onPress={() => setShowAlert(true)}
+                    disabled={isDisabled}
+                    loading={isLoading}
+                    className="w-full"
+                >
+                    Confirm Password Reset
+                </Button>
+        </View>
+    )
     const renderContent = () => (
         <View className="w-full items-center">
             <Image source={require('../../assets/opencdx.png')} alt="OpenCDx logo" className="mb-8" />
@@ -196,16 +208,7 @@ const ChangePassword = () => {
                     ))}
                 </View>
             </View>
-            <View className={`w-full mt-8`}>
-                <Button
-                    onPress={() => setShowAlert(true)}
-                    disabled={isDisabled}
-                    loading={isLoading}
-                    className="w-full"
-                >
-                    Confirm Password Reset
-                </Button>
-            </View>
+            
         </View>
     );
 
@@ -216,19 +219,25 @@ const ChangePassword = () => {
                 <View className={`w-full flex flex-col justify-center items-center gap-6 max-w-[500px]`}>
                     {renderContent()}
                 </View>
+                <View className={`w-full flex flex-col justify-center items-center gap-6 max-w-[500px]`}>
+                    {renderFooter()}
+                </View>
             </View>
         </main>
     );
 
     const renderMobileContent = () => (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-            <View aria-label="main-layout change-password" className="flex items-center justify-between min-h-screen bg-white w-full mx-auto p-4">
-                <View className={'w-full flex flex-col justify-between items-center gap-6 px-4'}>
-                    {renderBackButton()}
-                    <View className='w-full flex flex-col justify-between mt-12'>
-                        {renderContent()}
-                    </View>
-                </View>
+            <View aria-label="main-layout change-password" className={`flex flex-1 justify-between items-center bg-white max-w-[500px] w-full mx-auto gap-6 px-4`}>
+             <View className={'w-full flex gap-6 px-4'}>
+                {renderBackButton()}
+             </View>
+            <View className={'w-full flex gap-6 px-4'}>
+                {renderContent()}
+            </View>
+            <View style={{ marginBottom: 25}} className={'w-full flex gap-6 px-4'}>
+                {renderFooter()}
+            </View>
             </View>
         </ScrollView>
     );
