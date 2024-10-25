@@ -5,7 +5,7 @@
   "scripts": {
     "start": "next dev",
     "startDev": "cross-env NODE_ENV=test next dev",
-    "startStatic": "cross-env NODE_ENV=test next start",
+    "startStatic": "cross-env next start",
     "lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
