@@ -72,13 +72,9 @@ const Edit: React.FC<{ questionnaireId: string }> = ({ questionnaireId }) => {
           )}
         </ModalContent>
       </Modal>
-      <FormProvider
-          register={register}
-          setValue={setValue}
-          control={control}
-          getValues={getValues}
-          handleSubmit={handleSubmit}
-        >
+      <FormProvider {...useForm<Questionnaire>({
+        defaultValues: async () => questionnaireData,
+      })}>
       <QuestionnaireWrapper questionnaire={questionnaireData as Questionnaire} />
       </FormProvider>
 
