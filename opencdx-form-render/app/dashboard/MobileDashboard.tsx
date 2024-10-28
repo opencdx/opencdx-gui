@@ -14,7 +14,11 @@ const MobileDashboard = () => {
     year: 'numeric',
 });
   return (<SafeAreaView>
-    <ImageBackground source={require('../../assets/background.png')} className="h-screen w-full"> 
+    <ImageBackground 
+        source={require('../../assets/background.png')} 
+        style={{ width: '100%', height: '100%' }} // Expands background image
+        resizeMode="cover" // Ensures image covers the entire screen
+      >
       <CustomHeader title={currentDate} rightButton={{
         imageSource: require('~/assets/logout_mobile.png'),
         onPress: () => {

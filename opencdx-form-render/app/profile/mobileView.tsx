@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { View, SafeAreaView, Text, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Input } from '../../components/ui/input';
@@ -7,6 +7,13 @@ import { Image } from '../../components/ui/image';
 
 const EditProfile = () => {
   const navigation = useNavigation();
+
+  // Hide the header when this component is mounted
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    });
+  }, [navigation]);
 
   // State to track original values
   const originalValues = {
