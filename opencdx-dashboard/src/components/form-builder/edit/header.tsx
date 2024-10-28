@@ -22,8 +22,8 @@ const Header = ({formTitle}: {formTitle: string}) => {
                                     Edit Form: <strong>{formTitle}</strong>
                                 </h1>
                                 <Breadcrumbs separator="/">
-                                    <BreadcrumbItem href="/pages/form-builder">Dashboard</BreadcrumbItem>
-                                    <BreadcrumbItem href="/pages/form-builder">Form Builder</BreadcrumbItem>
+                                    <BreadcrumbItem href="/dashboard/pages/form-builder">Dashboard</BreadcrumbItem>
+                                    <BreadcrumbItem href="/dashboard/pages/form-builder">Form Builder</BreadcrumbItem>
                                     <BreadcrumbItem>Edit Form: {formTitle}</BreadcrumbItem>
                                 </Breadcrumbs>
                             </div>
