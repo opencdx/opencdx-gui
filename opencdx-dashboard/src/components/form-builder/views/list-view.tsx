@@ -1,11 +1,7 @@
 import React, { useMemo } from 'react';
-import TitleIcon from '@mui/icons-material/Title';
 import Image from 'next/image';
 import { Questionnaire } from '@/api/questionnaire/model/questionnaire';
-import {  Button, Tooltip } from "ui-library";
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-
+import {  Button, Tooltip, TitleIcon } from "ui-library";
 import calendarToday from '../../../../public/images/calendar_today.png';
 import factCheck from '../../../../public/images/fact_check.png';
 import settingsSuggest from '../../../../public/images/settings_suggest.png';

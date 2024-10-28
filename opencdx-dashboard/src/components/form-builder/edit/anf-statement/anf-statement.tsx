@@ -14,8 +14,7 @@ import {
   ModalHeader,
   useDisclosure,
 } from 'ui-library';
-import CodeIcon from '@mui/icons-material/Code';
-import MonitorIcon from '@mui/icons-material/Monitor';
+import { CodeIcon, MonitorIcon } from 'ui-library'
 import { AuthorsWrapper } from './authors';
 import { CircumstanceChoice } from './circumstance-choice/index';
 import { SubjectOfInformationWrapper } from './subject-of-information';

@@ -39,9 +39,8 @@ const ComponentTypeWrapper = ({
 
   const radioOptions = [
     { value: AnfStatementType.AnfStatementTypeMain, label: "Main ANF Statement", description: "Component marked as Main ANF type" },
+    { value: AnfStatementType.AnfStatementTypeNotApplicable, label: "Contributing ANF Statement", description: "Select Main Statement for the Contributing ANF Statement" },
     { value: AnfStatementType.AnfStatementTypeAssociated, label: "Associated ANF Statement", description: "Select Main Statement for the Associated Statement" },
-    { value: AnfStatementType.AnfStatementUserQuestion, label: "User Question", description: "User Provided Data" },
-    { value: AnfStatementType.AnfStatementTypeNotApplicable, label: "Not Applicable", description: "Component marked as non ANF type." },
   ];
   return (
     <div className='p-8'>

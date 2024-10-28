@@ -7,29 +7,28 @@ const MeasureComponent = ({ anfStatementConnectorId, questionnaireItemId, tabNam
         `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.${tabName}.${field}`;
     const BoundInput = ({ label, fieldName, includeBoundName }: BoundInputProps) => (
         <>
-            <div className="flex items-center gap-4 p-4 pt-8">
+            <div className="flex items-center gap-4">
                 <ControlledInput isFullWidth={false} label={label} name={getFieldName(fieldName)} />
                 <ControlledRadio label={`Include ${label}:`} name={getFieldName(includeBoundName)} />
             </div>
-            <Divider className="bg-[#99C7FB]" />
         </>
     );
     return (
-        <div className="flex flex-col gap-4">
-            {label && <label className="pl-4 pb-0 text-sm font-bold text-black">{label}</label>}
-            
+        <div className="flex flex-col gap-4 ">
+            {label && <label className=" text-sm font-bold text-black">{label}</label>}
             <BoundInput label="Lower Bound" fieldName="lowerBoundConfig" includeBoundName="includeLowerBound" />
+            <Divider className="my-2" />
             <BoundInput label="Upper Bound" fieldName="upperBoundConfig" includeBoundName="includeUpperBound" />
-            
+            <Divider className="my-2" />
             <ControlledInput
-                className="w-full p-4"
+                className="w-full"
                 isFullWidth
                 label="Semantic"
                 name={getFieldName("semantic.expression")}
             />
-            
+            <Divider className="my-2" />
             <ControlledInput
-                className="w-full p-4"
+                className="w-full"
                 isFullWidth
                 label="Resolution"
                 type="number"

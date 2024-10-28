@@ -7,11 +7,13 @@ interface TimeWrapperProps {
 }
 
 const TimeWrapper: React.FC<TimeWrapperProps> = ({ anfStatementConnectorId, questionnaireItemId }) => (
-  <MeasureComponent
-    anfStatementConnectorId={anfStatementConnectorId}
-    questionnaireItemId={questionnaireItemId}
-    tabName="time"
-  />
+  <div className='flex flex-col p-4'>
+    <MeasureComponent
+      anfStatementConnectorId={anfStatementConnectorId}
+      questionnaireItemId={questionnaireItemId}
+      tabName="time"
+    />
+  </div>
 );
 
-export {TimeWrapper};
+export { TimeWrapper };

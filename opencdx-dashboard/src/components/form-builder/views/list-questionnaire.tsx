@@ -10,9 +10,9 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  useDisclosure,
   Button ,
-  Tooltip
+  Tooltip,
+  LeftChevronIcon
 } from 'ui-library';
 import { Link, Tab, Tabs } from 'ui-library';
 import { allExpanded, defaultStyles, JsonView } from 'react-json-view-lite';
@@ -35,7 +35,6 @@ import ListView from './list-view';
 import dynamicForm from '../../../../public/images/dynamic_form.png';
 import dynamicFormTransparent from '../../../../public/images/dynamic_form_transparent.png';
 import fileUploadTransparent from '../../../../public/images/file_upload_transparent.png';
-import arrowBack from '../../../../public/images/arrow-back.png';
 
 export default function ListQuestionnaire() {
   const { data: currentUser } = useCurrentUser();
@@ -191,19 +190,19 @@ export default function ListQuestionnaire() {
         <div className="flex flex-col space-y-1">
           <h1 className="text-base font-semibold">Forms Builder</h1>
           <Breadcrumbs className="mb-4" separator="/" >
-            <BreadcrumbItem href="/form-builder" >Dashboard</BreadcrumbItem>
+            <BreadcrumbItem href="/dashboard/pages/form-builder" >Dashboard</BreadcrumbItem>
             <BreadcrumbItem>Forms Builder</BreadcrumbItem>
           </Breadcrumbs>
         </div>
       </div>
       <div className="flex items-center space-x-2">
-        <Link href="/form-builder">
+        <Link href="/dashboard/pages/form-builder">
           <Button
             className="mr-4"
             color="primary"
             variant="bordered"
           >
-            <Image src={arrowBack.src} alt="" width={20} height={20} priority />
+            <LeftChevronIcon />
             Back
           </Button>
         </Link>

@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react';
 import { Card, CardBody, CardFooter, Button, Tooltip } from 'ui-library';
 import Image from 'next/image';
-import TitleIcon from '@mui/icons-material/Title';
 import { Questionnaire } from '@/api/questionnaire/model/questionnaire';
-
+import { TitleIcon } from 'ui-library';
 import calendarToday from '../../../../public/images/calendar_today.png';
 import factCheck from '../../../../public/images/fact_check.png';
 import removeRedEye from '../../../../public/images/remove_red_eye.png';
