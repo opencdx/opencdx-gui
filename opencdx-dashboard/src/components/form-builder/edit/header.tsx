@@ -1,5 +1,5 @@
 import { Card, CardBody, BreadcrumbItem, Breadcrumbs, Button, Image, Switch } from 'ui-library';
-import { ChevronLeft} from '@mui/icons-material'
+import { LeftChevronIcon} from 'ui-library'
 import { useRouter } from 'next/navigation';
 import editNoteLite from '../../../../public/images/edit_note_lite.png';
 
@@ -22,8 +22,8 @@ const Header = ({formTitle}: {formTitle: string}) => {
                                     Edit Form: <strong>{formTitle}</strong>
                                 </h1>
                                 <Breadcrumbs separator="/">
-                                    <BreadcrumbItem href="/dashboard/pages/form-builder">Dashboard</BreadcrumbItem>
-                                    <BreadcrumbItem href="/dashboard/pages/form-builder">Form Builder</BreadcrumbItem>
+                                    <BreadcrumbItem href="/pages/form-builder">Dashboard</BreadcrumbItem>
+                                    <BreadcrumbItem href="/pages/form-builder">Form Builder</BreadcrumbItem>
                                     <BreadcrumbItem>Edit Form: {formTitle}</BreadcrumbItem>
                                 </Breadcrumbs>
                             </div>
@@ -32,7 +32,7 @@ const Header = ({formTitle}: {formTitle: string}) => {
                         <div className="flex flex-row">
                             <Button
                                 className="mr-4"
-                                startContent={<ChevronLeft />}
+                                startContent={<LeftChevronIcon />}
                                 variant="bordered"
                                 color="primary"
                                 onPress={handleBack}

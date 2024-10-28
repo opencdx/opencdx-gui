@@ -10,9 +10,9 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  useDisclosure,
   Button ,
-  Tooltip
+  Tooltip,
+  LeftChevronIcon
 } from 'ui-library';
 import { Link, Tab, Tabs } from 'ui-library';
 import { allExpanded, defaultStyles, JsonView } from 'react-json-view-lite';
@@ -35,7 +35,6 @@ import ListView from './list-view';
 import dynamicForm from '../../../../public/images/dynamic_form.png';
 import dynamicFormTransparent from '../../../../public/images/dynamic_form_transparent.png';
 import fileUploadTransparent from '../../../../public/images/file_upload_transparent.png';
-import arrowBack from '../../../../public/images/arrow-back.png';
 
 export default function ListQuestionnaire() {
   const { data: currentUser } = useCurrentUser();
@@ -203,7 +202,7 @@ export default function ListQuestionnaire() {
             color="primary"
             variant="bordered"
           >
-            <Image src={arrowBack.src} alt="" width={20} height={20} priority />
+            <LeftChevronIcon />
             Back
           </Button>
         </Link>
