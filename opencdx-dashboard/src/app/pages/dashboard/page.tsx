@@ -2,6 +2,9 @@
 
 import { Users, Clock, UserMinus, ClipboardList, Building, MessageSquare, Search } from 'lucide-react'
 import { Input, Card, CardBody, Image } from 'ui-library'
+
+import person from '../../../../public/images/person.png';
+
 interface StatCardProps {
   icon: React.ReactNode
   title: string
@@ -22,12 +25,12 @@ const StatCard: React.FC<StatCardProps> = ({ icon, title, value, color }) => (
 )
 
 const statCards = [
-  { icon: <Image src="/images/person.png" alt="Total Users" width={24} height={24} />, title: "Total Users", value: 571, color: "bg-blue-500" },
-  { icon: <Image src="/images/person.png" alt="Pending" width={24} height={24} />, title: "Pending", value: 93, color: "bg-yellow-500" },
-  { icon: <Image src="/images/person.png" alt="Inactive Users" width={24} height={24} />, title: "Inactive Users", value: 24, color: "bg-red-500" },
-  { icon: <Image src="/images/person.png" alt="Test Types" width={24} height={24} />, title: "Test Types", value: 6, color: "bg-green-500" },
-  { icon: <Image src="/images/person.png" alt="Organization" width={24} height={24} />, title: "Organization", value: 3, color: "bg-purple-500" },
-  { icon: <Image src="/images/person.png" alt="User Responses" width={24} height={24} />, title: "User Responses", value: 8, color: "bg-indigo-500" },
+  { icon: <Image src={person.src} alt="Total Users" width={24} height={24} />, title: "Total Users", value: 571, color: "bg-blue-500" },
+  { icon: <Image src={person.src} alt="Pending" width={24} height={24} />, title: "Pending", value: 93, color: "bg-yellow-500" },
+  { icon: <Image src={person.src} alt="Inactive Users" width={24} height={24} />, title: "Inactive Users", value: 24, color: "bg-red-500" },
+  { icon: <Image src={person.src} alt="Test Types" width={24} height={24} />, title: "Test Types", value: 6, color: "bg-green-500" },
+  { icon: <Image src={person.src} alt="Organization" width={24} height={24} />, title: "Organization", value: 3, color: "bg-purple-500" },
+  { icon: <Image src={person.src} alt="User Responses" width={24} height={24} />, title: "User Responses", value: 8, color: "bg-indigo-500" },
 ]
 
 export default function Component() {

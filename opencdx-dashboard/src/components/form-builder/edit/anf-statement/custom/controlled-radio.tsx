@@ -24,7 +24,7 @@ const ControlledRadio: React.FC<ControlledRadioProps> = ({ label, name, orientat
               label: 'text-sm font-normal text-black'
             }}
             value={String(value)}
-            onChange={(event) => onChange(event.target.value === 'true')}
+            onChange={(event: { target: { value: string; }; }) => onChange(event.target.value === 'true')}
           >
             <Radio 
               value="true"

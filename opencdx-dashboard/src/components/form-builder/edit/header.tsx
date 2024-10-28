@@ -1,7 +1,7 @@
 import { Card, CardBody, BreadcrumbItem, Breadcrumbs, Button, Image, Switch } from 'ui-library';
 import { ChevronLeft} from '@mui/icons-material'
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import editNoteLite from '../../../../public/images/edit_note_lite.png';
 
 const Header = ({formTitle}: {formTitle: string}) => {
     const router = useRouter();
@@ -16,7 +16,7 @@ const Header = ({formTitle}: {formTitle: string}) => {
                 <CardBody>
                     <div className="flex flex-row justify-between items-center mb-4 mt-4">
                         <div className="flex items-center space-x-4">
-                            <Image src="/images/edit_note_lite.png" alt="Dynamic Form" width={48} height={48} />
+                            <Image src={editNoteLite.src} alt="Dynamic Form" width={48} height={48} />
                             <div className="flex flex-col space-y-1">
                                 <h1 className="text-xl">
                                     Edit Form: <strong>{formTitle}</strong>
