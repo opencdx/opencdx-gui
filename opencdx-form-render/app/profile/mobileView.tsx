@@ -65,7 +65,7 @@ const EditProfile = () => {
             /> */}
         </Pressable>
       </View>
-        <View className="flex-1 items-center p-6">
+        <View className="flex-1 items-center justify-between p-6">
           <Image
             className="mb-12 w-500"
             source={require('~/assets/profile.png')}

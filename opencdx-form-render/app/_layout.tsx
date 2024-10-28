@@ -91,14 +91,9 @@ export default function RootLayout() {
                 title: 'Questionnaire',
                 contentStyle: { backgroundColor: 'white' },
               }} />
-              <Stack.Screen name="profile/view" options={{
+              <Stack.Screen name="profile/index" options={{
                 headerShown: false,
                 title: 'Profile',
-                contentStyle: { backgroundColor: 'white' },
-              }} />
-              <Stack.Screen name="profile/mobileView" options={{
-                headerShown: false,
-                title: 'Edit Profile',
                 contentStyle: { backgroundColor: 'white' },
               }} />
             </Stack>
