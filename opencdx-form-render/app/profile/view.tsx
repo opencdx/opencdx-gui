@@ -21,9 +21,18 @@ const ProfileView = ({ links }: { links: any }) => {
     phoneNumber: '555-555-5555',
     dateOfBirth: 'Sep 23, 1978',
   });
+  const [originalProfileData, setOriginalProfileData] = useState<ProfileData>(profileData);
 
   const handleEdit = () => {
+    if (!isEditing) {
+      setOriginalProfileData(profileData); // Save current data before editing
+    }
     setIsEditing(!isEditing);
+  };
+
+  const handleCancelEdit = () => {
+    setProfileData(originalProfileData); // Revert to original data
+    setIsEditing(false);
   };
 
   const handleInputChange = (field: keyof ProfileData, value: string) => {
@@ -33,6 +42,7 @@ const ProfileView = ({ links }: { links: any }) => {
   const handleSave = () => {
     setIsEditing(false); // End editing mode
   };
+
   const isValidInput = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return profileData.firstName.length > 0 && profileData.lastName.length > 0 && profileData.email && emailRegex.test(profileData.email) && isEditing;
@@ -75,7 +85,7 @@ const ProfileView = ({ links }: { links: any }) => {
             />
             <Pressable
               className="flex flex-row items-center mt-2"
-              onPress={handleEdit}
+              onPress={!isEditing ? handleEdit : handleCancelEdit}
               aria-label="Edit"
             >
               <Text className="text-blue-600 font-medium">
