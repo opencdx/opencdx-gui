@@ -9,9 +9,9 @@ import CustomHeader from '~/components/ui/CustomHeader';
 const EditProfile = () => {
   const navigation = useNavigation();
   const [bio, setBio] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('John');
+  const [lastName, setLastName] = useState('Cheng');
+  const [email, setEmail] = useState('john@xxx.com');
   const [phone, setPhone] = useState('');
   const [dob, setDob] = useState('');
   const [isEditing, setIsEditing] = useState(false);
@@ -27,7 +27,7 @@ const EditProfile = () => {
   };
   const isValidInput = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return firstName.length > 0 && lastName.length > 0 && email && emailRegex.test(email);
+    return firstName.length > 0 && lastName.length > 0 && email && emailRegex.test(email) && isEditing;
   };
   function handleSubmit() {
 
@@ -59,59 +59,51 @@ const EditProfile = () => {
             <Text className="font-inter text-base font-normal text-blue-600 pl-1">
             {!isEditing ? "Edit" : "Cancel"}
             </Text>
-            {/* <Image
-            source={require('../../assets/back.png')}
-            alt="Select Questionnaire"
-            /> */}
+            <Image source={require('~/assets/edit.png')} className='ml-3'/>
         </Pressable>
       </View>
-        <View className="flex-1 items-center justify-between p-6">
+        <View className="flex-1 items-center justify-between p-4">
           <Image
             className="mb-12 w-500"
             source={require('~/assets/profile.png')}
           />
-        <View className="flex ml-10 w-screen">
-            <Text className="text-2xl font-medium">My Profile</Text>
-            <Input
-                isDisbaled={!isEditing}
-                variant='plain'
-                label="This information is used for..."
-                value={bio}
-                onChangeText={setBio}
-            />
+        <View className="flex ml-14 w-screen">
+            <Text className="text-2xl font-medium mb-3">My Profile</Text>
+            <Text className="text-gray-600 mb-6">This information is used for...</Text>
         </View>
+
             <Input
-                isDisbaled={!isEditing}
+                isEditable={isEditing}
                 label="First Name*"
-                variant='underline'
+                variant={isEditing ? 'default' : 'underline'}
                 value={firstName}
                 onChangeText={setFirstName}
             />
             <Input
-                isDisbaled={!isEditing}
-                variant='underline'
+                isEditable={isEditing}
+                variant={isEditing ? 'default' : 'underline'}
                 label="Last Name*"
                 value={lastName}
                 onChangeText={setLastName}
             />
             <Input
-                isDisbaled={!isEditing}
-                variant='underline'
+                isEditable={isEditing}
+                variant={isEditing ? 'default' : 'underline'}
                 label="Email Address*"
                 value={email}
                 onChangeText={setEmail}
             />
             <Input
-                isDisbaled={!isEditing}
-                variant='underline'
+                isEditable={isEditing}
+                variant={isEditing ? 'default' : 'underline'}
                 label="Phone Number"
                 value={phone}
                 onChangeText={setPhone}
             />
             <Input
-                isDisbaled={!isEditing}
+                isEditable={isEditing}
                 className='mb-10'
-                variant='underline'
+                variant={isEditing ? 'default' : 'underline'}
                 label="Date of Birth"
                 value={dob}
                 onChangeText={setDob}
@@ -119,6 +111,7 @@ const EditProfile = () => {
           <Button
             onPress={()=>{}}
             disabled={!isValidInput()}
+            className="p-4"
             >
             Save
         </Button>
