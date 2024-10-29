@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
-import { View, Text, Pressable, ScrollView, useWindowDimensions, SafeAreaView, StatusBar } from 'react-native';
+import { View, Text, Pressable, ScrollView, useWindowDimensions, SafeAreaView, StatusBar, KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Input } from '../../../components/ui/input';
 import { Button } from '../../../components/ui/button';
@@ -9,7 +9,6 @@ import { Platform } from 'react-native';
 
 // Conditionally assign padding based on the platform
 const paddingTop = Platform.OS === 'android' ? Math.ceil(StatusBar.currentHeight || 0) : 0;
-
 
 const useForgotPasswordForm = () => {
     const [email, setEmail] = useState('');
@@ -68,7 +67,7 @@ const ForgotPassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
                 Continue
             </Button>
         </View>
-    )
+    );
 
     const renderContent = () => (
         <View className="w-full items-center">
@@ -113,23 +112,35 @@ const ForgotPassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
     );
 
     const renderMobileContent = () => (
-        <View aria-label="main-layout forgot-password" className={`flex flex-1 justify-between  items-center bg-white max-w-[500px] w-full mx-auto gap-6 px-4`}>
-             <View className={'w-full flex gap-6 px-4'}>
+        <View aria-label="main-layout forgot-password" className={`flex flex-1 justify-between items-center bg-white max-w-[500px] w-full mx-auto gap-6 px-4`}>
+            <View className={'w-full flex gap-6 px-4'}>
                 {renderBackButton()}
-             </View>
+            </View>
             <View className={'w-full flex gap-6 px-4'}>
                 {renderContent()}
             </View>
-            <View style={{ marginBottom: 25}} className={'w-full flex gap-6 px-4'}>
+            <View style={{ marginBottom: 25 }} className={'w-full flex gap-6 px-4'}>
                 {renderFooter()}
             </View>
         </View>
     );
 
     return (
-        <SafeAreaView style={{ paddingTop }} className={`flex-1 bg-white`}>
-            {!isMobile ? renderWebContent() : renderMobileContent()}
-        </SafeAreaView>
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'} // Adjusts based on platform
+            keyboardVerticalOffset={Platform.select({ ios: 0, android: 20 })} // Offset for smooth scrolling
+            >
+            <ScrollView
+                contentContainerStyle={{ flexGrow: 1 }}
+                showsVerticalScrollIndicator={false}
+            >
+                <SafeAreaView style={{ paddingTop }} className={`flex-1 bg-white`}>
+                {!isMobile ? renderWebContent() : renderMobileContent()}
+                </SafeAreaView>
+               
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 };
 

@@ -18,13 +18,13 @@ const DesktopDashboard = ({ links }: { links: any }) => (
     {/* Main Content */}
     <View className="flex-1 bg-[#020B2D] overflow-y-auto">
       {/* Header */}
-      <View className="flex flex-row justify-end items-center bg-white p-4  rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900">
+      <View style={{ borderTopLeftRadius: 40 }} className="flex flex-row justify-end items-center bg-white p-4">
         <View className="flex flex-row items-center">
           <View className="bg-blue-200 rounded-full w-8 h-8 flex items-center justify-center mr-2">
             <Image source={require('../../../assets/profile-small.png')} className="w-6  h-6" />
-            </View>
-          <Text className="text-gray-800">John</Text>
-          <Image source={require('../../../assets/arrow-down.png')} className="w-4 h-4" />
+          </View>
+            <Text className="text-gray-800 mr-1">John</Text>
+            <Image source={require('../../../assets/arrow-down.png')} className="w-4 h-4" />
         </View>
       </View>
 
