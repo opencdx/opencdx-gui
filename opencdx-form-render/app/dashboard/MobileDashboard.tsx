@@ -4,12 +4,42 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import QuestionnaireCard from './QuestionnaireCard';
 import HistoryCard from './HistoryCard';
 import { LinearGradient } from 'expo-linear-gradient';
-
-const MobileDashboard = () => (
-  <SafeAreaView>
-    <ImageBackground source={require('../../assets/background.png')} className="h-screen w-full"> 
-      <ScrollView className="flex flex-col h-screen">
-        <View className="flex bg-[#F8F9FB] p-6">
+import CustomHeader from '~/components/ui/CustomHeader';
+import { useNavigation } from '@react-navigation/native';
+const MobileDashboard = () => {
+  const navigation = useNavigation();
+  const currentDate = new Date().toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+});
+  return (<SafeAreaView>
+    <ImageBackground 
+        source={require('../../assets/background.png')} 
+        style={{ width: '100%', height: '100%' }} // Expands background image
+        resizeMode="cover" // Ensures image covers the entire screen
+      >
+      <CustomHeader title={currentDate} rightButton={{
+        imageSource: require('~/assets/logout_mobile.png'),
+        onPress: () => {
+          navigation.navigate("auth/login")
+        },
+      }}
+      leftButton={{
+        imageSource: require('~/assets/profile.png'),
+        onPress: () => {
+          navigation.navigate("profile/mobileView")
+        },
+      }}
+      titleStyle={{ fontSize: 12, color: 'lightblue', fontWeight: 'bold' }}
+      />
+      <ScrollView className="flex flex-col h-screen mb-20">
+        <View className="flex p-6">
+          <View className='items-center p-4'>
+            <Image source={require('../../assets/opencdx.png')} />
+            <Text className="text-gray-400 text-l font-medium mt-6">Welcome to your dashboard John.</Text>
+            <Text className="text-gray-400 text-l font-medium mb-4"> Let's see what is available for you today! </Text>
+          </View>
           <View className={`flex flex-col gap-2`}>
             {/* Column 1: Take Specific Questionnaire */}
             <View className="bg-black rounded-xl p-4 flex-1">
@@ -34,10 +64,14 @@ const MobileDashboard = () => (
             </View>
             <HistoryCard isMobile={true} />
           </View>
+          <View className='items-center'>
+            <Image source={require('../../assets/footer.png')} className="mt-10 mb-6" />
+          </View>
         </View>
       </ScrollView>
     </ImageBackground>
   </SafeAreaView>
 );
+  }
 
 export default MobileDashboard;

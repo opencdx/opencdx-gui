@@ -93,7 +93,6 @@ const Signup = () => {
     const onSuccess = useCallback(() => {
         setIsLoading(false);
         navigation.navigate('auth/login' as never);
-        showToast({ message: 'Signup successful.', type: 'success' });
     }, [navigation, showToast]);
 
     const onError = useCallback((error: any) => {
