@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
-import { View, Text, Pressable, ScrollView, useWindowDimensions, SafeAreaView, StatusBar } from 'react-native';
+import { View, Text, Pressable, ScrollView, useWindowDimensions, SafeAreaView, StatusBar, KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Input } from '../../components/ui/input';
 import { Button } from '../../components/ui/button';
@@ -227,7 +227,12 @@ const ChangePassword = () => {
     );
 
     const renderMobileContent = () => (
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'} // Adjusts based on platform
+            keyboardVerticalOffset={Platform.select({ ios: 0, android: 20 })} // Offset for smooth scrolling
+        >
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
             <View aria-label="main-layout change-password" className={`flex flex-1 justify-between items-center bg-white max-w-[500px] w-full mx-auto gap-6 px-4`}>
              <View className={'w-full flex gap-6 px-4'}>
                 {renderBackButton()}
@@ -240,6 +245,7 @@ const ChangePassword = () => {
             </View>
             </View>
         </ScrollView>
+        </KeyboardAvoidingView>
     );
 
     return (
