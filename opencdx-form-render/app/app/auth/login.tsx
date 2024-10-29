@@ -30,7 +30,7 @@ const Login = () => {
 
   const handleLoginSuccess = useCallback((data: { token: string }) => {
     AsyncStorage.setItem('serviceToken', data.token);
-    navigation.navigate('form-render/dashboard/index' as never);
+    navigation.navigate('app/dashboard/index' as never);
   }, [navigation, showToast]);
 
   const handleLoginError = useCallback((err: any) => {
@@ -44,7 +44,7 @@ const Login = () => {
   }, [username, password, login]);
 
   const handleSignup = useCallback(() => {
-    navigation.navigate('form-render/auth/signup' as never);
+    navigation.navigate('app/auth/signup' as never);
   }, [navigation]);
 
   const renderForm = () => (
@@ -83,7 +83,7 @@ const Login = () => {
             />
               <Pressable
                 className="self-end rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onPress={() => navigation.navigate('form-render/auth/forgot-password' as never)}
+                onPress={() => navigation.navigate('app/auth/forgot-password' as never)}
                 role="link"
                 aria-label="Forgot Password"
               >

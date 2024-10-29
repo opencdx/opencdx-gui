@@ -10,9 +10,9 @@ const Profile = () => {
   const isMobile = width <= 768 || Platform.OS=='ios' || Platform.OS=='android';
 
   const links = [
-    { label: 'Dashboard', href: 'form-render/dashboard', icon: <MaterialCommunityIcons name="view-dashboard" size={20} className="text-white"   /> },
-    { label: 'My Profile', href: 'form-render/profile', icon: <MaterialCommunityIcons name="account" size={20} className="text-white"  /> },
-    { label: 'Logout', href: 'form-render/auth/login', icon: <MaterialCommunityIcons name="logout" size={20} className="text-white"  /> },
+    { label: 'Dashboard', href: 'app/dashboard', icon: <MaterialCommunityIcons name="view-dashboard" size={20} className="text-white"   /> },
+    { label: 'My Profile', href: 'app/profile', icon: <MaterialCommunityIcons name="account" size={20} className="text-white"  /> },
+    { label: 'Logout', href: 'app/auth/login', icon: <MaterialCommunityIcons name="logout" size={20} className="text-white"  /> },
   ];
 
   useEffect(() => {
