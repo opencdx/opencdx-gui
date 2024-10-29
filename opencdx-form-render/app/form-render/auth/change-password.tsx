@@ -114,7 +114,7 @@ const ChangePassword = () => {
     const onSuccess = useCallback(() => {
         showToaster('Password reset successfully.', 'success');
         setTimeout(() => {
-            navigation.navigate('auth/password-changed' as never);
+            navigation.navigate('form-render/auth/password-changed' as never);
         }, 1000);
     }, [navigation, showToaster]);
 
