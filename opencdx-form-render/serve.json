@@ -1,0 +1,6 @@
+{
+    "redirects": [
+      { "source": "/form-render", "destination": "/form-render/auth/login" },
+      { "source": "/", "destination": "/form-render/auth/login" }
+    ]
+  }

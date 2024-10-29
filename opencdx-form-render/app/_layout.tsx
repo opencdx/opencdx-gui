@@ -49,49 +49,49 @@ export default function RootLayout() {
                   title: 'Home',
                   contentStyle: { backgroundColor: 'white' },
                 }} />
-              <Stack.Screen name="auth/login" options={{
+              <Stack.Screen name="form-render/auth/login" options={{
                 headerShown: false,
                 title: 'Login',
                 contentStyle: { backgroundColor: 'white' },
               }} />
-              <Stack.Screen name="auth/signup" options={{
+              <Stack.Screen name="form-render/auth/signup" options={{
                 headerShown: false,
                 title: 'Signup',
                 contentStyle: { backgroundColor: 'white' },
               }} />
-              <Stack.Screen name="auth/forgot-password" options={{
+              <Stack.Screen name="form-render/auth/forgot-password" options={{
                 headerShown: false,
                 title: 'Forgot Password',
                 contentStyle: { backgroundColor: 'white' },
               }} />
 
              
-              <Stack.Screen name="auth/change-password" options={{
+              <Stack.Screen name="form-render/auth/change-password" options={{
                 headerShown: false,
                 title: 'Change Password',
                 contentStyle: { backgroundColor: 'white' },
               }} />
-              <Stack.Screen name="auth/password-changed" options={{
+              <Stack.Screen name="form-render/auth/password-changed" options={{
                 headerShown: false,
                 title: 'Password Changed',
                 contentStyle: { backgroundColor: 'white' },
               }} />
-              <Stack.Screen name="dashboard/index" options={{
+              <Stack.Screen name="form-render/dashboard/index" options={{
                 headerShown: false,
                 title: 'Dashboard',
                 contentStyle: { backgroundColor: 'white' },
               }} />
-              <Stack.Screen name="questionnaire/list" options={{
+              <Stack.Screen name="form-render/questionnaire/list" options={{
                 headerShown: false,
                 title: 'Questionnaire',
                 contentStyle: { backgroundColor: 'white' },
               }} />
-              <Stack.Screen name="questionnaire/take-questionnaire" options={{
+              <Stack.Screen name="form-render/questionnaire/take-questionnaire" options={{
                 headerShown: false,
                 title: 'Questionnaire',
                 contentStyle: { backgroundColor: 'white' },
               }} />
-              <Stack.Screen name="profile/index" options={{
+              <Stack.Screen name="form-render/profile/index" options={{
                 headerShown: false,
                 title: 'Profile',
                 contentStyle: { backgroundColor: 'white' },

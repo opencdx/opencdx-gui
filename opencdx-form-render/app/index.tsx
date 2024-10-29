@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Suspense } from 'react';
-import Login from './auth/login';
+import Login from './form-render/auth/login';
 
 export default function Screen() {
   return (

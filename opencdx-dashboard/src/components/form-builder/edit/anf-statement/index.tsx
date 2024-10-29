@@ -123,12 +123,7 @@ const QuestionnaireItemWrapper: React.FC<{
       {/* ANF Definition buttons */}
       <div className='border-b border-grey-700 bg-white rounded-lg h-20 flex flex-row p-8 gap-3 items-center ml-2 mr-2'>
         <div className='font-medium text-lg flex-shrink-0 mr-auto'>ANF Definition</div>
-        <Button className="rounded-lg justify-content-end" color="primary" variant='bordered'>
-          Select a Rule
-        </Button>
-        <Button className="rounded-lg justify-content-end" color="primary" variant='bordered'>
-          Select a Rule Response
-        </Button>
+       
         {currentComponentType !== AnfStatementType.AnfStatementUserQuestion && (
           <Button
             className="rounded-lg"

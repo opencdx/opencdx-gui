@@ -14,14 +14,14 @@ export const RepetitionComponent: React.FC<RepetitionComponentProps> = ({
     tabName,
 }) => {
     return (
-        <div className="repetition-component ">
+        <div className="repetition-component flex flex-col gap-4 ">
             <MeasureComponent
                 label="Period Start"
                 anfStatementConnectorId={anfStatementConnectorId}
                 questionnaireItemId={questionnaireItemId}
                 tabName={`${tabName}.periodStart`}
             />
-            <Divider className="bg-[#99C7FB]" />
+            <Divider className="bg-[#99C7FB] " />
             <MeasureComponent
                 label="Period Duration"
                 anfStatementConnectorId={anfStatementConnectorId}

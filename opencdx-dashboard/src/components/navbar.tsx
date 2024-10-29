@@ -10,6 +10,12 @@ import { Locale } from '@/config/locale';
 import { setUserLocale } from '@/lib/locale';
 import { logout } from '@/hooks/iam-hooks';
 
+
+import arrowDown from '../../public/images/arrow-down.png';
+import settings from '../../public/settings.png';
+import logoutImage from '../../public/logout.png';
+import language from '../../public/language.png';
+
 const localeOptions = [
   { key: 'en', label: 'English' },
   { key: 'es', label: 'Spanish' }
@@ -31,7 +37,7 @@ export function Navbar() {
         logout(router);
         break;
       case 'change_password':
-        router.push('/password-change');
+        router.push('/auth/password-change');
         break;
       case 'locale':
         const otherLocale = localeOptions.find(option => option.key !== locale)?.key;
@@ -46,11 +52,11 @@ export function Navbar() {
     {
       key: 'locale',
       label: localeOptions.find(option => option.key !== locale)?.label,
-      icon: '/language.png'
+      icon: language.src
     },
-    { key: 'settings', label: 'Settings', icon: '/settings.png' },
-    { key: 'change_password', label: 'Change Password', icon: '/language.png' },
-    { key: 'logout', label: 'Logout', icon: '/logout.png' }
+    { key: 'settings', label: 'Settings', icon: settings.src },
+    { key: 'change_password', label: 'Change Password', icon: language.src },
+    { key: 'logout', label: 'Logout', icon: logoutImage.src }
   ], [locale]);
 
   return (
@@ -66,7 +72,7 @@ export function Navbar() {
                 className="w-full p-0"
                 endContent={
                   <Image 
-                    src="/images/arrow-down.png" 
+                    src={arrowDown.src}
                     alt="Dropdown arrow" 
                     width={24} 
                     height={24} 

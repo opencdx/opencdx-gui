@@ -74,7 +74,7 @@ const QuestionnaireWrapper = ({ questionnaire }: { questionnaire: Questionnaire 
       toast.success('Successfully saved', { position: 'top-right', autoClose: 500 });
       const timer = setTimeout(() => {
         localStorage.removeItem('questionnaire-store');
-        router.push('/form-builder');
+        router.push('/pages/form-builder');
       }, 500);
       return () => clearTimeout(timer);
     }
@@ -83,10 +83,12 @@ const QuestionnaireWrapper = ({ questionnaire }: { questionnaire: Questionnaire 
     }
   }, [isCreated, isUpdated, isCreateError, isUpdateError, router]);
 
-  const filteredItems = ruleSetData?.data?.ruleSets?.map((item: RuleSet) => ({
-    value: item.ruleId,
-    label: item.name,
-  })) || [];
+  const filteredItems = ruleSetData?.data?.ruleSets
+    ?.filter((item: RuleSet) => item.ruleId && item.name) // Ensure no undefined values
+    .map((item: RuleSet) => ({
+      value: item.ruleId as string,
+      label: item.name as string,
+    })) || [];
 
   const onSubmit = async (updatedData: Questionnaire) => {
     try {

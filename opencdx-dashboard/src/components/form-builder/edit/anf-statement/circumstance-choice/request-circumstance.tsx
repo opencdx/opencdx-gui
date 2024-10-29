@@ -1,68 +1,114 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { Divider, Button, Input } from 'ui-library';
+import React from 'react';
+import { Divider, Button } from 'ui-library';
 import { ANFStatement } from '@/api/questionnaire/model/anfstatement';
 import { ControlledInput } from '../custom/controlled-input';
-import { PlusIcon, TrashIcon } from 'lucide-react';
+import { PlusIcon } from 'lucide-react';
 import { MeasureComponent } from '../custom/measure';
 import { ParticipantComponent } from '../custom/participant';
-import { useFormContext } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AssociatedStatementComponent } from '../custom/associated-statement';
 import { RepetitionComponent } from '../custom/repetition';
+import { DeviceIdComponent } from '../custom/deviceid'
+import { PurposeComponent } from '../custom/purpose'
+import ControlledAccordion from '../custom/controlled-accordian';
+
+interface AccordionSectionProps {
+    title: string;
+    isTitleBold?: boolean;
+    children: React.ReactNode;
+}
+
+const AccordionSection: React.FC<AccordionSectionProps> = ({ title, isTitleBold = false, children }) => (
+    <>
+        <Divider className='bg-[#99C7FB]' />
+        <ControlledAccordion title={title} isTitleBold={isTitleBold}>
+            {children}
+        </ControlledAccordion>
+    </>
+);
 
 const RequestCircumstance: React.FC<{
     anfStatementConnectorId: number;
     questionnaireItemId: number;
     anfStatement: ANFStatement;
 }> = ({ anfStatementConnectorId, questionnaireItemId, anfStatement }) => {
-    const [deviceIds, setDeviceIds] = useState<string[]>([]);
-    const { setValue } = useFormContext();
+    const { control } = useFormContext();
     const tabName = 'requestCircumstance';
 
-    // ... existing useEffect, useMemo, and handler functions ...
+    const baseFieldName = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.${tabName}`;
+    const { fields: conditionalTriggerFields, append: appendConditionalTrigger, remove: removeConditionalTrigger } = useFieldArray({
+        control,
+        name: `${baseFieldName}.conditionalTrigger`,
+    });
 
-    const baseFieldName = useMemo(() => 
-        `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.${tabName}`,
-        [questionnaireItemId, anfStatementConnectorId, tabName]
-    );
+    const { fields: requestedParticipantFields, append: appendRequestedParticipant, remove: removeRequestedParticipant } = useFieldArray({
+        control,
+        name: `${baseFieldName}.requestedParticipant`,
+    });
 
-    
-    // ... existing renderDeviceIdInputs function ...
 
     return (
         <>
-            <Divider className='bg-[#99C7FB]' />
-            <MeasureComponent label='Timing' anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.timing`} />
-            <Divider className='bg-[#99C7FB]' />
-            <ControlledInput className='p-4' label="Purpose" name={`${baseFieldName}.purpose[0].expression`} />
-            <Divider className='bg-[#99C7FB]' />
-            {/* <AssociatedStatementComponent
-                label='Conditional Trigger'
-                anfStatementConnectorId={anfStatementConnectorId}
-                questionnaireItemId={questionnaireItemId}
-                tabName={`${tabName}.conditionalTrigger`}
-            /> */}
-            <Divider className='bg-[#99C7FB]' />
-            <ParticipantComponent
-                label='Requested Participant'
-                anfStatementConnectorId={anfStatementConnectorId}
-                questionnaireItemId={questionnaireItemId}
-                anfStatement={anfStatement}
-                tabName={`${tabName}.requestedParticipant`}
-            />
-            <Divider className='bg-[#99C7FB]' />
-            <ControlledInput className='p-4' label="Priority" name={`${baseFieldName}.priority.expression`} />
-            <Divider className='bg-[#99C7FB]' />
-            <MeasureComponent label='Requested Result' anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.requestedResult`} />
-            <Divider className='bg-[#99C7FB]' />
-            {/* <RepetitionComponent
-                anfStatementConnectorId={anfStatementConnectorId}
-                questionnaireItemId={questionnaireItemId}
-                tabName={`${tabName}.repetition`}
-            /> */}
-            <Divider className='bg-[#99C7FB]' />
-            {/* <div className='p-4 flex flex-col gap-4'>
-                {renderDeviceIdInputs()}
-            </div> */}
+            <AccordionSection title="Device ID">
+                <DeviceIdComponent
+                    anfStatementConnectorId={anfStatementConnectorId}
+                    questionnaireItemId={questionnaireItemId}
+                    tabName={tabName}
+                />
+            </AccordionSection>
+
+            <AccordionSection title="Timing" isTitleBold>
+                <MeasureComponent anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.timing`} />
+            </AccordionSection>
+
+            <AccordionSection title="Conditional Trigger" isTitleBold>
+                {conditionalTriggerFields.map((field, index) => (
+                    <div key={field.id} className='mb-2'>
+                        <AssociatedStatementComponent
+                            label={`Conditional Trigger ${index + 1}`}
+                            anfStatementConnectorId={anfStatementConnectorId}
+                            questionnaireItemId={questionnaireItemId}
+                            tabName={`${baseFieldName}.conditionalTrigger[${index}]`}
+                        />
+                        {index !== conditionalTriggerFields.length - 1 && <>
+                            <Divider className='bg-[#99C7FB] h-[16px] my-4' />
+                        </>}
+                    </div>
+                ))}
+                <Button className='w-fit'
+                    variant='flat'
+                    size='sm'
+                    color='primary'
+                    radius='sm' onClick={() => appendConditionalTrigger({})} endContent={<PlusIcon size={18} />}>Add Conditional Trigger</Button>      </AccordionSection>
+
+            <AccordionSection title="Requested Participant" isTitleBold>
+                <ParticipantComponent anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} anfStatement={anfStatement} tabName={tabName} addLabel="Add Requested Participant" />
+            </AccordionSection>
+
+            <AccordionSection title="Priority">
+                <ControlledInput placeholder="Priority" name={`${baseFieldName}.priority.expression`} />
+            </AccordionSection>
+
+            <AccordionSection title="Purpose">
+                <PurposeComponent
+                    anfStatementConnectorId={anfStatementConnectorId}
+                    questionnaireItemId={questionnaireItemId}
+                    tabName={tabName}
+                />
+            </AccordionSection>
+
+            <AccordionSection title="Requested Result" isTitleBold>
+                <MeasureComponent anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.requestedResult`} />
+            </AccordionSection>
+            <AccordionSection title="Repetition" isTitleBold>
+                <RepetitionComponent
+                    anfStatementConnectorId={anfStatementConnectorId}
+                    questionnaireItemId={questionnaireItemId}
+                    tabName={`${tabName}.repetition`}
+                />
+            </AccordionSection>
+            <Divider />
+
         </>
     );
 };

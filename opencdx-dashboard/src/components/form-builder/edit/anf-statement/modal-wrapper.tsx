@@ -1,6 +1,6 @@
 import { QuestionnaireItem } from '@/api/questionnaire/model/questionnaire-item';
 import { Snippet } from "@nextui-org/react";
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { ContentCopyIcon } from 'ui-library'
 import { useQuestionnaireStore } from '@/hooks/questionnaire';
 
 const SnippetItem: React.FC<{ item: QuestionnaireItem }> = ({ item }) => (

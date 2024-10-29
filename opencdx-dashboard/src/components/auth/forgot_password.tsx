@@ -13,6 +13,8 @@ import { Button, Input } from 'ui-library';
 import {useTranslations} from 'next-intl';
 // import { cookies } from 'next/headers';
 
+import back from '../../../public/back.svg';
+import login from '../../../public/login-logo.png'
 
 export default function ForgotPassword() {
   const router = useRouter();
@@ -26,7 +28,7 @@ export default function ForgotPassword() {
  
   const handleSubmit = async () => {
     localStorage.setItem('username', username);
-    router.push('/reset-password');
+    router.push('/auth/reset-password');
   };
 
   const handleBack = () => {
@@ -40,7 +42,7 @@ export default function ForgotPassword() {
     color="primary"
     variant="light"
     onClick={handleBack} // Handle back button click
-    startContent={<Image src="/back.svg" alt="back" width={16} height={16} />}
+    startContent={<Image src={back.src} alt="back" width={16} height={16} />}
   >
     {t('go_back')}
   </Button>
@@ -62,7 +64,7 @@ export default function ForgotPassword() {
             alt="opencdx logos"
             aria-label="OpenCDX Logo"
             radius="none"
-            src="/login-logo.png"
+            src={login.src}
             />
         </div>
         </CardHeader>

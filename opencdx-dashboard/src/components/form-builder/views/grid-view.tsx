@@ -1,8 +1,14 @@
 import React, { useMemo } from 'react';
 import { Card, CardBody, CardFooter, Button, Tooltip } from 'ui-library';
 import Image from 'next/image';
-import TitleIcon from '@mui/icons-material/Title';
 import { Questionnaire } from '@/api/questionnaire/model/questionnaire';
+import { TitleIcon } from 'ui-library';
+import calendarToday from '../../../../public/images/calendar_today.png';
+import factCheck from '../../../../public/images/fact_check.png';
+import removeRedEye from '../../../../public/images/remove_red_eye.png';
+import fileDownload from '../../../../public/images/file_download.png';
+import editNote from '../../../../public/images/edit_note.png';
+import deleteOutline from '../../../../public/images/delete_outline.png';
 
 interface GridViewProps {
   questionnaires: Questionnaire[];
@@ -22,10 +28,10 @@ const GridView: React.FC<GridViewProps> = ({
   convertDate,
 }) => {
   const actionButtons = useMemo(() => [
-    { text: "Preview JSON", icon: "/images/remove_red_eye.png", action: onView, dataTestId: "preview-json" },
-    { text: "Download JSON", icon: "/images/file_download.png", action: onDownload, dataTestId: "download-json" },
-    { text: "Edit Form", icon: "/images/edit_note.png", action: onEdit, dataTestId: "edit-form" },
-    { text: "Delete Form", icon: "/images/delete_outline.png", action: (q: Questionnaire) => onDelete(q.id!), dataTestId: "delete-form" },
+    { text: "Preview JSON", icon: removeRedEye.src, action: onView, dataTestId: "preview-json" },
+    { text: "Download JSON", icon: fileDownload.src, action: onDownload, dataTestId: "download-json" },
+    { text: "Edit Form", icon: editNote.src, action: onEdit, dataTestId: "edit-form" },
+    { text: "Delete Form", icon: deleteOutline.src, action: (q: Questionnaire) => onDelete(q.id!), dataTestId: "delete-form" },
   ], [onView, onDownload, onEdit, onDelete]);
 
   const renderQuestionnaireCard = useMemo(() => (questionnaire: Questionnaire) => (
@@ -42,12 +48,12 @@ const GridView: React.FC<GridViewProps> = ({
             isEllipsis
           />
           <InfoItem
-            icon={<Image src="/images/calendar_today.png" alt="Calendar" width={24} height={24} className="mr-2 text-black-500 flex-shrink-0" />}
+            icon={<Image src={calendarToday.src} alt="Calendar" width={24} height={24} className="mr-2 text-black-500 flex-shrink-0" />}
             title="Last Updated"
             value={convertDate(questionnaire.modified)}
           />
           <InfoItem
-            icon={<Image src="/images/fact_check.png" alt="Status" width={24} height={24} className="mr-2 text-black-500 flex-shrink-0" />}
+            icon={<Image src={factCheck.src} alt="Status" width={24} height={24} className="mr-2 text-black-500 flex-shrink-0" />}
             title="Status"
             value={
               <div className="flex items-center">

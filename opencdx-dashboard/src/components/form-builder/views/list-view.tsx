@@ -1,10 +1,14 @@
 import React, { useMemo } from 'react';
-import TitleIcon from '@mui/icons-material/Title';
 import Image from 'next/image';
 import { Questionnaire } from '@/api/questionnaire/model/questionnaire';
-import {  Button, Tooltip } from "ui-library";
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import {  Button, Tooltip, TitleIcon } from "ui-library";
+import calendarToday from '../../../../public/images/calendar_today.png';
+import factCheck from '../../../../public/images/fact_check.png';
+import settingsSuggest from '../../../../public/images/settings_suggest.png';
+import removeRedEye from '../../../../public/images/remove_red_eye.png';
+import fileDownload from '../../../../public/images/file_download.png';
+import editNote from '../../../../public/images/edit_note.png';
+import deleteOutline from '../../../../public/images/delete_outline.png';
 
 interface ListViewProps {
   questionnaires: Questionnaire[];
@@ -34,9 +38,9 @@ const ListView: React.FC<ListViewProps> = ({
 }) => {
   const tableHeaders = useMemo(() => [
     { icon: <TitleIcon className="w-6 h-6 mr-2 text-black-500 flex-shrink-0" />, label: 'Form Title' },
-    { icon: <Image src="/images/calendar_today.png" alt="Calendar" width={24} height={24} className='mr-2 text-black-500 flex-shrink-0' />, label: 'Last Updated' },
-    { icon: <Image src="/images/fact_check.png" alt="Upload" width={24} height={24} className='mr-2 text-black-500 flex-shrink-0' />, label: 'Status' },
-    { icon: <Image src="/images/settings_suggest.png" alt="Settings" width={24} height={24} className='mr-2 text-black-500 flex-shrink-0' />, label: 'Actions' },
+    { icon: <Image src={calendarToday.src} alt="Calendar" width={24} height={24} className='mr-2 text-black-500 flex-shrink-0' />, label: 'Last Updated' },
+    { icon: <Image src={factCheck.src} alt="Upload" width={24} height={24} className='mr-2 text-black-500 flex-shrink-0' />, label: 'Status' },
+    { icon: <Image src={settingsSuggest.src} alt="Settings" width={24} height={24} className='mr-2 text-black-500 flex-shrink-0' />, label: 'Actions' },
   ], []);
 
   const getStatusColor = (status: string) => {
@@ -100,17 +104,17 @@ const ListView: React.FC<ListViewProps> = ({
                 <td className="px-6 py-4">
                   <div className="flex space-x-2">
                     {[
-                      { action: onView, icon: 'remove_red_eye', alt: 'Preview JSON', dataTestId: 'preview-json'   },
-                      { action: onDownload, icon: 'file_download', alt: 'Download JSON', dataTestId: 'download-json' },
-                      { action: onEdit, icon: 'edit_note', alt: 'Edit Form', dataTestId: 'edit-form' },
-                      { action: () => onDelete(questionnaire.id!), icon: 'delete_outline', alt: 'Delete Form', dataTestId: 'delete-form' },
+                      { action: onView, icon: removeRedEye.src, alt: 'Preview JSON', dataTestId: 'preview-json'   },
+                      { action: onDownload, icon: fileDownload.src, alt: 'Download JSON', dataTestId: 'download-json' },
+                      { action: onEdit, icon: editNote.src, alt: 'Edit Form', dataTestId: 'edit-form' },
+                      { action: () => onDelete(questionnaire.id!), icon: deleteOutline.src, alt: 'Delete Form', dataTestId: 'delete-form' },
                     ].map(({ action, icon, alt ,dataTestId}, index) => (
                       <Tooltip content={alt} placement="top" classNames={{
                         base: "rounded-md",
                         content: "bg-gray-900 text-white text-sm max-w-xs break-words"
                       }}>
                         <Button key={index} isIconOnly variant="bordered" color='primary' onPress={() => action(questionnaire)} data-testid={dataTestId}>
-                          <Image src={`/images/${icon}.png`} alt={alt} width={24} height={24} className='text-black-500 flex-shrink-0' />
+                          <Image src={icon} alt={alt} width={24} height={24} className='text-black-500 flex-shrink-0' />
                       </Button>
                       </Tooltip>
                     ))}

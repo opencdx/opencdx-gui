@@ -10,9 +10,9 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  useDisclosure,
   Button ,
-  Tooltip
+  Tooltip,
+  LeftChevronIcon
 } from 'ui-library';
 import { Link, Tab, Tabs } from 'ui-library';
 import { allExpanded, defaultStyles, JsonView } from 'react-json-view-lite';
@@ -31,6 +31,10 @@ import { useQuestionnaireStore } from '@/hooks/questionnaire';
 import { toast, ToastContainer } from 'react-toastify';
 import GridView from './grid-view';
 import ListView from './list-view';
+
+import dynamicForm from '../../../../public/images/dynamic_form.png';
+import dynamicFormTransparent from '../../../../public/images/dynamic_form_transparent.png';
+import fileUploadTransparent from '../../../../public/images/file_upload_transparent.png';
 
 export default function ListQuestionnaire() {
   const { data: currentUser } = useCurrentUser();
@@ -108,7 +112,7 @@ export default function ListQuestionnaire() {
         const formData = JSON.parse(event.target?.result as string);
         delete formData.id;
         updateQuestionnaire(formData);
-        router.push('/edit-questionnaire/upload-questionnaire');
+        router.push('/pages/edit-questionnaire/upload-questionnaire');
       } catch (error) {
         toast.error('Error parsing the selected file.');
       }
@@ -145,7 +149,7 @@ export default function ListQuestionnaire() {
 
   const handleEdit = useCallback((questionnaire: Questionnaire) => {
     updateQuestionnaire(questionnaire);
-    router.push(`/edit-questionnaire/${questionnaire.id}`);
+    router.push(`/pages/edit-questionnaire/${questionnaire.id}`);
   }, [updateQuestionnaire, router]);
 
   const handleDelete = useCallback((id: string) => {
@@ -182,23 +186,23 @@ export default function ListQuestionnaire() {
   const renderHeader = useMemo(() => (
     <div className="flex flex-row justify-between items-center bg-white dark:bg-neutral-800 p-4 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700">
       <div className="flex items-center  justify-center space-x-4 align-center ">
-        <Image src="/images/dynamic_form.png" alt="Dynamic Form" width={48} height={48} priority />
+        <Image src={dynamicForm.src} alt="Dynamic Form" width={48} height={48} priority />
         <div className="flex flex-col space-y-1">
           <h1 className="text-base font-semibold">Forms Builder</h1>
           <Breadcrumbs className="mb-4" separator="/" >
-            <BreadcrumbItem href="/form-builder" >Dashboard</BreadcrumbItem>
+            <BreadcrumbItem href="/dashboard/pages/form-builder" >Dashboard</BreadcrumbItem>
             <BreadcrumbItem>Forms Builder</BreadcrumbItem>
           </Breadcrumbs>
         </div>
       </div>
       <div className="flex items-center space-x-2">
-        <Link href="/form-builder">
+        <Link href="/dashboard/pages/form-builder">
           <Button
             className="mr-4"
             color="primary"
             variant="bordered"
           >
-            <Image src="/images/arrow-back.png" alt="" width={20} height={20} priority />
+            <LeftChevronIcon />
             Back
           </Button>
         </Link>
@@ -210,9 +214,9 @@ export default function ListQuestionnaire() {
         >
           <Button color="primary"
             onClick={() => {
-              router.push('/edit-questionnaire/new-questionnaire');
+              router.push('/pages/edit-questionnaire/new-questionnaire');
             }}
-          >Create New Form <Image src="/images/dynamic_form_transparent.png" alt="Upload" width={20} height={20} priority /></Button>
+          >Create New Form <Image src={dynamicFormTransparent.src} alt="Upload" width={20} height={20} priority /></Button>
         </Tooltip>
         <Tooltip content="Upload Form" placement="top"
           classNames={{
@@ -230,7 +234,7 @@ export default function ListQuestionnaire() {
               data-testid="upload-form"
             />
             Upload Form
-            <Image src="/images/file_upload_transparent.png" alt="Upload" width={20} height={20} priority />
+            <Image src={fileUploadTransparent.src} alt="Upload" width={20} height={20} priority />
 
           </label>
          

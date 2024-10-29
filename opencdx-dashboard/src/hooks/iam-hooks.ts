@@ -25,7 +25,7 @@ export const useLogin = (onSuccess: (data: any) => void, onError: (error: any) =
         onSuccess: (data) => {
             const { token } = data.data
             localStorage.setItem('serviceToken', token as string);
-            router.push('/form-builder');
+            router.push('/pages/form-builder');
             if (onSuccess) onSuccess(data);
         },
         onError: (error) => {
@@ -45,7 +45,7 @@ export const useSignUp = (onSuccess: (data: any) => void, onError: (error: any) 
             const userId = signupData.iamUser?.id || '';
             try {
                 await iamApi.verifyEmailIamUser({ id: userId });
-                router.push('/login');
+                router.push('/auth/login');
                 if (onSuccess) onSuccess(data);
             } catch (error) {
                 console.error('Email verification failed:', error);
@@ -65,7 +65,7 @@ export const useResetPassword = (onSuccess: (data: any) => void, onError: (error
     return useMutation({
         mutationFn: (credentials: ResetPasswordRequest) => iamApi.resetPassword({ resetPasswordRequest: credentials }),
         onSuccess: (data) => {
-            router.push('/reset-password-success');
+            router.push('/auth/reset-password-success');
             if (onSuccess) onSuccess(data);
         },
         onError: (error) => {
@@ -80,7 +80,7 @@ export const usePasswordChange = () => {
     return useMutation({
         mutationFn: (credentials: ChangePasswordRequest) => iamApi.changePassword({ changePasswordRequest: credentials }),
         onSuccess: (data) => {
-            router.push('/login');
+            router.push('/auth/login');
         },
         onError: (error) => {
             console.error('Password change failed:', error);
@@ -142,13 +142,13 @@ export const useUserVerify = (userId: string) => {
 
 export const logout = (router: ReturnType<typeof useRouter>) => {
     localStorage.removeItem('serviceToken');
-    router.replace('/login');
+    router.replace('/auth/login');
 };
 
 export const handleSessionOut = (router: ReturnType<typeof useRouter>) => {
     const isAuthenticated = localStorage.getItem('serviceToken');
     if (!isAuthenticated || isAuthenticated.length === 0) {
-        router.replace('/login');
+        router.replace('/auth/login');
     }
 };
 

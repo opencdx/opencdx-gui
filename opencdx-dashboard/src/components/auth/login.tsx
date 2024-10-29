@@ -22,6 +22,10 @@ import { useTranslations } from 'next-intl';
 import { Button, Input } from 'ui-library';
 import { AxiosError } from 'axios';
 
+import logo from '../../../public/login-logo.png';
+import eye from '../../../public/eye.svg';
+import crossEye from '../../../public/cross_eye.svg';
+
 export default function Login() {
   // Define success and error callback functions
 const handleSuccess = (data: any) => {
@@ -96,7 +100,7 @@ const handleError = (error: AxiosError) => {
                 alt="opencdx logos"
                 aria-label="opencdx logos"
                 radius="none"
-                src="/login-logo.png"
+                src={logo.src}
               />
             </div>
           </CardHeader>
@@ -128,9 +132,9 @@ const handleError = (error: AxiosError) => {
                     onClick={toggleVisibility}
                   >
                     {isVisible ? (
-                      <Image alt="nextui logo" src="/eye.svg" />
+                      <Image alt="nextui logo" src={eye.src} />
                     ) : (
-                      <Image alt="nextui logo" src="/cross_eye.svg" />
+                      <Image alt="nextui logo" src={crossEye.src} />
                     )}
                   </button>
                 }
@@ -145,7 +149,7 @@ const handleError = (error: AxiosError) => {
             <Link
               className="text-center cursor-pointer"
               color="primary"
-              onPress={() => router.push('/forgot-password')}
+              onPress={() => router.push('/auth/forgot-password')}
             >
               {t('forgot_password_label')}
             </Link>
@@ -169,7 +173,7 @@ const handleError = (error: AxiosError) => {
             <Link
               className="text-center cursor-pointer"
               color="primary"
-              onPress={() => router.push('/signup')}
+              onPress={() => router.push('/auth/signup')}
               aria-label= {t('dont_have_account') + t('sign_up_label')} 
             >
               {t('sign_up_label')}

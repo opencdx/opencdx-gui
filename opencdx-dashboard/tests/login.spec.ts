@@ -4,7 +4,7 @@ import path from 'path';
 test.describe('Login Page', () => {
   test.beforeEach(async ({ page }) => {
     // Navigate to the login page before each test
-    await page.goto('/login');
+    await page.goto('/auth/login');
   });
 
   test('should display login form', async ({ page }) => {

@@ -49,7 +49,7 @@ export interface Questionnaire {
      * @type {string}
      * @memberof Questionnaire
      */
-    'status'?: Status;
+    'status'?: QuestionnaireStatus;
     /**
      * 
      * @type {string}
@@ -112,7 +112,7 @@ export interface Questionnaire {
     'version'?: string;
 }
 
-export const Status = {
+export const QuestionnaireStatus = {
     Draft: 'draft',
     Active: 'active',
     Retired: 'retired',
@@ -120,6 +120,6 @@ export const Status = {
     Unrecognized: 'UNRECOGNIZED'
 } as const;
 
-export type Status = typeof Status[keyof typeof Status];
+export type QuestionnaireStatus = typeof QuestionnaireStatus[keyof typeof QuestionnaireStatus];
 
 

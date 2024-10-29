@@ -25,13 +25,13 @@ export const SidebarLink: React.FC<SidebarLinkProps> = ({ link, className }) => 
   useEffect(() => {
     if (link.href === '/dashboard') {
       AsyncStorage.getItem('serviceToken').then(token => {
-        if (!token) navigation.navigate('auth/login' as never);
+        if (!token) navigation.navigate('form-render/auth/login' as never);
       });
     }
   }, [link.href, navigation]);
 
   const handlePress = useCallback(async () => {
-    if (link.href === '/auth/login') {
+    if (link.href === 'form-render/auth/login') {
       await AsyncStorage.removeItem('serviceToken');
     }
     link.onClick?.();
