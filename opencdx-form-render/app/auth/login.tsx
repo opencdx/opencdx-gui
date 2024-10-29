@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import { View, Text, Pressable, ScrollView, Platform, useWindowDimensions } from 'react-native';
+import { View, Text, Pressable, ScrollView, Platform, useWindowDimensions, KeyboardAvoidingView, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useLogin } from '../../lib/iam-hooks';
@@ -127,18 +127,26 @@ const Login = () => {
   );
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      {!isMobile ? (
-        <main aria-label="main-layout Web" className="flex items-center justify-center min-h-screen">
-          {renderContent()}
-        </main>
-      ) : (
-        <View className="flex items-center justify-center min-h-screen bg-white">
-          {renderContent()}
-        </View>
-      )}
-      <Loader isVisible={loading} />
+
+
+      <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'} // Adjusts based on platform
+          keyboardVerticalOffset={Platform.select({ ios: 0, android: 20 })} // Offset for smooth scrolling
+       >
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+          {!isMobile ? (
+            <main aria-label="main-layout Web" className="flex items-center justify-center min-h-screen">
+              {renderContent()}
+            </main>
+          ) : (
+            <View className="flex items-center justify-center min-h-screen bg-white">
+              {renderContent()}
+            </View>
+          )}
+         <Loader isVisible={loading} />
     </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
