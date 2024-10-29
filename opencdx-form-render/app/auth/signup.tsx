@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
-import { View, Text, Pressable, ScrollView, useWindowDimensions, Platform } from 'react-native';
+import { View, Text, Pressable, ScrollView, useWindowDimensions, Platform, KeyboardAvoidingView } from 'react-native';
 import { useSignUp } from '../../lib/iam-hooks';
 import { useNavigation } from '@react-navigation/native';
 import { Input } from '../../components/ui/input';
@@ -224,7 +224,13 @@ const Signup = () => {
     );
 
     return (
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+
+       <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'} // Adjusts based on platform
+            keyboardVerticalOffset={Platform.select({ ios: 0, android: 20 })} // Offset for smooth scrolling
+        >
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
             {!isMobile ? (
                 <main aria-label="main-layout-signup" className="flex items-center justify-center min-h-screen">
                     {renderContent()}
@@ -250,6 +256,7 @@ const Signup = () => {
                 }}
             />
         </ScrollView>
+       </KeyboardAvoidingView> 
     );
 };
 
