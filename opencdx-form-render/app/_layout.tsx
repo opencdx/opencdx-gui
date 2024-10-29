@@ -76,7 +76,7 @@ export default function RootLayout() {
                 title: 'Password Changed',
                 contentStyle: { backgroundColor: 'white' },
               }} />
-              <Stack.Screen name="form-render/dashboard" options={{
+              <Stack.Screen name="form-render/dashboard/index" options={{
                 headerShown: false,
                 title: 'Dashboard',
                 contentStyle: { backgroundColor: 'white' },
@@ -91,7 +91,7 @@ export default function RootLayout() {
                 title: 'Questionnaire',
                 contentStyle: { backgroundColor: 'white' },
               }} />
-              <Stack.Screen name="form-render/profile" options={{
+              <Stack.Screen name="form-render/profile/index" options={{
                 headerShown: false,
                 title: 'Profile',
                 contentStyle: { backgroundColor: 'white' },
