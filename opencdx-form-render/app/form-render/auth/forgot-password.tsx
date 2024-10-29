@@ -1,9 +1,9 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { View, Text, Pressable, ScrollView, useWindowDimensions, SafeAreaView, StatusBar, KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Input } from '../../components/ui/input';
-import { Button } from '../../components/ui/button';
-import { Image } from '../../components/ui/image';
+import { Input } from '../../../components/ui/input';
+import { Button } from '../../../components/ui/button';
+import { Image } from '../../../components/ui/image';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 
@@ -40,17 +40,17 @@ const ForgotPassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
 
     const handleForgotPassword = useCallback(async () => {
         AsyncStorage.setItem('username', email);
-        navigation.navigate('auth/change-password' as never);
+        navigation.navigate('form-render/auth/change-password' as never);
     }, [email, navigation]);
 
     const handleBack = useCallback(() => {
-        navigation.navigate('auth/login' as never);
+        navigation.navigate('form-render/auth/login' as never);
     }, [navigation]);
 
     const renderBackButton = () => (
         <Pressable onPress={handleBack} className="self-start mb-4">
             <View className="flex-row items-center md:p-4">
-                <Image source={require('../../assets/back.png')} alt="Back" className="w-4 h-4" />
+                <Image source={require('../../../assets/back.png')} alt="Back" className="w-4 h-4" />
                 <Text className={`ml-2 text-base text-blue-500`}>Back</Text>
             </View>
         </Pressable>
@@ -72,7 +72,7 @@ const ForgotPassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
     const renderContent = () => (
         <View className="w-full items-center">
             <Image
-                source={require('../../assets/login-logo.png')}
+                source={require('../../../assets/login-logo.png')}
                 alt="OpenCDx logo"
                 className="mb-8"
             />

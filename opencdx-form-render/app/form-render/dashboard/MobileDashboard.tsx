@@ -15,20 +15,20 @@ const MobileDashboard = () => {
 });
   return (<SafeAreaView>
     <ImageBackground 
-        source={require('../../assets/background.png')} 
+        source={require('../../../assets/background.png')} 
         style={{ width: '100%', height: '100%' }} // Expands background image
         resizeMode="cover" // Ensures image covers the entire screen
       >
       <CustomHeader title={currentDate} rightButton={{
-        imageSource: require('~/assets/logout_mobile.png'),
+        imageSource: require('../../../assets/logout_mobile.png'),
         onPress: () => {
-          navigation.navigate("auth/login")
+          navigation.navigate("form-render/auth/login" as never)
         },
       }}
       leftButton={{
-        imageSource: require('~/assets/profile.png'),
+        imageSource: require('../../../assets/profile.png'),
         onPress: () => {
-          navigation.navigate("profile/mobileView")
+          navigation.navigate("form-render/profile/mobileView" as never)
         },
       }}
       titleStyle={{ fontSize: 12, color: 'lightblue', fontWeight: 'bold' }}
@@ -36,7 +36,7 @@ const MobileDashboard = () => {
       <ScrollView className="flex flex-col h-screen mb-20">
         <View className="flex p-6">
           <View className='items-center p-4'>
-            <Image source={require('../../assets/opencdx.png')} />
+            <Image source={require('../../../assets/opencdx.png')} />
             <Text className="text-gray-400 text-l font-medium mt-6">Welcome to your dashboard John.</Text>
             <Text className="text-gray-400 text-l font-medium mb-4"> Let's see what is available for you today! </Text>
           </View>
@@ -49,7 +49,7 @@ const MobileDashboard = () => {
             <View className="bg-black rounded-xl p-4">
               <View className="flex flex-row items-center">
                 <View className=" p-2 rounded-lg mr-4">
-                  <Image source={require('../../assets/passport.png')} className="w-6 h-6" />
+                  <Image source={require('../../../assets/passport.png')} className="w-6 h-6" />
                 </View>
                 <View>
                   <Text className="text-white text-xl font-bold">My Passport</Text>
@@ -65,7 +65,7 @@ const MobileDashboard = () => {
             <HistoryCard isMobile={true} />
           </View>
           <View className='items-center'>
-            <Image source={require('../../assets/footer.png')} className="mt-10 mb-6" />
+            <Image source={require('../../../assets/footer.png')} className="mt-10 mb-6" />
           </View>
         </View>
       </ScrollView>

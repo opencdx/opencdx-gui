@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { View, Text, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Image } from '../../components/ui/image'
-import { Button } from '../../components/ui/button'
+import { Image } from '../../../components/ui/image'
+import { Button } from '../../../components/ui/button'
 
 const PasswordChanged: React.FC = () => {
     const navigation = useNavigation();
 
     const handleProceedToLogin = () => {
-        navigation.navigate('auth/login' as never);
+        navigation.navigate('form-render/auth/login' as never);
     };
 
     useEffect(() => {
@@ -22,7 +22,7 @@ const PasswordChanged: React.FC = () => {
             <View className="bg-white p-8 text-center items-center">
                 <View className="mb-6 flex justify-center items-center">
                     <Image
-                        source={require('../../assets/reset_pass_success.png')}
+                        source={require('../../../assets/reset_pass_success.png')}
                         alt="Success logo"
                     />
                 </View>

@@ -1,9 +1,9 @@
 import React, { useState, useLayoutEffect } from 'react';
 import { View, SafeAreaView, Text, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Input } from '../../components/ui/input';
-import { Button } from '../../components/ui/button';
-import { Image } from '../../components/ui/image';
+import { Input } from '../../../components/ui/input';
+import { Button } from '../../../components/ui/button';
+import { Image } from '../../../components/ui/image';
 
 const EditProfile = () => {
   const navigation = useNavigation();
@@ -64,7 +64,7 @@ const EditProfile = () => {
           aria-label="Back"
         >
           <Image
-            source={require('../../assets/back.png')}
+            source={require('../../../assets/back.png')}
             alt="back button"
           />
           <Text className="font-inter text-base font-normal text-blue-600 pl-1">

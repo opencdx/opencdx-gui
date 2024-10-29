@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Image, Text, View, Pressable } from 'react-native';
-import { Input } from '../../components/ui/input';
-import { Button } from '../../components/ui/button';
-import { SidebarLink } from '../../components/ui/sidenav';
+import { Input } from '../../../components/ui/input';
+import { Button } from '../../../components/ui/button';
+import { SidebarLink } from '../../../components/ui/sidenav';
 
 interface ProfileData {
   firstName: string;
@@ -53,7 +53,7 @@ const ProfileView = ({ links }: { links: any }) => {
       {/* Sidebar */}
       <View className="bg-[#020B2D] bg-gradient-to-b from-[#020B2D] from-70% via-[#0A2A88] to-[#0D47E9] w-64 p-4">
         <Image
-          source={require('../../assets/long.png')}
+          source={require('../../../assets/long.png')}
           className="w-32 h-8 mb-8"
         />
         {links.map((link: any) => (
@@ -67,10 +67,10 @@ const ProfileView = ({ links }: { links: any }) => {
        <View style={{ borderTopLeftRadius: 40 }} className="flex flex-row justify-end items-center bg-white p-4">
         <View className="flex flex-row items-center">
           <View className="bg-blue-200 rounded-full w-8 h-8 flex items-center justify-center mr-2">
-            <Image source={require('../../assets/profile-small.png')} className="w-6  h-6" />
+            <Image source={require('../../../assets/profile-small.png')} className="w-6  h-6" />
           </View>
             <Text className="text-gray-800 mr-1">John</Text>
-            <Image source={require('../../assets/arrow-down.png')} className="w-4 h-4" />
+            <Image source={require('../../../assets/arrow-down.png')} className="w-4 h-4" />
         </View>
       </View>
 
@@ -80,7 +80,7 @@ const ProfileView = ({ links }: { links: any }) => {
           {/* Profile Picture and Edit Button */}
           <View className="flex items-center mb-4">
             <Image
-              source={require('../../assets/profile.png')}
+              source={require('../../../assets/profile.png')}
               className="w-24 h-24 rounded-full mb-2"
             />
             <Pressable
@@ -92,7 +92,7 @@ const ProfileView = ({ links }: { links: any }) => {
                 {!isEditing ? "Edit" : "Cancel"}
               </Text>
               <Image
-                source={require('~/assets/edit.png')}
+                source={require('../../../assets/edit.png')}
                 className="w-4 h-4 ml-1"
                 alt="Edit Icon"
               />

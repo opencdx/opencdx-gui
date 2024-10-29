@@ -1,14 +1,14 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { View, Text, Pressable, ScrollView, useWindowDimensions, SafeAreaView, StatusBar, KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Input } from '../../components/ui/input';
-import { Button } from '../../components/ui/button';
-import { Image } from '../../components/ui/image';
+import { Input } from '../../../components/ui/input';
+import { Button } from '../../../components/ui/button';
+import { Image } from '../../../components/ui/image';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ValidationRow from '../../components/ui/validate';
-import Loader from '../../components/ui/loading';
-import ModalComponent from '../../components/ui/modal';
-import { useResetPassword } from '../../lib/iam-hooks';
+import ValidationRow from '../../../components/ui/validate';
+import Loader from '../../../components/ui/loading';
+import ModalComponent from '../../../components/ui/modal';
+import { useResetPassword } from '../../../lib/iam-hooks';
 import { Platform } from 'react-native';
 import { useShowToast } from '~/lib/toast';
 
@@ -114,7 +114,7 @@ const ChangePassword = () => {
     const onSuccess = useCallback(() => {
         showToaster('Password reset successfully.', 'success');
         setTimeout(() => {
-            navigation.navigate('auth/password-changed' as never);
+            navigation.navigate('form-render/auth/password-changed' as never);
         }, 1000);
     }, [navigation, showToaster]);
 
@@ -145,8 +145,8 @@ const ChangePassword = () => {
                     aria-label={`Toggle ${field} visibility`}
                 >
                     <Image 
-                        source={field === 'newPassword' ? (showNewPassword ? require('../../assets/eye.png') : require('../../assets/cross_eye.png')) 
-                                                        : (showConfirmPassword ? require('../../assets/eye.png') : require('../../assets/cross_eye.png'))}
+                        source={field === 'newPassword' ? (showNewPassword ? require('../../../assets/eye.png') : require('../../../assets/cross_eye.png')) 
+                                                        : (showConfirmPassword ? require('../../../assets/eye.png') : require('../../../assets/cross_eye.png'))}
                         alt={field === 'newPassword' ? (showNewPassword ? "Hide new password" : "Show new password") 
                                                      : (showConfirmPassword ? "Hide confirm password" : "Show confirm password")}
                         className="w-6 h-6"
@@ -157,9 +157,9 @@ const ChangePassword = () => {
     );
 
     const renderBackButton = () => (
-        <Pressable onPress={() => navigation.navigate('auth/forgot-password' as never)} className="self-start mb-4">
+        <Pressable onPress={() => navigation.navigate('form-render/auth/forgot-password' as never)} className="self-start mb-4">
             <View className="flex-row items-center md:p-4">
-                <Image source={require('../../assets/back.png')} alt="Back" className="w-4 h-4" />
+                <Image source={require('../../../assets/back.png')} alt="Back" className="w-4 h-4" />
                 <Text className={`ml-2 text-base text-blue-500`}>Back</Text>
             </View>
         </Pressable>
@@ -179,7 +179,7 @@ const ChangePassword = () => {
     )
     const renderContent = () => (
         <View className="w-full items-center">
-            <Image source={require('../../assets/opencdx.png')} alt="OpenCDx logo" className="mb-8" />
+            <Image source={require('../../../assets/opencdx.png')} alt="OpenCDx logo" className="mb-8" />
             <View className='flex flex-col items-left w-full gap-2'>
                 <Text className="font-inter font-medium text-left text-2xl">Change Password</Text>
                 <Text className="font-inter text-base text-left text-gray-600">Please change your password below.</Text>

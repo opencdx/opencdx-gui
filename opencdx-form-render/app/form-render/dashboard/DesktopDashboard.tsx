@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
-import { SidebarLink } from '../../components/ui/sidenav';
+import { SidebarLink } from '../../../components/ui/sidenav';
 import QuestionnaireCard from './QuestionnaireCard';
 
 const DesktopDashboard = ({ links }: { links: any }) => (
   <View className="flex flex-row h-screen">
     <View className="bg-[#020B2D] bg-gradient-to-b from-[#020B2D] from-70% via-[#0A2A88] to-[#0D47E9] w-64 p-4">
       <Image
-        source={require('../../assets/long.png')}
+        source={require('../../../assets/long.png')}
         className="w-32 h-8 mb-8"
       />
       {links.map((link: any) => (
@@ -21,10 +21,10 @@ const DesktopDashboard = ({ links }: { links: any }) => (
       <View style={{ borderTopLeftRadius: 40 }} className="flex flex-row justify-end items-center bg-white p-4">
         <View className="flex flex-row items-center">
           <View className="bg-blue-200 rounded-full w-8 h-8 flex items-center justify-center mr-2">
-            <Image source={require('../../assets/profile-small.png')} className="w-6  h-6" />
+            <Image source={require('../../../assets/profile-small.png')} className="w-6  h-6" />
           </View>
             <Text className="text-gray-800 mr-1">John</Text>
-            <Image source={require('../../assets/arrow-down.png')} className="w-4 h-4" />
+            <Image source={require('../../../assets/arrow-down.png')} className="w-4 h-4" />
         </View>
       </View>
 
@@ -49,10 +49,10 @@ const DesktopDashboard = ({ links }: { links: any }) => (
             <Text className="text-white text-xl font-bold mb-4">My History</Text>
             <View className="grid grid-cols-4 gap-2">
               {[
-                { label: 'Test History', image: require('../../assets/testhistory.png') },
-                { label: 'Vaccine History', image: require('../../assets/vaccine.png') },
-                { label: 'Lorem Ipsum', image: require('../../assets/product1.png') },
-                { label: 'Lorem Ipsum', image: require('../../assets/product2.png') },
+                { label: 'Test History', image: require('../../../assets/testhistory.png') },
+                { label: 'Vaccine History', image: require('../../../assets/vaccine.png') },
+                { label: 'Lorem Ipsum', image: require('../../../assets/product1.png') },
+                { label: 'Lorem Ipsum', image: require('../../../assets/product2.png') },
               ].map((item, index) => (
                 <View key={index} className="aspect-square rounded-lg ">
                   <View className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-2 ">
@@ -83,7 +83,7 @@ const DesktopDashboard = ({ links }: { links: any }) => (
           <View className="bg-black rounded-xl p-4">
             <View className="flex flex-row items-center">
               <View className=" p-2 rounded-lg mr-4">
-                <Image source={require('../../assets/passport.png')} className="w-6 h-6" />
+                <Image source={require('../../../assets/passport.png')} className="w-6 h-6" />
               </View>
               <View>
                 <Text className="text-white text-xl font-bold">My Passport</Text>
@@ -95,7 +95,7 @@ const DesktopDashboard = ({ links }: { links: any }) => (
         
       </View>
       <View className="flex justify-center items-center bg-[#F4F9FF]">
-        <Image source={require('../../assets/footer.png')} className="w-full justify-center items-center" />
+        <Image source={require('../../../assets/footer.png')} className="w-full justify-center items-center" />
       </View>
 
     </View>
