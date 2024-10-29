@@ -1,7 +1,7 @@
 import React from 'react';
 import {  Image, Text, View } from 'react-native';
 import { Input, InputField } from '@gluestack-ui/themed';
-import { Button } from '../../components/ui/button';
+import { Button } from '../../../components/ui/button';
 
 interface ProfileData {
   firstName: string;
@@ -25,7 +25,7 @@ const ProfileView: React.FC = () => {
     <div className="max-w-md mx-auto p-4">
       <div className="flex flex-col items-center mb-6">
         <Image
-          source={require('../../assets/profile.png')}
+          source={require('../../../assets/profile.png')}
           alt="Profile"
           width={80}
           height={80}

@@ -7,7 +7,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 const MobileDashboard = () => (
   <SafeAreaView>
-    <ImageBackground source={require('../../assets/background.png')} className="h-screen w-full"> 
+    <ImageBackground source={require('../../../assets/background.png')} className="h-screen w-full"> 
       <ScrollView className="flex flex-col h-screen">
         <View className="flex bg-[#F8F9FB] p-6">
           <View className={`flex flex-col gap-2`}>
@@ -19,7 +19,7 @@ const MobileDashboard = () => (
             <View className="bg-black rounded-xl p-4">
               <View className="flex flex-row items-center">
                 <View className=" p-2 rounded-lg mr-4">
-                  <Image source={require('../../assets/passport.png')} className="w-6 h-6" />
+                  <Image source={require('../../../assets/passport.png')} className="w-6 h-6" />
                 </View>
                 <View>
                   <Text className="text-white text-xl font-bold">My Passport</Text>

@@ -1,13 +1,13 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { View, Text, Pressable, ScrollView, useWindowDimensions, Platform } from 'react-native';
-import { useSignUp } from '../../lib/iam-hooks';
+import { useSignUp } from '../../../lib/iam-hooks';
 import { useNavigation } from '@react-navigation/native';
-import { Input } from '../../components/ui/input';
-import { Button } from '../../components/ui/button';
-import { Image } from '../../components/ui/image';
-import ValidationRow from '../../components/ui/validate';
-import ModalComponent from '../../components/ui/modal';
-import Loader from '../../components/ui/loading';
+import { Input } from '../../../components/ui/input';
+import { Button } from '../../../components/ui/button';
+import { Image } from '../../../components/ui/image';
+import ValidationRow from '../../../components/ui/validate';
+import ModalComponent from '../../../components/ui/modal';
+import Loader from '../../../components/ui/loading';
 import { useShowToast } from '~/lib/toast';
 
 const useSignupForm = () => {
@@ -92,7 +92,7 @@ const Signup = () => {
 
     const onSuccess = useCallback(() => {
         setIsLoading(false);
-        navigation.navigate('auth/login' as never);
+        navigation.navigate('form-render/auth/login' as never);
         showToast({ message: 'Signup successful.', type: 'success' });
     }, [navigation, showToast]);
 
@@ -135,8 +135,8 @@ const Signup = () => {
                     aria-label={`Toggle ${field} visibility`}
                 >
                     <Image 
-                        source={field === 'password' ? (showPassword ? require('../../assets/eye.png') : require('../../assets/cross_eye.png')) 
-                                                     : (showConfirmPassword ? require('../../assets/eye.png') : require('../../assets/cross_eye.png'))}
+                        source={field === 'password' ? (showPassword ? require('../../../assets/eye.png') : require('../../../assets/cross_eye.png')) 
+                                                     : (showConfirmPassword ? require('../../../assets/eye.png') : require('../../../assets/cross_eye.png'))}
                         alt={field === 'password' ? (showPassword ? "Hide password" : "Show password") 
                                                   : (showConfirmPassword ? "Hide confirm password" : "Show confirm password")}
                         className="w-6 h-6"
@@ -149,7 +149,7 @@ const Signup = () => {
     const renderForm = () => (
     <View className="flex flex-1 justify-center items-center bg-white max-w-[500px] w-full mx-auto p-4 sm:p-0">
      <View className="w-full gap-8 items-center">
-        <Image source={require('../../assets/opencdx.png')} alt="OpenCDx logo" />
+        <Image source={require('../../../assets/opencdx.png')} alt="OpenCDx logo" />
 
         <View className="w-full gap-4">
             <View className="flex flex-row gap-4 w-full">
@@ -207,7 +207,7 @@ const Signup = () => {
                         Already have an account?
                     </Text>
                     <Pressable
-                        onPress={() => navigation.navigate('auth/login' as never)}
+                        onPress={() => navigation.navigate('form-render/auth/login' as never)}
                         role="link"
                         aria-label="Login"
                     >

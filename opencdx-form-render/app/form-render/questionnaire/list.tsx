@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, ScrollView, Pressable, Platform } from 'react-native';
-import { Questionnaire } from '../../api/questionnaire/model/questionnaire';
+import { Questionnaire } from '../../../api/questionnaire/model/questionnaire';
 
-import { Image } from '../../components/ui/image'
+import { Image } from '../../../components/ui/image'
 
-import { useGetQuestionnaireList } from '../../lib/iam-hooks';
+import { useGetQuestionnaireList } from '../../../lib/iam-hooks';
 import { useNavigation } from 'expo-router';
-import Loading from '../../components/ui/loading';
+import Loading from '../../../components/ui/loading';
 
 const QuestionnaireList: React.FC = () => {
   const { mutate: getQuestionnaireDataList, data } = useGetQuestionnaireList();
@@ -39,7 +39,7 @@ const QuestionnaireList: React.FC = () => {
   const handleBack = useCallback(() => navigation.goBack(), [navigation]);
 
   const handleQuestionnaireSelect = useCallback(() => {
-    navigation.navigate('questionnaire/take-questionnaire' as never);
+    navigation.navigate('form-render/questionnaire/take-questionnaire' as never);
   }, [navigation]);
 
   const content = (
@@ -51,7 +51,7 @@ const QuestionnaireList: React.FC = () => {
         aria-label="Back"
       >
         <Image
-          source={require('../../assets/back.png')}
+          source={require('../../../assets/back.png')}
           alt="Select Questionnaire"
         />
         <Text className="font-inter text-base font-normal text-blue-600 pl-1 flex flex-row items-center gap-2">
@@ -79,7 +79,7 @@ const QuestionnaireList: React.FC = () => {
                     <Text className="font-inter text-gray-600">{item.description}</Text>
                   </View>
                   <Image
-                    source={require('../../assets/arrow-right.png')}
+                    source={require('../../../assets/arrow-right.png')}
                     alt="Select Questionnaire"
                   />
                 </View>

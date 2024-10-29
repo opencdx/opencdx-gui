@@ -2,12 +2,12 @@ import React, { useState, useCallback, useMemo } from 'react';
 import { View, Text, Pressable, ScrollView, Platform, useWindowDimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useLogin } from '../../lib/iam-hooks';
-import { Input } from '../../components/ui/input';
-import { Button } from '../../components/ui/button';
-import { Image } from '../../components/ui/image';
+import { useLogin } from '../../../lib/iam-hooks';
+import { Input } from '../../../components/ui/input';
+import { Button } from '../../../components/ui/button';
+import { Image } from '../../../components/ui/image';
 import { useToast, Toast, ToastDescription } from '@gluestack-ui/themed';
-import Loader from '../../components/ui/loading';
+import Loader from '../../../components/ui/loading';
 import { useShowToast } from '~/lib/toast';
 
 const useLoginForm = () => {
@@ -30,7 +30,7 @@ const Login = () => {
 
   const handleLoginSuccess = useCallback((data: { token: string }) => {
     AsyncStorage.setItem('serviceToken', data.token);
-    navigation.navigate('dashboard/index' as never);
+    navigation.navigate('form-render/dashboard/index' as never);
   }, [navigation, showToast]);
 
   const handleLoginError = useCallback((err: any) => {
@@ -44,13 +44,13 @@ const Login = () => {
   }, [username, password, login]);
 
   const handleSignup = useCallback(() => {
-    navigation.navigate('auth/signup' as never);
+    navigation.navigate('form-render/auth/signup' as never);
   }, [navigation]);
 
   const renderForm = () => (
     <View className='flex flex-1 justify-center items-center bg-white max-w-[500px] w-full mx-auto p-4 sm:p-0 gap-12'>
           <Image
-            source={require('../../assets/login-logo.png')}
+            source={require('../../../assets/login-logo.png')}
             alt="OpenCDx logo"
           />
 
@@ -74,7 +74,7 @@ const Login = () => {
                     aria-label="Toggle password visibility"
                   >
                     <Image 
-                      source={showPassword ? require('../../assets/eye.png') : require('../../assets/cross_eye.png')} 
+                      source={showPassword ? require('../../../assets/eye.png') : require('../../../assets/cross_eye.png')} 
                       alt={showPassword ? "Hide password" : "Show password"}
                       className="w-6 h-6"
                     />
@@ -83,7 +83,7 @@ const Login = () => {
             />
               <Pressable
                 className="self-end rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onPress={() => navigation.navigate('auth/forgot-password' as never)}
+                onPress={() => navigation.navigate('form-render/auth/forgot-password' as never)}
                 role="link"
                 aria-label="Forgot Password"
               >
