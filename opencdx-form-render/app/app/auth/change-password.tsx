@@ -114,7 +114,7 @@ const ChangePassword = () => {
     const onSuccess = useCallback(() => {
         showToaster('Password reset successfully.', 'success');
         setTimeout(() => {
-            navigation.navigate('form-render/auth/password-changed' as never);
+            navigation.navigate('app/auth/password-changed' as never);
         }, 1000);
     }, [navigation, showToaster]);
 
@@ -157,7 +157,7 @@ const ChangePassword = () => {
     );
 
     const renderBackButton = () => (
-        <Pressable onPress={() => navigation.navigate('form-render/auth/forgot-password' as never)} className="self-start mb-4">
+        <Pressable onPress={() => navigation.navigate('app/auth/forgot-password' as never)} className="self-start mb-4">
             <View className="flex-row items-center md:p-4">
                 <Image source={require('../../../assets/back.png')} alt="Back" className="w-4 h-4" />
                 <Text className={`ml-2 text-base text-blue-500`}>Back</Text>

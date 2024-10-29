@@ -22,13 +22,13 @@ const MobileDashboard = () => {
       <CustomHeader title={currentDate} rightButton={{
         imageSource: require('../../../assets/logout_mobile.png'),
         onPress: () => {
-          navigation.navigate("form-render/auth/login" as never)
+          navigation.navigate("app/auth/login" as never)
         },
       }}
       leftButton={{
         imageSource: require('../../../assets/profile.png'),
         onPress: () => {
-          navigation.navigate("form-render/profile/mobileView" as never)
+          navigation.navigate("app/profile/mobileView" as never)
         },
       }}
       titleStyle={{ fontSize: 12, color: 'lightblue', fontWeight: 'bold' }}

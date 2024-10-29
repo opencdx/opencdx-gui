@@ -92,7 +92,7 @@ const Signup = () => {
 
     const onSuccess = useCallback(() => {
         setIsLoading(false);
-        navigation.navigate('form-render/auth/login' as never);
+        navigation.navigate('app/auth/login' as never);
     }, [navigation, showToast]);
 
     const onError = useCallback((error: any) => {
@@ -206,7 +206,7 @@ const Signup = () => {
                         Already have an account?
                     </Text>
                     <Pressable
-                        onPress={() => navigation.navigate('form-render/auth/login' as never)}
+                        onPress={() => navigation.navigate('app/auth/login' as never)}
                         role="link"
                         aria-label="Login"
                     >
