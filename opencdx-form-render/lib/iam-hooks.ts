@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { iamApi , questionnaireApi} from '../api';
+import { iamApi , questionnaireApi, healthApi} from '../api';
 import { useMutation } from '@tanstack/react-query';
 
 import { GetQuestionnaireListRequest, QuestionnaireRequest } from "../api/questionnaire";
-
+import { UserProfileResponse, UserProfile, PutHealthUserProfileRequest } from '../api/health';
 import { LoginRequest, SignUpRequest, ResetPasswordRequest, SignUpResponse } from '../api/iam';
 /**
  * Custom hook to handle user login
@@ -122,4 +122,66 @@ export const useGetQuestionnaireList = (onLoading?: (isLoading: boolean) => void
             if (onLoading) onLoading(false);
         },
     });
+};
+
+export const useGetHealthUserProfile = (onSuccess: (arg0: any) => void, onError: (arg0: unknown) => void) => {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const userProfile = async () => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            // Call the userProfile API
+            const response = await healthApi.getHealthUserProfile();
+            console.log(response.data)
+            // Execute the onSuccess callback if provided
+            if (onSuccess) onSuccess(response.data);
+        } catch (err) {
+            setError(err as any);
+
+            // Execute the onError callback if provided
+            if (onError) onError(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return {
+        userProfile,
+        loading,
+        error,
+    };
+};
+
+export const usePutHealthUserProfile = (onSuccess: (arg0: any) => void, onError: (arg0: unknown) => void) => {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const updateUserProfile = async (credentials: PutHealthUserProfileRequest) => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            // Call the userProfile API
+            const response = await healthApi.putHealthUserProfile({putHealthUserProfileRequest: credentials});
+            console.log("")
+            // Execute the onSuccess callback if provided
+            if (onSuccess) onSuccess(response.data);
+        } catch (err) {
+            setError(err as any);
+
+            // Execute the onError callback if provided
+            if (onError) onError(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return {
+        updateUserProfile,
+        loading,
+        error,
+    };
 };

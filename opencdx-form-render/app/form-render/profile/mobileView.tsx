@@ -1,13 +1,19 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect, useCallback, useEffect } from 'react';
 import { View, SafeAreaView, Text, Pressable } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { Input } from '../../../components/ui/input';
 import { Button } from '../../../components/ui/button';
 import { Image } from '../../../components/ui/image';
-
+import { useGetHealthUserProfile, usePutHealthUserProfile} from '~/lib/iam-hooks';
+import { UserProfile, PutHealthUserProfileRequest } from '~/api/health';
+import { useShowToast } from '~/lib/toast';
+import axios, { AxiosError } from 'axios';
+import Loader from "~/components/ui/loading";
 const EditProfile = () => {
+  const showToast = useShowToast();
   const navigation = useNavigation();
-
+  
   // Hide the header when this component is mounted
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -16,35 +22,91 @@ const EditProfile = () => {
   }, [navigation]);
 
   // State to track original values
-  const originalValues = {
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'jdoe@email.com',
-    phone: '555-555-5555',
-    dob: 'Sep 23, 1978',
-  };
+  const handleUserProfileSuccess = useCallback((data: { userProfile: UserProfile }) => {
+    setOriginalValues(data.userProfile);
+    AsyncStorage.setItem('userProfile', data.userProfile.id ?? "");
+  }, [showToast]);
+
+  const handleUserProfileError = useCallback((err: any) => {
+    if (axios.isAxiosError(err)) {
+      // Handle AxiosError
+      const axiosError = err as AxiosError;
+      showToast({ message: axiosError.message, type: 'error' });
+    }
+    
+  }, [showToast]);
+
+  const handleUpdateUserProfileSuccess = useCallback((data: any) => {
+    showToast({message: "Profile updated successfully.", type: "success"})
+  }, [showToast]);
+
+  const handleUpdateUserProfileError = useCallback((err: any) => {
+    if (axios.isAxiosError(err)) {
+      // Handle AxiosError
+      const axiosError = err as AxiosError;
+      showToast({ message: axiosError.message, type: 'error' });
+    }
+    
+  }, [showToast]);
+
+  const {userProfile} = useGetHealthUserProfile(handleUserProfileSuccess, handleUserProfileError);
+  const {updateUserProfile, loading} = usePutHealthUserProfile(handleUpdateUserProfileSuccess, handleUpdateUserProfileError)
+  useEffect(() => {
+    // Fetch or set original values here
+    const fetchData = async () => {
+      await userProfile();
+      setShowLoading(false);
+    };
+    setShowLoading(true);
+    fetchData();
+  }, []);
+
+  const [originalValues, setOriginalValues] = useState<UserProfile | null>(null);
 
   // Profile state
-  const [firstName, setFirstName] = useState(originalValues.firstName);
-  const [lastName, setLastName] = useState(originalValues.lastName);
-  const [email, setEmail] = useState(originalValues.email);
-  const [phone, setPhone] = useState(originalValues.phone);
-  const [dob, setDob] = useState(originalValues.dob);
+  const [firstName, setFirstName] = useState(originalValues?.fullName?.firstName || "");
+  const [lastName, setLastName] = useState(originalValues?.fullName?.lastName || "");
+  const [email, setEmail] = useState(originalValues?.email?.[0] || '');
+  const [phone, setPhone] = useState(originalValues?.phone?.[0] || "");
+  const [dob, setDob] = useState(originalValues?.dateOfBirth || "");
 
   const [isEditing, setIsEditing] = useState(false);
-
+  const [showLoading, setShowLoading] = useState(false);
   const handleBack = () => {
     navigation.goBack();
   };
 
+  const handleSubmit = () => {
+    console.log("submit started");
+    const userProfileRequest: PutHealthUserProfileRequest = {
+      userId: originalValues?.userId || "",
+      id: originalValues?.id || "",
+      nationalHealthId: originalValues?.nationalHealthId || "",
+      updatedProfile: {
+          userId: originalValues?.userId || "",
+          id: originalValues?.id || "",
+          nationalHealthId: originalValues?.nationalHealthId || "",
+          fullName: {
+              firstName: firstName,
+              lastName: lastName
+          },
+          email: [{email}],
+          phone: [{number: phone}]
+          
+      }
+  }
+    updateUserProfile(userProfileRequest);
+  }
+  
+
   const handleEdit = () => {
     if (isEditing) {
       // Cancel edit and revert values to original
-      setFirstName(originalValues.firstName);
-      setLastName(originalValues.lastName);
-      setEmail(originalValues.email);
-      setPhone(originalValues.phone);
-      setDob(originalValues.dob);
+      setFirstName(originalValues?.fullName?.firstName || "");
+      setLastName(originalValues?.fullName?.lastName || "");
+      setEmail(originalValues?.email?.[0] || '');
+      setPhone(originalValues?.phone?.[0] || "");
+      setDob(originalValues?.dateOfBirth || "");
     }
     setIsEditing(!isEditing);
   };
@@ -133,13 +195,15 @@ const EditProfile = () => {
         />
 
         <Button
-          onPress={() => {}}
+          onPress={() => handleSubmit()}
           disabled={!isValidInput()}
           className="p-4"
+          loading={loading}
         >
           Save
         </Button>
       </View>
+      <Loader isVisible={loading || showLoading} />
     </SafeAreaView>
   );
 };

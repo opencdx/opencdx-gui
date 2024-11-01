@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Image, Text, View, Pressable } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Input } from '../../../components/ui/input';
 import { Button } from '../../../components/ui/button';
 import { SidebarLink } from '../../../components/ui/sidenav';
-
+import { useGetHealthUserProfile, usePutHealthUserProfile} from '~/lib/iam-hooks';
+import { UserProfile, PutHealthUserProfileRequest } from '~/api/health';
+import { useShowToast } from '~/lib/toast';
+import axios, { AxiosError } from 'axios';
+import Loader from "~/components/ui/loading";
 interface ProfileData {
   firstName: string;
   lastName: string;
@@ -13,15 +18,51 @@ interface ProfileData {
 }
 
 const ProfileView = ({ links }: { links: any }) => {
+  const showToast = useShowToast();
   const [isEditing, setIsEditing] = useState(false);
-  const [profileData, setProfileData] = useState<ProfileData>({
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'jdoe@email.com',
-    phoneNumber: '555-555-5555',
-    dateOfBirth: 'Sep 23, 1978',
-  });
-  const [originalProfileData, setOriginalProfileData] = useState<ProfileData>(profileData);
+  const [profileData, setProfileData] = useState<UserProfile>();
+  // State to track original values
+  const handleUserProfileSuccess = useCallback((data: { userProfile: UserProfile }) => {
+    setProfileData(data.userProfile)
+    setOriginalProfileData(data.userProfile);
+    AsyncStorage.setItem('userProfile', data.userProfile.id ?? "");
+  }, [showToast]);
+
+  const handleUserProfileError = useCallback((err: any) => {
+    if (axios.isAxiosError(err)) {
+      // Handle AxiosError
+      const axiosError = err as AxiosError;
+      showToast({ message: axiosError.message, type: 'error' });
+    }
+    
+  }, [showToast]);
+
+  const handleUpdateUserProfileSuccess = useCallback((data: any) => {
+    showToast({message: "Profile updated successfully.", type: "success"})
+  }, [showToast]);
+
+  const handleUpdateUserProfileError = useCallback((err: any) => {
+    if (axios.isAxiosError(err)) {
+      // Handle AxiosError
+      const axiosError = err as AxiosError;
+      showToast({ message: axiosError.message, type: 'error' });
+    }
+    
+  }, [showToast]);
+  const [showLoading, setShowLoading] = useState(false);
+  const {userProfile} = useGetHealthUserProfile(handleUserProfileSuccess, handleUserProfileError);
+  const {updateUserProfile, loading} = usePutHealthUserProfile(handleUpdateUserProfileSuccess, handleUpdateUserProfileError)
+  
+  useEffect(() => {
+    // Fetch or set original values here
+    const fetchData = async () => {
+      await userProfile();
+      setShowLoading(false);
+    };
+    setShowLoading(true);
+    fetchData();
+  }, []);
+  const [originalProfileData, setOriginalProfileData] = useState<UserProfile>();
 
   const handleEdit = () => {
     if (!isEditing) {
@@ -35,17 +76,72 @@ const ProfileView = ({ links }: { links: any }) => {
     setIsEditing(false);
   };
 
-  const handleInputChange = (field: keyof ProfileData, value: string) => {
+  const handleInputChange = (field: string, value: string) => {
     setProfileData((prevData) => ({ ...prevData, [field]: value }));
+  };
+
+  const setFirstName = (newFirstName: string) => {
+    setProfileData((prevData) => ({
+      ...prevData,
+      fullName: {
+        ...prevData?.fullName,
+        firstName: newFirstName,
+      },
+    }));
+  };
+
+  const setLastName = (newLastName: string) => {
+    setProfileData((prevData) => ({
+      ...prevData,
+      fullName: {
+        ...prevData?.fullName,
+        lastName: newLastName,
+      },
+    }));
+  };
+
+  const setEmail = (newEmail: string) => {
+    setProfileData((prevData) => ({
+      ...prevData,
+      email: [newEmail],
+    }));
+  };
+
+  const setPhone = (newPhone: string) => {
+    setProfileData((prevData) => ({
+      ...prevData,
+      phone: [newPhone],
+    }));
   };
 
   const handleSave = () => {
     setIsEditing(false); // End editing mode
+    const userProfileRequest: PutHealthUserProfileRequest = {
+      userId: profileData?.userId || "",
+      id: profileData?.id || "",
+      nationalHealthId: profileData?.nationalHealthId || "",
+      updatedProfile: {
+          userId: profileData?.userId || "",
+          id: profileData?.id || "",
+          nationalHealthId: profileData?.nationalHealthId || "",
+          fullName: {
+              firstName: profileData?.fullName?.firstName,
+              lastName: profileData?.fullName?.lastName
+          },
+          email: [{email: (profileData?.email?.[0]) || ""}],
+          phone: [{number: (profileData?.phone?.[0]) || ""}]
+          
+      }
+  }
+    updateUserProfile(userProfileRequest);
   };
 
   const isValidInput = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return profileData.firstName.length > 0 && profileData.lastName.length > 0 && profileData.email && emailRegex.test(profileData.email) && isEditing;
+    const firstName = profileData?.fullName?.firstName || ""
+    const lastName = profileData?.fullName?.lastName || ""
+    const email = profileData?.email?.[0] || ""
+    return firstName.length > 0 && lastName.length > 0 && email && emailRegex.test(email) && isEditing;
   };
 
   return (
@@ -107,35 +203,35 @@ const ProfileView = ({ links }: { links: any }) => {
           <View className="space-y-4">
             <Input
               label="First Name*"
-              value={profileData.firstName}
-              onChangeText={(text) => handleInputChange('firstName', text)}
+              value={profileData?.fullName?.firstName || ""}
+              onChangeText={(text) => setFirstName(text)}
               variant={isEditing ? 'default' : 'underline'}
               isEditable={isEditing}
             />
             <Input
               label="Last Name*"
-              value={profileData.lastName}
-              onChangeText={(text) => handleInputChange('lastName', text)}
+              value={profileData?.fullName?.lastName || ""}
+              onChangeText={(text) => setLastName(text)}
               variant={isEditing ? 'default' : 'underline'}
               isEditable={isEditing}
             />
             <Input
               label="Email Address*"
-              value={profileData.email}
-              onChangeText={(text) => handleInputChange('email', text)}
+              value={profileData?.email?.[0] || ""}
+              onChangeText={(text) => setEmail(text)}
               variant={isEditing ? 'default' : 'underline'}
               isEditable={isEditing}
             />
             <Input
               label="Phone Number"
-              value={profileData.phoneNumber}
-              onChangeText={(text) => handleInputChange('phoneNumber', text)}
+              value={profileData?.phone?.[0] || ""}
+              onChangeText={(text) => setPhone(text)}
               isEditable={isEditing}
               variant={isEditing ? 'default' : 'underline'}
             />
             <Input
               label="Date of Birth"
-              value={profileData.dateOfBirth}
+              value={profileData?.dateOfBirth || ""}
               onChangeText={(text) => handleInputChange('dateOfBirth', text)}
               isEditable={isEditing}
               variant={isEditing ? 'default' : 'underline'}
@@ -149,6 +245,7 @@ const ProfileView = ({ links }: { links: any }) => {
           
         </View>
       </View>
+      <Loader isVisible={loading || showLoading}/>
      </View>
     </View>
   );

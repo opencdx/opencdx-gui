@@ -1,0 +1,398 @@
+{
+    "openapi": "3.0.1",
+    "info": { "title": "OpenAPI definition", "version": "v0" },
+    "servers": [
+      {
+        "url": "https://localhost:8080/health",
+        "description": "Generated server url"
+      }
+    ],
+    "security": [{ "bearerAuth": [] }],
+    "paths": {
+      "/profile/user": {
+        "get": {
+          "summary": "Retrieve User Profile",
+          "tags": ["open-cdxhealth-user-rest-controller"],
+          "operationId": "getHealthUserProfile",
+          "responses": {
+            "200": {
+              "description": "A user profile object",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserProfileResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/profile": {
+        "put": {
+          "summary": "Update User Profile",
+          "description": "Updates the user profile information.",
+          "tags": ["open-cdxhealth-user-rest-controller"],
+          "operationId": "putHealthUserProfile",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "userId": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "nationalHealthId": {
+                      "type": "string"
+                    },
+                    "updatedProfile": {
+                      "$ref": "#/components/schemas/UpdatedProfile"
+                    }
+                  },
+                  "required": ["userId", "updatedProfile"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Profile updated successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "404": {
+              "description": "User not found"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "UserProfileResponse": {
+          "type": "object",
+          "properties": {
+            "userProfile": {
+              "$ref": "#/components/schemas/UserProfile"
+            }
+          }
+        },
+        "UpdatedProfile": {
+          "type": "object",
+          "properties": {
+            "userId": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
+            },
+            "nationalHealthId": {
+              "type": "string"
+            },
+            "fullName": {
+              "$ref": "#/components/schemas/FullName"
+            },
+            "dateOfBirth": {
+              "$ref": "#/components/schemas/DateOfBirth"
+            },
+            "isActive": {
+              "type": "boolean"
+            },
+            "email": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Email"
+              }
+            },
+            "phone": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Phone"
+              }
+            }
+          },
+          "required": ["userId", "fullName", "email"]
+        },
+        "Email": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string"
+            }
+          },
+          "required": ["email"]
+        },
+        "Phone": {
+          "type": "object",
+          "properties": {
+            "number": {
+              "type": "string"
+            }
+          },
+          "required": ["number"]
+        },
+        "DateOfBirth": {
+          "type": "object",
+          "properties": {
+            "seconds": {
+              "type": "integer"
+            },
+            "nanos": {
+              "type": "integer"
+            }
+          },
+          "required": ["seconds"]
+        },
+        "UserProfile": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "userId": {
+              "type": "string"
+            },
+            "nationalHealthId": {
+              "type": "string"
+            },
+            "fullName": {
+              "$ref": "#/components/schemas/FullName"
+            },
+            "contacts": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "email": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "phone": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "dateOfBirth": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "photo": {
+              "type": "string"
+            },
+            "demographics": {
+              "$ref": "#/components/schemas/Demographics"
+            },
+            "employeeIdentity": {
+              "$ref": "#/components/schemas/EmployeeIdentity"
+            },
+            "primaryContactInfo": {
+              "$ref": "#/components/schemas/PrimaryContactInfo"
+            },
+            "emergencyContact": {
+              "$ref": "#/components/schemas/EmergencyContact"
+            },
+            "pharmacyDetails": {
+              "$ref": "#/components/schemas/PharmacyDetails"
+            },
+            "dependentId": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "knownAllergies": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Allergy"
+              }
+            },
+            "isActive": {
+              "type": "boolean"
+            },
+            "address": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "created": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "modified": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "creator": {
+              "type": "string"
+            },
+            "modifier": {
+              "type": "string"
+            },
+            "bloodtype": {
+              "type": "string"
+            }
+          }
+        },
+        "FullName": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "firstName": {
+              "type": "string"
+            },
+            "middleName": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "suffix": {
+              "type": "string"
+            }
+          }
+        },
+        "Demographics": {
+          "type": "object",
+          "properties": {
+            "ethnicity": {
+              "type": "string"
+            },
+            "race": {
+              "type": "string"
+            },
+            "nationality": {
+              "type": "string"
+            },
+            "gender": {
+              "type": "string"
+            },
+            "language": {
+              "type": "string"
+            },
+            "timeZone": {
+              "type": "string"
+            },
+            "incomeLevel": {
+              "type": "string"
+            },
+            "maritalStatus": {
+              "type": "string"
+            },
+            "religion": {
+              "type": "string"
+            },
+            "vitalStatus": {
+              "type": "string"
+            }
+          }
+        },
+        "EmployeeIdentity": {
+          "type": "object",
+          "properties": {
+            "organizationId": {
+              "type": "string"
+            },
+            "workspaceId": {
+              "type": "string"
+            },
+            "employeeId": {
+              "type": "string"
+            },
+            "identityVerified": {
+              "type": "boolean"
+            },
+            "status": {
+              "type": "string"
+            }
+          }
+        },
+        "PrimaryContactInfo": {
+          "type": "object",
+          "properties": {
+            "addresses": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "phoneNumbers": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "emails": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "EmergencyContact": {
+          "type": "object",
+          "properties": {
+            "relationship": {
+              "type": "string"
+            }
+          }
+        },
+        "PharmacyDetails": {
+          "type": "object",
+          "properties": {
+            "pharmacyName": {
+              "type": "string"
+            }
+          }
+        },
+        "Allergy": {
+          "type": "object",
+          "properties": {
+            "patientId": {
+              "type": "string"
+            },
+            "nationalhealthid": {
+              "type": "string"
+            },
+            "allergen": {
+              "type": "string"
+            },
+            "reaction": {
+              "type": "string"
+            },
+            "isSevere": {
+              "type": "boolean"
+            },
+            "notes": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "name": "bearerAuth",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      }
+    }
+  }
+  
