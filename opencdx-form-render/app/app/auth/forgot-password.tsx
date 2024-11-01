@@ -40,11 +40,11 @@ const ForgotPassword = ({ isLoading, setIsLoading }: { isLoading: boolean, setIs
 
     const handleForgotPassword = useCallback(async () => {
         AsyncStorage.setItem('username', email);
-        navigation.navigate('form-render/auth/change-password' as never);
+        navigation.navigate('app/auth/change-password' as never);
     }, [email, navigation]);
 
     const handleBack = useCallback(() => {
-        navigation.navigate('form-render/auth/login' as never);
+        navigation.navigate('app/auth/login' as never);
     }, [navigation]);
 
     const renderBackButton = () => (

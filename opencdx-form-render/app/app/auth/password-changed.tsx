@@ -8,7 +8,7 @@ const PasswordChanged: React.FC = () => {
     const navigation = useNavigation();
 
     const handleProceedToLogin = () => {
-        navigation.navigate('form-render/auth/login' as never);
+        navigation.navigate('app/auth/login' as never);
     };
 
     useEffect(() => {

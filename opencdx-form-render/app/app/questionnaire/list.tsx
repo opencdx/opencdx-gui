@@ -39,7 +39,7 @@ const QuestionnaireList: React.FC = () => {
   const handleBack = useCallback(() => navigation.goBack(), [navigation]);
 
   const handleQuestionnaireSelect = useCallback(() => {
-    navigation.navigate('form-render/questionnaire/take-questionnaire' as never);
+    navigation.navigate('app/questionnaire/take-questionnaire' as never);
   }, [navigation]);
 
   const content = (

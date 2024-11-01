@@ -16,7 +16,7 @@ const QuestionnaireCard = ({ isMobile }: { isMobile: boolean }) => {
       <Text className="text-white text-xl font-bold mb-2">Take Specific Questionnaire</Text>
       <Text className="text-gray-400 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.</Text>
       <Button onPress={() => {
-        navigation.navigate('form-render/questionnaire/list' as never);
+        navigation.navigate('app/questionnaire/list' as never);
       }} className="w-full">
         <Text className="text-white text-xl font-bold mb-2">Take Questionnaire</Text>
       </Button>
