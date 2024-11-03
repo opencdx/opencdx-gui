@@ -3,9 +3,11 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Platfo
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
+import { useUserFlow } from '../context/UserFlowContext';
 
 function ShippingAddressPage() {
   const navigation = useNavigation();
+  const { enforceShippingAddressValidation, welcomeScreen } = useUserFlow();
   const [formData, setFormData] = useState({
     streetAddress: '',
     city: '',
@@ -45,16 +47,36 @@ function ShippingAddressPage() {
       }
     } catch (error) {
       console.error('Address validation error:', error);
-      setAddressError('Unable to validate address. Please try again.');
+      setAddressError('We are unable to validate address. Please try again.');
       return false;
+    }
+  };
+
+  const navigateToWelcomeScreen = () => {
+    switch (welcomeScreen) {
+      case 'custom-internal':
+        navigation.navigate('app/login-flow/WelcomeScreen-Custom-Internal' as never);
+        break;
+      case 'custom-external':
+        navigation.navigate('app/login-flow/WelcomeScreen-Custom-External' as never);
+        break;
+      case 'default':
+      default:
+        navigation.navigate('app/login-flow/WelcomeScreen' as never);
+        break;
     }
   };
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     
-    if (await validateAddress()) {
-      navigation.navigate('app/login-flow/WelcomeScreen' as never);
+    if (enforceShippingAddressValidation) {
+      if (await validateAddress()) {
+        navigateToWelcomeScreen();
+      }
+    } else {
+      // Skip validation if flag is false
+      navigateToWelcomeScreen();
     }
   };
 

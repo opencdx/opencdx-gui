@@ -7,6 +7,8 @@ interface UserFlowContextType {
   setAccountInformationRequired: (value: boolean) => void;
   shippingAddressRequired: boolean;
   setShippingAddressRequired: (value: boolean) => void;
+  enforceShippingAddressValidation: boolean;
+  setEnforceShippingAddressValidation: (value: boolean) => void;
   welcomeScreen: WelcomeScreenType;
   setWelcomeScreen: (value: WelcomeScreenType) => void;
 }
@@ -16,6 +18,7 @@ const UserFlowContext = createContext<UserFlowContextType | undefined>(undefined
 export function UserFlowProvider({ children }: { children: ReactNode }) {
   const [accountInformationRequired, setAccountInformationRequired] = useState(false);
   const [shippingAddressRequired, setShippingAddressRequired] = useState(true);
+  const [enforceShippingAddressValidation, setEnforceShippingAddressValidation] = useState(true);
   const [welcomeScreen, setWelcomeScreen] = useState<WelcomeScreenType>('custom-internal');
 
   return (
@@ -25,6 +28,8 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
         setAccountInformationRequired,
         shippingAddressRequired,
         setShippingAddressRequired,
+        enforceShippingAddressValidation,
+        setEnforceShippingAddressValidation,
         welcomeScreen,
         setWelcomeScreen,
       }}
