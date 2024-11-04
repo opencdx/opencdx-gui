@@ -1,8 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useUserFlow } from '../context/UserFlowContext';
+import commonStyles from '../../../assets/css/common';
 
 const LoginForm: React.FC = () => {
   const navigation = useNavigation();
@@ -31,15 +32,15 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <View style={styles.loginContainer}>
+    <View style={[styles.loginContainer, commonStyles.container]}>
       <Image 
         source={require('../../../assets/logo.png')}
-        style={styles.logo}
+        style={[styles.logo, commonStyles.logoImage]}
         resizeMode="contain"
       />
-      <View style={styles.formContainer}>
+      <View style={[styles.formContainer, commonStyles.formWrapper]}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, commonStyles.inputField]}
           keyboardType="email-address"
           placeholder="Email"
           value={email}
@@ -65,23 +66,39 @@ const LoginForm: React.FC = () => {
           </TouchableOpacity>
         </View>
         
-        <View style={styles.actionRow}>
-          <TouchableOpacity style={styles.touchIdButton} onPress={() => {}}>
+        <View style={[styles.actionRow, commonStyles.actionContainer]}>
+          <TouchableOpacity 
+            style={[styles.touchIdButton, commonStyles.secondaryButton]} 
+            onPress={() => {}}
+          >
             <Text>👆</Text>
-            <Text style={styles.touchIdText}>Use TouchID</Text>
+            <Text style={[styles.touchIdText, commonStyles.secondaryButtonText]}>
+              Use TouchID
+            </Text>
           </TouchableOpacity>
-          <Text style={styles.forgotPassword} onPress={() => {}}>
+          <Text 
+            style={[styles.forgotPassword, commonStyles.linkText]} 
+            onPress={() => {}}
+          >
             Forgot Password?
           </Text>
         </View>
 
-        <TouchableOpacity style={styles.signInButton} onPress={handleSubmit}>
-          <Text style={styles.signInButtonText}>Sign In</Text>
+        <TouchableOpacity 
+          style={[styles.signInButton, commonStyles.primaryButton]} 
+          onPress={handleSubmit}
+        >
+          <Text style={[styles.signInButtonText, commonStyles.buttonText]}>
+            Sign In
+          </Text>
         </TouchableOpacity>
         
-        <Text style={styles.signUpText}>
+        <Text style={[styles.signUpText, commonStyles.bodyText]}>
           Don't have an account?{' '}
-          <Text style={styles.signUpLink} onPress={handleSignUp}>
+          <Text 
+            style={[styles.signUpLink, commonStyles.linkText]} 
+            onPress={handleSignUp}
+          >
             Sign Up
           </Text>
         </Text>

@@ -1,0 +1,105 @@
+/* Colors */
+:root {
+  --primary-blue: #0066FF;
+  --white: #FFFFFF;
+  --black: #000000;
+  --light-gray: #F5F5F5;
+  --border-gray: #D4D4D4;
+  --text-gray: #666666;
+  --error-red: #FF0000;
+}
+
+/* Typography */
+:root {
+  --font-primary: 'Inter', sans-serif;
+  --font-size-base: 16px;
+  --font-size-small: 14px;
+  --font-size-xs: 12px;
+}
+
+/* Buttons */
+.btn {
+  font-family: var(--font-primary);
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: var(--primary-blue);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  background-color: var(--white);
+  color: var(--primary-blue);
+  border: 1px solid var(--primary-blue);
+}
+
+/* Form Elements */
+.input-field {
+  font-family: var(--font-primary);
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-gray);
+  background-color: var(--white);
+  width: 100%;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+}
+
+/* Labels */
+.form-label {
+  color: var(--text-gray);
+  font-size: var(--font-size-small);
+  margin-bottom: 8px;
+}
+
+/* Error States */
+.error-text {
+  color: var(--error-red);
+  font-size: var(--font-size-xs);
+  margin-top: 4px;
+}
+
+/* Card/Container Layouts */
+.auth-container {
+  background-color: var(--white);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Common Layout Classes */
+.center-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Links */
+.link-text {
+  color: var(--primary-blue);
+  text-decoration: none;
+  font-size: var(--font-size-small);
+}
+
+.link-text:hover {
+  text-decoration: underline;
+}
+
+/* Divider */
+.divider {
+  border-top: 1px solid var(--border-gray);
+  margin: 20px 0;
+} 
