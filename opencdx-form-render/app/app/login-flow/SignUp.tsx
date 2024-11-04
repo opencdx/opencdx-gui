@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   signupButton: {
-    backgroundColor: '#D8A1BB',
+    backgroundColor: '#C026D3',
     padding: 15,
     borderRadius: 5,
     alignItems: 'center',

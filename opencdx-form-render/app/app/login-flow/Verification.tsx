@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     color: '#666',
   },
   continueButton: {
-    backgroundColor: '#E291B7',
+    backgroundColor: '#C026D3',
     padding: 16,
     borderRadius: 25,
     alignItems: 'center',
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   resendText: {
-    color: '#E75480',
+    color: '#C026D3',
     fontSize: 16,
   },
 });

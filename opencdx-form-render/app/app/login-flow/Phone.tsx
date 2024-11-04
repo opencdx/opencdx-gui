@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   continueButton: {
-    backgroundColor: '#E291B7',
+    backgroundColor: '#C026D3',
     padding: 16,
     borderRadius: 25,
     alignItems: 'center',

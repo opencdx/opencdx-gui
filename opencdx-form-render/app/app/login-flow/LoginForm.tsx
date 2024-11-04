@@ -61,7 +61,7 @@ const LoginForm: React.FC = () => {
             <MaterialIcons 
               name={showPassword ? "visibility" : "visibility-off"} 
               size={24} 
-              color="#E91E63"
+              color="#C026D3"
             />
           </TouchableOpacity>
         </View>
@@ -156,19 +156,19 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   touchIdText: {
-    color: '#E91E63',
+    color: '#C026D3',
     fontSize: 16,
     fontWeight: '600',
   },
   forgotPassword: {
-    color: '#E91E63',
+    color: '#C026D3',
     fontSize: 16,
     fontWeight: '600',
   },
   signInButton: {
     width: '100%',
     padding: 16,
-    backgroundColor: '#E91E63',
+    backgroundColor: '#C026D3',
     borderRadius: 12,
     marginVertical: 24,
   },
@@ -184,8 +184,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   signUpLink: {
-    color: '#E91E63',
-    fontWeight: '600',
+    color: '#C026D3',
+    fontWeight: '600'
   },
 });
 

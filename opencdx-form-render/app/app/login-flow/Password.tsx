@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   submitButton: {
-    backgroundColor: '#C23B80',
+    backgroundColor: '#C026D3',
     padding: 15,
     borderRadius: 25,
     alignItems: 'center',

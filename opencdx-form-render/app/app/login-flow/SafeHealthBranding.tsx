@@ -32,14 +32,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 20,
+    paddingTop: 40,
   },
   logoContainer: {
-    flex: 1,
-    justifyContent: 'center',
+    alignItems: 'center',
   },
   mainLogo: {
-    width: 200,
-    height: 50,
+    width: 400,
+    height: 100,
   },
   footer: {
     alignItems: 'center',
@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   footerLogo: {
-    width: 200,
-    height: 40,
+    width: 400,
+    height: 100,
   },
 });
 
