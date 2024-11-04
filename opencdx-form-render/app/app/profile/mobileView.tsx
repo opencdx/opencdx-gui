@@ -94,8 +94,8 @@ const EditProfile = () => {
   };
   const updatedUser = {
     fullName: { firstName: firstName, lastName: lastName },
-    email: [{email: email}],
-    phone: [{number: phone}],
+    email: email ? [email] : [], // Convert email to an array of strings if it's required to be a string[]
+    phone: phone ? [phone] : [], // Convert phone to an array of strings if it's required to be a string[]
     dateOfBirth: dob,
   };
     updateUserProfile(userProfileRequest);
@@ -130,8 +130,8 @@ const EditProfile = () => {
   };
   const updatedUser = {
     fullName: { firstName: firstName, lastName: lastName },
-    email: [{email: email}],
-    phone: [{number: phone}],
+    email: email ? [email] : [], // Convert email to an array of strings if it's required to be a string[]
+    phone: phone ? [phone] : [], // Convert phone to an array of strings if it's required to be a string[]
     dateOfBirth: dob,
   };
     updateUserProfile(userProfileRequest);
@@ -146,9 +146,9 @@ const EditProfile = () => {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 20} // Adjust as needed
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'} // Adjusts based on platform
+        keyboardVerticalOffset={Platform.select({ ios: 0, android: 20 })} // Offset for smooth scrolling
     >
       <SafeAreaView className="flex-1 bg-white">
         <ScrollView 
@@ -201,6 +201,7 @@ const EditProfile = () => {
           variant={isEditing ? 'default' : 'underline'}
           value={firstName}
           onChangeText={setFirstName}
+          className="mb-3"
         />
         <Input
           isEditable={isEditing}
@@ -208,6 +209,7 @@ const EditProfile = () => {
           label="Last Name*"
           value={lastName}
           onChangeText={setLastName}
+           className="mb-3"
         />
         <Input
           isEditable={isEditing}
@@ -215,6 +217,7 @@ const EditProfile = () => {
           label="Email Address*"
           value={email}
           onChangeText={setEmail}
+           className="mb-3"
         />
         <Input
           isEditable={isEditing}
@@ -222,6 +225,7 @@ const EditProfile = () => {
           label="Phone Number"
           value={phone}
           onChangeText={setPhone}
+          className="mb-3"
         />
         <TouchableOpacity
             className='w-full' 
