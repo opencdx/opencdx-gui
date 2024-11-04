@@ -19,7 +19,7 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
   const [accountInformationRequired, setAccountInformationRequired] = useState(false);
   const [shippingAddressRequired, setShippingAddressRequired] = useState(true);
   const [enforceShippingAddressValidation, setEnforceShippingAddressValidation] = useState(true);
-  const [welcomeScreen, setWelcomeScreen] = useState<WelcomeScreenType>('default');
+  const [welcomeScreen, setWelcomeScreen] = useState<WelcomeScreenType>('custom-internal');
 
   return (
     <UserFlowContext.Provider

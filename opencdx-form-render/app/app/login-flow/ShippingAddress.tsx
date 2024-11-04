@@ -5,6 +5,31 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import { useUserFlow } from '../context/UserFlowContext';
 
+// Update the validation result type to match the proxy response
+type ValidationResult = {
+  success: boolean;
+  data: {
+    matchedAddress: string;
+    coordinates: { x: number; y: number };
+    tigerLine: { side: string; tigerLineId: string };
+    addressComponents: {
+      streetName: string;
+      suffixType: string;
+      city: string;
+      state: string;
+      zip: string;
+    };
+    inputAddress: string;
+  };
+  quality: {
+    matchScore: string;
+    matchType: string;
+    isExact: boolean;
+  };
+  timestamp: string;
+  statusCode: number;
+};
+
 function ShippingAddressPage() {
   const navigation = useNavigation();
   const { enforceShippingAddressValidation, welcomeScreen } = useUserFlow();
@@ -16,38 +41,50 @@ function ShippingAddressPage() {
   });
   const [addressError, setAddressError] = useState('');
   const [matchedAddress, setMatchedAddress] = useState('');
+  const [validationResult, setValidationResult] = useState<ValidationResult | null>(null);
 
   const isFormValid = () => {
-    return formData.streetAddress && formData.city && 
-           formData.state && formData.zipCode;
+    return formData.streetAddress && 
+           formData.city && 
+           formData.state && 
+           formData.state !== '' && 
+           formData.zipCode;
   };
 
   const validateAddress = async () => {
     try {
       setAddressError('');
-      setMatchedAddress('');
-      const address = `${formData.streetAddress}, ${formData.city}, ${formData.state} ${formData.zipCode}`;
-      const encodedAddress = encodeURIComponent(address);
+      setValidationResult(null);
+      
+      // Construct address from current form data
+      const formattedAddress = `${formData.streetAddress}, ${formData.city}, ${formData.state} ${formData.zipCode}`;
+      const encodedAddress = encodeURIComponent(formattedAddress);
       const apiUrl = `http://localhost:3001/validate-address?address=${encodedAddress}`;
       
-      console.log('Proxy API Request:', apiUrl);
-      console.log('Original Address:', address);
-
-      const response = await fetch(apiUrl);
-      const data = await response.json();
+      console.log('Validating address:', formattedAddress); // Add this for debugging
       
-      if (data.result?.addressMatches?.length > 0) {
-        const match = data.result.addressMatches[0];
-        const standardizedAddress = `${match.matchedAddress}`;
-        setMatchedAddress(standardizedAddress);
+      const response = await fetch(apiUrl);
+      const data: ValidationResult = await response.json();
+      
+      console.log('Census API Response:', data);
+      
+      if (data.success) {
+        // Verify that the returned state matches the form state
+        const returnedState = data.data.addressComponents.state;
+        if (returnedState !== formData.state) {
+          setAddressError(`Invalid state. Address belongs to ${returnedState}, not ${formData.state}`);
+          return false;
+        }
+        
+        setValidationResult(data);
         return true;
       } else {
-        setAddressError('Invalid address. Please check and try again.');
+        setAddressError(data.error || 'Address validation failed');
         return false;
       }
     } catch (error) {
       console.error('Address validation error:', error);
-      setAddressError('We are unable to validate address. Please try again.');
+      setAddressError('Unable to validate address. Please try again.');
       return false;
     }
   };
@@ -136,6 +173,22 @@ function ShippingAddressPage() {
     // Todo: Ravi - move this to centralize location
   ];
 
+  // Add this new function to check if the form can be submitted
+  const canSubmit = () => {
+    if (enforceShippingAddressValidation) {
+      return isFormValid() && validationResult?.success;
+    }
+    return isFormValid();
+  };
+
+  // Update the form data change handler to clear validation
+  const updateFormData = (field: string, value: string) => {
+    setFormData(prev => ({...prev, [field]: value}));
+    // Clear validation result when form changes
+    setValidationResult(null);
+    setAddressError('');
+  };
+
   return (
     <ScrollView style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
@@ -154,7 +207,18 @@ function ShippingAddressPage() {
           style={styles.input} 
           placeholder="Street Address*" 
           value={formData.streetAddress}
-          onChangeText={(text) => setFormData({...formData, streetAddress: text})}
+          onChangeText={(text) => updateFormData('streetAddress', text)}
+          onChange={(e) => {
+            // Check if other fields were autofilled
+            const form = e.target.form;
+            if (form) {
+              const state = form.querySelector('[name="state"]')?.value;
+              if (state) {
+                updateFormData('state', state);
+              }
+            }
+          }}
+          name="street"  // Add name attribute for autofill
         />
         <View style={styles.row}>
           <TextInput style={[styles.input, styles.flex1]} placeholder="Apt/Ste" />
@@ -162,21 +226,23 @@ function ShippingAddressPage() {
             style={[styles.input, styles.flex1]} 
             placeholder="City*"
             value={formData.city}
-            onChangeText={(text) => setFormData({...formData, city: text})}
+            onChangeText={(text) => updateFormData('city', text)}
           />
         </View>
         <View style={styles.row}>
           <View style={[styles.flex1, styles.pickerContainer]}>
             <Picker
               selectedValue={formData.state}
-              onValueChange={(value) => setFormData({...formData, state: value})}
+              onValueChange={(value) => updateFormData('state', value)}
               style={styles.picker}
+              name="state"  // Add name attribute for autofill
             >
               {states.map((state) => (
                 <Picker.Item 
                   key={state.value} 
                   label={state.label} 
                   value={state.value}
+                  enabled={state.value !== ''}
                 />
               ))}
             </Picker>
@@ -186,27 +252,51 @@ function ShippingAddressPage() {
             placeholder="Zip Code*" 
             keyboardType="numeric"
             value={formData.zipCode}
-            onChangeText={(text) => setFormData({...formData, zipCode: text})}
+            onChangeText={(text) => updateFormData('zipCode', text)}
           />
         </View>
 
-        {matchedAddress ? (
-          <View style={styles.matchedAddressContainer}>
-            <Text style={styles.matchedAddressTitle}>Verified Address:</Text>
-            <Text style={styles.matchedAddressText}>{matchedAddress}</Text>
+        {validationResult && validationResult.success && (
+          <View style={styles.validationContainer}>
+            <Text style={styles.validationTitle}>✓ Address Verified</Text>
+            <Text style={styles.matchedAddressText}>
+              {validationResult.data.matchedAddress}
+            </Text>
+            
+            {validationResult.data.coordinates && (
+              <Text style={styles.coordinatesText}>
+                Coordinates: {validationResult.data.coordinates.y.toFixed(6)}, {validationResult.data.coordinates.x.toFixed(6)}
+              </Text>
+            )}
           </View>
-        ) : null}
+        )}
 
-        {addressError ? (
-          <Text style={styles.errorText}>{addressError}</Text>
-        ) : null}
+        {addressError && (
+          <View style={styles.validationErrorContainer}>
+            <Text style={styles.validationErrorTitle}>✕ Address Invalid</Text>
+            <Text style={styles.validationErrorText}>{addressError}</Text>
+            <Text style={styles.enteredAddressText}>
+              Entered address: {`${formData.streetAddress}, ${formData.city}, ${formData.state} ${formData.zipCode}`}
+            </Text>
+          </View>
+        )}
+
+        {enforceShippingAddressValidation && (
+          <TouchableOpacity 
+            onPress={validateAddress} 
+            style={[styles.validateButton, !isFormValid() && styles.buttonDisabled]}
+            disabled={!isFormValid()}
+          >
+            <Text style={styles.buttonText}>Validate Address</Text>
+          </TouchableOpacity>
+        )}
 
         <TouchableOpacity 
           onPress={handleSubmit} 
-          style={[styles.button, !isFormValid() && styles.buttonDisabled]}
-          disabled={!isFormValid()}
+          style={[styles.button, !canSubmit() && styles.buttonDisabled]}
+          disabled={!canSubmit()}
         >
-        <Text style={styles.buttonText}>Continue</Text>
+          <Text style={styles.buttonText}>Continue</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -293,6 +383,60 @@ const styles = StyleSheet.create({
   },
   matchedAddressText: {
     color: '#333',
+  },
+  validationContainer: {
+    backgroundColor: '#e8f5e9',
+    padding: 16,
+    borderRadius: 8,
+    marginVertical: 12,
+    borderWidth: 1,
+    borderColor: '#81c784',
+  },
+  validationTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#2e7d32',
+    marginBottom: 8,
+  },
+  matchedAddressText: {
+    fontSize: 15,
+    color: '#1b5e20',
+    marginBottom: 8,
+  },
+  coordinatesText: {
+    fontSize: 13,
+    color: '#388e3c',
+    marginBottom: 8,
+  },
+  validateButton: {
+    backgroundColor: '#81c784', // A different color to distinguish from Continue button
+    padding: 16,
+    borderRadius: 4,
+    marginTop: 16,
+  },
+  validationErrorContainer: {
+    backgroundColor: '#ffebee',
+    padding: 16,
+    borderRadius: 8,
+    marginVertical: 12,
+    borderWidth: 1,
+    borderColor: '#ef5350',
+  },
+  validationErrorTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#c62828',
+    marginBottom: 8,
+  },
+  validationErrorText: {
+    fontSize: 15,
+    color: '#b71c1c',
+    marginBottom: 8,
+  },
+  enteredAddressText: {
+    fontSize: 13,
+    color: '#d32f2f',
+    marginBottom: 8,
   },
 });
 
