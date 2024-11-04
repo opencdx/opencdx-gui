@@ -26,3 +26,14 @@ questionnaire.accessToken = async () => {
     return await AsyncStorage.getItem('serviceToken') || '';
 }
 export const questionnaireApi = new OpenCdxRestQuestionnaireControllerApi(questionnaire);
+
+
+import { Configuration as HealthConfiguration, OpenCdxhealthUserRestControllerApi } from "./health";
+const health = new HealthConfiguration({
+    basePath: (REACT_APP_API_HOST ?? '') + REACT_APP_API_PORT + "/health"
+});
+health.accessToken = async () => {
+    return await AsyncStorage.getItem('serviceToken') || '';
+}
+
+export const healthApi = new OpenCdxhealthUserRestControllerApi(health);
