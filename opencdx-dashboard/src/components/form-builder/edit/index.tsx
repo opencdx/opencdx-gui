@@ -7,19 +7,34 @@ import { useQuestionnaireStore } from '@/hooks/questionnaire';
 import { QuestionnaireWrapper } from '@/components/form-builder/edit/edit-questionnaire-wrapper';
 import { Questionnaire } from '@/api/questionnaire/model/questionnaire';
 import { useForm, FormProvider } from 'react-hook-form';
+import { toast, ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const Edit: React.FC<{ questionnaireId: string }> = ({ questionnaireId }) => {
-  // const { setValue } = useFormContext();
-
-  const { control, register, handleSubmit, getValues, setValue } = useForm<Questionnaire>({
-    defaultValues: async () => questionnaireData,
-  });
   const { questionnaire: questionnaireData, updateQuestionnaireTitle } = useQuestionnaireStore();
+  
+  // Initialize form with empty object if questionnaireData is undefined
+  const methods = useForm<Questionnaire>({
+    defaultValues: async () => questionnaireData || { title: '', questions: [] },
+  });
+  const { setValue } = methods;
+  
   const [formName, setFormName] = useState('');
   const [showModal, setShowModal] = useState(questionnaireId === 'new-questionnaire');
 
+  
+  useEffect(() => {
+    return () => {
+      // Cleanup state when component unmounts
+      setFormName('');
+      setShowModal(false);
+    };
+  }, []);
+  const notify = () => toast.error("Form successfully created! Begin adding questions.");
 
   const handleContinue = () => {
+    //notify();
     setValue('title', formName);
     updateQuestionnaireTitle(formName);
   };
@@ -42,12 +57,12 @@ const Edit: React.FC<{ questionnaireId: string }> = ({ questionnaireId }) => {
             <>
               <ModalHeader className="flex flex-col gap-1">Create New Form</ModalHeader>
               <ModalBody>
-                <p>Please name your form.</p>
+                <p>Please name your form</p>
                 <Input
                   type="text"
                   variant="bordered"
                   size="lg"
-                  placeholder="Form Name*"
+                  label="Form Name*"
                   onChange={handleFormNameChange}
                 />
               </ModalBody>
@@ -56,10 +71,11 @@ const Edit: React.FC<{ questionnaireId: string }> = ({ questionnaireId }) => {
                   Cancel
                 </Button>
                 <Button
-                  color="primary"
+                  color={formName.length > 0 ? 'primary' : 'default'}
                   aria-label="Continue to reset password" 
                   tabIndex={0}
                   size="lg"
+                  isDisabled={formName.length === 0}
                   onPress={() => {
                     onClose();
                     handleContinue();
@@ -72,12 +88,11 @@ const Edit: React.FC<{ questionnaireId: string }> = ({ questionnaireId }) => {
           )}
         </ModalContent>
       </Modal>
-      <FormProvider {...useForm<Questionnaire>({
-        defaultValues: async () => questionnaireData,
-      })}>
-      <QuestionnaireWrapper questionnaire={questionnaireData as Questionnaire} />
+      <FormProvider {...methods}>
+        <QuestionnaireWrapper questionnaire={questionnaireData as Questionnaire} />
       </FormProvider>
-
+      
+     
     </>
   );
 };

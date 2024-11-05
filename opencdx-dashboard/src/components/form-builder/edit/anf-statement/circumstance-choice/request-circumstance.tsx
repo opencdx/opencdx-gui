@@ -49,7 +49,7 @@ const RequestCircumstance: React.FC<{
 
     return (
         <>
-            <AccordionSection title="Device ID">
+            <AccordionSection title="Device ID:">
                 <DeviceIdComponent
                     anfStatementConnectorId={anfStatementConnectorId}
                     questionnaireItemId={questionnaireItemId}
@@ -85,11 +85,11 @@ const RequestCircumstance: React.FC<{
                 <ParticipantComponent anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} anfStatement={anfStatement} tabName={tabName} addLabel="Add Requested Participant" />
             </AccordionSection>
 
-            <AccordionSection title="Priority">
+            <AccordionSection title="Priority:">
                 <ControlledInput placeholder="Priority" name={`${baseFieldName}.priority.expression`} />
             </AccordionSection>
 
-            <AccordionSection title="Purpose">
+            <AccordionSection title="Purpose:">
                 <PurposeComponent
                     anfStatementConnectorId={anfStatementConnectorId}
                     questionnaireItemId={questionnaireItemId}

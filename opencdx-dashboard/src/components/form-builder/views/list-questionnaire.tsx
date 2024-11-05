@@ -196,7 +196,7 @@ export default function ListQuestionnaire() {
         </div>
       </div>
       <div className="flex items-center space-x-2">
-        <Link href="/dashboard/pages/form-builder">
+        <Link href="/dashboard/pages/form-builder" aria-label="Back to Dashboard">
           <Button
             className="mr-4"
             color="primary"

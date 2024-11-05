@@ -25,6 +25,11 @@ export const useQuestionnaireStore = create<QuestionnaireStore>((set) => ({
             draft.questionnaire = { ...data };
         })
     ),
+    reset: () => set(
+        produce((draft) => {
+            draft.questionnaire = { item: [], title: '' };
+        })
+    ),
     updateQuestionnaireTitle: (data: string) => set(
         produce((draft) => {
             draft.questionnaire.title = data;

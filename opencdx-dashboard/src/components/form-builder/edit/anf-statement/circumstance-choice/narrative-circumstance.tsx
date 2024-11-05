@@ -46,7 +46,7 @@ const NarrativeCircumstance: React.FC<{
                 <PurposeComponent anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={tabName} />
             </AccordionSection>
 
-            <AccordionSection title="Text">
+            <AccordionSection title="Text:">
                 <ControlledInput placeholder="Text" name={`${baseFieldName}.text`} />
             </AccordionSection>
             <Divider className='bg-white' />
