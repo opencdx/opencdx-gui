@@ -123,3 +123,15 @@ export const useGetQuestionnaireList = (onLoading?: (isLoading: boolean) => void
         },
     });
 };
+
+export const useGetQuestionnaire = (onLoading?: (isLoading: boolean) => void) => {
+    return useMutation({
+        mutationFn: (params: string) => questionnaireApi.getQuestionnaire({ id: params }),
+        onMutate: () => {
+            if (onLoading) onLoading(true);
+        },
+        onSettled: () => {
+            if (onLoading) onLoading(false);
+        },
+    });
+};

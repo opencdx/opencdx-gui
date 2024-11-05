@@ -8,11 +8,16 @@ import { useGetQuestionnaireList } from '../../../lib/iam-hooks';
 import { useNavigation } from 'expo-router';
 import Loading from '../../../components/ui/loading';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { StackNavigationProp } from '@react-navigation/stack';
+
+type QuestionnaireListNavigationProp = StackNavigationProp<{
+  'app/questionnaire/take-questionnaire': { id: string };
+}>;
 
 const QuestionnaireList: React.FC = () => {
   const { mutate: getQuestionnaireDataList, data } = useGetQuestionnaireList();
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<QuestionnaireListNavigationProp>();
   const [isWeb, setIsWeb] = useState(Platform.OS === 'web');
   const [isLoading, setIsLoading] = useState(true);
 
@@ -39,8 +44,8 @@ const QuestionnaireList: React.FC = () => {
 
   const handleBack = useCallback(() => navigation.goBack(), [navigation]);
 
-  const handleQuestionnaireSelect = useCallback(() => {
-    navigation.navigate('app/questionnaire/take-questionnaire' as never);
+  const handleQuestionnaireSelect = useCallback((id: string) => {
+    navigation.navigate('app/questionnaire/take-questionnaire', { id });
   }, [navigation]);
 
   const content = (
@@ -72,7 +77,7 @@ const QuestionnaireList: React.FC = () => {
               <Pressable
                 key={index}
                 className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onPress={() => handleQuestionnaireSelect()}
+                onPress={() => item.id && handleQuestionnaireSelect(item.id)}
               >
                 <View className="flex flex-row justify-between items-center">
                   <View className="flex-1">
