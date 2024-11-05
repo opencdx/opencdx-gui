@@ -36,9 +36,16 @@ const TakeQuestionnaire: React.FC = () => {
   const content = (
     <>
       <View className="w-full max-w-[800px] flex flex-col justify-center items-center gap-4">
-        <Text className="font-inter font-medium text-left w-full text-3xl mb-2">
-          Question 1 {data?.data.title}
-        </Text>
+        {data?.data?.item?.map((question, index) => (
+          <React.Fragment key={`question-${index}`}>
+            <Text className="font-inter font-light text-slate-400 text-left w-full text-2xl pl-4 pt-4">
+              Question {index + 1}
+            </Text>
+            <Text className="font-inter font-medium text-left w-full text-3xl pl-4">
+              {question.text}
+            </Text>
+          </React.Fragment>
+        ))}
       </View>
     </>
   );
