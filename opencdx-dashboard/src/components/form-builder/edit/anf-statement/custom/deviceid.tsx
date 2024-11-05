@@ -32,9 +32,9 @@ export const DeviceIdComponent: React.FC<DeviceIdComponentProps> = ({
             {deviceIdFields.map((field, index) => (
                 <div key={field.id} className='flex flex-row items-center gap-2 mb-4'>
                     <ControlledInput className='w-full'
-                        placeholder='Add Device ID'
+                        placeholder='Device ID'
                         name={`${baseFieldName}.deviceid.${index}`} />
-                    <Button
+                    {/* <Button
                         className='rounded-lg'
                         color='danger'
                         variant='flat'
@@ -42,7 +42,7 @@ export const DeviceIdComponent: React.FC<DeviceIdComponentProps> = ({
                         size='lg'
                         endContent={<TrashIcon size={18} />}
                         onClick={() => removeDeviceId(index)}
-                    />
+                    /> */}
                 </div>
             ))}
             <Button className='w-fit'

@@ -40,11 +40,11 @@ const PerformanceCircumstance: React.FC<{
 
   return (
     <>
-      <AccordionSection title="Status">
+      <AccordionSection title="Status:">
         <ControlledInput placeholder="Status" name={`${baseFieldName}.status.expression`} />
       </AccordionSection>
 
-      <AccordionSection title="Device ID">
+      <AccordionSection title="Device ID:">
         <DeviceIdComponent
           anfStatementConnectorId={anfStatementConnectorId}
           questionnaireItemId={questionnaireItemId}
@@ -56,7 +56,7 @@ const PerformanceCircumstance: React.FC<{
         <MeasureComponent anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} tabName={`${tabName}.result`} />
       </AccordionSection>
 
-      <AccordionSection title="Health Risk">
+      <AccordionSection title="Health Risk:">
         <ControlledInput placeholder="Health Risk" name={`${baseFieldName}.healthRisk.expression`} />
       </AccordionSection>
 

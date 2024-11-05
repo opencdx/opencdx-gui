@@ -46,7 +46,7 @@ const ParticipantComponent = ({
         <Divider className="my-2" />
         <div className='flex flex-col gap-4'>
           <div className='text-sm '>Practitioner Value:</div>
-          {['identifier', 'display', 'reference', 'uri'].map((field) => (
+          {['identifier', 'display', 'reference', 'URI'].map((field) => (
             <React.Fragment key={field}>
               <ControlledInput
                 label={field.charAt(0).toUpperCase() + field.slice(1)}

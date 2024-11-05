@@ -69,6 +69,7 @@ export function Navbar() {
                 variant="light"
                 disableAnimation
                 role="link"
+                aria-label="User actions dropdown"
                 className="w-full p-0"
                 endContent={
                   <Image 

@@ -2,11 +2,14 @@ import { Card, CardBody, BreadcrumbItem, Breadcrumbs, Button, Image, Switch } fr
 import { LeftChevronIcon} from 'ui-library'
 import { useRouter } from 'next/navigation';
 import editNoteLite from '../../../../public/images/edit_note_lite.png';
+import { useQuestionnaireStore } from '@/hooks/questionnaire';
 
 const Header = ({formTitle}: {formTitle: string}) => {
     const router = useRouter();
+    const resetStore = useQuestionnaireStore((state: any) => state.reset);
 
     const handleBack = () => {
+        resetStore();
         router.push('/pages/form-builder');
     };
 
@@ -19,11 +22,11 @@ const Header = ({formTitle}: {formTitle: string}) => {
                             <Image src={editNoteLite.src} alt="Dynamic Form" width={48} height={48} />
                             <div className="flex flex-col space-y-1">
                                 <h1 className="text-xl">
-                                    Edit Form: <strong>{formTitle}</strong>
+                                    {formTitle ? `Edit Form: ${formTitle}` : 'Create New Form'}   
                                 </h1>
                                 <Breadcrumbs separator="/">
-                                    <BreadcrumbItem href="/pages/form-builder">Dashboard</BreadcrumbItem>
-                                    <BreadcrumbItem href="/pages/form-builder">Form Builder</BreadcrumbItem>
+                                    <BreadcrumbItem href="/dashboard/pages/form-builder">Dashboard</BreadcrumbItem>
+                                    <BreadcrumbItem href="/dashboard/pages/form-builder">Form Builder</BreadcrumbItem>
                                     <BreadcrumbItem>Edit Form: {formTitle}</BreadcrumbItem>
                                 </Breadcrumbs>
                             </div>

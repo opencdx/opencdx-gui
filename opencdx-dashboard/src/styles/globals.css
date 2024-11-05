@@ -32,6 +32,9 @@
   .Toastify__toast-theme--colored.Toastify__toast--error {
 
     background-color: rgba(243, 18, 96, 1) !important;
+}   
+.Toastify__toast-theme--colored.Toastify__toast--success {
+    background-color: #00b37e !important;
 }
 
   

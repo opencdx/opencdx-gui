@@ -14,7 +14,7 @@ interface CircumstanceChoiceProps {
 
 const CircumstanceChoice = ({ anfStatementConnectorId, questionnaireItemId, anfStatement }: CircumstanceChoiceProps) => {
     const { control } = useFormContext();
-    const [tabName, setTabName] = useState('requestCircumstance');
+    const [tabName, setTabName] = useState('performanceCircumstance');
 
     const circumstanceComponents = {
         performanceCircumstance: PerformanceCircumstance,
