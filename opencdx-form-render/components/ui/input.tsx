@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Pressable } from 'react-native';
 import { TextInput } from 'react-native-paper';
 
 interface InputProps {
@@ -13,9 +13,10 @@ interface InputProps {
   variant?: 'default' | 'underline' | 'plain';
   isDisabled?: boolean;
   isEditable?:boolean;
+  onClick?: ()=>void
 }
 
-export const Input: React.FC<InputProps> = ({ label, value, onChangeText, secureTextEntry = false, rightIcon, keyboardType, className, variant = 'default', isDisabled = false, isEditable = true }) => {
+export const Input: React.FC<InputProps> = ({ label, value, onChangeText, secureTextEntry = false, rightIcon, keyboardType, className, variant = 'default', isDisabled = false, isEditable = true, onClick }) => {
   return (
     <View className={`w-full bg-white ${variant === 'underline' || variant === 'plain' ? '' : 'border-2 border-[#e4e4e7] rounded-lg overflow-hidden'} ${className}`}>
       <TextInput
@@ -31,6 +32,7 @@ export const Input: React.FC<InputProps> = ({ label, value, onChangeText, secure
         aria-label={label}
         underlineStyle={variant === 'underline' ? { marginLeft: 10, backgroundColor: '#e4e4e7', height:1} : { backgroundColor: 'transparent', height:0}} 
         contentStyle={{ backgroundColor: 'bg-white' }}
+        onPressOut={onClick}
         style={{ 
           backgroundColor: 'bg-white'
         }}

@@ -50,9 +50,7 @@ const EditProfile = () => {
   }, []);
 
   const handleEdit = () => {
-    if (!isEditing) {
-      populateData(userProfile); // Save current data before editing
-    }
+    populateData(userProfile);
     setIsEditing(!isEditing);
   };
 
@@ -76,33 +74,6 @@ const EditProfile = () => {
   const [phone, setPhone] = useState(userProfile?.phone?.[0]?.number || "");
   const [dob, setDob] = useState(userProfile?.dateOfBirth || "");
 
-  const handleSave = () => {
-    setIsEditing(false); // End editing mode
-    const userProfileRequest: PutHealthUserProfileRequest = {
-      userId: userProfile?.userId || "",
-      updatedProfile: {
-          id: userProfile?.id || "",
-          nationalHealthId: userProfile?.nationalHealthId || "",
-          fullName: {
-              firstName: firstName,
-              lastName: lastName
-          },
-          email: [{email: email}],
-          phone: phone.length > 0 ?  [{number: phone}] : undefined,
-          dateOfBirth: dob.length > 0 ? dob : undefined
-      }
-  };
-  const updatedUser = {
-    fullName: { firstName: firstName, lastName: lastName },
-    email: email ? [email] : [], // Convert email to an array of strings if it's required to be a string[]
-    phone: phone ? [phone] : [], // Convert phone to an array of strings if it's required to be a string[]
-    dateOfBirth: dob,
-  };
-    updateUserProfile(userProfileRequest);
-    updateUserStore(updatedUser);
-    console.log("update success:",userProfile);
-  };
-
   const [isEditing, setIsEditing] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const handleBack = () => {
@@ -110,7 +81,7 @@ const EditProfile = () => {
   };
   const handleDateChange = (date: Date) => {
     setShowDOBPicker(false);
-    setDob(new Date(dayjs(date).locale('en').format("MMMM, DD, YYYY")).toISOString());
+    setDob(dayjs(date).toDate().toISOString());
   };
   const handleSubmit = () => {
     setIsEditing(false); // End editing mode
@@ -123,15 +94,15 @@ const EditProfile = () => {
               firstName: firstName,
               lastName: lastName
           },
-          email: [{email: email}],
+          email: [{email}],
           phone: phone.length > 0 ?  [{number: phone}] : undefined,
           dateOfBirth: dob.length > 0 ? dob : undefined
       }
   };
   const updatedUser = {
     fullName: { firstName: firstName, lastName: lastName },
-    email: email ? [email] : [], // Convert email to an array of strings if it's required to be a string[]
-    phone: phone ? [phone] : [], // Convert phone to an array of strings if it's required to be a string[]
+    email: email ? [{email: email}] : [], // Convert email to an array of strings if it's required to be a string[]
+    phone: phone ? [{number: phone}] : [], // Convert phone to an array of strings if it's required to be a string[]
     dateOfBirth: dob,
   };
     updateUserProfile(userProfileRequest);
@@ -150,13 +121,8 @@ const EditProfile = () => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'} // Adjusts based on platform
         keyboardVerticalOffset={Platform.select({ ios: 0, android: 20 })} // Offset for smooth scrolling
     >
-      <SafeAreaView className="flex-1 bg-white">
-        <ScrollView 
-          contentContainerStyle={{ flexGrow: 1 }}
-          showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled" // Allows tapping outside to dismiss keyboard
-        >
-      <View className="flex-row p-2 justify-between">
+      <SafeAreaView className="flex-1 bg-white"> 
+      <View className={`flex-row p-2 justify-between ${Platform.OS === 'ios' ? '' : 'mt-5'}`}>
         <Pressable
           className="self-start focus:outline-none focus:ring-2 focus:ring-blue-500 flex-row p-2"
           onPress={handleBack}
@@ -184,8 +150,12 @@ const EditProfile = () => {
           <Image source={require('~/assets/edit.png')} className='ml-3'/>
         </Pressable>
       </View>
-
-      <View className="flex-1 items-center justify-between p-4">
+      <ScrollView 
+          contentContainerStyle={{ flexGrow: 1 }}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled" // Allows tapping outside to dismiss keyboard
+        >
+      <View className={`flex-1 items-center justify-between p-4 ${Platform.OS === 'ios' ? '' : 'mb-50'}`}>
         <Image
           className="mb-12 w-500"
           source={require('~/assets/profile.png')}
@@ -227,28 +197,31 @@ const EditProfile = () => {
           onChangeText={setPhone}
           className="mb-3"
         />
-        <TouchableOpacity
-            className='w-full' 
-            onPress={() => setShowDOBPicker(true)}
-          >
-        <Input
-          isEditable={false}
-          className='mb-10'
-          variant={isEditing ? 'default' : 'underline'}
-          label="Date of Birth"
-          value={dayjs(dob).locale('en').format("MMMM DD, YYYY")}
-          onChangeText={setDob}
-        />
-        </TouchableOpacity>
-
+        <Pressable
+                  className='w-full'
+                    onPress={() => setShowDOBPicker(true && isEditing)}
+                    accessibilityRole="button"
+                    accessibilityLabel="Today"
+                  >
+          <Input
+              isEditable={false}
+              className='mb-10'
+              variant={isEditing ? 'default' : 'underline'}
+              label="Date of Birth"
+              value={dob.length > 0 ? dayjs(dob).locale('en').format("MMMM DD, YYYY") : ""}
+              onChangeText={setDob}
+              onClick={()=> setShowDOBPicker(true && isEditing)}
+            />
+        </Pressable>
         <Button
           onPress={() => handleSubmit()}
           disabled={!isValidInput()}
-          className="p-4"
+          className={`p-4 ${Platform.OS === 'ios' ? '' : 'mb-16'}`}
           loading={loading}
         >
           Save
         </Button>
+        
       </View>
       </ScrollView>
       <Loader isVisible={loading || showLoading} />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Button, Modal } from 'react-native';
+import { View, Text, Button, Modal, Platform } from 'react-native';
 import DateTimePicker, { DateType } from 'react-native-ui-datepicker';
 interface DateOfBirthPickerProps {
     initialDate: Date;
@@ -21,7 +21,7 @@ const DateOfBirthPicker: React.FC<DateOfBirthPickerProps> = ({ initialDate, onDa
     visible={modalVisible}
     onRequestClose={() => setModalVisible(!modalVisible)}
   >
-    <View className={"flex-1 justify-center items-center bg-black bg-opacity-50"}>
+    <View className={"flex-1 justify-center items-center bg-[#00000050]"}>
       <View className={"w-100 h-100 bg-white rounded-lg p-4"}>
         <DateTimePicker
           mode="single"
