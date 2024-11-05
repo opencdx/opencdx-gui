@@ -42,7 +42,7 @@ const QuestionnaireList: React.FC = () => {
     }
   }, [getQuestionnaireDataList, isWeb]);
 
-  const handleBack = useCallback(() => navigation.goBack(), [navigation]);
+  const handleBack = useCallback(() => navigation.navigate('app/dashboard/index' as never), [navigation]);
 
   const handleQuestionnaireSelect = useCallback((id: string) => {
     navigation.navigate('app/questionnaire/take-questionnaire', { id });
