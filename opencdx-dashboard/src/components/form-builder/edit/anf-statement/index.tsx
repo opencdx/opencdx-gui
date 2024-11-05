@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { QuestionnaireItem, AnfStatementConnector, AnfStatementType, AnfOperatorType } from '@/api/questionnaire/model';
-import { Button, Divider, Accordion, AccordionItem, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from 'ui-library';
-import { Plus, Trash } from 'lucide-react';
+import { Button, Divider, Accordion, AccordionItem, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, DeleteIcon, AddIcon } from 'ui-library';
 import { ANFStatementWrapper } from './anf-statement';
 import { ComponentTypeWrapper } from './component-type';
 import { OperatorWrapper } from './operator';
@@ -93,7 +92,7 @@ const QuestionnaireItemWrapper: React.FC<{
               className='rounded-lg m-8'
               color='danger'
               variant='flat'
-              endContent={<Trash />}
+              endContent={<DeleteIcon />}
               onClick={handleDeleteButtonClick}
             >
               Delete Question
@@ -103,17 +102,28 @@ const QuestionnaireItemWrapper: React.FC<{
       </Accordion>
 
       {/* Delete Confirmation Modal */}
-      <Modal isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} radius='none'>
-        <ModalContent>
-          <ModalHeader>Delete this question?</ModalHeader>
-          <ModalBody>
-            Delete {item.text}? This will also delete the associated ANF Statement. This cannot be undone.
+      <Modal 
+      placement="auto"
+      onOpenChange={() => setIsDeleteModalOpen(false)}
+      hideCloseButton={true}
+      radius="none"
+      className={`w-full md:w-11/12 lg:w-4/5 overflow-auto`}
+      isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} >
+       
+        <ModalContent >
+          <ModalHeader className="flex flex-col gap-1">Delete this question?</ModalHeader>
+          <ModalBody className="w-full overflow-auto bg-white">
+            <p>Delete <strong>Male ANF Statement</strong>? This will also delete the associated ANF Statement. This cannot be undone.</p>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" variant="light" onClick={() => setIsDeleteModalOpen(false)}>
+            <Button color="primary" variant='bordered' size='lg' onClick={() => setIsDeleteModalOpen(false)}>
               Cancel
             </Button>
-            <Button color="danger" onClick={handleConfirmDelete}>
+            <Button  color="danger"
+            aria-label='Delete'
+            tabIndex={0}
+            size='lg'
+             onClick={handleConfirmDelete}>
               Delete
             </Button>
           </ModalFooter>
@@ -128,7 +138,7 @@ const QuestionnaireItemWrapper: React.FC<{
           <Button
             className="rounded-lg"
             color="primary"
-            endContent={<Plus />}
+            endContent={<AddIcon />}
             variant='flat'
             onClick={handleAddButtonClick}
           >
@@ -144,7 +154,7 @@ const QuestionnaireItemWrapper: React.FC<{
         <React.Fragment key={id}>
           <Accordion  >
             <AccordionItem
-              className='bg-white px-6' title={id + 1 + '. ' + 'ANF Statement'}>
+              className='bg-white px-6' title={'Male ANF Statement'}>
               <ComponentTypeWrapper
                 anfStatementConnectorId={id}
                 currentComponentType={currentComponentType}
@@ -172,7 +182,7 @@ const QuestionnaireItemWrapper: React.FC<{
                   className='rounded-lg m-8'
                   color='danger'
                   variant='flat'
-                  endContent={<Trash />}
+                  endContent={<DeleteIcon />}
                   onClick={() => handleDeleteButtonClick()}
                 >
                   Delete ANF
