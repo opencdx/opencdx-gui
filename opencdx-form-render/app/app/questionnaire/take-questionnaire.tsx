@@ -65,7 +65,7 @@ const TakeQuestionnaire: React.FC = () => {
           Take a Specific Questionnaire
         </Text>
         <Pressable onPress={() => navigation.navigate('app/questionnaire/list' as never)}>
-          <Text className="font-inter font-bold text-xl"><CloseIcon className='text-[#006FEE]' /></Text>
+          <CloseIcon style={{ color: '#006FEE' }} />
         </Pressable>
       </View>
 
