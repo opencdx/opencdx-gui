@@ -7,6 +7,7 @@ import { Image } from '../../../components/ui/image'
 import { useGetQuestionnaireList } from '../../../lib/iam-hooks';
 import { useNavigation } from 'expo-router';
 import Loading from '../../../components/ui/loading';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const QuestionnaireList: React.FC = () => {
   const { mutate: getQuestionnaireDataList, data } = useGetQuestionnaireList();
@@ -43,7 +44,7 @@ const QuestionnaireList: React.FC = () => {
   }, [navigation]);
 
   const content = (
-    <>
+    <SafeAreaView>
       <Pressable
         className="self-start rounded focus:outline-none focus:ring-2 focus:ring-blue-500 flex flex-row items-center p-2"
         onPress={handleBack}
@@ -88,7 +89,7 @@ const QuestionnaireList: React.FC = () => {
           </View>
         </View>
       </View>
-    </>
+    </SafeAreaView>
   );
 
   return (
