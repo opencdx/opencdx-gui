@@ -134,6 +134,8 @@ export const useGetQuestionnaire = (onLoading?: (isLoading: boolean) => void) =>
             if (onLoading) onLoading(false);
         },
     });
+}
+
 export const useGetHealthUserProfile = (onSuccess: (arg0: any) => void, onError: (arg0: unknown) => void) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
