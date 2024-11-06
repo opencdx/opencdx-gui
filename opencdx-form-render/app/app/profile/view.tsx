@@ -12,34 +12,56 @@ import Loader from "~/components/ui/loading";
 import useUserStore from '~/app/data_store/user_store';
 import dayjs from 'dayjs';
 import DateOfBirthPicker from '~/components/ui/DateOfBirthPicker';
+
+
+
 const ProfileView = ({ links }: { links: any }) => {
   const { userProfile, setUserProfile, updateUserStore, clearUserProfile } = useUserStore();
   const showToast = useShowToast();
   const [isEditing, setIsEditing] = useState(false);
   const [showDOBPicker, setShowDOBPicker] = useState(false);
   const [showLoading, setshowLoading] = useState(false);
+
+  // Success and error handlers for fetching the user profile
+  const handleUserProfileSuccess = useCallback((data: { userProfile: UserProfile }) => {
+    setUserProfile(data.userProfile);
+    populateData(data.userProfile); // Populate data with user profile details
+  }, [setUserProfile]);
+
+  const handleUserProfileError = useCallback((err: any) => {
+    if (axios.isAxiosError(err)) {
+      const axiosError = err as AxiosError;
+      console.error("User profile fetch error:", axiosError.message);
+      showToast({ message: "Failed to fetch user profile", type: "error" });
+    }
+  }, [showToast]);
+
+  const { userProfileData } = useGetHealthUserProfile(handleUserProfileSuccess, handleUserProfileError);
   
-  const handleUpdateUserProfileSuccess = useCallback((data: any) => {
-    showToast({message: "Profile updated successfully.", type: "success"})
+ // Success and error handlers for updating the user profile
+  const handleUpdateUserProfileSuccess = useCallback(() => {
+    showToast({ message: "Profile updated successfully.", type: "success" });
   }, [showToast]);
 
   const handleUpdateUserProfileError = useCallback((err: any) => {
     if (axios.isAxiosError(err)) {
-      // Handle AxiosError
       const axiosError = err as AxiosError;
       showToast({ message: axiosError.message, type: 'error' });
     }
-    
   }, [showToast]);
-  const {updateUserProfile, loading} = usePutHealthUserProfile(handleUpdateUserProfileSuccess, handleUpdateUserProfileError)
+
+  const {updateUserProfile, loading} = usePutHealthUserProfile(handleUpdateUserProfileSuccess, handleUpdateUserProfileError);
   
+
   useEffect(() => {
-    // Fetch or set original values here
-    const fetchData = async () => {
+    if (!userProfile) {
+      // Fetch the user profile if it doesn't exist in the store
+      userProfileData();
+    } else {
       populateData(userProfile);
-    };
-    fetchData();
+    }
   }, []);
+
 
   const handleEdit = () => {
     if (!isEditing) {
@@ -61,6 +83,7 @@ const ProfileView = ({ links }: { links: any }) => {
     setIsEditing(false);
   };
 
+  
   // Profile state
   const [firstName, setFirstName] = useState(userProfile?.fullName?.firstName || "");
   const [lastName, setLastName] = useState(userProfile?.fullName?.lastName || "");
@@ -85,9 +108,12 @@ const ProfileView = ({ links }: { links: any }) => {
       }
   };
   const updatedUser = {
-    fullName: { firstName: firstName, lastName: lastName },
-    email: [{email: email}],
-    phone: [{number: phone}],
+    fullName: { 
+      firstName: firstName, 
+      lastName: lastName 
+    },
+    email: [email], // Assuming `email` should be an array of strings
+    phone: [phone], // Assuming `phone` should be an array of strings
     dateOfBirth: dob,
   };
     updateUserProfile(userProfileRequest);

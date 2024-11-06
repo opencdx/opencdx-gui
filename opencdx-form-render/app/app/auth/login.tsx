@@ -35,7 +35,7 @@ const Login = () => {
 
   const handleLoginSuccess = useCallback((data: { token: string }) => {
     AsyncStorage.setItem('serviceToken', data.token);
-    userProfile();
+    userProfileData();
   }, [navigation, showToast]);
 
   const handleLoginError = useCallback((err: any) => {
@@ -58,7 +58,7 @@ const Login = () => {
     
   }, [showToast]);
 
-  const {userProfile} = useGetHealthUserProfile(handleUserProfileSuccess, handleUserProfileError);
+  const {userProfileData} = useGetHealthUserProfile(handleUserProfileSuccess, handleUserProfileError);
   const handleLogin = useCallback(() => {
     login({ userName: username, password: password });
   }, [username, password, login]);

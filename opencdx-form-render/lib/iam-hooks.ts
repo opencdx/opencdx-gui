@@ -128,7 +128,7 @@ export const useGetHealthUserProfile = (onSuccess: (arg0: any) => void, onError:
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const userProfile = async () => {
+    const userProfileData = async () => {
         setLoading(true);
         setError(null);
 
@@ -149,7 +149,7 @@ export const useGetHealthUserProfile = (onSuccess: (arg0: any) => void, onError:
     };
 
     return {
-        userProfile,
+        userProfileData,
         loading,
         error,
     };

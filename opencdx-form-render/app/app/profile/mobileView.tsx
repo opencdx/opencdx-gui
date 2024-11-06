@@ -27,6 +27,22 @@ const EditProfile = () => {
     });
   }, [navigation]);
 
+  // Success and error handlers for fetching the user profile
+  const handleUserProfileSuccess = useCallback((data: { userProfile: UserProfile }) => {
+    setUserProfile(data.userProfile);
+    populateData(data.userProfile); // Populate data with user profile details
+  }, [setUserProfile]);
+
+  const handleUserProfileError = useCallback((err: any) => {
+    if (axios.isAxiosError(err)) {
+      const axiosError = err as AxiosError;
+      console.error("User profile fetch error:", axiosError.message);
+      showToast({ message: "Failed to fetch user profile", type: "error" });
+    }
+  }, [showToast]);
+
+  const { userProfileData } = useGetHealthUserProfile(handleUserProfileSuccess, handleUserProfileError);
+
   const handleUpdateUserProfileSuccess = useCallback((data: any) => {
     showToast({message: "Profile updated successfully.", type: "success"})
   }, [showToast]);
@@ -42,11 +58,12 @@ const EditProfile = () => {
   const {updateUserProfile, loading} = usePutHealthUserProfile(handleUpdateUserProfileSuccess, handleUpdateUserProfileError)
   
   useEffect(() => {
-    // Fetch or set original values here
-    const fetchData = async () => {
+    if (!userProfile) {
+      // Fetch the user profile if it doesn't exist in the store
+      userProfileData();
+    } else {
       populateData(userProfile);
-    };
-    fetchData();
+    }
   }, []);
 
   const handleEdit = () => {
