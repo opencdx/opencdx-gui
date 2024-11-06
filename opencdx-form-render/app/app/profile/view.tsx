@@ -1,51 +1,134 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Image, Text, View, Pressable } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Input } from '../../../components/ui/input';
 import { Button } from '../../../components/ui/button';
 import { SidebarLink } from '../../../components/ui/sidenav';
+import { useGetHealthUserProfile, usePutHealthUserProfile} from '~/lib/iam-hooks';
+import { UserProfile, PutHealthUserProfileRequest } from '~/api/health';
+import { useShowToast } from '~/lib/toast';
+import axios, { AxiosError } from 'axios';
+import Loader from "~/components/ui/loading";
+import useUserStore from '~/app/data_store/user_store';
+import dayjs from 'dayjs';
+import DateOfBirthPicker from '~/components/ui/DateOfBirthPicker';
 
-interface ProfileData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phoneNumber: string;
-  dateOfBirth: string;
-}
+
 
 const ProfileView = ({ links }: { links: any }) => {
+  const { userProfile, setUserProfile, updateUserStore, clearUserProfile } = useUserStore();
+  const showToast = useShowToast();
   const [isEditing, setIsEditing] = useState(false);
-  const [profileData, setProfileData] = useState<ProfileData>({
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'jdoe@email.com',
-    phoneNumber: '555-555-5555',
-    dateOfBirth: 'Sep 23, 1978',
-  });
-  const [originalProfileData, setOriginalProfileData] = useState<ProfileData>(profileData);
+  const [showDOBPicker, setShowDOBPicker] = useState(false);
+  const [showLoading, setshowLoading] = useState(false);
+
+  // Success and error handlers for fetching the user profile
+  const handleUserProfileSuccess = useCallback((data: { userProfile: UserProfile }) => {
+    setUserProfile(data.userProfile);
+    populateData(data.userProfile); // Populate data with user profile details
+  }, [setUserProfile]);
+
+  const handleUserProfileError = useCallback((err: any) => {
+    if (axios.isAxiosError(err)) {
+      const axiosError = err as AxiosError;
+      console.error("User profile fetch error:", axiosError.message);
+      showToast({ message: "Failed to fetch user profile", type: "error" });
+    }
+  }, [showToast]);
+
+  const { userProfileData } = useGetHealthUserProfile(handleUserProfileSuccess, handleUserProfileError);
+  
+ // Success and error handlers for updating the user profile
+  const handleUpdateUserProfileSuccess = useCallback(() => {
+    showToast({ message: "Profile updated successfully.", type: "success" });
+  }, [showToast]);
+
+  const handleUpdateUserProfileError = useCallback((err: any) => {
+    if (axios.isAxiosError(err)) {
+      const axiosError = err as AxiosError;
+      showToast({ message: axiosError.message, type: 'error' });
+    }
+  }, [showToast]);
+
+  const {updateUserProfile, loading} = usePutHealthUserProfile(handleUpdateUserProfileSuccess, handleUpdateUserProfileError);
+  
+
+  useEffect(() => {
+    if (!userProfile) {
+      // Fetch the user profile if it doesn't exist in the store
+      userProfileData();
+    } else {
+      populateData(userProfile);
+    }
+  }, []);
+
 
   const handleEdit = () => {
     if (!isEditing) {
-      setOriginalProfileData(profileData); // Save current data before editing
+      populateData(userProfile); // Save current data before editing
     }
     setIsEditing(!isEditing);
   };
 
+  function populateData(userProfile: UserProfile | undefined) {
+    setFirstName(userProfile?.fullName?.firstName || "");
+      setLastName(userProfile?.fullName?.lastName || "");
+      setEmail(userProfile?.email?.[0]?.email || '');
+      setPhone(userProfile?.phone?.[0]?.number || "");
+      setDob(userProfile?.dateOfBirth || "");
+  }
+
   const handleCancelEdit = () => {
-    setProfileData(originalProfileData); // Revert to original data
+    populateData(userProfile);
     setIsEditing(false);
   };
 
-  const handleInputChange = (field: keyof ProfileData, value: string) => {
-    setProfileData((prevData) => ({ ...prevData, [field]: value }));
-  };
+  
+  // Profile state
+  const [firstName, setFirstName] = useState(userProfile?.fullName?.firstName || "");
+  const [lastName, setLastName] = useState(userProfile?.fullName?.lastName || "");
+  const [email, setEmail] = useState(userProfile?.email?.[0]?.email || '');
+  const [phone, setPhone] = useState(userProfile?.phone?.[0]?.number || "");
+  const [dob, setDob] = useState(userProfile?.dateOfBirth || "");
 
   const handleSave = () => {
     setIsEditing(false); // End editing mode
+    const userProfileRequest: PutHealthUserProfileRequest = {
+      userId: userProfile?.userId || "",
+      updatedProfile: {
+          id: userProfile?.id || "",
+          nationalHealthId: userProfile?.nationalHealthId || "",
+          fullName: {
+              firstName: firstName,
+              lastName: lastName
+          },
+          email: [{email: email}],
+          phone: phone.length > 0 ?  [{number: phone}] : undefined,
+          dateOfBirth: dob.length > 0 ? dob : undefined
+      }
+  };
+  const updatedUser = {
+    fullName: { 
+      firstName: firstName, 
+      lastName: lastName 
+    },
+    email: [email], // Assuming `email` should be an array of strings
+    phone: [phone], // Assuming `phone` should be an array of strings
+    dateOfBirth: dob,
+  };
+    updateUserProfile(userProfileRequest);
+    updateUserStore(updatedUser);
+    console.log("update success:",userProfile);
   };
 
   const isValidInput = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return profileData.firstName.length > 0 && profileData.lastName.length > 0 && profileData.email && emailRegex.test(profileData.email) && isEditing;
+    return firstName.length > 0 && lastName.length > 0 && email && emailRegex.test(email) && isEditing;
+  };
+
+  const handleDateChange = (date: Date) => {
+    setShowDOBPicker(false);
+    setDob(new Date(dayjs(date).locale('en').format("MMMM, DD, YYYY")).toISOString());
   };
 
   return (
@@ -107,39 +190,46 @@ const ProfileView = ({ links }: { links: any }) => {
           <View className="space-y-4">
             <Input
               label="First Name*"
-              value={profileData.firstName}
-              onChangeText={(text) => handleInputChange('firstName', text)}
+              value={firstName}
+              onChangeText={(text) => setFirstName(text)}
               variant={isEditing ? 'default' : 'underline'}
               isEditable={isEditing}
             />
             <Input
               label="Last Name*"
-              value={profileData.lastName}
-              onChangeText={(text) => handleInputChange('lastName', text)}
+              value={lastName}
+              onChangeText={(text) => setLastName(text)}
               variant={isEditing ? 'default' : 'underline'}
               isEditable={isEditing}
             />
             <Input
               label="Email Address*"
-              value={profileData.email}
-              onChangeText={(text) => handleInputChange('email', text)}
+              value={email}
+              onChangeText={(text) => setEmail(text)}
               variant={isEditing ? 'default' : 'underline'}
               isEditable={isEditing}
             />
             <Input
               label="Phone Number"
-              value={profileData.phoneNumber}
-              onChangeText={(text) => handleInputChange('phoneNumber', text)}
+              value={phone}
+              onChangeText={(text) => setPhone(text)}
               isEditable={isEditing}
               variant={isEditing ? 'default' : 'underline'}
             />
+            <Pressable
+                    onPress={() => setShowDOBPicker(true && isEditing)}
+                    accessibilityRole="button"
+                    accessibilityLabel="Today"
+                  >
             <Input
+              
               label="Date of Birth"
-              value={profileData.dateOfBirth}
-              onChangeText={(text) => handleInputChange('dateOfBirth', text)}
-              isEditable={isEditing}
+              value={dob.length > 0 ? dayjs(dob).locale('en').format("MMMM DD, YYYY") : ""}
+              onChangeText={(text) => setDob(text)}
+              isEditable={false}
               variant={isEditing ? 'default' : 'underline'}
             />
+            </Pressable>
           </View>
 
           {/* Save Button */}
@@ -149,6 +239,8 @@ const ProfileView = ({ links }: { links: any }) => {
           
         </View>
       </View>
+      <Loader isVisible={loading || showLoading}/>
+      {showDOBPicker && isEditing && (<DateOfBirthPicker initialDate={dob.length > 0 ? new Date(dob) : new Date()} onDateChange={handleDateChange} onCancel={() => setShowDOBPicker(false)} />)}
      </View>
     </View>
   );
