@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Alert, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Camera } from 'expo-camera';
+import { CameraView } from 'expo-camera';
 
 const ScanTestScreen = () => {
     const navigation = useNavigation();
@@ -200,17 +200,16 @@ const ScanTestScreen = () => {
 
         return (
             <View style={styles.cameraContainer}>
-                <Camera
+                <CameraView
                     style={styles.camera}
-                    type={Camera.Constants.Type.back}
-                    barCodeScannerSettings={{
-                        barCodeTypes: ['qr', 'pdf417'],
+                    barcodeScannerSettings={{
+                        barcodeTypes: ['qr', 'pdf417'],
                     }}
                 >
                     <View style={styles.overlay}>
                         <View style={styles.scanArea} />
                     </View>
-                </Camera>
+                </CameraView>
             </View>
         );
     };
