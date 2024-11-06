@@ -97,6 +97,8 @@ export default function RootLayout() {
                   title: 'Profile',
                   contentStyle: { backgroundColor: 'white' },
                 }} />
+
+                {/* Login Flow */}
                 <Stack.Screen name="app/login-flow/index" options={{
                   headerShown: false,
                   title: 'Login Flow',
@@ -150,6 +152,23 @@ export default function RootLayout() {
                 <Stack.Screen name="app/login-flow/WelcomeScreen-Custom-External" options={{
                   headerShown: false,
                   title: 'Welcome',
+                  contentStyle: { backgroundColor: 'white' },
+                }} />
+
+                {/* Test Scan */}
+                <Stack.Screen name="app/test-scan/index" options={{
+                  headerShown: false,
+                  title: 'Test Scan',
+                  contentStyle: { backgroundColor: 'white' },
+                }} />
+                <Stack.Screen name="app/test-scan/ScanTestScreen" options={{
+                  headerShown: false,
+                  title: 'Scan Test',
+                  contentStyle: { backgroundColor: 'white' },
+                }} />
+                <Stack.Screen name="app/test-scan/ScanCode" options={{
+                  headerShown: false,
+                  title: 'Scan Code',
                   contentStyle: { backgroundColor: 'white' },
                 }} />
               </Stack>

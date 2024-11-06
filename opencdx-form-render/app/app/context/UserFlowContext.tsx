@@ -16,9 +16,9 @@ interface UserFlowContextType {
 const UserFlowContext = createContext<UserFlowContextType | undefined>(undefined);
 
 export function UserFlowProvider({ children }: { children: ReactNode }) {
-  const [accountInformationRequired, setAccountInformationRequired] = useState(false);
+  const [accountInformationRequired, setAccountInformationRequired] = useState(true);
   const [shippingAddressRequired, setShippingAddressRequired] = useState(true);
-  const [enforceShippingAddressValidation, setEnforceShippingAddressValidation] = useState(false);
+  const [enforceShippingAddressValidation, setEnforceShippingAddressValidation] = useState(true);
   const [welcomeScreen, setWelcomeScreen] = useState<WelcomeScreenType>('default');
 
   return (
