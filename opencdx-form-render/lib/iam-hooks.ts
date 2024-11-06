@@ -124,6 +124,18 @@ export const useGetQuestionnaireList = (onLoading?: (isLoading: boolean) => void
     });
 };
 
+export const useGetQuestionnaire = (onLoading?: (isLoading: boolean) => void) => {
+    return useMutation({
+        mutationFn: (params: string) => questionnaireApi.getQuestionnaire({ id: params }),
+        onMutate: () => {
+            if (onLoading) onLoading(true);
+        },
+        onSettled: () => {
+            if (onLoading) onLoading(false);
+        },
+    });
+}
+
 export const useGetHealthUserProfile = (onSuccess: (arg0: any) => void, onError: (arg0: unknown) => void) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
