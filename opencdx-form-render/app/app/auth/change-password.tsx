@@ -240,7 +240,7 @@ const ChangePassword = () => {
             <View className={'w-full flex gap-6 px-4'}>
                 {renderContent()}
             </View>
-            <View style={{ marginBottom: 25}} className={'w-full flex gap-6 px-4'}>
+            <View className={'w-full flex gap-6 px-4  mb-16'}>
                 {renderFooter()}
             </View>
             </View>

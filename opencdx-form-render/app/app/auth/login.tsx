@@ -9,7 +9,11 @@ import { Image } from '../../../components/ui/image';
 import { useToast, Toast, ToastDescription } from '@gluestack-ui/themed';
 import Loader from '../../../components/ui/loading';
 import { useShowToast } from '~/lib/toast';
-
+import useUserStore from '~/app/data_store/user_store';
+import { useGetHealthUserProfile, usePutHealthUserProfile} from '~/lib/iam-hooks';
+import { UserProfile, PutHealthUserProfileRequest } from '~/api/health';
+import axios from 'axios';
+import { AxiosError } from 'axios';
 const useLoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -26,11 +30,12 @@ const Login = () => {
   const isMobile = width <= 768 || Platform.OS === 'ios' || Platform.OS === 'android';
   const navigation = useNavigation();
   const { username, setUsername, password, setPassword, showPassword, isDisabled, toggleShowPassword } = useLoginForm();
+  const { setUserProfile } = useUserStore();
   const showToast = useShowToast();
 
   const handleLoginSuccess = useCallback((data: { token: string }) => {
     AsyncStorage.setItem('serviceToken', data.token);
-    navigation.navigate('app/dashboard/index' as never);
+    userProfileData();
   }, [navigation, showToast]);
 
   const handleLoginError = useCallback((err: any) => {
@@ -39,6 +44,21 @@ const Login = () => {
 
   const { login, loading } = useLogin(handleLoginSuccess, handleLoginError);
 
+  const handleUserProfileSuccess = useCallback((data: { userProfile: UserProfile }) => {
+    setUserProfile(data.userProfile);
+    navigation.navigate('app/dashboard/index' as never);
+  }, [showToast]);
+
+  const handleUserProfileError = useCallback((err: any) => {
+    if (axios.isAxiosError(err)) {
+      // Handle AxiosError
+      const axiosError = err as AxiosError;
+      showToast({ message: axiosError.message, type: 'error' });
+    }
+    
+  }, [showToast]);
+
+  const {userProfileData} = useGetHealthUserProfile(handleUserProfileSuccess, handleUserProfileError);
   const handleLogin = useCallback(() => {
     login({ userName: username, password: password });
   }, [username, password, login]);
