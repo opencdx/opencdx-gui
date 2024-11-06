@@ -197,12 +197,6 @@ const EditProfile = () => {
           onChangeText={setPhone}
           className="mb-3"
         />
-        <Pressable
-                  className='w-full'
-                    onPress={() => setShowDOBPicker(true && isEditing)}
-                    accessibilityRole="button"
-                    accessibilityLabel="Today"
-                  >
           <Input
               isEditable={false}
               className='mb-10'
@@ -212,7 +206,6 @@ const EditProfile = () => {
               onChangeText={setDob}
               onClick={()=> setShowDOBPicker(true && isEditing)}
             />
-        </Pressable>
         <Button
           onPress={() => handleSubmit()}
           disabled={!isValidInput()}
@@ -225,7 +218,7 @@ const EditProfile = () => {
       </View>
       </ScrollView>
       <Loader isVisible={loading || showLoading} />
-      {showDOBPicker && isEditing && (<DateOfBirthPicker initialDate={new Date(dob)} onDateChange={handleDateChange} />)}
+      {showDOBPicker && isEditing && (<DateOfBirthPicker initialDate={new Date(dob)} onDateChange={handleDateChange} onCancel={() => setShowDOBPicker(false)} />)}
     </SafeAreaView>
     </KeyboardAvoidingView>
   );

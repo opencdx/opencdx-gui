@@ -196,10 +196,11 @@ const ProfileView = ({ links }: { links: any }) => {
                     accessibilityLabel="Today"
                   >
             <Input
+              
               label="Date of Birth"
-              value={dob.length > 0 ? dayjs(dob).locale('en').format("MMM DD, YYYY") : ""}
+              value={dob.length > 0 ? dayjs(dob).locale('en').format("MMMM DD, YYYY") : ""}
               onChangeText={(text) => setDob(text)}
-              isEditable={isEditing}
+              isEditable={false}
               variant={isEditing ? 'default' : 'underline'}
             />
             </Pressable>
@@ -213,7 +214,7 @@ const ProfileView = ({ links }: { links: any }) => {
         </View>
       </View>
       <Loader isVisible={loading || showLoading}/>
-      {showDOBPicker && isEditing && (<DateOfBirthPicker initialDate={dob.length > 0 ? new Date(dob) : new Date()} onDateChange={handleDateChange} />)}
+      {showDOBPicker && isEditing && (<DateOfBirthPicker initialDate={dob.length > 0 ? new Date(dob) : new Date()} onDateChange={handleDateChange} onCancel={() => setShowDOBPicker(false)} />)}
      </View>
     </View>
   );
