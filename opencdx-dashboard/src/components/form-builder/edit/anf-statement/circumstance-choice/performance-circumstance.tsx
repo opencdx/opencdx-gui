@@ -4,11 +4,11 @@ import {
   Divider
 } from 'ui-library';
 import { ANFStatement } from '@/api/questionnaire/model/anfstatement';
-import { ControlledInput } from '../custom/controlled-input';
-import { MeasureComponent } from '../custom/measure';
-import { ParticipantComponent } from '../custom/participant';
-import { DeviceIdComponent } from '../custom/deviceid';
-import ControlledAccordion from '../custom/controlled-accordian';
+import { ControlledInput } from '@/components/custom/controlled-input';
+import { MeasureComponent } from '@/components/form-builder/edit/anf-statement/custom/measure';
+import { ParticipantComponent } from '@/components/form-builder/edit/anf-statement/custom/participant';
+import { DeviceIdComponent } from '@/components/form-builder/edit/anf-statement/custom/deviceid';
+import ControlledAccordion from '@/components/custom/controlled-accordian';
 
 
 interface AccordionSectionProps {

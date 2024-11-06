@@ -1,6 +1,6 @@
 import React from 'react';
 import { Divider } from 'ui-library';
-import { ControlledInput } from './custom/controlled-input';
+import { ControlledInput } from '@/components/custom/controlled-input';
 
 interface SubjectOfRecordWrapperProps {
   anfStatementConnectorId: number;

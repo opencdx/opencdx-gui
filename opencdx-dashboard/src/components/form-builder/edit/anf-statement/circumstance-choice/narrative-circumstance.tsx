@@ -4,10 +4,10 @@ import {
     Divider
 } from 'ui-library';
 import { ANFStatement } from '@/api/questionnaire/model/anfstatement';
-import { ControlledInput } from '../custom/controlled-input';
-import { MeasureComponent } from '../custom/measure';
-import ControlledAccordion from '../custom/controlled-accordian';
-import { PurposeComponent } from '../custom/purpose';
+import { ControlledInput } from '@/components/custom/controlled-input';
+import { MeasureComponent } from '@/components/form-builder/edit/anf-statement/custom/measure';
+import ControlledAccordion from '@/components/custom/controlled-accordian';
+import { PurposeComponent } from '@/components/form-builder/edit/anf-statement/custom/purpose';
 
 interface AccordionSectionProps {
     title: string;

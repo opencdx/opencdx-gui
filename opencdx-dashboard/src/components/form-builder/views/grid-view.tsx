@@ -7,7 +7,7 @@ import calendarToday from '../../../../public/images/calendar_today.png';
 import factCheck from '../../../../public/images/fact_check.png';
 import removeRedEye from '../../../../public/images/remove_red_eye.png';
 import fileDownload from '../../../../public/images/file_download.png';
-import editNote from '../../../../public/images/edit_note.png';
+import editNote from '../../../../public/edit_note_view.png';
 import deleteOutline from '../../../../public/images/delete_outline.png';
 
 interface GridViewProps {

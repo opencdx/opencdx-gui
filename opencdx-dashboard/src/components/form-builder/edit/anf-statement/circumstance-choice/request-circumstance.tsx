@@ -1,16 +1,16 @@
 import React from 'react';
 import { Divider, Button } from 'ui-library';
 import { ANFStatement } from '@/api/questionnaire/model/anfstatement';
-import { ControlledInput } from '../custom/controlled-input';
+import { ControlledInput } from '@/components/custom/controlled-input';
 import { PlusIcon } from 'lucide-react';
-import { MeasureComponent } from '../custom/measure';
-import { ParticipantComponent } from '../custom/participant';
+import { MeasureComponent } from '@/components/form-builder/edit/anf-statement/custom/measure';
+import { ParticipantComponent } from '@/components/form-builder/edit/anf-statement/custom/participant';
 import { useFieldArray, useFormContext } from 'react-hook-form';
-import { AssociatedStatementComponent } from '../custom/associated-statement';
-import { RepetitionComponent } from '../custom/repetition';
-import { DeviceIdComponent } from '../custom/deviceid'
-import { PurposeComponent } from '../custom/purpose'
-import ControlledAccordion from '../custom/controlled-accordian';
+import { AssociatedStatementComponent } from '@/components/form-builder/edit/anf-statement/custom/associated-statement';
+import { RepetitionComponent } from '@/components/form-builder/edit/anf-statement/custom/repetition';
+import { DeviceIdComponent } from '@/components/form-builder/edit/anf-statement/custom/deviceid'
+import { PurposeComponent } from '@/components/form-builder/edit/anf-statement/custom/purpose'
+import ControlledAccordion from '@/components/custom/controlled-accordian';
 
 interface AccordionSectionProps {
     title: string;

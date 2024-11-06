@@ -13,7 +13,7 @@ export const CustomRadio = (props: any) => {
       classNames={{
         base: cn(
           'inline-flex m-0 bg-content1 hover:bg-content2 items-center justify-between',
-          'flex-row w-[450px] cursor-pointer rounded-lg gap-4 p-4 mb-1 border-2 border-transparent',
+          'flex-row cursor-pointer rounded-lg gap-2 p-2 mb-1 border-2 border-transparent',
           'data-[selected=true]:border-primary',
         ),
       }}
@@ -23,24 +23,22 @@ export const CustomRadio = (props: any) => {
   );
 };
 
-const ComponentTypeWrapper = ({
+const AnswerWrapper = ({
   questionnaireItemId,
   anfStatementConnectorId,
   currentComponentType,
-  onValueChange,
 }: {
   questionnaireItemId: number;
   anfStatementConnectorId: number;
   currentComponentType: AnfStatementType;
-  onValueChange: (value: AnfStatementType) => void;
 }) => {
   const { control, getValues } = useFormContext();
-  const name = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatementType`;
+  const name = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.operatorValue`;
 
   const radioOptions = [
-    { value: AnfStatementType.AnfStatementTypeMain, label: "Main ANF Statement", description: "Component marked as Main ANF type" },
-    { value: AnfStatementType.AnfStatementTypeNotApplicable, label: "Contributing ANF Statement", description: "Select Main Statement for the Contributing ANF Statement" },
-    { value: AnfStatementType.AnfStatementTypeAssociated, label: "Associated ANF Statement", description: "Select Main Statement for the Associated Statement" },
+    { value: 'anyvalue', label: "Any value", description: "Any value" },
+    { value: 'value', label: "Value", description: "Value" },
+   
   ];
   return (
     <div className='px-8'>
@@ -49,19 +47,18 @@ const ComponentTypeWrapper = ({
         name={name}
         render={({ field }) => (
           <RadioGroup
-            {...field}
-            label="Select Component Type"
+            {...field}  
+            label="Select Answer"
             orientation="horizontal"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               field.onChange(e.target.value);
               const formData = getValues();
               localStorage.setItem('questionnaire-store', JSON.stringify(formData));
-              onValueChange(e.target.value as AnfStatementType);
             }}
           >
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap gap-4">
               {radioOptions.map((option) => (
-                <div key={option.value} className="w-1/2">
+                <div key={option.value} className="">
                   <CustomRadio
                     description={option.description}
                     value={option.value}
@@ -78,4 +75,4 @@ const ComponentTypeWrapper = ({
   );
 };
 
-export { ComponentTypeWrapper };
+export { AnswerWrapper };

@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
+import arrowDown from '../../../public/images/arrow-down.png';
+import arrowUp from '../../../public/images/arrow-up.png';
+import { cn } from '@/lib/utils';
 
 interface AccordionProps {
   title: string;
   children: React.ReactNode;
   isTitleBold?: boolean;
+  className?: string;
 }
 
-const ControlledAccordion: React.FC<AccordionProps> = ({ title, children, isTitleBold = true }) => {
+const ControlledAccordion: React.FC<AccordionProps> = ({ title, children, isTitleBold = true, className }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleAccordion = () => {
@@ -15,14 +19,14 @@ const ControlledAccordion: React.FC<AccordionProps> = ({ title, children, isTitl
   };
 
   return (
-    <div className='px-4'>
+    <div className={cn('px-4', className)}>
       <div
         className="flex justify-between items-center cursor-pointer"
         onClick={toggleAccordion}
       >
         {title && <label className={` text-sm ${isTitleBold ? 'font-bold' : ''} text-black`}>{title}</label>}
         <Image
-          src={isExpanded ? '/images/arrow-up.png' : '/images/arrow-down.png'}
+          src={isExpanded ? arrowUp : arrowDown}
           alt={isExpanded ? 'Collapse' : 'Expand'}
           width={20}
           height={20}

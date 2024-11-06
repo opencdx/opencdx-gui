@@ -3,7 +3,7 @@ import { Divider, Button } from 'ui-library';
 import { PlusIcon } from 'lucide-react';
 import { Practitioner } from '@/api/questionnaire/model/practitioner';
 import { ANFStatement } from '@/api/questionnaire/model/anfstatement';
-import { ControlledInput } from './custom/controlled-input';
+import { ControlledInput } from '@/components/custom/controlled-input';
 
 const AuthorsWrapper = ({
   anfStatementConnectorId,
@@ -19,6 +19,11 @@ const AuthorsWrapper = ({
   useEffect(() => {
     setAuthors(anfStatement.authors || []);
   }, [anfStatement]);
+  useEffect(() => {
+    if (authors.length === 0) {
+      handleAddAuthor();
+    }
+  }, []);
 
   const handleAddAuthor = () => {
     setAuthors(prevAuthors => [...prevAuthors, {
@@ -39,7 +44,7 @@ const AuthorsWrapper = ({
       <Divider className='bg-[#99C7FB]' />
       <div className='flex flex-col gap-4'>
         <div className='text-sm pl-4 pt-4'>Practitioner Value:</div>
-        {['identifier', 'display', 'reference', 'uri'].map((field) => (
+        {['identifier', 'display', 'reference', 'URI'].map((field) => (
           <React.Fragment key={field}>
             <ControlledInput
               label={field.charAt(0).toUpperCase() + field.slice(1)}

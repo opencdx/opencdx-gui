@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import { RadioGroup, Radio, Input, Accordion, AccordionItem, Select, SelectItem, Button } from "ui-library";
-import { Trash, Plus, Search } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { RadioGroup, Radio, Input, Select, SelectItem, Button } from "ui-library";
+import { Trash, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Divider } from "@nextui-org/react";
 import { QuestionnaireItem } from "@/api/questionnaire/model/questionnaire-item";
 import { Controller, useFormContext } from 'react-hook-form';
+import { AnfOperatorType } from "@/api/questionnaire/model/anf-statement-connector";
+import { v4 as uuidv4 } from 'uuid';
 
 export default function BooleanQuestionConfig({
     item,
@@ -13,45 +15,54 @@ export default function BooleanQuestionConfig({
     item: QuestionnaireItem;
     questionnaireItemId: number;
 }) {
-    const { control } = useFormContext();
+    const { control, setValue, getValues } = useFormContext();
     const basePath = `item.${questionnaireItemId}`;
     const QuestionnaireItemType = [
         { key: "boolen", label: "Boolean" },
         { key: "choice", label: "Choice" },
         { key: "open-choice", label: "Open Choice" },
-        { key: "date", label: "Date" },
         { key: "datetime", label: "Datetime" },
         { key: "string", label: "String" },
         { key: "number", label: "Number" },
-        { key: "integer", label: "Integer" },
-        { key: "decimal", label: "Decimal" },
-        { key: "quantity", label: "Quantity" },
     ]
 
-    const [conditionalDisplayRows, setConditionalDisplayRows] = useState([{ id: 1, question: "", operator: "", answer: "" }]);
+
+    const CustomRadioOperator = (props: any) => {
+        const { children, ...otherProps } = props;
+
+        return (
+            <Radio
+                {...otherProps}
+                classNames={{
+                    base: cn(
+                        'inline-flex m-0 bg-content1 hover:bg-content2 items-center justify-between',
+                        'flex-row cursor-pointer rounded-lg gap-2 p-2 w-[250px] mb-1 border-2 border-transparent',
+                        'data-[selected=true]:border-primary',
+                    ),
+                }}
+            >
+                {children}
+            </Radio>
+        );
+    };
     const [activeTab, setActiveTab] = useState('question');
 
-    const addConditionalDisplayRow = () => {
-        setConditionalDisplayRows([...conditionalDisplayRows, { id: conditionalDisplayRows.length + 1, question: "", operator: "", answer: "" }]);
-    };
-
-    const removeConditionalDisplayRow = (id: number) => {
-        if (conditionalDisplayRows.length > 1) {
-            setConditionalDisplayRows(conditionalDisplayRows.filter(row => row.id !== id));
-        }
-    };
 
     const handleTabClick = (e: React.MouseEvent<HTMLButtonElement>, tabId: string) => {
         e.preventDefault();
         e.stopPropagation();
         setActiveTab(tabId);
     };
+    useEffect(() => {
+        if (!item.linkId) {
+            setValue(`${basePath}.linkId`, uuidv4());
+        }
 
-    const tabs = [
-        { id: 'question', label: 'Question' },
-        { id: 'operator', label: 'Operator' },
-        { id: 'answer', label: 'Answer' },
-    ];
+    }, []);
+
+    const [showQuestionCode, setShowQuestionCode] = useState(false);
+    const [showConditionalDisplay, setShowConditionalDisplay] = useState(false);
+
     const CustomRadio = ({ title, description, name }: { title: string, description: string, name: string }) => (
         <div>
             <p className="text-sm font-medium">{title}</p>
@@ -62,35 +73,157 @@ export default function BooleanQuestionConfig({
                 render={({ field }) => (
                     <RadioGroup
                         orientation="horizontal"
-                        value={field.value === true ? 'true' : field.value === false ? 'false' : 'unspecified'}
+                        value={field.value === true ? 'true' : 'false'}
                         onValueChange={(value) => {
                             if (value === 'true') {
                                 field.onChange(true);
-                            } else if (value === 'false') {
+                            } else {
                                 field.onChange(false);
-                            } else if (value === 'unspecified') {
-                                field.onChange(undefined);
                             }
                         }}
                         className="mt-2 my-2"
                     >
                         <Radio className="text-sm mr-4" value="true">Yes</Radio>
                         <Radio className="text-sm mr-4" value="false">No</Radio>
-                        <Radio className="text-sm mr-4" value="unspecified">Unspecified</Radio>
                     </RadioGroup>
                 )}
             />
-            <Divider className="my-4" />
         </div>
     );
+
     const [dataType, setDataType] = useState(item.type);
     const handleChange = (value: string) => {
         setDataType(value);
     };
 
+    // Update the initial state to include the existing answer options if any
+    const [answerChoices, setAnswerChoices] = useState(() => {
+        const existingAnswers = getValues(`${basePath}.answerOption`) || [];
+        return existingAnswers.length > 0 
+            ? existingAnswers.map((answer: any) => ({ display: answer.valueCoding.display }))
+            : [{ display: '' }];
+    });
+
+    const addAnswerChoice = () => {
+        setAnswerChoices([...answerChoices, { display: '' }]);
+        // Also update the form context
+        const currentAnswers = getValues(`${basePath}.answerOption`) || [];
+        setValue(`${basePath}.answerOption`, [...currentAnswers, { valueCoding: { display: '' } }]);
+    };
+
+    const radioOptions = [
+        { value: AnfOperatorType.AnfOperatorTypeEqual, label: "=", description: "is equal to" },
+        { value: AnfOperatorType.AnfOperatorTypeNotEqual, label: "<>", description: "is not equal to" },
+        { value: AnfOperatorType.AnfOperatorTypeContains, label: "Empty", description: "is empty" },
+        { value: AnfOperatorType.AnfOperatorTypeNotContains, label: "Not empty", description: "is not empty" },
+
+    ];
+
+    const radioOprionsExtended = [
+        { value: AnfOperatorType.AnfOperatorTypeEqual, label: "=", description: "is equal to" },
+        { value: AnfOperatorType.AnfOperatorTypeNotEqual, label: "<>", description: "is not equal to" },
+        { value: AnfOperatorType.AnfOperatorTypeGreaterThan, label: ">", description: "is greater than" },
+        { value: AnfOperatorType.AnfOperatorTypeLessThan, label: "<", description: "is less than" },
+        { value: AnfOperatorType.AnfOperatorTypeGreaterThanOrEqual, label: ">=", description: "is greater than or equal to" },
+        { value: AnfOperatorType.AnfOperatorTypeLessThanOrEqual, label: "<=", description: "is less than or equal to" },
+        { value: AnfOperatorType.AnfOperatorTypeContains, label: "Empty", description: "is empty" },
+        { value: AnfOperatorType.AnfOperatorTypeNotContains, label: "Not empty", description: "is not empty" },
+
+    ];
+
+    const [questionCodes, setQuestionCodes] = useState([{ type: '', code: '' }]);
+
+    const handleAddQuestionCode = () => {
+        setQuestionCodes([...questionCodes, { type: '', code: '' }]);
+    };
+
+    // Add new state for conditional display rows
+    const [conditionalRows, setConditionalRows] = useState([
+        { operator: '', answer: '', action: '' }
+    ]);
+
+    // Add handler for adding new conditional row
+    const handleAddConditionalRow = () => {
+        setConditionalRows([...conditionalRows, { operator: '', answer: '', action: '' }]);
+    };
+
+    // Add handler for removing conditional row
+    const handleRemoveConditionalRow = (index: number) => {
+        const newRows = conditionalRows.filter((_, i) => i !== index);
+        setConditionalRows(newRows);
+    };
 
     return (
         <div className="space-y-6">
+            <Divider />
+
+            <div className="flex gap-4 w-full flex-wrap">
+                <div className="flex-1">
+                    <Controller
+                        name={`${basePath}.text`}
+                        control={control}
+                        render={({ field }) => (
+                            <Input
+                                {...field}
+                                label="Enter your question"
+                                variant="bordered"
+                                radius="sm"
+                                className="w-64 bg-white"
+                            />
+                        )}
+                    />
+                    <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                </div>
+
+                <div className="flex-1">
+                    {/* <Controller
+                        name={`${basePath}.units`}
+                        control={control}
+                        render={({ field }) => (
+                            <Select
+                                {...field}
+                                label="Units"
+                                variant="bordered"
+                                radius="sm"
+                                className="w-64 bg-white"
+                            >
+                                <SelectItem key="unit1">Unit 1</SelectItem>
+                                <SelectItem key="unit2">Unit 2</SelectItem>
+                            </Select>
+                        )}
+                    /> */}
+                    <Select
+                        label="Units"
+                        variant="bordered"
+                        radius="sm"
+                        className="w-64 bg-white"
+                    >
+                        <SelectItem key="meter">Meter</SelectItem>
+                        <SelectItem key="month">Month</SelectItem>
+                    </Select>
+                    <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                </div>
+            </div>
+            <Divider />
+
+            {/* <div>
+                <Controller
+                    name={`${basePath}.initial[0].valueString`}
+                    control={control}
+                    render={({ field }) => (
+                        <Input
+                            {...field}
+                            label="Initial Value"
+                            variant="bordered"
+                            radius="sm"
+                            className="w-64 bg-white"
+                        />
+                    )}
+                />
+                <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+            </div> */}
+            <Divider />
+
             <div>
                 <Controller
                     name={`${basePath}.type`}
@@ -98,10 +231,15 @@ export default function BooleanQuestionConfig({
                     render={({ field }: { field: any }) => (
                         <Select
                             {...field}
-                            className="w-full"
+                            className="w-64 bg-white"
+                            label="Data Type"
                             defaultSelectedKeys={[field.value]}
                             variant="bordered"
                             radius="sm"
+                            onSelectionChange={(keys) => {
+                                const selectedValue = Array.from(keys)[0];
+                                field.onChange(selectedValue);
+                            }}
                             onChange={(e) => handleChange(e.target.value)}
                         >
                             {Object.values(QuestionnaireItemType).map((type) => (
@@ -111,177 +249,327 @@ export default function BooleanQuestionConfig({
                     )}
                 />
 
-                <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
-                <Divider className="my-4" />
+                <p className="text-sm text-gray-500 mt-2">Please select your Datatype.</p>
             </div>
-            {dataType === "quantity" || dataType === "decimal" || dataType === "integer" && (
+            <Divider />
+
+            <div className='w-full'>
+                <Controller
+                    control={control}
+                    name={`${basePath}.enableWhen[0].operator`}
+                    render={({ field }) => (
+                        <RadioGroup
+                            {...field}
+                            label="Select Operator"
+                            orientation="horizontal"
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                field.onChange(e.target.value);
+                                //   const formData = getValues();
+                                //   localStorage.setItem('questionnaire-store', JSON.stringify(formData));
+                            }}
+                        >
+                            <div className="flex flex-wrap">
+                                {dataType === "boolean" || dataType === "choice" || dataType === "open-choice" ? (
+                                    radioOptions.map((option) => (
+                                        <div key={option.value} className="w-1/4">
+                                            <CustomRadioOperator
+                                                description={option.description}
+                                                value={option.value}
+                                            >
+                                                {option.label}
+                                            </CustomRadioOperator>
+                                        </div>
+                                    ))
+                                ) :
+                                    radioOprionsExtended.map((option) => (
+                                        <div key={option.value} className="w-1/4">
+                                            <CustomRadioOperator
+                                                description={option.description}
+                                                value={option.value}
+                                            >
+                                                {option.label}
+                                            </CustomRadioOperator>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        </RadioGroup>
+                    )}
+                />
+            </div>
+
+
+            <Divider />
+
+            {(dataType === "choice" || dataType === "open-choice") && (
                 <div>
-                    <p className="text-sm font-medium mb-2">Units</p>
-                    <p className="text-sm text-gray-500 mb-2 ">Search for UCUM unit or type your own</p>
-                    <Input
-                        placeholder="Search"
-                        variant="bordered"
-                        radius="sm"
-                        className="w-1/2"
-                        startContent={<Search />}
-                    />
+                    <div>
+                        <p className="text-sm font-medium mb-2">Answer choices</p>
+                        <p className="text-sm text-gray-500">Descriptive informational helper text here.</p>
+                        <div className="border overflow-hidden border-[#99C7FB] p-4 mt-4 mb-4">
+                            {answerChoices.map((choice: any, index: number) => (
+                                <div key={index} className="mt-2">
+                                    <Controller
+                                        name={`${basePath}.answerOption[${index}].valueCoding.display`}
+                                        control={control}
+                                        defaultValue={choice.display}
+                                        render={({ field }) => (
+                                            <Input
+                                                {...field}
+                                                placeholder="Display"
+                                                variant="bordered"
+                                                radius="sm"
+                                                className="w-full"
+                                                onChange={(e) => {
+                                                    field.onChange(e.target.value);
+                                                    const newChoices = [...answerChoices];
+                                                    newChoices[index].display = e.target.value;
+                                                    setAnswerChoices(newChoices);
+                                                }}
+                                            />
+                                        )}
+                                    />
+                                    <p className="text-sm text-gray-500 mt-1">Descriptive informational helper text here.</p>
+                                </div>
+                            ))}
+
+                            <Button
+                                className="text-sm mt-4"
+                                variant="flat"
+                                color="primary"
+                                radius="sm"
+                                fullWidth
+                                endContent={<Plus />}
+                                onClick={addAnswerChoice}
+                            >
+                                Add Another Answer
+                            </Button>
+                        </div>
+                    </div>
+                    <Divider />
+
+                    <div className="mt-6">
+                        <p className="text-sm font-medium mb-2">Answer list layout</p>
+                        <p className="text-sm text-gray-500">Descriptive informational helper text here.</p>
+                        <Controller
+                            name={`${basePath}.extension[0].valueCodeableConcept.coding[0].code`}
+                            control={control}
+                            render={({ field }) => (
+                                <RadioGroup
+                                    orientation="horizontal"
+                                    value={field.value}
+                                    onValueChange={field.onChange}
+                                    className="mt-2"
+                                >
+                                    <Radio className="text-sm mr-4" value="dropdown">Drop down</Radio>
+                                    <Radio className="text-sm mr-4" value="radio">Radio button</Radio>
+                                </RadioGroup>
+                            )}
+                        />
+                    </div>
                     <Divider className="my-4" />
                 </div>
             )}
-
             <div className="space-y-4">
-                <CustomRadio title="Allow repeating question?" description="Descriptive informational helper text here." name="repeats" />
                 <CustomRadio title="Answer required?" description="Descriptive informational helper text here." name="required" />
+                <Divider />
                 <CustomRadio title="Read only?" description="Descriptive informational helper text here." name="readOnly" />
+                <Divider />
+                <div>
+                    <p className="text-sm font-medium">Add question code?</p>
+                    <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                    <RadioGroup
+                        orientation="horizontal"
+                        onValueChange={(value) => {
+                            if (value === 'true') {
+                                setShowQuestionCode(true);
+                            } else {
+                                setShowQuestionCode(false);
+                            }
+                        }}
+                        className="mt-2 my-2"
+                    >
+                        <Radio className="text-sm mr-4" value="true">Yes</Radio>
+                        <Radio className="text-sm mr-4" value="false">No</Radio>
+                    </RadioGroup>
+                </div>
+                {showQuestionCode && (
+                    <div className="flex flex-col gap-4">
+                        {questionCodes.map((qCode, index) => (
+                            <div key={index} className="flex flex-wrap gap-4">
+                                <div className="flex-1 min-w-[350px]">
+                                    <Select
+                                        label="Select Question Code"
+                                        variant="bordered"
+                                        radius="sm"
+                                        className="w-full bg-white"
+                                        value={qCode.type}
+                                        onChange={(e) => {
+                                            const newCodes = [...questionCodes];
+                                            newCodes[index].type = e.target.value;
+                                            setQuestionCodes(newCodes);
+                                        }}
+                                    >
+                                        <SelectItem key="icd">ICD</SelectItem>
+                                        <SelectItem key="loinc">LOINC</SelectItem>
+                                        <SelectItem key="snomed">SNOMED</SelectItem>
+                                        <SelectItem key="ndc">NDC</SelectItem>
+                                    </Select>
+                                    <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                                </div>
+
+                                <div className="flex-1 min-w-[350px]">
+                                    <Input
+                                        label="Question Code"
+                                        variant="bordered"
+                                        radius="sm"
+                                        className="w-full"
+                                        placeholder="Enter question code"
+                                        value={qCode.code}
+                                        onChange={(e) => {
+                                            const newCodes = [...questionCodes];
+                                            newCodes[index].code = e.target.value;
+                                            setQuestionCodes(newCodes);
+                                        }}
+                                    />
+                                    <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                                </div>
+                            </div>
+                        ))}
+
+                        <Button
+                            className="text-sm"
+                            variant="flat"
+                            color="primary"
+                            radius="sm"
+                            endContent={<Plus />}
+                            onClick={handleAddQuestionCode}
+                        >
+                            Add Question Code
+                        </Button>
+                    </div>
+                )}
+                <Divider />
             </div>
 
-            <Accordion>
-                <AccordionItem key="1" aria-label="Advanced Fields" title="Advanced Fields">
-                    <div className="space-y-6">
-                        <div>
-                            <p className="text-sm font-medium">Conditional display</p>
-                            <p className="text-sm text-gray-500 mb-2">Descriptive informational helper text here.</p>
-                            <div className="border overflow-hidden">
-                                <div className="flex bg-[#99C7FB] flex-row justify-between px-2">
-                                    {tabs.map((item) => (
-                                        <button
-                                            key={item.id}
-                                            className={cn(
-                                                'font-small text-sm focus:outline-none transition-colors text-black',
-                                                activeTab === item.id
-                                                    ? 'm-1 p-1.5 bg-[#006FEE] text-white'
-                                                    : 'm-1 p-1.5 text-black hover:bg-blue-100'
-                                            )}
-                                            onClick={(e) => handleTabClick(e, item.id)}
+            <div>
+                <p className="text-sm font-medium">Conditional display?</p>
+                <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                <RadioGroup
+                    orientation="horizontal"
+                    onValueChange={(value) => {
+                        if (value === 'true') {
+                            setShowConditionalDisplay(true);
+                        } else {
+                            setShowConditionalDisplay(false);
+                        }
+                    }}
+                    className="mt-2 my-2"
+                >
+                    <Radio className="text-sm mr-4" value="true">Yes</Radio>
+                    <Radio className="text-sm mr-4" value="false">No</Radio>
+                </RadioGroup>
+            </div>
+
+            {showConditionalDisplay && (
+                <div className="">
+                    <div className="border border-[#99C7FB] p-4">
+                        {conditionalRows.map((row, index) => (
+                            <>
+                                <div key={index} className="flex flex-wrap gap-4 mb-4 ">
+
+                                    <div className="flex-1 min-w-[150px]">
+                                        <Select
+                                            label="Operator"
+                                            variant="bordered"
+                                            radius="sm"
+                                            className="w-full bg-white"
+                                            value={row.operator}
+                                            onChange={(e) => {
+                                                const newRows = [...conditionalRows];
+                                                newRows[index].operator = e.target.value;
+                                                setConditionalRows(newRows);
+                                            }}
                                         >
-                                            {item.label}
-                                        </button>
-                                    ))}
+                                            <SelectItem key="=">=</SelectItem>
+                                            <SelectItem key="<>">≠</SelectItem>
+                                        </Select>
+                                        <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                                    </div>
 
-                                </div>
-                                <div className="border border-[#99C7FB] p-4">
-                                    {activeTab === 'question' && (
-                                        <>
-                                            <p className="text-sm text-gray-600 mb-4">Descriptive informational helper text here for Question tab.</p>
-                                            {conditionalDisplayRows.map((row, index) => (
-                                                <div key={row.id} className="flex items-center space-x-2 mb-2">
-                                                    <Input
-                                                        placeholder="Question"
-                                                        value={row.question}
-                                                        className='w-full'
-                                                        variant="bordered"
-                                                        radius='sm'
-                                                        endContent={<Trash className="w-4 h-4" onClick={() => removeConditionalDisplayRow(row.id)} />}
-                                                        onChange={(e) => {
-                                                            const updatedRows = conditionalDisplayRows.map(r => r.id === row.id ? { ...r, question: e.target.value } : r);
-                                                            setConditionalDisplayRows(updatedRows);
-                                                        }}
-                                                    />
+                                    <div className="flex-1 min-w-[150px]">
+                                        <Input
+                                            label="Answer"
+                                            variant="bordered"
+                                            radius="sm"
+                                            className="w-full"
+                                            placeholder="Enter answer"
+                                            value={row.answer}
+                                            onChange={(e) => {
+                                                const newRows = [...conditionalRows];
+                                                newRows[index].answer = e.target.value;
+                                                setConditionalRows(newRows);
+                                            }}
+                                        />
+                                        <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                                    </div>
 
-                                                </div>
-                                            ))}
-                                        </>
-                                    )}
-                                    {activeTab === 'operator' && (
-                                        <>
-                                            <p className="text-sm text-gray-600 mb-4">Descriptive informational helper text here for Operator tab.</p>
-                                            {conditionalDisplayRows.map((row, index) => (
-                                                <div key={row.id} className="flex items-center space-x-2 mb-2">
-                                                    <Input
-                                                        placeholder="Operator"
-                                                        value={row.operator}
-                                                        className='w-full'
-                                                        variant="bordered"
-                                                        radius='sm'
-                                                        endContent={<Trash className="w-4 h-4" />}
-                                                        onChange={(e) => {
-                                                            const updatedRows = conditionalDisplayRows.map(r => r.id === row.id ? { ...r, operator: e.target.value } : r);
-                                                            setConditionalDisplayRows(updatedRows);
-                                                        }}
-                                                    />
-                                                </div>
-                                            ))}
-                                        </>
-                                    )}
-                                    {activeTab === 'answer' && (
-                                        <>
-                                            <p className="text-sm text-gray-600 mb-4">Descriptive informational helper text here for Answer tab.</p>
-                                            {conditionalDisplayRows.map((row, index) => (
-                                                <div key={row.id} className="flex items-center space-x-2 mb-2">
-                                                    <Input
-                                                        placeholder="Answer"
-                                                        value={row.answer}
-                                                        className='w-full'
-                                                        variant="bordered"
-                                                        radius='sm'
-                                                        endContent={<Trash className="w-4 h-4" onClick={() => removeConditionalDisplayRow(row.id)} />}
-                                                        onChange={(e) => {
-                                                            const updatedRows = conditionalDisplayRows.map(r => r.id === row.id ? { ...r, answer: e.target.value } : r);
-                                                            setConditionalDisplayRows(updatedRows);
-                                                        }}
-                                                    />
-                                                </div>
-                                            ))}
-                                        </>
-                                    )}
+                                    <div className="flex-1 min-w-[150px]">
+                                        <Select
+                                            label="Action"
+                                            variant="bordered"
+                                            radius="sm"
+                                            className="w-full bg-white"
+                                            value={row.action}
+                                            onChange={(e) => {
+                                                const newRows = [...conditionalRows];
+                                                newRows[index].action = e.target.value;
+                                                setConditionalRows(newRows);
+                                            }}
+                                        >
+                                            <SelectItem key="q1">Q1</SelectItem>
+                                            <SelectItem key="q2">Q2</SelectItem>
+                                            <SelectItem key="q3">Q3</SelectItem>
+                                        </Select>
+                                        <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                                    </div>
+
                                     <Button
-                                        className="text-sm mr-4 mt-4"
-                                        variant='flat'
-                                        color="primary"
-                                        radius="sm"
-                                        fullWidth
-                                        endContent={<Plus />}
-                                        onClick={addConditionalDisplayRow}
+                                        isIconOnly
+                                        color="danger"
+                                        variant="light"
+                                        onClick={() => handleRemoveConditionalRow(index)}
+                                        className="mt-2"
+                                        size="sm"
                                     >
-                                        Add another condition
+                                        <Trash className="h-4 w-4" />
                                     </Button>
+
                                 </div>
-
-                            </div>
-                        </div>
-
-
-                        <div>
-                            <p className="text-sm font-medium mb-2">Show this item when</p>
-                            <p className="text-sm text-gray-500">Descriptive informational helper text here.</p>
-                            <RadioGroup
-                                orientation="horizontal"
-                                value={item.enableBehavior}
-                                className="mt-2 mb-2"
-                            >
-                                <Radio className="text-sm mr-4" value="all">All the conditions are true</Radio>
-                                <Radio className="text-sm mr-4" value="any">Any conditions are true</Radio>
-                            </RadioGroup>
-                            <Divider className="my-4" />
-                        </div>
-
-                        <div>
-                            <p className="text-sm font-medium mb-2">Terminology server</p>
-                            <p className="text-sm text-gray-500 mb-2 ">You can set this condition if you are providing an answer value set for either items or it's children</p>
-                            <Input
-                                placeholder="Enter url for preferred terminology server"
-                                variant="bordered"
-                                radius="sm"
-                                className="w-full"
-                                endContent={<Trash />}
-                            />
-                            <Divider className="my-4" />
-                        </div>
-
-                        <div>
-                            <p className="text-sm font-medium mb-2">Add link to pre-populate FHIR Observation?</p>
-                            <p className="text-sm text-gray-500">Descriptive informational helper text here.</p>
-                            <RadioGroup
-                                orientation="horizontal"
-                                className="mt-2 mb-2"
-                            >
-                                <Radio className="text-sm mr-4" value="yes">Yes</Radio>
-                                <Radio className="text-sm mr-4" value="no">No</Radio>
-                            </RadioGroup>
-                        </div>
+                                {conditionalRows.length > 1 && index !== conditionalRows.length - 1 && (
+                                    <Divider className=" my-4 border-[#99C7FB]" />
+                                )}
+                            </>
+                        ))}
                     </div>
-                </AccordionItem>
-            </Accordion>
+
+
+                    <Button
+                        className="text-sm mt-4"
+                        variant="flat"
+                        color="primary"
+                        radius="sm"
+                        size="sm"
+                        fullWidth
+                        endContent={<Plus />}
+                        onClick={handleAddConditionalRow}
+                    >
+                        Add Another Condition
+                    </Button>
+                </div>
+            )}
+
+
         </div>
     );
 }

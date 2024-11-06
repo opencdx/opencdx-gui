@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Button } from 'ui-library';
-import { ControlledInput } from './controlled-input';
-import { PlusIcon, TrashIcon } from 'lucide-react';
+import { ControlledInput } from '@/components/custom/controlled-input';
+import { PlusIcon } from 'lucide-react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 interface DeviceIdComponentProps {
