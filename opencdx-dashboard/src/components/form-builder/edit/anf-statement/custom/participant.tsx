@@ -3,7 +3,7 @@ import { Divider, Button } from 'ui-library';
 import { PlusIcon } from 'lucide-react';
 import { Participant } from '@/api/questionnaire/model/participant';
 import { ANFStatement } from '@/api/questionnaire/model/anfstatement';
-import { ControlledInput } from './controlled-input';
+import { ControlledInput } from '@/components/custom/controlled-input';
 
 const ParticipantComponent = ({
   label,

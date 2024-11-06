@@ -7,7 +7,7 @@ import { useQuestionnaireStore } from '@/hooks/questionnaire';
 import { QuestionnaireWrapper } from '@/components/form-builder/edit/edit-questionnaire-wrapper';
 import { Questionnaire } from '@/api/questionnaire/model/questionnaire';
 import { useForm, FormProvider } from 'react-hook-form';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 

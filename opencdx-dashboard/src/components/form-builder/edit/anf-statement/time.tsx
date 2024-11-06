@@ -1,5 +1,5 @@
 import React from 'react';
-import { MeasureComponent } from './custom/measure';
+import { MeasureComponent } from '@/components/form-builder/edit/anf-statement/custom/measure';
 
 interface TimeWrapperProps {
   anfStatementConnectorId: number;

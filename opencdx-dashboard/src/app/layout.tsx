@@ -3,7 +3,6 @@ import '@/styles/globals.css';
 import { Metadata, Viewport } from 'next';
 
 import { fontSans } from '@/config/fonts';
-import { SiteConfig } from '@/config/site';
 import clsx from 'clsx';
 
 
@@ -12,8 +11,8 @@ import {NextIntlClientProvider} from 'next-intl';
 import {getLocale, getMessages} from 'next-intl/server';
 export const metadata: Metadata = {
   title: {
-    default: SiteConfig.name,
-    template: `%s - ${SiteConfig.name}`,
+    default: 'Dashboard',
+    template: `%s - Dashboard`,
   },
   icons: {
     icon: '/open-logo.png',

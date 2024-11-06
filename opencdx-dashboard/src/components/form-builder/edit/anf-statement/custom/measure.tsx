@@ -1,5 +1,5 @@
-import { ControlledInput } from "./controlled-input";
-import { ControlledRadio } from "./controlled-radio";
+import { ControlledInput } from "@/components/custom/controlled-input";
+import { ControlledRadio } from "@/components/custom/controlled-radio";
 import { Divider } from "ui-library";
 
 const MeasureComponent = ({ anfStatementConnectorId, questionnaireItemId, tabName, label }: MeasureComponentProps) => {

@@ -2,9 +2,8 @@
 import { cn } from "@/lib/utils";
 import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { usePathname } from 'next/navigation';
-import { ChevronRight, IceCream } from "lucide-react";
 import Image from 'next/image';
 
 import collapseIcon from '../../public/images/collapse_icon.png';

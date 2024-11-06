@@ -124,7 +124,13 @@ export interface ANFStatement {
      * @type {string}
      * @memberof ANFStatement
      */
-    'status'?: Status;
+    'status'?: StatusANFStatement;
+    /**
+     * 
+     * @type {LogicalExpression}
+     * @memberof ANFStatement
+     */
+    'method'?: LogicalExpression;
     /**
      * 
      * @type {NarrativeCircumstance}
@@ -145,13 +151,13 @@ export interface ANFStatement {
     'performanceCircumstance'?: PerformanceCircumstance;
 }
 
-export const Status = {
+export const StatusANFStatement = {
     StatusUnspecified: 'STATUS_UNSPECIFIED',
     StatusActive: 'STATUS_ACTIVE',
     StatusDeleted: 'STATUS_DELETED',
     Unrecognized: 'UNRECOGNIZED'
 } as const;
 
-export type Status = typeof Status[keyof typeof Status];
+export type StatusANFStatement = typeof StatusANFStatement[keyof typeof StatusANFStatement];
 
 

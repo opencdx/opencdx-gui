@@ -1,5 +1,5 @@
 import React from 'react';
-import { ControlledInput } from './custom/controlled-input';
+import { ControlledInput } from '@/components/custom/controlled-input';
 
 interface SubjectOfInformationWrapperProps {
   anfStatementConnectorId: number;

@@ -47,6 +47,12 @@ export interface AnfStatementConnector {
      * @memberof AnfStatementConnector
      */
     'operatorValue'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnfStatementConnector
+     */
+    'name'?: string;
 }
 
 export const AnfStatementType = {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Divider } from 'ui-library';
-import { ControlledInput } from './controlled-input';
+import { ControlledInput } from '@/components/custom/controlled-input';
 import { LogicalExpressionComponent } from './logical-expression';
 
 interface AssociatedStatementProps {

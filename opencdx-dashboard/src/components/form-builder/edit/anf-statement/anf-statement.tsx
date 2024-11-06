@@ -7,6 +7,7 @@ import {
 } from '@/api/questionnaire/model/anfstatement';
 import {
   Button,
+  Input,
   Modal,
   ModalBody,
   ModalContent,
@@ -33,8 +34,8 @@ const ANFStatementWrapper = ({
   anfStatementConnectorId: number;
 }) => {
   const [activeTab, setActiveTab] = useState('time');
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
+  const { isOpen, onOpen, onOpenChange , } = useDisclosure();
+  const [codes, setCodes] = useState('');
   const tabs = [
     {
       id: 'time',
@@ -131,18 +132,26 @@ const ANFStatementWrapper = ({
           <Button
             className="mr-2"
             color="primary"
+            size='sm'
             endContent={<MonitorIcon />}
             variant='flat'
-            onPress={onOpen}
+            onPress={() => {
+              onOpen();
+              setCodes('systemVariables');
+            }}
           >
             System Variables
           </Button>
           <Button
             className="mr-2"
             color="primary"
+            size='sm'
             endContent={<CodeIcon />}
             variant="flat"
-            onPress={onOpen}
+            onPress={() => {
+              onOpen();
+              setCodes('codeLookup');
+            }}
           >
             Code Lookup
           </Button>
@@ -156,7 +165,7 @@ const ANFStatementWrapper = ({
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                System Variables
+              <div className="">{codes === 'systemVariables' ? <div className='text-primary'>System Variables</div> : <div className='flex gap-2 justify-between'><div className=''>Code Lookup</div> <Input size='sm' label='Search' variant='bordered' className='w-1/3' /></div>}</div>
               </ModalHeader>
               <ModalBody className="">
                   <ModalWrapper />
