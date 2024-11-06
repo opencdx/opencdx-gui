@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Alert, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { CameraView } from 'expo-camera';
+import { Camera, CameraView } from 'expo-camera';
 
 const ScanTestScreen = () => {
     const navigation = useNavigation();
-    const [hasPermission, setHasPermission] = useState(null);
-    const [hasCamera, setHasCamera] = useState(null);
+    const [hasPermission, setHasPermission] = useState(false);
+    const [hasCamera, setHasCamera] = useState(false);
 
     useEffect(() => {
         checkCameraAvailability();
@@ -20,9 +20,7 @@ const ScanTestScreen = () => {
                 console.log('Browser camera support result:', browserSupport);
                 setHasCamera(browserSupport);
             } else {
-                const cameraExists = await Camera.isAvailableAsync();
-                console.log('Native camera check result:', cameraExists);
-                setHasCamera(cameraExists);
+                setHasCamera(true);
             }
         } catch (error) {
             console.error('Camera check error:', error);
