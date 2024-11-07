@@ -1,10 +1,33 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Switch, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Switch } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import ScreenWrapper from '../../components/ScreenWrapper';
+import { commonStyles } from '../../constants/styles';
 
+const styles = {
+  container: "flex-1 bg-white p-5",
+  backButton: "mb-5",
+  title: "text-2xl font-semibold mb-2",
+  subtitle: "text-base text-gray-600 mb-6",
+  inputContainer: "relative mb-4",
+  input: commonStyles.input,
+  eyeIcon: "absolute right-4 top-1/2 -translate-y-3 p-1",
+  requirements: "mb-6",
+  requirement: "text-sm text-gray-600 mb-1",
+  requirementMet: "text-green-500",
+  biometricContainer: "flex-row justify-between items-center mb-4",
+  biometricText: "text-base text-gray-800",
+  termsContainer: "flex-row items-start mb-6",
+  checkbox: "w-6 h-6 border border-pink-500 rounded mr-2 justify-center items-center",
+  termsText: "flex-1 text-sm text-gray-600",
+  termsLink: "text-pink-500 underline",
+  submitButton: commonStyles.button.primary,
+  submitButtonDisabled: commonStyles.button.disabled,
+  submitButtonText: commonStyles.buttonText.primary,
+};
 
-const SignUp = () => {
+const Password = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -30,20 +53,23 @@ const SignUp = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+    <ScreenWrapper>
+      <TouchableOpacity 
+        className={styles.backButton} 
+        onPress={() => navigation.goBack()}
+      >
         <MaterialIcons name="arrow-back" size={24} color="#666" />
       </TouchableOpacity>
 
-      <View style={styles.content}>
-        <Text style={styles.title}>Create a password</Text>
-        <Text style={styles.subtitle}>
+      <View className={styles.container}>
+        <Text className={styles.title}>Create a password</Text>
+        <Text className={styles.subtitle}>
           This password will be used to ensure your account is secure, so do not share this password with anyone.
         </Text>
 
-        <View style={styles.inputContainer}>
+        <View className={styles.inputContainer}>
           <TextInput
-            style={styles.input}
+            className={styles.input}
             placeholder="Password *"
             value={password}
             onChangeText={setPassword}
@@ -51,7 +77,7 @@ const SignUp = () => {
             placeholderTextColor="#666"
           />
           <TouchableOpacity 
-            style={styles.eyeIcon}
+            className={styles.eyeIcon}
             onPress={() => setShowPassword(!showPassword)}
           >
             <MaterialIcons 
@@ -62,9 +88,9 @@ const SignUp = () => {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.inputContainer}>
+        <View className={styles.inputContainer}>
           <TextInput
-            style={styles.input}
+            className={styles.input}
             placeholder="Re-enter Password *"
             value={confirmPassword}
             onChangeText={setConfirmPassword}
@@ -72,7 +98,7 @@ const SignUp = () => {
             placeholderTextColor="#666"
           />
           <TouchableOpacity 
-            style={styles.eyeIcon}
+            className={styles.eyeIcon}
             onPress={() => setShowConfirmPassword(!showConfirmPassword)}
           >
             <MaterialIcons 
@@ -83,26 +109,26 @@ const SignUp = () => {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.requirements}>
-          <Text style={[styles.requirement, password.length >= 8 && styles.requirementMet]}>
+        <View className={styles.requirements}>
+          <Text className={`${styles.requirement} ${password.length >= 8 ? styles.requirementMet : ''}`}>
             ✓ At least 8 characters
           </Text>
-          <Text style={[styles.requirement, /[a-z]/.test(password) && styles.requirementMet]}>
+          <Text className={`${styles.requirement} ${/[a-z]/.test(password) ? styles.requirementMet : ''}`}>
             ✓ 1 Lowercase letter
           </Text>
-          <Text style={[styles.requirement, /[A-Z]/.test(password) && styles.requirementMet]}>
+          <Text className={`${styles.requirement} ${/[A-Z]/.test(password) ? styles.requirementMet : ''}`}>
             ✓ 1 Uppercase letter
           </Text>
-          <Text style={[styles.requirement, /\d/.test(password) && styles.requirementMet]}>
+          <Text className={`${styles.requirement} ${/\d/.test(password) ? styles.requirementMet : ''}`}>
             ✓ 1 Number
           </Text>
-          <Text style={[styles.requirement, /[!@#$%^&*(),.?":{}|<>]/.test(password) && styles.requirementMet]}>
+          <Text className={`${styles.requirement} ${/[!@#$%^&*(),.?":{}|<>]/.test(password) ? styles.requirementMet : ''}`}>
             ✓ 1 Special character
           </Text>
         </View>
 
-        <View style={styles.biometricContainer}>
-          <Text style={styles.biometricText}>Enable Face/Touch ID for login</Text>
+        <View className={styles.biometricContainer}>
+          <Text className={styles.biometricText}>Enable Face/Touch ID for login</Text>
           <Switch
             value={enableBiometric}
             onValueChange={setEnableBiometric}
@@ -111,136 +137,30 @@ const SignUp = () => {
           />
         </View>
 
-        <View style={styles.termsContainer}>
+        <View className={styles.termsContainer}>
           <TouchableOpacity 
-            style={styles.checkbox}
+            className={styles.checkbox}
             onPress={() => setAgreeToTerms(!agreeToTerms)}
           >
             {agreeToTerms && <MaterialIcons name="check" size={20} color="#C23B80" />}
           </TouchableOpacity>
-          <Text style={styles.termsText}>
+          <Text className={styles.termsText}>
             I agree to the{' '}
-            <Text style={styles.termsLink}>Terms and Conditions</Text>
+            <Text className={styles.termsLink}>Terms and Conditions</Text>
             {' '}and attest that I am a legal adult.
           </Text>
         </View>
 
         <TouchableOpacity 
-          style={[
-            styles.submitButton,
-            (!validatePassword(password) || password !== confirmPassword || !agreeToTerms) && 
-            styles.submitButtonDisabled
-          ]}
+          className={`${styles.submitButton} ${(!validatePassword(password) || password !== confirmPassword || !agreeToTerms) ? styles.submitButtonDisabled : ''}`}
           onPress={handleSubmit}
           disabled={!validatePassword(password) || password !== confirmPassword || !agreeToTerms}
         >
-          <Text style={styles.submitButtonText}>Submit</Text>
+          <Text className={styles.submitButtonText}>Submit</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScreenWrapper>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    padding: 20,
-  },
-  content: {
-    flex: 1,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: '500',
-    color: '#333',
-    marginBottom: 10,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#666',
-    marginBottom: 30,
-  },
-  inputContainer: {
-    position: 'relative',
-    marginBottom: 20,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    padding: 15,
-    fontSize: 16,
-  },
-  eyeIcon: {
-    position: 'absolute',
-    right: 15,
-    top: 15,
-  },
-  requirements: {
-    marginBottom: 30,
-  },
-  requirement: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 5,
-  },
-  requirementMet: {
-    color: '#4CAF50',
-  },
-  biometricContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  biometricText: {
-    fontSize: 16,
-    color: '#333',
-  },
-  termsContainer: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginBottom: 30,
-  },
-  checkbox: {
-    width: 24,
-    height: 24,
-    borderWidth: 1,
-    borderColor: '#C23B80',
-    borderRadius: 4,
-    marginRight: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  termsText: {
-    flex: 1,
-    fontSize: 14,
-    color: '#666',
-  },
-  termsLink: {
-    color: '#C23B80',
-    textDecorationLine: 'underline',
-  },
-  submitButton: {
-    backgroundColor: '#C026D3',
-    padding: 15,
-    borderRadius: 25,
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: 20,
-    left: 0,
-    right: 0,
-  },
-  submitButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  submitButtonDisabled: {
-    backgroundColor: '#E0E0E0',
-    opacity: 0.7,
-  },
-});
-
-export default SignUp;
+export default Password;

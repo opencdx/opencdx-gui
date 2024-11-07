@@ -1,4 +1,5 @@
 import '../global.css';
+import React from 'react';
 import { GluestackUIProvider } from '@gluestack-ui/themed';
 import { config } from '@gluestack-ui/config';
 import { useNavigation } from '@react-navigation/native';

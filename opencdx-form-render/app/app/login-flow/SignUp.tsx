@@ -1,7 +1,22 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
+import ScreenWrapper from '../../components/ScreenWrapper';
+import { commonStyles } from '../../constants/styles';
+
+const styles = {
+  content: "flex-1 w-full",
+  backButton: "mb-5",
+  nameFields: "flex-row gap-2 mb-2",
+  input: commonStyles.input,
+  consentText: "text-sm text-gray-500 mb-5",
+  submitButton: `${commonStyles.button.primary} mt-auto`,
+  submitButtonDisabled: commonStyles.button.disabled,
+  submitButtonText: commonStyles.buttonText.primary,
+  signinPrompt: "flex-row justify-center mt-5",
+  link: "text-blue-500",
+};
 
 const SignUp = () => {
   const navigation = useNavigation();
@@ -29,121 +44,62 @@ const SignUp = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+    <ScreenWrapper>
+      <TouchableOpacity 
+        className={styles.backButton}
+        onPress={() => navigation.goBack()}
+      >
         <MaterialIcons name="arrow-back" size={24} color="#666" />
       </TouchableOpacity>
 
-      <Text style={styles.title}>Sign up</Text>
-      
-      <View>
-        <View style={styles.nameFields}>
+      <View className={styles.content}>
+        <Text className={commonStyles.text.title}>Sign up</Text>
+        
+        <View className={styles.nameFields}>
           <TextInput
-            style={styles.input}
+            className={styles.input}
             value={formData.firstName}
             onChangeText={(value) => handleChange(value, 'firstName')}
             placeholder="First Name*"
-            required
           />
           <TextInput
-            style={styles.input}
+            className={styles.input}
             value={formData.lastName}
             onChangeText={(value) => handleChange(value, 'lastName')}
             placeholder="Last Name*"
-            required
           />
         </View>
         
         <TextInput
-          style={styles.input}
+          className={styles.input}
           value={formData.email}
           onChangeText={(value) => handleChange(value, 'email')}
           placeholder="Email*"
           keyboardType="email-address"
-          required
         />
         
-        <Text style={styles.consentText}>
+        <Text className={styles.consentText}>
           I understand that by signing up, I agree to receive email communications 
           in order to create an account.
         </Text>
         
         <TouchableOpacity 
-          style={[
-            styles.signupButton, 
-            !isFormValid() && styles.disabledButton
-          ]} 
+          className={`${styles.submitButton} ${!isFormValid() && styles.submitButtonDisabled}`}
           onPress={handleSubmit}
           disabled={!isFormValid()}
         >
-          <Text style={styles.buttonText}>Sign Up</Text>
+          <Text className={styles.submitButtonText}>Sign Up</Text>
         </TouchableOpacity>
+
+        <View className={styles.signinPrompt}>
+          <Text>Already have an account? </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('SignIn' as never)}>
+            <Text className={styles.link}>Sign In</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      
-      <View style={styles.signinPrompt}>
-        <Text>Already have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('SignIn' as never)}>
-          <Text style={styles.link}>Sign In</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    </ScreenWrapper>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#fff',
-  },
-  backButton: {
-    padding: 10,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  nameFields: {
-    flexDirection: 'row',
-    gap: 10,
-    marginBottom: 10,
-  },
-  input: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
-  },
-  consentText: {
-    fontSize: 12,
-    color: '#666',
-    marginBottom: 20,
-  },
-  signupButton: {
-    backgroundColor: '#C026D3',
-    padding: 15,
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-  disabledButton: {
-    backgroundColor: '#cccccc',
-    opacity: 0.7,
-  },
-  buttonText: {
-    color: '#FFFFFFFF',
-    fontWeight: 'bold',
-  },
-  signinPrompt: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 20,
-  },
-  link: {
-    color: '#007AFFFF',
-  },
-});
 
 export default SignUp;

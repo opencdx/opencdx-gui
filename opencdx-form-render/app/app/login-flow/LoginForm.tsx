@@ -1,9 +1,24 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useUserFlow } from '../context/UserFlowContext';
-import commonStyles from '../../../assets/css/common';
+import ScreenWrapper from '../../components/ScreenWrapper';
+import { commonStyles } from '../../constants/styles';
+
+const styles = {
+  logo: "w-30 h-30 mb-12 mx-auto",
+  input: commonStyles.input,
+  passwordContainer: "relative",
+  visibilityButton: "absolute right-4 top-1/2 -translate-y-3 p-1",
+  actionRow: "flex-row justify-between items-center w-full my-4",
+  touchIdContainer: "flex-row items-center gap-2",
+  actionText: commonStyles.text.link,
+  signInButton: commonStyles.button.primary,
+  signInText: commonStyles.buttonText.primary,
+  signUpContainer: "text-gray-600 text-center mt-4 text-base",
+  signUpLink: commonStyles.text.link,
+};
 
 const LoginForm: React.FC = () => {
   const navigation = useNavigation();
@@ -32,23 +47,23 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <View style={[styles.loginContainer, commonStyles.container]}>
+    <ScreenWrapper>
       <Image 
         source={require('../../../assets/logo.png')}
-        style={[styles.logo, commonStyles.logoImage]}
+        className={styles.logo}
         resizeMode="contain"
       />
-      <View style={[styles.formContainer, commonStyles.formWrapper]}>
+      <View className="w-full px-0">
         <TextInput
-          style={[styles.input, commonStyles.inputField]}
+          className={styles.input}
           keyboardType="email-address"
           placeholder="Email"
           value={email}
           onChangeText={setEmail}
         />
-        <View style={styles.passwordContainer}>
+        <View className={styles.passwordContainer}>
           <TextInput
-            style={styles.input}
+            className={styles.input}
             secureTextEntry={!showPassword}
             placeholder="Password"
             value={password}
@@ -56,7 +71,7 @@ const LoginForm: React.FC = () => {
           />
           <TouchableOpacity
             onPress={() => setShowPassword(!showPassword)}
-            style={styles.eyeIcon}
+            className={styles.visibilityButton}
           >
             <MaterialIcons 
               name={showPassword ? "visibility" : "visibility-off"} 
@@ -66,18 +81,18 @@ const LoginForm: React.FC = () => {
           </TouchableOpacity>
         </View>
         
-        <View style={[styles.actionRow, commonStyles.actionContainer]}>
+        <View className={styles.actionRow}>
           <TouchableOpacity 
-            style={[styles.touchIdButton, commonStyles.secondaryButton]} 
+            className={styles.touchIdContainer}
             onPress={() => {}}
           >
             <Text>👆</Text>
-            <Text style={[styles.touchIdText, commonStyles.secondaryButtonText]}>
+            <Text className={styles.actionText}>
               Use TouchID
             </Text>
           </TouchableOpacity>
           <Text 
-            style={[styles.forgotPassword, commonStyles.linkText]} 
+            className={styles.actionText}
             onPress={() => {}}
           >
             Forgot Password?
@@ -85,108 +100,26 @@ const LoginForm: React.FC = () => {
         </View>
 
         <TouchableOpacity 
-          style={[styles.signInButton, commonStyles.primaryButton]} 
+          className={styles.signInButton}
           onPress={handleSubmit}
         >
-          <Text style={[styles.signInButtonText, commonStyles.buttonText]}>
+          <Text className={styles.signInText}>
             Sign In
           </Text>
         </TouchableOpacity>
         
-        <Text style={[styles.signUpText, commonStyles.bodyText]}>
+        <Text className={styles.signUpContainer}>
           Don't have an account?{' '}
           <Text 
-            style={[styles.signUpLink, commonStyles.linkText]} 
+            className={styles.signUpLink}
             onPress={handleSignUp}
           >
             Sign Up
           </Text>
         </Text>
       </View>
-    </View>
+    </ScreenWrapper>
   );
 };
-
-const styles = StyleSheet.create({
-  loginContainer: {
-    flex: 1,
-    alignItems: 'center',
-    padding: 16,
-    width: '100%'
-  },
-  logo: {
-    width: 120,
-    height: 120,
-    marginBottom: 48,
-  },
-  formContainer: {
-    width: '100%',
-    paddingHorizontal: 0
-  },
-  input: {
-    width: '100%',
-    padding: 16,
-    marginVertical: 8,
-    borderWidth: 1,
-    borderColor: '#E0E0E0',
-    borderRadius: 12,
-    fontSize: 16,
-    backgroundColor: '#F8F9FE'
-  },
-  passwordContainer: {
-    position: 'relative',
-  },
-  eyeIcon: {
-    position: 'absolute',
-    right: 16,
-    top: '50%',
-    transform: [{ translateY: -12 }],
-    padding: 4
-  },
-  actionRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
-    marginVertical: 16,
-  },
-  touchIdButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  touchIdText: {
-    color: '#C026D3',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  forgotPassword: {
-    color: '#C026D3',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  signInButton: {
-    width: '100%',
-    padding: 16,
-    backgroundColor: '#C026D3',
-    borderRadius: 12,
-    marginVertical: 24,
-  },
-  signInButtonText: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 16,
-  },
-  signUpText: {
-    color: '#666',
-    textAlign: 'center',
-    marginTop: 16,
-    fontSize: 16,
-  },
-  signUpLink: {
-    color: '#C026D3',
-    fontWeight: '600'
-  },
-});
 
 export default LoginForm;
