@@ -4,6 +4,14 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { useGetQuestionnaire } from '~/lib/iam-hooks';
 import { CloseIcon } from '@gluestack-ui/themed';
 import { Button } from '~/components/ui/button';
+import { Input } from '../../../components/ui/input';
+
+const useGetQuestionnaireForm = () => {
+  const [answers, setAnswers] = useState('');
+  
+  return { answers, setAnswers};
+};
+
 
 const paddingTop = Platform.OS === 'android' ? Math.ceil(StatusBar.currentHeight || 0) : 0;
 
@@ -15,6 +23,8 @@ const TakeQuestionnaire: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+
+  const { answers, setAnswers } = useGetQuestionnaireForm();
 
   useEffect(() => {
     const fetchQuestionnaire = async () => {
@@ -51,6 +61,27 @@ const TakeQuestionnaire: React.FC = () => {
             </Text>
             <Text className="font-inter font-medium text-left w-full text-3xl pl-4">
               {data.data.item[currentQuestionIndex].text}
+            </Text>
+            <Text className="font-inter font-medium text-left w-full text-3xl pl-4">
+
+               if ( {data.data.item[currentQuestionIndex].type === 'Integer'}) 
+               {
+                      <Input
+                      label="Age*"
+                      value=""
+                      onChangeText={setAnswers}
+                      />
+
+               }
+                if ( {data.data.item[currentQuestionIndex].type === 'Choice'}) 
+               {
+                  
+
+               }
+          
+             
+              
+              
             </Text>
           </React.Fragment>
         )}
