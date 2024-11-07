@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useUserFlow } from '../context/UserFlowContext';
+import { commonStyles } from '../../constants/styles';
+import ScreenWrapper from '~/app/components/ScreenWrapper';
+
+const styles = {
+  container: "flex-1 p-5 bg-white",
+  backButton: "mb-5",
+  codeContainer: "flex-row justify-between mb-4",
+  inputFocused: "border-pink-500",
+};
 
 export default function Verification() {
   const route = useRoute();
@@ -43,24 +52,24 @@ export default function Verification() {
   };
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+    <ScreenWrapper>
+      <TouchableOpacity className={styles.backButton} onPress={() => navigation.goBack()}>
         <MaterialIcons name="arrow-back" size={24} color="#666" />
       </TouchableOpacity>
 
-      <Text style={styles.title}>Verify Phone Number</Text>
-      <Text style={styles.subtitle}>
+      <Text className={commonStyles.text.title}>Verify Phone Number</Text>
+      <Text className={commonStyles.text.subtitle}>
         We've sent a code to {phoneNumber}. The code expires shortly, so please enter it as soon as possible.
       </Text>
 
-      <View style={styles.codeContainer}>
+      <View className={styles.codeContainer}>
         {[0, 1, 2, 3, 4, 5].map((item, i) => (
           <TextInput
             ref={inputRefs[i]}
-            style={[
-              styles.codeInput,
-              focusedIndex === i && styles.codeInputFocused
-            ]}
+            className={[
+              commonStyles.input,
+              focusedIndex === i && styles.inputFocused
+            ].join(' ')}
             keyboardType="number-pad"
             maxLength={1}
             value={verificationCode[i] || ''}
@@ -75,97 +84,22 @@ export default function Verification() {
       </View>
 
       <TouchableOpacity 
-        style={[
-          styles.continueButton,
-          verificationCode.length < 6 && styles.continueButtonDisabled
-        ]}
+        className={[
+          commonStyles.button.primary,
+          verificationCode.length < 6 && commonStyles.button.disabled
+        ].join(' ')}
         onPress={handleContinue}
         disabled={verificationCode.length < 6}
       >
-        <Text style={styles.continueText}>Continue</Text>
+        <Text className={commonStyles.buttonText.primary}>Continue</Text>
       </TouchableOpacity>
 
       <TouchableOpacity 
-        style={styles.resendButton}
+        className={commonStyles.button.secondary}
         onPress={handleResendCode}
       >
-        <Text style={styles.resendText}>Resend Code</Text>
+        <Text className={commonStyles.buttonText.secondary}>Resend Code</Text>
       </TouchableOpacity>
-    </View>
+    </ScreenWrapper>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: 'white',
-  },
-  backButton: {
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: '600',
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#666',
-    marginBottom: 24,
-  },
-  codeContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 32,
-    gap: 8,
-  },
-  codeInput: {
-    width: 45,
-    height: 45,
-    borderWidth: 1,
-    borderColor: '#E0E0E0',
-    borderRadius: 8,
-    textAlign: 'center',
-    fontSize: 20,
-    fontWeight: '500',
-    color: '#000',
-    padding: 0,
-  },
-  codeInputFocused: {
-    borderColor: '#E291B7',
-    borderWidth: 2,
-  },
-  codeText: {
-    fontSize: 20,
-    fontWeight: '500',
-  },
-  codeSeparator: {
-    fontSize: 20,
-    marginHorizontal: 4,
-    color: '#666',
-  },
-  continueButton: {
-    backgroundColor: '#C026D3',
-    padding: 16,
-    borderRadius: 25,
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  continueButtonDisabled: {
-    opacity: 0.5,
-  },
-  continueText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  resendButton: {
-    alignItems: 'center',
-  },
-  resendText: {
-    color: '#C026D3',
-    fontSize: 16,
-  },
-});
