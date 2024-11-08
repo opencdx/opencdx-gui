@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Platform } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import { useUserFlow } from '../context/UserFlowContext';
+import ScreenWrapper from '../../components/ScreenWrapper';
+import { commonStyles } from '../../constants/styles';
 
 // Update the validation result type to match the proxy response
 type ValidationResult = {
@@ -30,7 +32,31 @@ type ValidationResult = {
   statusCode: number;
 };
 
-function ShippingAddressPage() {
+const styles = {
+  container: "flex-1 p-5 bg-white",
+  backButton: "mb-5",
+  title: "text-2xl font-semibold mb-2",
+  subtitle: "text-base text-gray-600 mb-6",
+  input: commonStyles.input,
+  row: "flex-row gap-3",
+  flex1: "flex-1",
+  button: commonStyles.button.primary,
+  buttonDisabled: commonStyles.button.disabled,
+  buttonText: commonStyles.buttonText.primary,
+  pickerContainer: "border border-gray-300 rounded bg-white mb-3 justify-center",
+  picker: Platform.OS === 'ios' ? "h-24" : "h-11",
+  errorText: "text-red-500 mb-3 text-center",
+  validationContainer: "bg-green-100 p-4 rounded mb-3 border border-green-300",
+  validationTitle: "text-lg font-bold text-green-800 mb-2",
+  matchedAddressText: "text-green-900 mb-2",
+  coordinatesText: "text-green-700 mb-2",
+  validationErrorContainer: "bg-red-100 p-4 rounded mb-3 border border-red-300",
+  validationErrorTitle: "text-lg font-bold text-red-800 mb-2",
+  validationErrorText: "text-red-900 mb-2",
+  enteredAddressText: "text-red-700 mb-2",
+};
+
+function ShippingAddress() {
   const navigation = useNavigation();
   const { enforceShippingAddressValidation, welcomeScreen } = useUserFlow();
   const [formData, setFormData] = useState({
@@ -79,7 +105,7 @@ function ShippingAddressPage() {
         setValidationResult(data);
         return true;
       } else {
-        setAddressError(data.error || 'Address validation failed');
+        setAddressError('Address validation failed');
         return false;
       }
     } catch (error) {
@@ -169,8 +195,6 @@ function ShippingAddressPage() {
     { label: 'West Virginia', value: 'WV' },
     { label: 'Wisconsin', value: 'WI' },
     { label: 'Wyoming', value: 'WY' },
-
-    // Todo: Ravi - move this to centralize location
   ];
 
   // Add this new function to check if the form can be submitted
@@ -190,27 +214,27 @@ function ShippingAddressPage() {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+    <ScreenWrapper>
+      <TouchableOpacity className={styles.backButton} onPress={() => navigation.goBack()}>
         <MaterialIcons name="arrow-back" size={24} color="#666" />
       </TouchableOpacity>
 
-      <Text style={styles.title}>
+      <Text className={styles.title}>
         What is your current shipping address?
       </Text>
-      <Text style={styles.subtitle}>
+      <Text className={styles.subtitle}>
         This address will be used to send any tests that you order.
       </Text>
 
       <View>
         <TextInput 
-          style={styles.input} 
+          className={styles.input} 
           placeholder="Street Address*" 
           value={formData.streetAddress}
           onChangeText={(text) => updateFormData('streetAddress', text)}
           onChange={(e) => {
             // Check if other fields were autofilled
-            const form = e.target.form;
+            const form = e.target.form; 
             if (form) {
               const state = form.querySelector('[name="state"]')?.value;
               if (state) {
@@ -218,24 +242,22 @@ function ShippingAddressPage() {
               }
             }
           }}
-          name="street"  // Add name attribute for autofill
         />
-        <View style={styles.row}>
-          <TextInput style={[styles.input, styles.flex1]} placeholder="Apt/Ste" />
+        <View className={styles.row}>
+          <TextInput className={`${styles.input} ${styles.flex1}`} placeholder="Apt/Ste" />
           <TextInput 
-            style={[styles.input, styles.flex1]} 
+            className={`${styles.input} ${styles.flex1}`} 
             placeholder="City*"
             value={formData.city}
             onChangeText={(text) => updateFormData('city', text)}
           />
         </View>
-        <View style={styles.row}>
-          <View style={[styles.flex1, styles.pickerContainer]}>
+        <View className={styles.row}>
+          <View className={`${styles.flex1} ${styles.pickerContainer}`}>
             <Picker
               selectedValue={formData.state}
               onValueChange={(value) => updateFormData('state', value)}
-              style={styles.picker}
-              name="state"  // Add name attribute for autofill
+              className={styles.picker}
             >
               {states.map((state) => (
                 <Picker.Item 
@@ -248,7 +270,7 @@ function ShippingAddressPage() {
             </Picker>
           </View>
           <TextInput 
-            style={[styles.input, styles.flex1]} 
+            className={`${styles.input} ${styles.flex1}`} 
             placeholder="Zip Code*" 
             keyboardType="numeric"
             value={formData.zipCode}
@@ -257,14 +279,14 @@ function ShippingAddressPage() {
         </View>
 
         {validationResult && validationResult.success && (
-          <View style={styles.validationContainer}>
-            <Text style={styles.validationTitle}>✓ Address Verified</Text>
-            <Text style={styles.matchedAddressText}>
+          <View className={styles.validationContainer}>
+            <Text className={styles.validationTitle}>✓ Address Verified</Text>
+            <Text className={styles.matchedAddressText}>
               {validationResult.data.matchedAddress}
             </Text>
             
             {validationResult.data.coordinates && (
-              <Text style={styles.coordinatesText}>
+              <Text className={styles.coordinatesText}>
                 Coordinates: {validationResult.data.coordinates.y.toFixed(6)}, {validationResult.data.coordinates.x.toFixed(6)}
               </Text>
             )}
@@ -272,10 +294,10 @@ function ShippingAddressPage() {
         )}
 
         {addressError && (
-          <View style={styles.validationErrorContainer}>
-            <Text style={styles.validationErrorTitle}>✕ Address Invalid</Text>
-            <Text style={styles.validationErrorText}>{addressError}</Text>
-            <Text style={styles.enteredAddressText}>
+          <View className={styles.validationErrorContainer}>
+            <Text className={styles.validationErrorTitle}>✕ Address Invalid</Text>
+            <Text className={styles.validationErrorText}>{addressError}</Text>
+            <Text className={styles.enteredAddressText}>
               Entered address: {`${formData.streetAddress}, ${formData.city}, ${formData.state} ${formData.zipCode}`}
             </Text>
           </View>
@@ -284,160 +306,23 @@ function ShippingAddressPage() {
         {enforceShippingAddressValidation && (
           <TouchableOpacity 
             onPress={validateAddress} 
-            style={[styles.validateButton, !isFormValid() && styles.buttonDisabled]}
+            className={`${styles.button} ${!isFormValid() && styles.buttonDisabled}`}
             disabled={!isFormValid()}
           >
-            <Text style={styles.buttonText}>Validate Address</Text>
+            <Text className={styles.buttonText}>Validate Address</Text>
           </TouchableOpacity>
         )}
 
         <TouchableOpacity 
           onPress={handleSubmit} 
-          style={[styles.button, !canSubmit() && styles.buttonDisabled]}
+          className={`${styles.button} ${!canSubmit() && styles.buttonDisabled}`}
           disabled={!canSubmit()}
         >
-          <Text style={styles.buttonText}>Continue</Text>
+          <Text className={styles.buttonText}>Continue</Text>
         </TouchableOpacity>
       </View>
-    </ScrollView>
+    </ScreenWrapper>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#fff',
-  },
-  backButton: {
-    marginBottom: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#666',
-    marginBottom: 24,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 4,
-    padding: 12,
-    marginBottom: 12,
-    backgroundColor: '#fff',
-  },
-  row: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  flex1: {
-    flex: 1,
-  },
-  button: {
-    backgroundColor: '#C026D3',
-    padding: 16,
-    borderRadius: 4,
-    marginTop: 16,
-  },
-  buttonText: {
-    color: '#fff',
-    textAlign: 'center',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  buttonDisabled: {
-    backgroundColor: '#E0E0E0',
-  },
-  pickerContainer: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 4,
-    backgroundColor: '#fff',
-    marginBottom: 12,
-    justifyContent: 'center',
-  },
-  picker: {
-    height: Platform.OS === 'ios' ? 100 : 44,
-  },
-  errorText: {
-    color: 'red',
-    marginBottom: 12,
-    textAlign: 'center',
-  },
-  matchedAddressContainer: {
-    backgroundColor: '#f0f8ff', // Light blue background
-    padding: 12,
-    borderRadius: 4,
-    marginBottom: 12,
-    borderWidth: 1,
-    borderColor: '#4682b4',
-  },
-  matchedAddressTitle: {
-    fontWeight: 'bold',
-    marginBottom: 4,
-    color: '#4682b4',
-  },
-  matchedAddressText: {
-    color: '#333',
-  },
-  validationContainer: {
-    backgroundColor: '#e8f5e9',
-    padding: 16,
-    borderRadius: 8,
-    marginVertical: 12,
-    borderWidth: 1,
-    borderColor: '#81c784',
-  },
-  validationTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#2e7d32',
-    marginBottom: 8,
-  },
-  matchedAddressText: {
-    fontSize: 15,
-    color: '#1b5e20',
-    marginBottom: 8,
-  },
-  coordinatesText: {
-    fontSize: 13,
-    color: '#388e3c',
-    marginBottom: 8,
-  },
-  validateButton: {
-    backgroundColor: '#81c784', // A different color to distinguish from Continue button
-    padding: 16,
-    borderRadius: 4,
-    marginTop: 16,
-  },
-  validationErrorContainer: {
-    backgroundColor: '#ffebee',
-    padding: 16,
-    borderRadius: 8,
-    marginVertical: 12,
-    borderWidth: 1,
-    borderColor: '#ef5350',
-  },
-  validationErrorTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#c62828',
-    marginBottom: 8,
-  },
-  validationErrorText: {
-    fontSize: 15,
-    color: '#b71c1c',
-    marginBottom: 8,
-  },
-  enteredAddressText: {
-    fontSize: 13,
-    color: '#d32f2f',
-    marginBottom: 8,
-  },
-});
-
-export default ShippingAddressPage; 
+export default ShippingAddress; 
