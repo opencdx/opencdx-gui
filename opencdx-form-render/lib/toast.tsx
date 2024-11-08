@@ -16,8 +16,23 @@ export function useShowToast() {
       render: ({ id }) => {
         const toastId = "toast-" + id;
         return (
-          <Toast nativeID={toastId} bg={type === 'error' ? '#F31260' : '#A2E9C1'} width={278} height={52} alignContent='center' justifyContent='center' borderRadius={2} >
-            <ToastDescription color='#FEE7EF' fontSize={16} fontWeight='medium' padding={5}>
+          <Toast
+            nativeID={toastId}
+            bg={type === 'error' ? '#F31260' : '#A2E9C1'}
+            width={278}
+            alignContent='center'
+            justifyContent='center'
+            borderRadius={2}
+            paddingVertical={10} // Added padding to ensure comfortable spacing
+          >
+            <ToastDescription
+              color='#FEE7EF'
+              fontSize={16}
+              fontWeight='medium'
+              padding={5}
+              lineHeight={24} // Optional, for better readability
+            
+            >
               {message}
             </ToastDescription>
           </Toast>

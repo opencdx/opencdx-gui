@@ -23,7 +23,11 @@ const useSignupForm = () => {
     const [passwordMismatchError, setPasswordMismatchError] = useState<string | null>(null);
 
     const validatePasswordMatch = useCallback((pass: string, confirmPass: string) => {
-        setPasswordMismatchError(pass !== confirmPass ? "New password and confirm password do not match" : null);
+        if (pass && confirmPass) { // Only validate if both fields have values
+            setPasswordMismatchError(pass !== confirmPass ? "New password and confirm password do not match" : null);
+        } else {
+            setPasswordMismatchError(null); // Clear the error if either field is empty
+        }
     }, []);
 
     const passwordValidations = [
@@ -43,9 +47,10 @@ const useSignupForm = () => {
 
     const updateFormField = useCallback((field: string, value: string) => {
         setFormData(prev => ({ ...prev, [field]: value }));
-        if (field === 'password' || field === 'confirmPassword') {
-            validatePasswordMatch(field === 'password' ? value : formData.password, field === 'confirmPassword' ? value : formData.confirmPassword);
-        }
+       // Run validation only if both fields have values
+       if ((field === 'password' && formData.confirmPassword) || (field === 'confirmPassword' && formData.password)) {
+        validatePasswordMatch(field === 'password' ? value : formData.password, field === 'confirmPassword' ? value : formData.confirmPassword);
+    }
     }, [formData.password, formData.confirmPassword, validatePasswordMatch]);
 
     const togglePasswordVisibility = useCallback((field: 'password' | 'confirmPassword') => {
