@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 
@@ -10,34 +10,31 @@ interface AnswerOption {
 interface RadioInputProps {
   name: string;
   label?: string;
-  defaultValue?: string;
   options: AnswerOption[];
-  onValueChange?: (value: string) => void; // Callback function for parent components to receive value changes
+  value: string;
+  onValueChange: (value: string) => void;
 }
 
-const RadioInput: React.FC<RadioInputProps> = ({ name, label, defaultValue, options, onValueChange }) => {
-  const [selectedValue, setSelectedValue] = useState(defaultValue || '');
-
-  const handleChange = (value: string) => {
-    setSelectedValue(value);
-    if (onValueChange) {
-      onValueChange(value); // Notify parent component of the value change
-    }
-  };
-
+export const RadioInput: React.FC<RadioInputProps> = ({
+  label,
+  options,
+  value,
+  onValueChange,
+}) => {
   return (
-    <View style={{ padding: 16 }}>
+    <View style={{ padding: 16, alignItems: 'flex-start', width: '100%' }}>
       {label && <Text style={{ fontSize: 18, marginBottom: 8 }}>{label}</Text>}
-      <RadioButton.Group onValueChange={handleChange} value={selectedValue}>
+      <RadioButton.Group onValueChange={onValueChange} value={value}>
         {options.map((option, index) => (
-          <View key={index} style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 4 }}>
-            <RadioButton value={option.value} />
-            <Text style={{ fontSize: 16 }}>{option.label}</Text>
+          <View key={index} style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 4 }}>
+            <RadioButton
+              value={option.value}
+              color="#0066cc" // Primary color for selected radio button
+            />
+            <Text style={{ fontSize: 14 }}>{option.label}</Text>
           </View>
         ))}
       </RadioButton.Group>
     </View>
   );
 };
-
-export default RadioInput;

@@ -5,7 +5,7 @@ import { useGetQuestionnaire } from '~/lib/iam-hooks';
 import { CloseIcon } from '@gluestack-ui/themed';
 import { Button } from '~/components/ui/button';
 import { Input } from '../../../components/ui/input';
-import  RadioInput  from '../../../components/ui/radioInput';
+import { RadioInput }  from '../../../components/ui/radioInput';
 
 const useGetQuestionnaireForm = () => {
   const [answers, setAnswers] = useState<{ [key: string]: string }>({});
@@ -72,9 +72,10 @@ const TakeQuestionnaire: React.FC = () => {
             <Text className="font-inter font-medium text-left w-full text-3xl pl-4">
               {data?.data?.item?.[currentQuestionIndex]?.text || ''}
             </Text>
-  
+
             <View className="w-full gap-4 sm:gap-6 items-center bg-grey-400 p-4 rounded-lg">
-              
+
+              {/* Integer or Decimal Input */}
               {(data?.data?.item?.[currentQuestionIndex]?.type === 'integer' || data?.data?.item?.[currentQuestionIndex]?.type === 'decimal') && (
                 <Input
                   label={data?.data?.item?.[currentQuestionIndex]?.text || 'Enter Value'}
@@ -84,12 +85,13 @@ const TakeQuestionnaire: React.FC = () => {
                     const filteredText = data?.data?.item?.[currentQuestionIndex]?.type === 'integer'
                       ? text.replace(/[^0-9]/g, '')
                       : text.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
-  
+
                     handleAnswerChange(currentQuestionIndex.toString(), filteredText);
                   }}
                 />
               )}
 
+              {/* Radio Input for Choice Type */}
               {data?.data?.item?.[currentQuestionIndex]?.type === 'choice' && (
                 <RadioInput
                   name={`question-${currentQuestionIndex}`}
@@ -100,10 +102,12 @@ const TakeQuestionnaire: React.FC = () => {
                       value: option.valueCoding?.display || '',
                     })) || []
                   }
+                  value={answers[currentQuestionIndex.toString()] || ''}
                   onValueChange={(value: string) => handleAnswerChange(currentQuestionIndex.toString(), value)}
                 />  
               )}
 
+              {/* Text Input for Text or String Type */}
               {(data?.data?.item?.[currentQuestionIndex]?.type === 'text' || 
                 data?.data?.item?.[currentQuestionIndex]?.type === 'string') && (
                 <Input
