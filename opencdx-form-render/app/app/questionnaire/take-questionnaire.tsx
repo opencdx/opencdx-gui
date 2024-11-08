@@ -1,17 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, Pressable, Platform, TextInput, KeyboardAvoidingView, StatusBar, SafeAreaView } from 'react-native';
+import { View, Text, ScrollView, Pressable, Platform, KeyboardAvoidingView, StatusBar, SafeAreaView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useGetQuestionnaire } from '~/lib/iam-hooks';
 import { CloseIcon } from '@gluestack-ui/themed';
 import { Button } from '~/components/ui/button';
 import { Input } from '../../../components/ui/input';
+import  RadioInput  from '../../../components/ui/radioInput';
 
 const useGetQuestionnaireForm = () => {
-  const [answers, setAnswers] = useState('');
-  
-  return { answers, setAnswers};
-};
+  const [answers, setAnswers] = useState<{ [key: string]: string }>({});
 
+  const handleAnswerChange = (questionId: string, answer: string) => {
+    setAnswers(prevAnswers => ({
+      ...prevAnswers,
+      [questionId]: answer,
+    }));
+  };
+
+  return { answers, handleAnswerChange };
+};
 
 const paddingTop = Platform.OS === 'android' ? Math.ceil(StatusBar.currentHeight || 0) : 0;
 
@@ -24,7 +31,7 @@ const TakeQuestionnaire: React.FC = () => {
   const navigation = useNavigation();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
-  const { answers, setAnswers } = useGetQuestionnaireForm();
+  const { answers, handleAnswerChange } = useGetQuestionnaireForm();
 
   useEffect(() => {
     const fetchQuestionnaire = async () => {
@@ -43,6 +50,8 @@ const TakeQuestionnaire: React.FC = () => {
       document.title = 'Questionnaires';
       setIsWeb(true);
     }
+
+    console.log("Current Question Data:", data?.data?.item?.[currentQuestionIndex]);
   }, [getQuestionnaire, isWeb]);
 
   const handleContinue = () => {
@@ -52,7 +61,8 @@ const TakeQuestionnaire: React.FC = () => {
   };
 
   const content = (
-    <>
+
+    <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ alignItems: 'center', paddingHorizontal: 20 }}>
       <View className="w-full max-w-[800px] mx-auto flex flex-col justify-center items-center gap-4">
         {data?.data?.item && data.data.item.length > 0 && (
           <React.Fragment key={`question-${currentQuestionIndex}`}>
@@ -60,33 +70,59 @@ const TakeQuestionnaire: React.FC = () => {
               Question {currentQuestionIndex + 1}
             </Text>
             <Text className="font-inter font-medium text-left w-full text-3xl pl-4">
-              {data.data.item[currentQuestionIndex].text}
+              {data?.data?.item?.[currentQuestionIndex]?.text || ''}
             </Text>
-            <Text className="font-inter font-medium text-left w-full text-3xl pl-4">
-
-               if ( {data.data.item[currentQuestionIndex].type === 'Integer'}) 
-               {
-                      <Input
-                      label="Age*"
-                      value=""
-                      onChangeText={setAnswers}
-                      />
-
-               }
-                if ( {data.data.item[currentQuestionIndex].type === 'Choice'}) 
-               {
-                  
-
-               }
-          
-             
+  
+            <View className="w-full gap-4 sm:gap-6 items-center bg-grey-400 p-4 rounded-lg">
               
-              
-            </Text>
+              {(data?.data?.item?.[currentQuestionIndex]?.type === 'integer' || data?.data?.item?.[currentQuestionIndex]?.type === 'decimal') && (
+                <Input
+                  label={data?.data?.item?.[currentQuestionIndex]?.text || 'Enter Value'}
+                  value={answers[currentQuestionIndex.toString()] || ''} 
+                  keyboardType={data?.data?.item?.[currentQuestionIndex]?.type === 'integer' ? 'number-pad' : 'decimal-pad'}
+                  onChangeText={(text) => {
+                    const filteredText = data?.data?.item?.[currentQuestionIndex]?.type === 'integer'
+                      ? text.replace(/[^0-9]/g, '')
+                      : text.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
+  
+                    handleAnswerChange(currentQuestionIndex.toString(), filteredText);
+                  }}
+                />
+              )}
+
+              {data?.data?.item?.[currentQuestionIndex]?.type === 'choice' && (
+                <RadioInput
+                  name={`question-${currentQuestionIndex}`}
+                  label={''}
+                  options={
+                    data?.data?.item?.[currentQuestionIndex]?.answerOption?.map((option, index) => ({
+                      label: option.valueCoding?.display || '',
+                      value: option.valueCoding?.display || '',
+                    })) || []
+                  }
+                  onValueChange={(value: string) => handleAnswerChange(currentQuestionIndex.toString(), value)}
+                />  
+              )}
+
+              {(data?.data?.item?.[currentQuestionIndex]?.type === 'text' || 
+                data?.data?.item?.[currentQuestionIndex]?.type === 'string') && (
+                <Input
+                  label="Type your answer here"
+                  value={answers[currentQuestionIndex.toString()] || ''}
+                  onChangeText={(text) => handleAnswerChange(currentQuestionIndex.toString(), text)}
+                />
+              )}
+
+              {isWeb && (
+                <Button onPress={handleContinue} className="w-full mt-8">
+                    <Text className="text-white text-xl font-bold">Continue</Text>
+                 </Button>
+              )}
+            </View>
           </React.Fragment>
         )}
       </View>
-    </>
+    </ScrollView>
   );
 
   return (
@@ -105,22 +141,15 @@ const TakeQuestionnaire: React.FC = () => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.select({ ios: 0, android: 20 })}
       >
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          {content}
-          {isWeb ? (
-            <View className="w-full max-w-[800px] mx-auto px-4 py-4">
-              <Button onPress={handleContinue} className="w-full">
-                <Text className="text-white text-xl font-bold mb-2">Continue</Text>
-              </Button>
-            </View>
-          ) : (
-            <View className="w-full px-4 pb-4" style={{ marginTop: 'auto' }}>
-              <Button onPress={handleContinue} className="w-full">
-                <Text className="text-white text-xl font-bold mb-2">Continue</Text>
-              </Button>
-            </View>
-          )}
-        </ScrollView>
+        {content}
+        
+        {!isWeb && (
+          <View className="w-full px-4 pb-4" style={{ marginTop: 'auto' }}>
+            <Button onPress={handleContinue} className="w-full">
+              <Text className="text-white text-xl font-bold">Continue</Text>
+            </Button>
+          </View>
+        )}
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
