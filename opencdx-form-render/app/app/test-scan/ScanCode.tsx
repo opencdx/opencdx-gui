@@ -198,16 +198,14 @@ const ScanTestScreen = () => {
 
         return (
             <View style={styles.cameraContainer}>
-                <CameraView
-                    style={styles.camera}
-                    barcodeScannerSettings={{
-                        barcodeTypes: ['qr', 'pdf417'],
-                    }}
-                >
-                    <View style={styles.overlay}>
-                        <View style={styles.scanArea} />
-                    </View>
-                </CameraView>
+                <View style={styles.cameraWrapper}>
+                    <CameraView
+                        style={styles.camera}
+                        barcodeScannerSettings={{
+                            barcodeTypes: ['qr', 'pdf417'],
+                        }}
+                    />
+                </View>
             </View>
         );
     };
@@ -215,7 +213,7 @@ const ScanTestScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.content}>
-                <Text style={styles.title}>Scan Code</Text>
+                <Text style={styles.title}>Scan Code (Mac)</Text>
                 
                 {renderContent()}
 
@@ -246,9 +244,20 @@ const styles = StyleSheet.create({
     cameraContainer: {
         flex: 1,
         backgroundColor: '#C026D3',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    cameraWrapper: {
+        width: 200,
+        height: 300,
+        overflow: 'hidden',
+        borderWidth: 2,
+        borderColor: 'white',
+        borderRadius: 1,
     },
     camera: {
-        flex: 1,
+        width: '100%',
+        height: '100%',
     },
     messageContainer: {
         flex: 1,
@@ -279,20 +288,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: 'white',
         textAlign: 'center',
-    },
-    overlay: {
-        flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    scanArea: {
-        width: 250,
-        height: 250,
-        borderWidth: 2,
-        borderColor: 'white',
-        backgroundColor: 'transparent',
-        borderRadius: 1,
     },
 });
 
