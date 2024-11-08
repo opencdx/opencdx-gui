@@ -61,7 +61,6 @@ const TakeQuestionnaire: React.FC = () => {
   };
 
   const content = (
-
     <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ alignItems: 'center', paddingHorizontal: 20 }}>
       <View className="w-full max-w-[800px] mx-auto flex flex-col justify-center items-center gap-4">
         {data?.data?.item && data.data.item.length > 0 && (
@@ -72,10 +71,8 @@ const TakeQuestionnaire: React.FC = () => {
             <Text className="font-inter font-medium text-left w-full text-3xl pl-4">
               {data?.data?.item?.[currentQuestionIndex]?.text || ''}
             </Text>
-
-            <View className="w-full gap-4 sm:gap-6 items-center bg-grey-400 p-4 rounded-lg">
-
-              {/* Integer or Decimal Input */}
+  
+            <View className="w-full gap-4 sm:gap-6 items-center bg-grey-400 p-4 rounded-lg max-w-[800px] mx-auto">
               {(data?.data?.item?.[currentQuestionIndex]?.type === 'integer' || data?.data?.item?.[currentQuestionIndex]?.type === 'decimal') && (
                 <Input
                   label={data?.data?.item?.[currentQuestionIndex]?.text || 'Enter Value'}
@@ -85,17 +82,16 @@ const TakeQuestionnaire: React.FC = () => {
                     const filteredText = data?.data?.item?.[currentQuestionIndex]?.type === 'integer'
                       ? text.replace(/[^0-9]/g, '')
                       : text.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
-
+  
                     handleAnswerChange(currentQuestionIndex.toString(), filteredText);
                   }}
                 />
               )}
-
-              {/* Radio Input for Choice Type */}
+  
               {data?.data?.item?.[currentQuestionIndex]?.type === 'choice' && (
                 <RadioInput
                   name={`question-${currentQuestionIndex}`}
-                  label={''}
+                  label=""
                   options={
                     data?.data?.item?.[currentQuestionIndex]?.answerOption?.map((option, index) => ({
                       label: option.valueCoding?.display || '',
@@ -106,8 +102,7 @@ const TakeQuestionnaire: React.FC = () => {
                   onValueChange={(value: string) => handleAnswerChange(currentQuestionIndex.toString(), value)}
                 />  
               )}
-
-              {/* Text Input for Text or String Type */}
+  
               {(data?.data?.item?.[currentQuestionIndex]?.type === 'text' || 
                 data?.data?.item?.[currentQuestionIndex]?.type === 'string') && (
                 <Input
@@ -116,11 +111,13 @@ const TakeQuestionnaire: React.FC = () => {
                   onChangeText={(text) => handleAnswerChange(currentQuestionIndex.toString(), text)}
                 />
               )}
-
+  
               {isWeb && (
-                <Button onPress={handleContinue} className="w-full mt-8">
+                <View className="w-full max-w-[800px] mx-auto mt-8">
+                  <Button onPress={handleContinue} className="w-full">
                     <Text className="text-white text-xl font-bold">Continue</Text>
-                 </Button>
+                  </Button>
+              </View>
               )}
             </View>
           </React.Fragment>
@@ -128,7 +125,7 @@ const TakeQuestionnaire: React.FC = () => {
       </View>
     </ScrollView>
   );
-
+  
   return (
     <SafeAreaView style={{ paddingTop }} className={`flex-1 bg-white`}>
       <View className="flex flex-row items-center p-5">
