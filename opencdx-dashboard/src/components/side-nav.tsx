@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import logo from '../../public/images/logo-long.png';
-import { TableChart, NotificationImportant, Announcement, ContentPasteGo, VerifiedUser, AssuredWorkload, PermMedia, ToggleOff, SpaceDashboard, BuildCircle ,MapOutlined, Person } from '@mui/icons-material';
+import { TableChart, NotificationImportant, Announcement, ContentPasteGo, VerifiedUser, AssuredWorkload, PermMedia, ToggleOff, SpaceDashboard, BuildCircle ,MapOutlined, Person, Assessment } from '@mui/icons-material';
 interface Links {
   label: string;
   href: string;
@@ -267,6 +267,13 @@ export const SideNavigation = () => {
       href: '/pages/toggle',
       icon: (
         <ToggleOff className="text-white" />
+      ),
+    },
+    {
+      label: 'Reports',
+      href: '/pages/reports',
+      icon: (
+        <Assessment className="text-white" />
       ),
     }
   ];
