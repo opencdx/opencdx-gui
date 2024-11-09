@@ -1,113 +1,168 @@
 'use client';
 
-import { Key, useCallback, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+
+import { useRouter, usePathname } from 'next/navigation';
+import { User } from "ui-library";
 import { useLocale } from 'next-intl';
-import Image from 'next/image';
-import { NavbarContent, NavbarItem, Navbar as NextUINavbar } from '@nextui-org/navbar';
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, User } from 'ui-library';
-import { Locale } from '@/config/locale';
-import { setUserLocale } from '@/lib/locale';
-import { logout } from '@/hooks/iam-hooks';
+import {useTransition} from 'react';
 
+import {
+  NavbarContent,
+  NavbarItem,
+  Navbar as NextUINavbar,
+} from '@nextui-org/navbar';
 
-import arrowDown from '../../public/images/arrow-down.png';
-import settings from '../../public/settings.png';
-import logoutImage from '../../public/logout.png';
-import language from '../../public/language.png';
+import {
+  Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Image,
+} from 'ui-library';
 
-const localeOptions = [
-  { key: 'en', label: 'English' },
-  { key: 'es', label: 'Spanish' }
-] as const;
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import { Locale} from '@/config/locale';
 
-export function Navbar() {
+import {setUserLocale} from '@/lib/locale';
+export const Navbar = () => {
   const router = useRouter();
   const locale = useLocale();
+  const [selectedOption] = useState(new Set(['english']));
+  const [isOpen, setIsOpen] = useState(false);
+  const localeOptions = [
+    { key: 'en', label: 'English' },
+    { key: 'es', label: 'Spanish' }
+  ];
 
-  const handleLocaleChange = useCallback((key: Locale) => {
-    if (key !== locale) {
-      setUserLocale(key);
-    }
-  }, [locale]);
 
-  const handleDropdownAction = useCallback((key: string) => {
-    switch (key) {
-      case 'logout':
-        logout(router);
-        break;
-      case 'change_password':
-        router.push('/auth/password-change');
-        break;
-      case 'locale':
-        const otherLocale = localeOptions.find(option => option.key !== locale)?.key;
-        if (otherLocale) {
-          handleLocaleChange(otherLocale);
-        }
-        break;
-    }
-  }, [router, locale, handleLocaleChange]);
-
-  const dropdownItems = useMemo(() => [
-    {
-      key: 'locale',
-      label: localeOptions.find(option => option.key !== locale)?.label,
-      icon: language.src
-    },
-    { key: 'settings', label: 'Settings', icon: settings.src },
-    { key: 'change_password', label: 'Change Password', icon: language.src },
-    { key: 'logout', label: 'Logout', icon: logoutImage.src }
-  ], [locale]);
+  // Define a type for the labelsMap object
+  type LabelsMapType = {
+    [key: string]: string;
+  };
+  // Define the labelsMap object with the correct type
+  const labelsMap: LabelsMapType = {
+    english: 'En',
+    spanish: 'Es',
+  };
+  const [isPending, startTransition] = useTransition();
+  function handleLocaleChange(key: string) {
+    // If the locale is the same as the current locale, return.
+    if (key === locale) return;
+    const locales = key as Locale;
+    startTransition(() => {
+      setUserLocale(locales);
+    });
+  }
+  const handleClick = () => {
+    setIsOpen(!isOpen);
+  };
+  // Convert the Set to an Array and get the first value.
+  const selectedOptionValue = Array.from(selectedOption)[0];
 
   return (
-    <NextUINavbar maxWidth="full" className="rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full" position="sticky" aria-label="User actions dropdown">
-      <NavbarContent justify="end" aria-label="User actions">
-        <NavbarItem className="hidden md:flex" aria-label="User actions Item">
-          <Dropdown>
-            <DropdownTrigger>
-              <Button
-                variant="light"
-                disableAnimation
-                role="link"
-                className="w-full p-0"
-                endContent={
-                  <Image 
-                    src={arrowDown.src}
-                    alt="Dropdown arrow" 
-                    width={24} 
-                    height={24} 
-                    priority 
-                  />
-                }
-              >
-                <User name="John Doe" />
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu 
-              variant="faded" 
-              aria-label="User actions"
-              selectionMode="single"
-              onAction={(key: Key) => handleDropdownAction(key as string) }
-            >
-              {dropdownItems.map(({ key, label, icon }) => (
-                <DropdownItem
-                  key={key}
-                  startContent={
-                    <Image
-                      alt={`${label} icon`}
-                      src={icon}
-                      width={20}
-                      height={20}
-                    />
+    <NextUINavbar maxWidth="full" className=" rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full" position="sticky">
+      <NavbarContent
+        justify="end"
+      >
+        <NavbarItem className="hidden md:flex">
+            <Dropdown>
+              <DropdownTrigger>
+                <Button
+                  variant="light"
+                  onClick={handleClick}
+                  disableAnimation
+                  className="w-full p-0"
+                  endContent={
+                    isOpen ? (
+                      <ChevronUp />
+                    ) : (
+                      <ChevronDown />
+                    )
                   }
                 >
-                  {label}
+                  <User
+                    name="John Doe"
+                  />
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu 
+              variant="faded" 
+              aria-label="Dropdown menu with icons"
+              selectionMode="single"
+                onAction={(key) => {
+                  if (key === 'logout') {
+                    router.push('/');
+                  } else if (key === 'settings') {
+                  } else if (key === 'locale') {
+                    localeOptions.map((language) => {
+                      if (language.key !== locale) {
+                        handleLocaleChange(language.key)
+
+                      }
+                    }
+                    )
+                  } else if (key === 'change_password') {
+                    router.push('/password-change');
+                  }
+                }
+              }
+              >
+                <DropdownItem
+                  key="locale"
+                  tabIndex={0}
+                  startContent={<Image
+                    alt="locale logo"
+                    src="/language.png"
+                  />}
+                >
+                  {
+                    localeOptions.map((language) => {
+                      if (language.key !== locale) {
+                        return language.label
+                      }
+                    })
+                  }
                 </DropdownItem>
-              ))}
-            </DropdownMenu>
-          </Dropdown>
+                <DropdownItem
+                  key="settings"
+                  tabIndex={0}
+                  startContent={<Image
+                    alt="settings logo"
+                    src="/settings.png"
+                  />
+                  
+                  }
+                >
+                  Settings
+                </DropdownItem>
+                <DropdownItem
+                  key="change_password"
+                  tabIndex={0}
+                  startContent={<Image
+                    alt="change logo"
+                    src="/language.png"
+                  />
+                  }
+                >
+                  Change Password
+                </DropdownItem>
+                <DropdownItem
+                  key="logout"
+                  tabIndex={0}
+                  startContent={<Image
+                    alt="logout logo"
+                    src="/logout.png"
+                  />}
+                >
+                  Logout
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
         </NavbarItem>
       </NavbarContent>
     </NextUINavbar>
   );
-}
+};
+

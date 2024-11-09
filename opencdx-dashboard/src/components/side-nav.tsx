@@ -2,22 +2,15 @@
 import { cn } from "@/lib/utils";
 import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { usePathname } from 'next/navigation';
-import { ChevronRight, IceCream } from "lucide-react";
 import Image from 'next/image';
-
-import collapseIcon from '../../public/images/collapse_icon.png';
-import expandIcon from '../../public/images/expand_icon.png';
-import logoLong from '../../public/images/logo-long.png';
-import logoShort from '../../public/images/logo-short.png';
-
+import logo from '../../public/images/logo-long.png';
+import { TableChart, NotificationImportant, Announcement, ContentPasteGo, VerifiedUser, AssuredWorkload, PermMedia, ToggleOff, SpaceDashboard, BuildCircle ,MapOutlined, Person } from '@mui/icons-material';
 interface Links {
   label: string;
   href: string;
   icon: React.JSX.Element | React.ReactNode;
-  selectedIcon: React.JSX.Element | React.ReactNode;
-  onClick?: () => void;
 }
 
 interface SidebarContextProps {
@@ -79,70 +72,35 @@ export const Sidebar = ({
   );
 };
 
-export const SidebarBody = ({
+export const SidebarBody = (props: React.ComponentProps<typeof motion.div>) => {
+  return (
+    <>
+      <DesktopSidebar {...props} />
+    </>
+  );
+};
+
+export const DesktopSidebar = ({
   className,
   children,
   ...props
-}: React.ComponentProps<typeof motion.div> & { children?: React.ReactNode }) => {
+}: React.ComponentProps<typeof motion.div>) => {
   const { open, setOpen, animate } = useSidebar();
 
   return (
     <>
+
       <motion.div
         className={cn(
-          "h-full px-4 py-4 md:flex md:flex-col h-screen bg-[#020B2D] bg-gradient-to-b from-[#020B2D] from-70% via-[#0A2A88] to-[#0D47E9] w-[260px] flex-shrink-0",
-          className
+          "h-full px-4 py-4   md:flex md:flex-col h-screen bg-[#020B2D] bg-gradient-to-b from-[#020B2D] from-70% via-[#0A2A88] to-[#0D47E9] w-[260px] flex-shrink-0",
         )}
         animate={{
           width: animate ? (open ? "220px" : "72px") : "220px",
         }}
+
         {...props}
       >
-        <div className="flex flex-col h-full">
-          <div className="mb-8 flex justify-between items-center">
-            {open ? (
-              <Link href="#" className="flex items-center">
-                <Image
-                  src={logoLong.src}
-                  alt="OpenCDx"
-                  width={120}
-                  height={40}
-                  priority
-                />
-              </Link>
-            ) : (
-              <Link href="#" className="flex items-center">
-                <Image
-                  src={logoShort.src}
-                  alt="OpenCDx"
-                  width={40}
-                  height={40}
-                  className="rounded-lg"
-                  priority
-                />
-              </Link>
-            )}
-            
-            <button 
-              onClick={() => setOpen(!open)} 
-              className={cn(
-                "flex items-center justify-center mt-8 -mr-6 z-50",
-               
-              )}
-            >
-              <Image
-                src={open ? collapseIcon.src : expandIcon.src}
-                alt={open ? "Collapse" : "Expand"}
-                width={26}
-                height={26}
-                priority
-              />
-            </button>
-          </div>
-          <div className="flex-1 overflow-y-auto">
-            {children}
-          </div>
-        </div>
+        {children}
       </motion.div>
     </>
   );
@@ -156,34 +114,178 @@ export const SidebarLink = ({
   link: Links;
   className?: string;
   props?: LinkProps;
-
 }) => {
-  const { open, setOpen, animate } = useSidebar();
-  const pathname = usePathname();
-  const selected = pathname === link.href;
+  const router = usePathname();
+  const selected = router.includes(link.href);
   return (
     <Link
       href={link.href}
       className={cn(
-        "flex items-center justify-start group/sidebar rounded-lg",
+        "flex items-center justify-start gap-2  group/sidebar py-2 rounded-lg",
+        'py-2 ',
         className
       )}
       {...props}
     >
+
       <div className={cn(
-        selected ? 'bg-gradient-to-r from-blue-800 to-blue-500 hover:from-blue-800 hover:to-blue-500 rounded-lg' : '',
-        open ? 'px-6' : 'px-2',
-        'flex items-start justify-start py-2',
+       selected ? 'bg-gradient-to-r from-blue-800 to-blue-500  px-4 py-2 hover:from-blue-800 hover:to-blue-500 rounded-lg ' : 'py-2 ',
+        'flex items-center justify-center pl-2',
       )}>
-        <div className="flex items-start justify-start">
-          {selected ? link.selectedIcon : link.icon}
-          {open && (
-            <div className="text-white dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block pl-2">
-              {link.label}
-            </div>
-          )}
+        <div className="flex items-center justify-center pl-2">
+          {link.icon}
+          <div className="text-white dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block pl-2">
+            {link.label}
+          </div>
         </div>
       </div>
+
+
+
     </Link>
+  );
+};
+
+export const Logo = () => {
+  return (
+    <Link
+      href="#"
+      className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
+    >
+      <Image
+        src={logo}
+        alt="logo"
+        width={120}
+        height={40}
+        priority
+      />
+    </Link>
+  );
+};
+
+export const LogoIcon = () => {
+  return (
+    <Link
+      href="#"
+      className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
+    >
+      <Image
+        src={logo}
+        alt="logo"
+        width={120}
+        height={120}
+        className="rounded-lg"
+        priority
+      />
+    </Link>
+  );
+};
+
+export const SideNavigation = () => {
+  const [open, setOpen] = useState(true);
+
+  const links = [
+    {
+      label: 'Dashboard',
+      href: '/pages/dashboard',
+      icon: (
+        <SpaceDashboard className="text-white" />
+      ),
+    },
+    {
+      label: 'Forms Builder',
+      href: '/pages/form-builder',
+      icon: (
+        <BuildCircle className="text-white" />
+      ),
+    },
+    {
+      label: 'Maps',
+      href: '/pages/maps',
+      icon: (
+        <MapOutlined className="text-white" />
+      ),
+    },
+    {
+      label: 'My Profile',
+      href: '/pages/profile',
+      icon: (
+        <Person className="text-white" />
+      ),
+    },
+    {
+      label: 'Functional Flow',
+      href: '/pages/flow',
+      icon: (
+        <TableChart className="text-white" />
+      ),
+    },
+    {
+      label: 'Templates',
+      href: '/pages/templates',
+      icon: (
+        <ContentPasteGo className="text-white" />
+      ),
+    },
+    {
+      label: 'Communication',
+      href: '/pages/communication',
+      icon: (
+        <Announcement className="text-white" />
+      ),
+    },
+    {
+      label: 'Notifications',
+      href: '/pages/notifications',
+      icon: (
+        <NotificationImportant className="text-white" />
+      ),
+    },
+    {
+      label: 'Audit',
+      href: '/pages/audit',
+      icon: (
+        <VerifiedUser className="text-white" />
+      ),
+    },
+    {
+      label: 'Logistics',
+      href: '/pages/logistics',
+      icon: (
+        <AssuredWorkload className="text-white" />
+      ),
+    },
+    {
+      label: 'Media',
+      href: '/pages/media',
+      icon: (
+        <PermMedia className="text-white" />
+      ),
+    },
+    {
+      label: 'Toggle',
+      href: '/pages/toggle',
+      icon: (
+        <ToggleOff className="text-white" />
+      ),
+    }
+  ];
+
+  return (
+    <Sidebar open={open} setOpen={setOpen}>
+      <SidebarBody className="justify-between gap-10">
+        <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+          {open ? <Logo /> : <LogoIcon />}
+          <div className="mt-8 flex flex-col gap-4">
+            {links.map((link, idx) => (
+              <SidebarLink 
+                key={idx} 
+                link={link} 
+              />
+            ))}
+          </div>
+        </div>
+      </SidebarBody>
+    </Sidebar>
   );
 };
