@@ -6,6 +6,7 @@ import { CloseIcon } from '@gluestack-ui/themed';
 import { Button } from '~/components/ui/button';
 import { Input } from '../../../components/ui/input';
 import { RadioInput }  from '../../../components/ui/radioInput';
+import  CheckboxInput  from '../../../components/ui/checkboxInput'
 import { ProgressBar } from 'react-native-paper';
 import ModalComponent from '../../../components/ui/modal';
 
@@ -43,7 +44,8 @@ const TakeQuestionnaire: React.FC = () => {
   const { answers, handleAnswerChange } = useGetQuestionnaireForm();
   const totalQuestions = data?.data?.item?.length || 0; // Total questions from the API
   const answeredQuestions = Object.keys(answers).length; // Questions answered so far
-  const progress = totalQuestions > 0 ? answeredQuestions / totalQuestions : 0;
+  const [viewedQuestions, setViewedQuestions] = useState<Set<number>>(new Set()); // Track viewed questions
+  const progress = totalQuestions > 0 ? viewedQuestions.size / totalQuestions : 0; // Use viewedQuestions for progress
   const [showAlert, setShowAlert] = useState(false);
   // Check if the current question is required
   const isCurrentQuestionRequired = data?.data?.item?.[currentQuestionIndex]?.required ?? true;
@@ -72,6 +74,10 @@ const TakeQuestionnaire: React.FC = () => {
   }, [getQuestionnaire, isWeb]);
 
   const handleContinue = () => {
+    // Add the current question to viewedQuestions if it’s not already there
+    setViewedQuestions((prev) => new Set(prev).add(currentQuestionIndex));
+
+    // Move to the next question if there are more
     if (currentQuestionIndex < (data?.data?.item?.length || 0) - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     }
@@ -141,6 +147,29 @@ const TakeQuestionnaire: React.FC = () => {
                   onValueChange={(value: string) => handleAnswerChange(currentQuestionIndex.toString(), (value === 'true').toString())}
                 />
               )}
+
+              {data?.data?.item?.[currentQuestionIndex]?.type === 'open-choice' && (
+                  <CheckboxInput
+                    name={`open-choice-question-${currentQuestionIndex}`}
+                    label=""
+                    options={
+                      data?.data?.item?.[currentQuestionIndex]?.answerOption?.map((option) => ({
+                        label: option.valueCoding?.display || '',
+                        value: option.valueCoding?.display || '',
+                      })) || []
+                    }
+                    selectedValues={answers[currentQuestionIndex.toString()]?.split(',') || []}
+                    onValueChange={(value: string) => {
+                      // Toggle selection
+                      const selectedValues = answers[currentQuestionIndex.toString()]?.split(',') || [];
+                      const updatedValues = selectedValues.includes(value)
+                        ? selectedValues.filter((item) => item !== value) // Remove if already selected
+                        : [...selectedValues, value]; // Add if not selected
+                      handleAnswerChange(currentQuestionIndex.toString(), updatedValues.join(',')); // Join as comma-separated string
+                    }}
+                    />
+                )}
+
   
               {isWeb && (
                 <View className="w-full max-w-[800px] mx-auto mt-8">
