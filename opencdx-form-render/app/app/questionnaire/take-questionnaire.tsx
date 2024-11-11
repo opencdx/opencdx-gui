@@ -13,10 +13,18 @@ const useGetQuestionnaireForm = () => {
   const [answers, setAnswers] = useState<{ [key: string]: string }>({});
 
   const handleAnswerChange = (questionId: string, answer: string) => {
-    setAnswers(prevAnswers => ({
-      ...prevAnswers,
-      [questionId]: answer,
-    }));
+    if (answer.length > 0) {
+      setAnswers((prevAnswers) => ({
+        ...prevAnswers,
+        [questionId]: answer,
+      }));
+    } else {
+      // Optionally remove answer if the input is cleared (length = 0)
+      setAnswers((prevAnswers) => {
+        const { [questionId]: _, ...rest } = prevAnswers;
+        return rest;
+      });
+    }
   };
 
   return { answers, handleAnswerChange };
@@ -37,6 +45,9 @@ const TakeQuestionnaire: React.FC = () => {
   const answeredQuestions = Object.keys(answers).length; // Questions answered so far
   const progress = totalQuestions > 0 ? answeredQuestions / totalQuestions : 0;
   const [showAlert, setShowAlert] = useState(false);
+  // Check if the current question is required
+  const isCurrentQuestionRequired = data?.data?.item?.[currentQuestionIndex]?.required ?? true;
+
 
 
   useEffect(() => {
@@ -117,12 +128,25 @@ const TakeQuestionnaire: React.FC = () => {
                   onChangeText={(text) => handleAnswerChange(currentQuestionIndex.toString(), text)}
                 />
               )}
+
+              {data?.data?.item?.[currentQuestionIndex]?.type === 'boolean' && (
+                <RadioInput
+                  name={`boolean-question-${currentQuestionIndex}`}
+                  label={data?.data?.item?.[currentQuestionIndex]?.text || ''}
+                  options={[
+                    { label: 'Yes', value: 'true' },
+                    { label: 'No', value: 'false' },
+                  ]}
+                  value={(answers[currentQuestionIndex.toString()] ?? data?.data?.item?.[currentQuestionIndex]?.initial?.[0]?.valueBoolean)?.toString()}
+                  onValueChange={(value: string) => handleAnswerChange(currentQuestionIndex.toString(), (value === 'true').toString())}
+                />
+              )}
   
               {isWeb && (
                 <View className="w-full max-w-[800px] mx-auto mt-8">
                   <Button 
                   onPress={handleContinue} 
-                  disabled={!answers[currentQuestionIndex.toString()]} // Disable button if no answer
+                  disabled={isCurrentQuestionRequired && !answers[currentQuestionIndex.toString()]} // Disable only if required and no answer
                   className="w-full"
                   >
                     <Text className="text-white text-xl font-bold">Continue</Text>
@@ -161,7 +185,11 @@ const TakeQuestionnaire: React.FC = () => {
         
         {!isWeb && (
           <View className="w-full px-4 pb-4" style={{ marginTop: 'auto' }}>
-            <Button onPress={handleContinue} className="w-full">
+            <Button 
+                  onPress={handleContinue} 
+                  disabled={isCurrentQuestionRequired && !answers[currentQuestionIndex.toString()]} // Disable only if required and no answer
+                  className="w-full"
+            >
               <Text className="text-white text-xl font-bold">Continue</Text>
             </Button>
           </View>
