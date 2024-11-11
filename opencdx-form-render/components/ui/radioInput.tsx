@@ -22,16 +22,23 @@ export const RadioInput: React.FC<RadioInputProps> = ({
   onValueChange,
 }) => {
   return (
-    <View style={{ padding: 16, alignItems: 'flex-start', width: '100%' }}>
-      {label && <Text style={{ fontSize: 18, marginBottom: 8 }}>{label}</Text>}
+    <View className="p-4 w-full items-start">
+      {label && <Text className="text-lg mb-4">{label}</Text>}
       <RadioButton.Group onValueChange={onValueChange} value={value}>
         {options.map((option, index) => (
-          <View key={index} style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 4 }}>
-            <RadioButton
-              value={option.value}
-              color="#0066cc" // Primary color for selected radio button
-            />
-            <Text style={{ fontSize: 14 }}>{option.label}</Text>
+          <View key={index} className="w-full max-w-[800px] mx-auto">
+            {/* Top separator line for all option */}
+            <View className="h-px bg-gray-300 w-full" />
+            <View className="flex-row items-center py-4 w-full">
+              <RadioButton
+                value={option.value}
+                color="#0066cc" // Primary color for selected radio button
+                uncheckedColor="#E4E4E7"
+              />
+              <Text className="text-base font-normal">{option.label}</Text>
+            </View>
+            {/* Bottom separator line for just last option */}
+            {index === options.length - 1 && <View className="h-px bg-gray-300 w-full" />}
           </View>
         ))}
       </RadioButton.Group>

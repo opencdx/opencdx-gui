@@ -6,6 +6,8 @@ import { CloseIcon } from '@gluestack-ui/themed';
 import { Button } from '~/components/ui/button';
 import { Input } from '../../../components/ui/input';
 import { RadioInput }  from '../../../components/ui/radioInput';
+import { ProgressBar } from 'react-native-paper';
+import ModalComponent from '../../../components/ui/modal';
 
 const useGetQuestionnaireForm = () => {
   const [answers, setAnswers] = useState<{ [key: string]: string }>({});
@@ -30,8 +32,12 @@ const TakeQuestionnaire: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-
   const { answers, handleAnswerChange } = useGetQuestionnaireForm();
+  const totalQuestions = data?.data?.item?.length || 0; // Total questions from the API
+  const answeredQuestions = Object.keys(answers).length; // Questions answered so far
+  const progress = totalQuestions > 0 ? answeredQuestions / totalQuestions : 0;
+  const [showAlert, setShowAlert] = useState(false);
+
 
   useEffect(() => {
     const fetchQuestionnaire = async () => {
@@ -114,7 +120,11 @@ const TakeQuestionnaire: React.FC = () => {
   
               {isWeb && (
                 <View className="w-full max-w-[800px] mx-auto mt-8">
-                  <Button onPress={handleContinue} className="w-full">
+                  <Button 
+                  onPress={handleContinue} 
+                  disabled={!answers[currentQuestionIndex.toString()]} // Disable button if no answer
+                  className="w-full"
+                  >
                     <Text className="text-white text-xl font-bold">Continue</Text>
                   </Button>
               </View>
@@ -128,13 +138,18 @@ const TakeQuestionnaire: React.FC = () => {
   
   return (
     <SafeAreaView style={{ paddingTop }} className={`flex-1 bg-white`}>
-      <View className="flex flex-row items-center p-5">
+      <View className="flex flex-row items-center p-5 mt-5">
         <Text className="flex-1 text-center text-xl text-slate-400">
           Take a Specific Questionnaire
         </Text>
-        <Pressable onPress={() => navigation.navigate('app/questionnaire/list' as never)}>
+        <Pressable onPress={() => setShowAlert(true)}>
           <CloseIcon style={{ color: '#006FEE' }} />
         </Pressable>
+      </View>
+
+      {/* Progress Bar */}
+      <View style={{ width: '100%', alignSelf: 'center', marginVertical: 5, marginBottom: 40}}>
+        <ProgressBar progress={progress} color="#006FEE" />
       </View>
 
       <KeyboardAvoidingView
@@ -152,6 +167,22 @@ const TakeQuestionnaire: React.FC = () => {
           </View>
         )}
       </KeyboardAvoidingView>
+
+      {/* Modal Component */}
+      <ModalComponent
+        visible={showAlert}
+        onClose={() => setShowAlert(false)}
+        title="Alert!"
+        content="If you will close this questionnaire you will need to start over again. Would you like to continue?"
+        buttonOneText="Cancel"
+        buttonTwoText="Continue"
+        onButtonOnePress={() => setShowAlert(false)}
+        onButtonTwoPress={() => {
+          setShowAlert(false);
+          navigation.navigate('app/questionnaire/list' as never);
+        }}
+      />
+
     </SafeAreaView>
   );
 };
