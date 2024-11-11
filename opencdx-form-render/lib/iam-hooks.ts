@@ -3,9 +3,10 @@ import { useNavigation } from '@react-navigation/native';
 import { iamApi , questionnaireApi, healthApi} from '../api';
 import { useMutation } from '@tanstack/react-query';
 
-import { GetQuestionnaireListRequest, QuestionnaireRequest } from "../api/questionnaire";
+import { GetQuestionnaireListRequest, QuestionnaireRequest, UserQuestionnaireDataRequest } from "../api/questionnaire";
 import { UserProfileResponse, UserProfile, PutHealthUserProfileRequest } from '../api/health';
 import { LoginRequest, SignUpRequest, ResetPasswordRequest, SignUpResponse } from '../api/iam';
+
 /**
  * Custom hook to handle user login
  * @param {Function} onSuccess - Callback function executed upon successful login
@@ -135,6 +136,20 @@ export const useGetQuestionnaire = (onLoading?: (isLoading: boolean) => void) =>
         },
     });
 }
+
+
+export const useSubmitUserQuestionnaire = (onSuccess?: (data: any) => void, onError?: (error: unknown) => void) => {
+    return useMutation({
+      mutationFn: (params: UserQuestionnaireDataRequest) => questionnaireApi.createUserQuestionnaireData( {userQuestionnaireDataRequest: params}),
+      onSuccess: (data) => {
+        if (onSuccess) onSuccess(data);
+      },
+      onError: (error) => {
+        if (onError) onError(error);
+      },
+    });
+  };
+
 
 export const useGetHealthUserProfile = (onSuccess: (arg0: any) => void, onError: (arg0: unknown) => void) => {
     const [loading, setLoading] = useState(false);

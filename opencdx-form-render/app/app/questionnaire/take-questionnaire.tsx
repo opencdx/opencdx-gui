@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Pressable, Platform, KeyboardAvoidingView, StatusBar, SafeAreaView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useGetQuestionnaire } from '~/lib/iam-hooks';
+import { useGetQuestionnaire, useSubmitUserQuestionnaire } from '~/lib/iam-hooks';
 import { CloseIcon } from '@gluestack-ui/themed';
 import { Button } from '~/components/ui/button';
 import { Input } from '../../../components/ui/input';
 import { RadioInput }  from '../../../components/ui/radioInput';
-import  CheckboxInput from '../../../components/ui/checkboxInput'
 import  SelectInput from '../../../components/ui/selectInput'
 import { ProgressBar } from 'react-native-paper';
 import ModalComponent from '../../../components/ui/modal';
@@ -49,6 +48,7 @@ const TakeQuestionnaire: React.FC = () => {
   const [showAlert, setShowAlert] = useState(false);
   // Check if the current question is required
   const isCurrentQuestionRequired = data?.data?.item?.[currentQuestionIndex]?.required ?? true;
+  const questionLinkId = data?.data?.item?.[currentQuestionIndex]?.linkId;
 
 
   useEffect(() => {
@@ -69,8 +69,22 @@ const TakeQuestionnaire: React.FC = () => {
       setIsWeb(true);
     }
 
-    console.log("Current Question Data:", data?.data?.item?.[currentQuestionIndex]);
   }, [getQuestionnaire, isWeb]);
+
+
+  // Initialize useSubmitUserQuestionnaire
+  const { mutate: submitQuestionnaire} = useSubmitUserQuestionnaire(
+    (response) => {
+      console.log('Questionnaire submitted successfully:', response);
+      // Pending to show return to dashboard UI
+      navigation.navigate('app/questionnaire/list' as never);
+    },
+    (error) => {
+      console.error('Failed to submit questionnaire:', error);
+      // Pending to show toast on error
+    }
+  );
+
 
   const handleContinue = () => {
 
@@ -84,15 +98,31 @@ const TakeQuestionnaire: React.FC = () => {
     } 
     else 
     {
-        // If on the last question, submit the questionnaire
         onSubmit();
     }
   };
 
    const onSubmit = () => {
-    
-    console.log("Submitting data:");
-    
+      const questionnaireData = JSON.parse(JSON.stringify(data?.data || {}));
+
+      const populateAnswers = (items: Array<{ linkId: string; answer?: any; [key: string]: any }>) => {
+        return items.map((question) => {
+          const questionLinkId = question.linkId;
+      
+          // If the question has an answer in the `answers` state, add it to the `answer` field
+          if (answers[questionLinkId] !== undefined) {
+            question.answer = [{ value: answers[questionLinkId] }];
+          }
+      
+          return question;
+        });
+      };
+
+      // Populate answers in the main questionnaire items
+      questionnaireData.item = populateAnswers(questionnaireData.item);
+
+      // Call the `submitQuestionnaire` mutation with the prepared data
+      submitQuestionnaire(questionnaireData.item);
   };
 
   const content = (
@@ -110,17 +140,19 @@ const TakeQuestionnaire: React.FC = () => {
             <View className="w-full gap-4 sm:gap-6 items-center bg-grey-400 p-4 rounded-lg max-w-[800px] mx-auto">
               {(data?.data?.item?.[currentQuestionIndex]?.type === 'integer' || data?.data?.item?.[currentQuestionIndex]?.type === 'decimal') && (
                 <Input
-                  label={data?.data?.item?.[currentQuestionIndex]?.text || 'Enter Value'}
-                  value={answers[currentQuestionIndex.toString()] || ''} 
-                  keyboardType={data?.data?.item?.[currentQuestionIndex]?.type === 'integer' ? 'number-pad' : 'decimal-pad'}
-                  onChangeText={(text) => {
-                    const filteredText = data?.data?.item?.[currentQuestionIndex]?.type === 'integer'
-                      ? text.replace(/[^0-9]/g, '')
-                      : text.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
-  
-                    handleAnswerChange(currentQuestionIndex.toString(), filteredText);
-                  }}
-                />
+                label={data?.data?.item?.[currentQuestionIndex]?.text || 'Enter Value'}
+                value={questionLinkId && answers[questionLinkId] ? answers[questionLinkId] : ''} // Check if questionLinkId is defined
+                keyboardType={data?.data?.item?.[currentQuestionIndex]?.type === 'integer' ? 'number-pad' : 'decimal-pad'}
+                onChangeText={(text) => {
+                  const filteredText = data?.data?.item?.[currentQuestionIndex]?.type === 'integer'
+                    ? text.replace(/[^0-9]/g, '')
+                    : text.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
+              
+                  if (questionLinkId) {
+                    handleAnswerChange(questionLinkId, filteredText); // Pass linkId if it's defined
+                  }
+                }}
+              />
               )}
   
                 {(data?.data?.item?.[currentQuestionIndex]?.type === 'choice' || 
@@ -139,8 +171,9 @@ const TakeQuestionnaire: React.FC = () => {
                         value: option.valueCoding?.code || option.valueCoding?.display || '',
                       })) || []
                     }
-                    value={answers[currentQuestionIndex.toString()] || ''}
-                    onValueChange={(value: string) => handleAnswerChange(currentQuestionIndex.toString(), value)}
+                     value={questionLinkId && answers[questionLinkId] ? answers[questionLinkId] : ''}
+                     onValueChange={(value: string) => { if (questionLinkId) handleAnswerChange(questionLinkId, value);
+                     }}
                   />
                 ) : (
                   // Render RadioInput for non-dropdown choice
@@ -153,8 +186,10 @@ const TakeQuestionnaire: React.FC = () => {
                         value: option.valueCoding?.display || '',
                       })) || []
                     }
-                    value={answers[currentQuestionIndex.toString()] || ''}
-                    onValueChange={(value: string) => handleAnswerChange(currentQuestionIndex.toString(), value)}
+                    value={questionLinkId && answers[questionLinkId] ? answers[questionLinkId] : ''}
+                    onValueChange={(value: string) => {
+                      if (questionLinkId) handleAnswerChange(questionLinkId, value);
+                    }}
                     required={isCurrentQuestionRequired}
                   />
                 )
@@ -165,8 +200,10 @@ const TakeQuestionnaire: React.FC = () => {
                 data?.data?.item?.[currentQuestionIndex]?.type === 'string') && (
                 <Input
                   label="Type your answer here"
-                  value={answers[currentQuestionIndex.toString()] || ''}
-                  onChangeText={(text) => handleAnswerChange(currentQuestionIndex.toString(), text)}
+                  value={questionLinkId && answers[questionLinkId] ? answers[questionLinkId] : ''}
+                  onChangeText={(text) => {
+                    if (questionLinkId) handleAnswerChange(questionLinkId, text);
+               }}
                 />
               )}
 
@@ -178,35 +215,17 @@ const TakeQuestionnaire: React.FC = () => {
                     { label: 'Yes', value: 'true' },
                     { label: 'No', value: 'false' },
                   ]}
-                  value={(answers[currentQuestionIndex.toString()] ?? data?.data?.item?.[currentQuestionIndex]?.initial?.[0]?.valueBoolean)?.toString()}
-                  onValueChange={(value: string) => handleAnswerChange(currentQuestionIndex.toString(), (value === 'true').toString())}
+                  value={
+                    (questionLinkId && answers[questionLinkId] !== undefined)
+                      ? answers[questionLinkId].toString() 
+                      : (data?.data?.item?.[currentQuestionIndex]?.initial?.[0]?.valueBoolean?.toString() || '')
+                  }
+                  onValueChange={(value: string) => {
+                    if (questionLinkId) handleAnswerChange(questionLinkId, (value === 'true').toString());
+                  }}
                   required={isCurrentQuestionRequired} // Indicates that this question is required
                 />
               )}
-
-              {/* {data?.data?.item?.[currentQuestionIndex]?.type === 'open-choice' && (
-                  <CheckboxInput
-                    name={`open-choice-question-${currentQuestionIndex}`}
-                    label=""
-                    options={
-                      data?.data?.item?.[currentQuestionIndex]?.answerOption?.map((option) => ({
-                        label: option.valueCoding?.display || '',
-                        value: option.valueCoding?.display || '',
-                      })) || []
-                    }
-                    selectedValues={answers[currentQuestionIndex.toString()]?.split(',') || []}
-                    required={isCurrentQuestionRequired} // Indicates that this question is required
-                    onValueChange={(value: string) => {
-                      // Toggle selection
-                      const selectedValues = answers[currentQuestionIndex.toString()]?.split(',') || [];
-                      const updatedValues = selectedValues.includes(value)
-                        ? selectedValues.filter((item) => item !== value) // Remove if already selected
-                        : [...selectedValues, value]; // Add if not selected
-                      handleAnswerChange(currentQuestionIndex.toString(), updatedValues.join(',')); // Join as comma-separated string
-                    }}
-                    />
-                )} */}
-
   
               {isWeb && (
                 <View className="w-full max-w-[800px] mx-auto mt-8">
@@ -266,10 +285,10 @@ const TakeQuestionnaire: React.FC = () => {
       <ModalComponent
         visible={showAlert}
         onClose={() => setShowAlert(false)}
-        title="Alert!"
-        content="If you will close this questionnaire you need to start over again. Would you like to continue?"
-        buttonOneText="Cancel"
-        buttonTwoText="Continue"
+        title="Unsaved Questionnaire"
+        content="Do you want to leave? If you leave your questionnaire responses will not be saved."
+        buttonOneText="Return"
+        buttonTwoText="Leave"
         onButtonOnePress={() => setShowAlert(false)}
         onButtonTwoPress={() => {
           setShowAlert(false);
