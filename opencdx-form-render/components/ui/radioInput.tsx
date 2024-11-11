@@ -13,6 +13,7 @@ interface RadioInputProps {
   options: AnswerOption[];
   value: string;
   onValueChange: (value: string) => void;
+  required?: boolean; // Add required prop
 }
 
 export const RadioInput: React.FC<RadioInputProps> = ({
@@ -20,6 +21,7 @@ export const RadioInput: React.FC<RadioInputProps> = ({
   options,
   value,
   onValueChange,
+  required = false, // Default to false if not provided
 }) => {
   return (
     <View className="p-4 w-full items-start">

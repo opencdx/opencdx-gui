@@ -6,7 +6,8 @@ import { CloseIcon } from '@gluestack-ui/themed';
 import { Button } from '~/components/ui/button';
 import { Input } from '../../../components/ui/input';
 import { RadioInput }  from '../../../components/ui/radioInput';
-import  CheckboxInput  from '../../../components/ui/checkboxInput'
+import  CheckboxInput from '../../../components/ui/checkboxInput'
+import  SelectInput from '../../../components/ui/selectInput'
 import { ProgressBar } from 'react-native-paper';
 import ModalComponent from '../../../components/ui/modal';
 
@@ -43,13 +44,11 @@ const TakeQuestionnaire: React.FC = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const { answers, handleAnswerChange } = useGetQuestionnaireForm();
   const totalQuestions = data?.data?.item?.length || 0; // Total questions from the API
-  const answeredQuestions = Object.keys(answers).length; // Questions answered so far
   const [viewedQuestions, setViewedQuestions] = useState<Set<number>>(new Set()); // Track viewed questions
   const progress = totalQuestions > 0 ? viewedQuestions.size / totalQuestions : 0; // Use viewedQuestions for progress
   const [showAlert, setShowAlert] = useState(false);
   // Check if the current question is required
   const isCurrentQuestionRequired = data?.data?.item?.[currentQuestionIndex]?.required ?? true;
-
 
 
   useEffect(() => {
@@ -74,13 +73,26 @@ const TakeQuestionnaire: React.FC = () => {
   }, [getQuestionnaire, isWeb]);
 
   const handleContinue = () => {
-    // Add the current question to viewedQuestions if it’s not already there
-    setViewedQuestions((prev) => new Set(prev).add(currentQuestionIndex));
 
-    // Move to the next question if there are more
-    if (currentQuestionIndex < (data?.data?.item?.length || 0) - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    if (currentQuestionIndex < totalQuestions - 1) 
+    {
+      setViewedQuestions((prev) => new Set(prev).add(currentQuestionIndex));
+      // Move to the next question if there are more to answer
+      if (currentQuestionIndex < (data?.data?.item?.length || 0) - 1) {
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+      }
+    } 
+    else 
+    {
+        // If on the last question, submit the questionnaire
+        onSubmit();
     }
+  };
+
+   const onSubmit = () => {
+    
+    console.log("Submitting data:");
+    
   };
 
   const content = (
@@ -111,20 +123,43 @@ const TakeQuestionnaire: React.FC = () => {
                 />
               )}
   
-              {data?.data?.item?.[currentQuestionIndex]?.type === 'choice' && (
-                <RadioInput
-                  name={`question-${currentQuestionIndex}`}
-                  label=""
-                  options={
-                    data?.data?.item?.[currentQuestionIndex]?.answerOption?.map((option, index) => ({
-                      label: option.valueCoding?.display || '',
-                      value: option.valueCoding?.display || '',
-                    })) || []
-                  }
-                  value={answers[currentQuestionIndex.toString()] || ''}
-                  onValueChange={(value: string) => handleAnswerChange(currentQuestionIndex.toString(), value)}
-                />  
+                {(data?.data?.item?.[currentQuestionIndex]?.type === 'choice' || 
+                data?.data?.item?.[currentQuestionIndex]?.type === 'open-choice') && (
+                
+                // Check for "Drop down" display in extensions
+                data?.data?.item?.[currentQuestionIndex]?.extension?.some(
+                  (ext) => ext.valueCodeableConcept?.coding?.some((coding) => coding.display === "Drop down")
+                ) ? (
+                  // Render SelectInput for dropdown display
+                  <SelectInput
+                    label=""
+                    options={
+                      data?.data?.item?.[currentQuestionIndex]?.answerOption?.map((option) => ({
+                        label: option.valueCoding?.display || '',
+                        value: option.valueCoding?.code || option.valueCoding?.display || '',
+                      })) || []
+                    }
+                    value={answers[currentQuestionIndex.toString()] || ''}
+                    onValueChange={(value: string) => handleAnswerChange(currentQuestionIndex.toString(), value)}
+                  />
+                ) : (
+                  // Render RadioInput for non-dropdown choice
+                  <RadioInput
+                    name={`question-${currentQuestionIndex}`}
+                    label=""
+                    options={
+                      data?.data?.item?.[currentQuestionIndex]?.answerOption?.map((option) => ({
+                        label: option.valueCoding?.display || '',
+                        value: option.valueCoding?.display || '',
+                      })) || []
+                    }
+                    value={answers[currentQuestionIndex.toString()] || ''}
+                    onValueChange={(value: string) => handleAnswerChange(currentQuestionIndex.toString(), value)}
+                    required={isCurrentQuestionRequired}
+                  />
+                )
               )}
+
   
               {(data?.data?.item?.[currentQuestionIndex]?.type === 'text' || 
                 data?.data?.item?.[currentQuestionIndex]?.type === 'string') && (
@@ -145,10 +180,11 @@ const TakeQuestionnaire: React.FC = () => {
                   ]}
                   value={(answers[currentQuestionIndex.toString()] ?? data?.data?.item?.[currentQuestionIndex]?.initial?.[0]?.valueBoolean)?.toString()}
                   onValueChange={(value: string) => handleAnswerChange(currentQuestionIndex.toString(), (value === 'true').toString())}
+                  required={isCurrentQuestionRequired} // Indicates that this question is required
                 />
               )}
 
-              {data?.data?.item?.[currentQuestionIndex]?.type === 'open-choice' && (
+              {/* {data?.data?.item?.[currentQuestionIndex]?.type === 'open-choice' && (
                   <CheckboxInput
                     name={`open-choice-question-${currentQuestionIndex}`}
                     label=""
@@ -159,6 +195,7 @@ const TakeQuestionnaire: React.FC = () => {
                       })) || []
                     }
                     selectedValues={answers[currentQuestionIndex.toString()]?.split(',') || []}
+                    required={isCurrentQuestionRequired} // Indicates that this question is required
                     onValueChange={(value: string) => {
                       // Toggle selection
                       const selectedValues = answers[currentQuestionIndex.toString()]?.split(',') || [];
@@ -168,7 +205,7 @@ const TakeQuestionnaire: React.FC = () => {
                       handleAnswerChange(currentQuestionIndex.toString(), updatedValues.join(',')); // Join as comma-separated string
                     }}
                     />
-                )}
+                )} */}
 
   
               {isWeb && (
@@ -178,7 +215,7 @@ const TakeQuestionnaire: React.FC = () => {
                   disabled={isCurrentQuestionRequired && !answers[currentQuestionIndex.toString()]} // Disable only if required and no answer
                   className="w-full"
                   >
-                    <Text className="text-white text-xl font-bold">Continue</Text>
+                     <Text className="text-white text-xl font-bold">{currentQuestionIndex === totalQuestions - 1 ? 'Submit' : 'Continue'}</Text>
                   </Button>
               </View>
               )}
@@ -219,7 +256,7 @@ const TakeQuestionnaire: React.FC = () => {
                   disabled={isCurrentQuestionRequired && !answers[currentQuestionIndex.toString()]} // Disable only if required and no answer
                   className="w-full"
             >
-              <Text className="text-white text-xl font-bold">Continue</Text>
+             <Text className="text-white text-xl font-bold">{currentQuestionIndex === totalQuestions - 1 ? 'Submit' : 'Continue'}</Text>
             </Button>
           </View>
         )}
@@ -230,7 +267,7 @@ const TakeQuestionnaire: React.FC = () => {
         visible={showAlert}
         onClose={() => setShowAlert(false)}
         title="Alert!"
-        content="If you will close this questionnaire you will need to start over again. Would you like to continue?"
+        content="If you will close this questionnaire you need to start over again. Would you like to continue?"
         buttonOneText="Cancel"
         buttonTwoText="Continue"
         onButtonOnePress={() => setShowAlert(false)}

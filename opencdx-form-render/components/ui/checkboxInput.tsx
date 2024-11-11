@@ -13,6 +13,7 @@ interface CheckboxInputProps {
   options: AnswerOption[];
   selectedValues: string[];
   onValueChange: (value: string) => void;
+  required?: boolean; // Add required prop
 }
 
 const CheckboxInput: React.FC<CheckboxInputProps> = ({
@@ -20,6 +21,7 @@ const CheckboxInput: React.FC<CheckboxInputProps> = ({
   options,
   selectedValues,
   onValueChange,
+  required = false, // Default to false if not provided
 }) => {
   return (
     <View className="p-4 w-full max-w-[800px] mx-auto items-start">
