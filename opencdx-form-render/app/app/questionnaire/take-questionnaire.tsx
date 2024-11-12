@@ -9,6 +9,7 @@ import { RadioInput }  from '../../../components/ui/radioInput';
 import  SelectInput from '../../../components/ui/selectInput'
 import { ProgressBar } from 'react-native-paper';
 import ModalComponent from '../../../components/ui/modal';
+import { useShowToast } from '~/lib/toast';
 
 const useGetQuestionnaireForm = () => {
   const [answers, setAnswers] = useState<{ [key: string]: string }>({});
@@ -46,6 +47,7 @@ const TakeQuestionnaire: React.FC = () => {
   const [viewedQuestions, setViewedQuestions] = useState<Set<number>>(new Set()); // Track viewed questions
   const progress = totalQuestions > 0 ? viewedQuestions.size / totalQuestions : 0; // Use viewedQuestions for progress
   const [showAlert, setShowAlert] = useState(false);
+  const showToast = useShowToast();
   // Check if the current question is required
   const isCurrentQuestionRequired = data?.data?.item?.[currentQuestionIndex]?.required ?? true;
   const questionLinkId = data?.data?.item?.[currentQuestionIndex]?.linkId;
@@ -71,17 +73,21 @@ const TakeQuestionnaire: React.FC = () => {
 
   }, [getQuestionnaire, isWeb]);
 
+  const showToaster = (message: string, type: 'success' | 'error') => {
+    showToast({ message, type });
+  };
 
   // Initialize useSubmitUserQuestionnaire
   const { mutate: submitQuestionnaire} = useSubmitUserQuestionnaire(
     (response) => {
-      console.log('Questionnaire submitted successfully:', response);
-      // Pending to show return to dashboard UI
-      navigation.navigate('app/questionnaire/list' as never);
+      
+       console.log('Questionnaire submitted successfully:', response);
+       
+       // Navigate to the questionnaire-success screen
+        navigation.navigate('app/questionnaire/questionnaire-success' as never);
     },
     (error) => {
-      console.error('Failed to submit questionnaire:', error);
-      // Pending to show toast on error
+       showToaster('Failed to submit questionnaire.', 'error');
     }
   );
 
@@ -91,13 +97,13 @@ const TakeQuestionnaire: React.FC = () => {
     if (currentQuestionIndex < totalQuestions - 1) 
     {
       setViewedQuestions((prev) => new Set(prev).add(currentQuestionIndex));
-      // Move to the next question if there are more to answer
       if (currentQuestionIndex < (data?.data?.item?.length || 0) - 1) {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
       }
     } 
     else 
     {
+        setViewedQuestions((prev) => new Set(prev).add(currentQuestionIndex));
         onSubmit();
     }
   };
@@ -210,7 +216,7 @@ const TakeQuestionnaire: React.FC = () => {
               {data?.data?.item?.[currentQuestionIndex]?.type === 'boolean' && (
                 <RadioInput
                   name={`boolean-question-${currentQuestionIndex}`}
-                  label={data?.data?.item?.[currentQuestionIndex]?.text || ''}
+                  label=""
                   options={[
                     { label: 'Yes', value: 'true' },
                     { label: 'No', value: 'false' },
@@ -231,7 +237,7 @@ const TakeQuestionnaire: React.FC = () => {
                 <View className="w-full max-w-[800px] mx-auto mt-8">
                   <Button 
                   onPress={handleContinue} 
-                  disabled={isCurrentQuestionRequired && !answers[currentQuestionIndex.toString()]} // Disable only if required and no answer
+                  disabled={isCurrentQuestionRequired && (!questionLinkId || !answers[questionLinkId])} // Disable only if required and no answer for questionLinkId
                   className="w-full"
                   >
                      <Text className="text-white text-xl font-bold">{currentQuestionIndex === totalQuestions - 1 ? 'Submit' : 'Continue'}</Text>
@@ -272,7 +278,7 @@ const TakeQuestionnaire: React.FC = () => {
           <View className="w-full px-4 pb-4" style={{ marginTop: 'auto' }}>
             <Button 
                   onPress={handleContinue} 
-                  disabled={isCurrentQuestionRequired && !answers[currentQuestionIndex.toString()]} // Disable only if required and no answer
+                  disabled={isCurrentQuestionRequired && (!questionLinkId || !answers[questionLinkId])} // Disable only if required and no answer for questionLinkId
                   className="w-full"
             >
              <Text className="text-white text-xl font-bold">{currentQuestionIndex === totalQuestions - 1 ? 'Submit' : 'Continue'}</Text>

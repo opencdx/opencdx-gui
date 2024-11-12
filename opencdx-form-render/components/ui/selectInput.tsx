@@ -25,7 +25,7 @@ interface SelectInputProps {
 
 const SelectInput: React.FC<SelectInputProps> = ({ label, options, value, onValueChange, required = false }) => {
   return (
-    <View className="p-4 w-full">
+    <View className=" w-full">
       <View className="flex-row items-center mb-4">
         {label && <Text className="text-lg">{label}</Text>}
       </View>
@@ -33,30 +33,27 @@ const SelectInput: React.FC<SelectInputProps> = ({ label, options, value, onValu
       <Select
         selectedValue={value}
         onValueChange={onValueChange}
-        className="w-full"
+        className="w-full min-h-[98px] "
       >
         
-        <SelectTrigger className="flex flex-row justify-between items-center w-full p-3 border border-gray-300 rounded-md">
-          <Text className={`pl-2 text-gray-500 ${value ? "text-gray-700" : ""}`}>
+        <SelectTrigger variant="outline" size="xl">
+          <Text className="pl-3 text-gray-600">
             {value || "Select option"}
           </Text>
-          <SelectIcon className="text-gray-500" style={{ fontSize: 20 }} />
+          <SelectIcon className="text-gray-500" style={{ fontSize: 20, width: 24, height: 24 }} />
         </SelectTrigger>
 
         {/* Use SelectPortal for dropdown content */}
-        <SelectPortal>
+        <SelectPortal className=" bg-white opacity-50 ">
           {/* Adjusted SelectBackdrop to align under SelectTrigger */}
-          <SelectBackdrop className="absolute inset-0 bg-black opacity-50 z-10" />
-          <SelectContent className="w-full max-w-[500px] bg-white border border-gray-300 rounded-md shadow-lg mt-2 z-20">
-            <SelectDragIndicatorWrapper>
-              <SelectDragIndicator className="bg-gray-300 h-1 w-10 rounded-full mt-2 mx-auto" />
-            </SelectDragIndicatorWrapper>
+          <SelectBackdrop className=" bg-white opacity-50 " />
+          <SelectContent className="w-full max-w-[500px] bg-white border border-gray-400 rounded-md shadow-lg">
             {options.map((option) => (
               <SelectItem
                 label={option.label}
                 value={option.value}
                 key={option.value}
-                className="text-base text-gray-700 p-2 hover:bg-gray-100"
+                className="text-base font-bold text-gray-700 p-8"
               />
             ))}
           </SelectContent>
