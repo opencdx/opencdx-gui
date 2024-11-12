@@ -10,6 +10,7 @@ import  SelectInput from '../../../components/ui/selectInput'
 import { ProgressBar } from 'react-native-paper';
 import ModalComponent from '../../../components/ui/modal';
 import { useShowToast } from '~/lib/toast';
+import useUserStore from '~/app/data_store/user_store';
 
 const useGetQuestionnaireForm = () => {
   const [answers, setAnswers] = useState<{ [key: string]: string }>({});
@@ -51,6 +52,7 @@ const TakeQuestionnaire: React.FC = () => {
   // Check if the current question is required
   const isCurrentQuestionRequired = data?.data?.item?.[currentQuestionIndex]?.required ?? true;
   const questionLinkId = data?.data?.item?.[currentQuestionIndex]?.linkId;
+  const { userProfile } = useUserStore();
 
 
   useEffect(() => {
@@ -108,29 +110,66 @@ const TakeQuestionnaire: React.FC = () => {
     }
   };
 
-   const onSubmit = () => {
+    const onSubmit = () => {
       const questionnaireData = JSON.parse(JSON.stringify(data?.data || {}));
-
-      const populateAnswers = (items: Array<{ linkId: string; answer?: any; [key: string]: any }>) => {
+      const patientId = userProfile?.id;
+    
+      const populateAnswers = (items: Array<{ linkId: string; type: string; answer?: any; [key: string]: any }>) => {
         return items.map((question) => {
           const questionLinkId = question.linkId;
-      
-          // If the question has an answer in the `answers` state, add it to the `answer` field
+    
+          // Check if the question has an answer in the `answers` state
           if (answers[questionLinkId] !== undefined) {
-            question.answer = [{ value: answers[questionLinkId] }];
+            // Set the answer based on question type
+            switch (question.type) {
+              case 'integer':
+              case 'decimal':
+                question.answer = [{ valueInteger: parseInt(answers[questionLinkId], 10) }];
+                break;
+              case 'boolean':
+                question.answer = [{ valueBoolean: answers[questionLinkId] === 'true' }];
+                break;
+              case 'text':
+              case 'string':
+              case 'choice':
+              case 'open-choice':
+                question.answer = [{ valueString: answers[questionLinkId] }];
+                break;
+              default:
+                question.answer = [{ value: answers[questionLinkId] }]; 
+            }
+          } else {
+            // If no answer, default to an empty array
+            question.answer = [];
           }
-      
+    
+          if (question.item && question.item.length > 0) {
+            question.item = populateAnswers(question.item);
+          }
+    
           return question;
         });
       };
-
-      // Populate answers in the main questionnaire items
-      questionnaireData.item = populateAnswers(questionnaireData.item);
-
-      // Call the `submitQuestionnaire` mutation with the prepared data
-      submitQuestionnaire(questionnaireData.item);
+    
+      // Populate answers in the questionnaire items
+      const populatedItems = populateAnswers(questionnaireData.item);
+    
+      // Prepare final request payload
+      const requestBody = {
+        userQuestionnaireData: {
+          patientId: patientId,
+          questionnaireData: [
+            {
+              item: populatedItems,
+            },
+          ],
+        },
+      };
+    
+      submitQuestionnaire(requestBody);
   };
-
+    
+  
   const content = (
     <ScrollView style={{ flex: 1, width: '100%' }} contentContainerStyle={{ alignItems: 'center', paddingHorizontal: 20 }}>
       <View className="w-full max-w-[800px] mx-auto flex flex-col justify-center items-center gap-4">
