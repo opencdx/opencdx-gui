@@ -1263,8 +1263,7 @@
                         "format": "double"
                     },
                     "valueString": {
-                        "type": "number",
-                        "format": "double"
+                        "type": "string"
                     }
                 }
             },

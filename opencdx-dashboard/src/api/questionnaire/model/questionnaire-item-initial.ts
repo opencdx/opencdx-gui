@@ -40,9 +40,9 @@ export interface QuestionnaireItemInitial {
     'valueDecimal'?: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof QuestionnaireItemInitial
      */
-    'valueString'?: number;
+    'valueString'?: string;
 }
 
