@@ -133,10 +133,9 @@ const TakeQuestionnaire: React.FC = () => {
               case 'string':
               case 'choice':
               case 'open-choice':
+              default:
                 question.answer = [{ valueString: answers[questionLinkId] }];
                 break;
-              default:
-                question.answer = [{ value: answers[questionLinkId] }]; 
             }
           } else {
             // If no answer, default to an empty array
