@@ -3,7 +3,7 @@ import { View, Text, Image } from 'react-native';
 import { SidebarLink } from '../../../components/ui/sidenav';
 import QuestionnaireCard from './QuestionnaireCard';
 
-const DesktopDashboard = ({ links }: { links: any }) => (
+const DesktopDashboard = ({ links, selectedTab }: { links: any; selectedTab: string }) => (
   <View className="flex flex-row h-screen">
     <View className="bg-[#020B2D] bg-gradient-to-b from-[#020B2D] from-70% via-[#0A2A88] to-[#0D47E9] w-64 p-4">
       <Image
@@ -11,7 +11,13 @@ const DesktopDashboard = ({ links }: { links: any }) => (
         className="w-32 h-8 mb-8"
       />
       {links.map((link: any) => (
-        <SidebarLink key={link.href} link={link} />
+        <SidebarLink 
+        key={link.href} 
+        link={{
+          ...link,
+          icon: selectedTab === link.label ? link.selectedIcon : link.unselectedIcon
+        }}
+      />
       ))}
     </View>
 
