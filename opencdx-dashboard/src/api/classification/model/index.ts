@@ -27,3 +27,4 @@ export * from './symptom';
 export * from './test-kit';
 export * from './timestamp';
 export * from './user-answer';
+export { Type } from './classification';

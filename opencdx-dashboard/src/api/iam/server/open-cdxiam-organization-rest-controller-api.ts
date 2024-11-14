@@ -28,6 +28,8 @@ import type { CreateOrganizationResponse } from '../model';
 // @ts-ignore
 import type { GetOrganizationDetailsByIdResponse } from '../model';
 // @ts-ignore
+import type { ListOrganizationsRequest } from '../model';
+// @ts-ignore
 import type { ListOrganizationsResponse } from '../model';
 // @ts-ignore
 import type { UpdateOrganizationRequest } from '../model';
@@ -117,10 +119,13 @@ export const OpenCdxiamOrganizationRestControllerApiAxiosParamCreator = function
         },
         /**
          * 
+         * @param {ListOrganizationsRequest} listOrganizationsRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listOrganizations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listOrganizations: async (listOrganizationsRequest: ListOrganizationsRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'listOrganizationsRequest' is not null or undefined
+            assertParamExists('listOrganizations', 'listOrganizationsRequest', listOrganizationsRequest)
             const localVarPath = `/organization/list`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -139,9 +144,12 @@ export const OpenCdxiamOrganizationRestControllerApiAxiosParamCreator = function
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(listOrganizationsRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -223,11 +231,12 @@ export const OpenCdxiamOrganizationRestControllerApiFp = function(configuration?
         },
         /**
          * 
+         * @param {ListOrganizationsRequest} listOrganizationsRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listOrganizations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListOrganizationsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listOrganizations(options);
+        async listOrganizations(listOrganizationsRequest: ListOrganizationsRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListOrganizationsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listOrganizations(listOrganizationsRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OpenCdxiamOrganizationRestControllerApi.listOrganizations']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -274,11 +283,12 @@ export const OpenCdxiamOrganizationRestControllerApiFactory = function (configur
         },
         /**
          * 
+         * @param {OpenCdxiamOrganizationRestControllerApiListOrganizationsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listOrganizations(options?: RawAxiosRequestConfig): AxiosPromise<ListOrganizationsResponse> {
-            return localVarFp.listOrganizations(options).then((request) => request(axios, basePath));
+        listOrganizations(requestParameters: OpenCdxiamOrganizationRestControllerApiListOrganizationsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ListOrganizationsResponse> {
+            return localVarFp.listOrganizations(requestParameters.listOrganizationsRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -318,6 +328,20 @@ export interface OpenCdxiamOrganizationRestControllerApiGetOrganizationDetailsBy
      * @memberof OpenCdxiamOrganizationRestControllerApiGetOrganizationDetailsById
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for listOrganizations operation in OpenCdxiamOrganizationRestControllerApi.
+ * @export
+ * @interface OpenCdxiamOrganizationRestControllerApiListOrganizationsRequest
+ */
+export interface OpenCdxiamOrganizationRestControllerApiListOrganizationsRequest {
+    /**
+     * 
+     * @type {ListOrganizationsRequest}
+     * @memberof OpenCdxiamOrganizationRestControllerApiListOrganizations
+     */
+    readonly listOrganizationsRequest: ListOrganizationsRequest
 }
 
 /**
@@ -365,12 +389,13 @@ export class OpenCdxiamOrganizationRestControllerApi extends BaseAPI {
 
     /**
      * 
+     * @param {OpenCdxiamOrganizationRestControllerApiListOrganizationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OpenCdxiamOrganizationRestControllerApi
      */
-    public listOrganizations(options?: RawAxiosRequestConfig) {
-        return OpenCdxiamOrganizationRestControllerApiFp(this.configuration).listOrganizations(options).then((request) => request(this.axios, this.basePath));
+    public listOrganizations(requestParameters: OpenCdxiamOrganizationRestControllerApiListOrganizationsRequest, options?: RawAxiosRequestConfig) {
+        return OpenCdxiamOrganizationRestControllerApiFp(this.configuration).listOrganizations(requestParameters.listOrganizationsRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -15,6 +15,9 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
+import type { Pagination } from './pagination';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { Workspace } from './workspace';
 
 /**
@@ -29,5 +32,11 @@ export interface ListWorkspacesResponse {
      * @memberof ListWorkspacesResponse
      */
     'workspaces'?: Array<Workspace>;
+    /**
+     * 
+     * @type {Pagination}
+     * @memberof ListWorkspacesResponse
+     */
+    'pagination'?: Pagination;
 }
 

@@ -38,7 +38,9 @@ model/list-analysis-engines-request.ts
 model/list-analysis-engines-response.ts
 model/list-iam-users-request.ts
 model/list-iam-users-response.ts
+model/list-organizations-request.ts
 model/list-organizations-response.ts
+model/list-workspaces-request.ts
 model/list-workspaces-response.ts
 model/login-request.ts
 model/login-response.ts

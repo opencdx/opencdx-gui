@@ -1,17 +1,26 @@
 {
   "openapi": "3.0.1",
-  "info": { "title": "OpenAPI definition", "version": "v0" },
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
   "servers": [
     {
-      "url": "https://localhost:8080/iam",
+      "url": "https://api.dev-1.opencdx.io/iam",
       "description": "Generated server url"
     }
   ],
-  "security": [{ "bearerAuth": [] }],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
   "paths": {
     "/workspace": {
       "put": {
-        "tags": ["open-cdxiam-workspace-rest-controller"],
+        "tags": [
+          "open-cdxiam-workspace-rest-controller"
+        ],
         "operationId": "updateWorkspace",
         "requestBody": {
           "content": {
@@ -37,7 +46,9 @@
         }
       },
       "post": {
-        "tags": ["open-cdxiam-workspace-rest-controller"],
+        "tags": [
+          "open-cdxiam-workspace-rest-controller"
+        ],
         "operationId": "createWorkspace",
         "requestBody": {
           "content": {
@@ -65,12 +76,16 @@
     },
     "/user": {
       "put": {
-        "tags": ["open-cdxiam-user-rest-controller"],
+        "tags": [
+          "open-cdxiam-user-rest-controller"
+        ],
         "operationId": "updateIamUser",
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/UpdateIamUserRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/UpdateIamUserRequest"
+              }
             }
           },
           "required": true
@@ -91,7 +106,9 @@
     },
     "/organization": {
       "put": {
-        "tags": ["open-cdxiam-organization-rest-controller"],
+        "tags": [
+          "open-cdxiam-organization-rest-controller"
+        ],
         "operationId": "updateOrganization",
         "requestBody": {
           "content": {
@@ -117,7 +134,9 @@
         }
       },
       "post": {
-        "tags": ["open-cdxiam-organization-rest-controller"],
+        "tags": [
+          "open-cdxiam-organization-rest-controller"
+        ],
         "operationId": "createOrganization",
         "requestBody": {
           "content": {
@@ -145,7 +164,9 @@
     },
     "/analysis-engine": {
       "put": {
-        "tags": ["open-cdx-analysis-engine-rest-controller"],
+        "tags": [
+          "open-cdx-analysis-engine-rest-controller"
+        ],
         "operationId": "updateAnalysisEngineRequest",
         "requestBody": {
           "content": {
@@ -171,7 +192,9 @@
         }
       },
       "post": {
-        "tags": ["open-cdx-analysis-engine-rest-controller"],
+        "tags": [
+          "open-cdx-analysis-engine-rest-controller"
+        ],
         "operationId": "createAnalysisEngineRequest",
         "requestBody": {
           "content": {
@@ -199,8 +222,20 @@
     },
     "/workspace/list": {
       "post": {
-        "tags": ["open-cdxiam-workspace-rest-controller"],
+        "tags": [
+          "open-cdxiam-workspace-rest-controller"
+        ],
         "operationId": "listWorkspaces",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListWorkspacesRequest"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -217,12 +252,16 @@
     },
     "/user/signup": {
       "post": {
-        "tags": ["open-cdxiam-user-rest-controller"],
+        "tags": [
+          "open-cdxiam-user-rest-controller"
+        ],
         "operationId": "signUp",
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/SignUpRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/SignUpRequest"
+              }
             }
           },
           "required": true
@@ -232,7 +271,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/SignUpResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/SignUpResponse"
+                }
               }
             }
           }
@@ -241,12 +282,16 @@
     },
     "/user/password": {
       "post": {
-        "tags": ["open-cdxiam-user-rest-controller"],
+        "tags": [
+          "open-cdxiam-user-rest-controller"
+        ],
         "operationId": "changePassword",
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/ChangePasswordRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordRequest"
+              }
             }
           },
           "required": true
@@ -267,12 +312,16 @@
     },
     "/user/password/reset": {
       "post": {
-        "tags": ["open-cdxiam-user-rest-controller"],
+        "tags": [
+          "open-cdxiam-user-rest-controller"
+        ],
         "operationId": "resetPassword",
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/ResetPasswordRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordRequest"
+              }
             }
           },
           "required": true
@@ -293,12 +342,16 @@
     },
     "/user/login": {
       "post": {
-        "tags": ["open-cdxiam-user-rest-controller"],
+        "tags": [
+          "open-cdxiam-user-rest-controller"
+        ],
         "operationId": "login",
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/LoginRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
             }
           },
           "required": true
@@ -308,7 +361,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/LoginResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
               }
             }
           }
@@ -317,12 +372,16 @@
     },
     "/user/list": {
       "post": {
-        "tags": ["open-cdxiam-user-rest-controller"],
+        "tags": [
+          "open-cdxiam-user-rest-controller"
+        ],
         "operationId": "listIamUsers",
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/ListIamUsersRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/ListIamUsersRequest"
+              }
             }
           },
           "required": true
@@ -343,12 +402,16 @@
     },
     "/user/exists": {
       "post": {
-        "tags": ["open-cdxiam-user-rest-controller"],
+        "tags": [
+          "open-cdxiam-user-rest-controller"
+        ],
         "operationId": "userExists",
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/UserExistsRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/UserExistsRequest"
+              }
             }
           },
           "required": true
@@ -358,7 +421,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/UserExistsResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/UserExistsResponse"
+                }
               }
             }
           }
@@ -367,7 +432,9 @@
     },
     "/protectPrivacy": {
       "post": {
-        "tags": ["open-cdx-rest-protector-controller"],
+        "tags": [
+          "open-cdx-rest-protector-controller"
+        ],
         "operationId": "postProtectPrivacy",
         "requestBody": {
           "content": {
@@ -384,7 +451,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/SecurityResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/SecurityResponse"
+                }
               }
             }
           }
@@ -393,8 +462,20 @@
     },
     "/organization/list": {
       "post": {
-        "tags": ["open-cdxiam-organization-rest-controller"],
+        "tags": [
+          "open-cdxiam-organization-rest-controller"
+        ],
         "operationId": "listOrganizations",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListOrganizationsRequest"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -411,7 +492,9 @@
     },
     "/monitorRealTime": {
       "post": {
-        "tags": ["open-cdx-rest-protector-controller"],
+        "tags": [
+          "open-cdx-rest-protector-controller"
+        ],
         "operationId": "postMonitorRealTime",
         "requestBody": {
           "content": {
@@ -428,7 +511,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/SecurityResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/SecurityResponse"
+                }
               }
             }
           }
@@ -437,7 +522,9 @@
     },
     "/detectAnomalies": {
       "post": {
-        "tags": ["open-cdx-rest-protector-controller"],
+        "tags": [
+          "open-cdx-rest-protector-controller"
+        ],
         "operationId": "postDetectAnomalies",
         "requestBody": {
           "content": {
@@ -454,7 +541,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/SecurityResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/SecurityResponse"
+                }
               }
             }
           }
@@ -463,7 +552,9 @@
     },
     "/authorize": {
       "post": {
-        "tags": ["open-cdx-rest-protector-controller"],
+        "tags": [
+          "open-cdx-rest-protector-controller"
+        ],
         "operationId": "postAuthorize",
         "requestBody": {
           "content": {
@@ -480,7 +571,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/SecurityResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/SecurityResponse"
+                }
               }
             }
           }
@@ -489,7 +582,9 @@
     },
     "/analyzeUserBehavior": {
       "post": {
-        "tags": ["open-cdx-rest-protector-controller"],
+        "tags": [
+          "open-cdx-rest-protector-controller"
+        ],
         "operationId": "postAnalyzeUserBehavior",
         "requestBody": {
           "content": {
@@ -506,7 +601,9 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/SecurityResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/SecurityResponse"
+                }
               }
             }
           }
@@ -515,7 +612,9 @@
     },
     "/analysis-engine/list": {
       "post": {
-        "tags": ["open-cdx-analysis-engine-rest-controller"],
+        "tags": [
+          "open-cdx-analysis-engine-rest-controller"
+        ],
         "operationId": "listAnalysisEngineRequest",
         "requestBody": {
           "content": {
@@ -543,14 +642,18 @@
     },
     "/workspace/{id}": {
       "get": {
-        "tags": ["open-cdxiam-workspace-rest-controller"],
+        "tags": [
+          "open-cdxiam-workspace-rest-controller"
+        ],
         "operationId": "getWorkspaceDetailsById",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -569,14 +672,18 @@
     },
     "/user/{id}": {
       "get": {
-        "tags": ["open-cdxiam-user-rest-controller"],
+        "tags": [
+          "open-cdxiam-user-rest-controller"
+        ],
         "operationId": "getIamUser",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -584,21 +691,27 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/GetIamUserResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/GetIamUserResponse"
+                }
               }
             }
           }
         }
       },
       "delete": {
-        "tags": ["open-cdxiam-user-rest-controller"],
+        "tags": [
+          "open-cdxiam-user-rest-controller"
+        ],
         "operationId": "deleteIamUser",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -617,21 +730,29 @@
     },
     "/user/verify/{id}": {
       "get": {
-        "tags": ["open-cdxiam-user-rest-controller"],
+        "tags": [
+          "open-cdxiam-user-rest-controller"
+        ],
         "operationId": "verifyEmailIamUser",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
-              "application/json": { "schema": { "type": "string" } }
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
@@ -639,14 +760,18 @@
     },
     "/user/current": {
       "get": {
-        "tags": ["open-cdxiam-user-rest-controller"],
+        "tags": [
+          "open-cdxiam-user-rest-controller"
+        ],
         "operationId": "currentUser",
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/CurrentUserResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentUserResponse"
+                }
               }
             }
           }
@@ -655,14 +780,18 @@
     },
     "/organization/{id}": {
       "get": {
-        "tags": ["open-cdxiam-organization-rest-controller"],
+        "tags": [
+          "open-cdxiam-organization-rest-controller"
+        ],
         "operationId": "getOrganizationDetailsById",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -681,14 +810,18 @@
     },
     "/analysis-engine/{id}": {
       "get": {
-        "tags": ["open-cdx-analysis-engine-rest-controller"],
+        "tags": [
+          "open-cdx-analysis-engine-rest-controller"
+        ],
         "operationId": "getAnalysisEngineRequest",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -705,14 +838,18 @@
         }
       },
       "delete": {
-        "tags": ["open-cdx-analysis-engine-rest-controller"],
+        "tags": [
+          "open-cdx-analysis-engine-rest-controller"
+        ],
         "operationId": "deleteAnalysisEngine",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -735,19 +872,29 @@
       "Department": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
-          "name": { "type": "string" },
-          "description": { "type": "string" },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
           "employees": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/Employee" }
+            "items": {
+              "$ref": "#/components/schemas/Employee"
+            }
           }
         }
       },
       "EmailAddress": {
         "type": "object",
         "properties": {
-          "email": { "type": "string" },
+          "email": {
+            "type": "string"
+          },
           "type": {
             "type": "string",
             "enum": [
@@ -763,33 +910,55 @@
       "Employee": {
         "type": "object",
         "properties": {
-          "employeeId": { "type": "string" },
-          "name": { "$ref": "#/components/schemas/FullName" },
-          "title": { "type": "string" },
+          "employeeId": {
+            "type": "string"
+          },
+          "name": {
+            "$ref": "#/components/schemas/FullName"
+          },
+          "title": {
+            "type": "string"
+          },
           "phoneNumbers": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/PhoneNumber" }
+            "items": {
+              "$ref": "#/components/schemas/PhoneNumber"
+            }
           },
           "email": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/EmailAddress" }
+            "items": {
+              "$ref": "#/components/schemas/EmailAddress"
+            }
           }
         }
       },
       "FullName": {
         "type": "object",
         "properties": {
-          "title": { "type": "string" },
-          "firstName": { "type": "string" },
-          "middleName": { "type": "string" },
-          "lastName": { "type": "string" },
-          "suffix": { "type": "string" }
+          "title": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "middleName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "suffix": {
+            "type": "string"
+          }
         }
       },
       "PhoneNumber": {
         "type": "object",
         "properties": {
-          "number": { "type": "string" },
+          "number": {
+            "type": "string"
+          },
           "type": {
             "type": "string",
             "enum": [
@@ -807,107 +976,202 @@
       "Timestamp": {
         "type": "object",
         "properties": {
-          "seconds": { "type": "integer", "format": "int64" },
-          "nanos": { "type": "integer", "format": "int32" }
+          "seconds": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "nanos": {
+            "type": "integer",
+            "format": "int32"
+          }
         }
       },
       "UpdateWorkspaceRequest": {
         "type": "object",
         "properties": {
-          "workspace": { "$ref": "#/components/schemas/Workspace" }
+          "workspace": {
+            "$ref": "#/components/schemas/Workspace"
+          }
         }
       },
       "Workspace": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
-          "name": { "type": "string" },
-          "description": { "type": "string" },
-          "organizationId": { "type": "string" },
-          "createdDate": { "$ref": "#/components/schemas/Timestamp" },
-          "location": { "type": "string" },
-          "manager": { "type": "string" },
-          "capacity": { "type": "integer", "format": "int32" },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "organizationId": {
+            "type": "string"
+          },
+          "createdDate": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "location": {
+            "type": "string"
+          },
+          "manager": {
+            "type": "string"
+          },
+          "capacity": {
+            "type": "integer",
+            "format": "int32"
+          },
           "facilities": {
             "type": "array",
             "properties": {
               "underlyingElements": {
                 "type": "array",
-                "items": { "type": "object" }
+                "items": {
+                  "type": "object"
+                }
               },
               "unmodifiableView": {
                 "type": "array",
                 "properties": {
                   "underlyingElements": {
                     "type": "array",
-                    "items": { "type": "object" }
+                    "items": {
+                      "type": "object"
+                    }
                   },
-                  "empty": { "type": "boolean" },
-                  "first": { "type": "string" },
-                  "last": { "type": "string" }
+                  "empty": {
+                    "type": "boolean"
+                  },
+                  "first": {
+                    "type": "string"
+                  },
+                  "last": {
+                    "type": "string"
+                  }
                 },
-                "items": { "type": "string" }
+                "items": {
+                  "type": "string"
+                }
               },
-              "empty": { "type": "boolean" },
-              "first": { "type": "string" },
-              "last": { "type": "string" },
-              "modifiable": { "type": "boolean" }
+              "empty": {
+                "type": "boolean"
+              },
+              "first": {
+                "type": "string"
+              },
+              "last": {
+                "type": "string"
+              },
+              "modifiable": {
+                "type": "boolean"
+              }
             },
-            "items": { "type": "string" }
+            "items": {
+              "type": "string"
+            }
           },
-          "workspaceType": { "type": "string" },
+          "workspaceType": {
+            "type": "string"
+          },
           "workspaceImageUrls": {
             "type": "array",
             "properties": {
               "underlyingElements": {
                 "type": "array",
-                "items": { "type": "object" }
+                "items": {
+                  "type": "object"
+                }
               },
               "unmodifiableView": {
                 "type": "array",
                 "properties": {
                   "underlyingElements": {
                     "type": "array",
-                    "items": { "type": "object" }
+                    "items": {
+                      "type": "object"
+                    }
                   },
-                  "empty": { "type": "boolean" },
-                  "first": { "type": "string" },
-                  "last": { "type": "string" }
+                  "empty": {
+                    "type": "boolean"
+                  },
+                  "first": {
+                    "type": "string"
+                  },
+                  "last": {
+                    "type": "string"
+                  }
                 },
-                "items": { "type": "string" }
+                "items": {
+                  "type": "string"
+                }
               },
-              "empty": { "type": "boolean" },
-              "first": { "type": "string" },
-              "last": { "type": "string" },
-              "modifiable": { "type": "boolean" }
+              "empty": {
+                "type": "boolean"
+              },
+              "first": {
+                "type": "string"
+              },
+              "last": {
+                "type": "string"
+              },
+              "modifiable": {
+                "type": "boolean"
+              }
             },
-            "items": { "type": "string" }
+            "items": {
+              "type": "string"
+            }
           },
-          "usagePolicy": { "type": "string" },
-          "availabilitySchedule": { "type": "string" },
+          "usagePolicy": {
+            "type": "string"
+          },
+          "availabilitySchedule": {
+            "type": "string"
+          },
           "departments": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/Department" }
+            "items": {
+              "$ref": "#/components/schemas/Department"
+            }
           },
-          "created": { "$ref": "#/components/schemas/Timestamp" },
-          "modified": { "$ref": "#/components/schemas/Timestamp" },
-          "creator": { "type": "string" },
-          "modifier": { "type": "string" }
+          "created": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "modified": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "creator": {
+            "type": "string"
+          },
+          "modifier": {
+            "type": "string"
+          }
         }
       },
       "UpdateWorkspaceResponse": {
         "type": "object",
         "properties": {
-          "workspace": { "$ref": "#/components/schemas/Workspace" }
+          "workspace": {
+            "$ref": "#/components/schemas/Workspace"
+          }
         }
       },
       "IamUser": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
-          "systemName": { "type": "string" },
-          "username": { "type": "string" },
-          "emailVerified": { "type": "boolean" },
+          "id": {
+            "type": "string"
+          },
+          "systemName": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "emailVerified": {
+            "type": "boolean"
+          },
           "status": {
             "type": "string",
             "enum": [
@@ -928,26 +1192,48 @@
               "UNRECOGNIZED"
             ]
           },
-          "organizationId": { "type": "string" },
-          "workspaceId": { "type": "string" },
-          "created": { "type": "string" },
-          "modified": { "type": "string" },
-          "creator": { "type": "string" },
-          "modifier": { "type": "string" }
+          "organizationId": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string"
+          },
+          "modified": {
+            "type": "string"
+          },
+          "creator": {
+            "type": "string"
+          },
+          "modifier": {
+            "type": "string"
+          }
         }
       },
       "UpdateIamUserRequest": {
         "type": "object",
-        "properties": { "iamUser": { "$ref": "#/components/schemas/IamUser" } }
+        "properties": {
+          "iamUser": {
+            "$ref": "#/components/schemas/IamUser"
+          }
+        }
       },
       "UpdateIamUserResponse": {
         "type": "object",
-        "properties": { "iamUser": { "$ref": "#/components/schemas/IamUser" } }
+        "properties": {
+          "iamUser": {
+            "$ref": "#/components/schemas/IamUser"
+          }
+        }
       },
       "Address": {
         "type": "object",
         "properties": {
-          "countryId": { "type": "string" },
+          "countryId": {
+            "type": "string"
+          },
           "addressPurpose": {
             "type": "string",
             "enum": [
@@ -961,132 +1247,274 @@
               "UNRECOGNIZED"
             ]
           },
-          "address1": { "type": "string" },
-          "address2": { "type": "string" },
-          "address3": { "type": "string" },
-          "city": { "type": "string" },
-          "state": { "type": "string" },
-          "postalCode": { "type": "string" }
+          "address1": {
+            "type": "string"
+          },
+          "address2": {
+            "type": "string"
+          },
+          "address3": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "postalCode": {
+            "type": "string"
+          }
         }
       },
       "ContactInfo": {
         "type": "object",
         "properties": {
-          "name": { "$ref": "#/components/schemas/FullName" },
-          "patientId": { "type": "string" },
+          "name": {
+            "$ref": "#/components/schemas/FullName"
+          },
+          "patientId": {
+            "type": "string"
+          },
           "addresses": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/Address" }
+            "items": {
+              "$ref": "#/components/schemas/Address"
+            }
           },
           "phoneNumbers": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/PhoneNumber" }
+            "items": {
+              "$ref": "#/components/schemas/PhoneNumber"
+            }
           },
           "emails": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/EmailAddress" }
+            "items": {
+              "$ref": "#/components/schemas/EmailAddress"
+            }
           }
         }
       },
       "Organization": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
-          "name": { "type": "string" },
-          "description": { "type": "string" },
-          "foundingDate": { "$ref": "#/components/schemas/Timestamp" },
-          "address": { "$ref": "#/components/schemas/Address" },
-          "website": { "type": "string" },
-          "industry": { "type": "string" },
-          "revenue": { "type": "number", "format": "double" },
-          "logoUrl": { "type": "string" },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "foundingDate": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "website": {
+            "type": "string"
+          },
+          "industry": {
+            "type": "string"
+          },
+          "revenue": {
+            "type": "number",
+            "format": "double"
+          },
+          "logoUrl": {
+            "type": "string"
+          },
           "socialMediaLinks": {
             "type": "array",
             "properties": {
               "underlyingElements": {
                 "type": "array",
-                "items": { "type": "object" }
+                "items": {
+                  "type": "object"
+                }
               },
               "unmodifiableView": {
                 "type": "array",
                 "properties": {
                   "underlyingElements": {
                     "type": "array",
-                    "items": { "type": "object" }
+                    "items": {
+                      "type": "object"
+                    }
                   },
-                  "empty": { "type": "boolean" },
-                  "first": { "type": "string" },
-                  "last": { "type": "string" }
+                  "empty": {
+                    "type": "boolean"
+                  },
+                  "first": {
+                    "type": "string"
+                  },
+                  "last": {
+                    "type": "string"
+                  }
                 },
-                "items": { "type": "string" }
+                "items": {
+                  "type": "string"
+                }
               },
-              "empty": { "type": "boolean" },
-              "first": { "type": "string" },
-              "last": { "type": "string" },
-              "modifiable": { "type": "boolean" }
+              "empty": {
+                "type": "boolean"
+              },
+              "first": {
+                "type": "string"
+              },
+              "last": {
+                "type": "string"
+              },
+              "modifiable": {
+                "type": "boolean"
+              }
             },
-            "items": { "type": "string" }
+            "items": {
+              "type": "string"
+            }
           },
-          "missionStatement": { "type": "string" },
-          "visionStatement": { "type": "string" },
+          "missionStatement": {
+            "type": "string"
+          },
+          "visionStatement": {
+            "type": "string"
+          },
           "contacts": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/ContactInfo" }
+            "items": {
+              "$ref": "#/components/schemas/ContactInfo"
+            }
           },
-          "created": { "$ref": "#/components/schemas/Timestamp" },
-          "modified": { "$ref": "#/components/schemas/Timestamp" },
-          "creator": { "type": "string" },
-          "modifier": { "type": "string" }
+          "created": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "modified": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "creator": {
+            "type": "string"
+          },
+          "modifier": {
+            "type": "string"
+          }
         }
       },
       "UpdateOrganizationRequest": {
         "type": "object",
         "properties": {
-          "organization": { "$ref": "#/components/schemas/Organization" }
+          "organization": {
+            "$ref": "#/components/schemas/Organization"
+          }
         }
       },
       "UpdateOrganizationResponse": {
         "type": "object",
         "properties": {
-          "organization": { "$ref": "#/components/schemas/Organization" }
+          "organization": {
+            "$ref": "#/components/schemas/Organization"
+          }
         }
       },
       "AnalysisEngine": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
-          "name": { "type": "string" },
-          "identifier": { "type": "string" },
-          "organizationId": { "type": "string" },
-          "workspaceId": { "type": "string" },
-          "created": { "$ref": "#/components/schemas/Timestamp" },
-          "modified": { "$ref": "#/components/schemas/Timestamp" },
-          "creator": { "type": "string" },
-          "modifier": { "type": "string" }
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "organizationId": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "string"
+          },
+          "created": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "modified": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "creator": {
+            "type": "string"
+          },
+          "modifier": {
+            "type": "string"
+          }
         }
       },
       "UpdateAnalysisEngineRequest": {
         "type": "object",
         "properties": {
-          "analysisEngine": { "$ref": "#/components/schemas/AnalysisEngine" }
+          "analysisEngine": {
+            "$ref": "#/components/schemas/AnalysisEngine"
+          }
         }
       },
       "UpdateAnalysisEngineResponse": {
         "type": "object",
         "properties": {
-          "analysisEngine": { "$ref": "#/components/schemas/AnalysisEngine" }
+          "analysisEngine": {
+            "$ref": "#/components/schemas/AnalysisEngine"
+          }
         }
       },
       "CreateWorkspaceRequest": {
         "type": "object",
         "properties": {
-          "workspace": { "$ref": "#/components/schemas/Workspace" }
+          "workspace": {
+            "$ref": "#/components/schemas/Workspace"
+          }
         }
       },
       "CreateWorkspaceResponse": {
         "type": "object",
         "properties": {
-          "workspace": { "$ref": "#/components/schemas/Workspace" }
+          "workspace": {
+            "$ref": "#/components/schemas/Workspace"
+          }
+        }
+      },
+      "ListWorkspacesRequest": {
+        "type": "object",
+        "properties": {
+          "pagination": {
+            "$ref": "#/components/schemas/Pagination"
+          }
+        }
+      },
+      "Pagination": {
+        "type": "object",
+        "properties": {
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sortAscending": {
+            "type": "boolean"
+          },
+          "sort": {
+            "type": "string"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalRecords": {
+            "type": "integer",
+            "format": "int64"
+          }
         }
       },
       "ListWorkspacesResponse": {
@@ -1094,7 +1522,12 @@
         "properties": {
           "workspaces": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/Workspace" }
+            "items": {
+              "$ref": "#/components/schemas/Workspace"
+            }
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/Pagination"
           }
         }
       },
@@ -1111,100 +1544,168 @@
               "UNRECOGNIZED"
             ]
           },
-          "firstName": { "type": "string" },
-          "lastName": { "type": "string" },
-          "systemName": { "type": "string" },
-          "username": { "type": "string" },
-          "password": { "type": "string" },
-          "organizationId": { "type": "string" },
-          "workspaceId": { "type": "string" }
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "systemName": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "organizationId": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "string"
+          }
         }
       },
       "SignUpResponse": {
         "type": "object",
-        "properties": { "iamUser": { "$ref": "#/components/schemas/IamUser" } }
+        "properties": {
+          "iamUser": {
+            "$ref": "#/components/schemas/IamUser"
+          }
+        }
       },
       "ChangePasswordRequest": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
-          "oldPassword": { "type": "string" },
-          "newPassword": { "type": "string" },
-          "newPasswordConfirmation": { "type": "string" }
+          "id": {
+            "type": "string"
+          },
+          "oldPassword": {
+            "type": "string"
+          },
+          "newPassword": {
+            "type": "string"
+          },
+          "newPasswordConfirmation": {
+            "type": "string"
+          }
         }
       },
       "ChangePasswordResponse": {
         "type": "object",
-        "properties": { "iamUser": { "$ref": "#/components/schemas/IamUser" } }
+        "properties": {
+          "iamUser": {
+            "$ref": "#/components/schemas/IamUser"
+          }
+        }
       },
       "ResetPasswordRequest": {
         "type": "object",
         "properties": {
-          "username": { "type": "string" },
-          "newPassword": { "type": "string" }
+          "username": {
+            "type": "string"
+          },
+          "newPassword": {
+            "type": "string"
+          },
+          "newPasswordConfirmation": {
+            "type": "string"
+          }
         }
       },
       "ResetPasswordResponse": {
         "type": "object",
-        "properties": { "iamUser": { "$ref": "#/components/schemas/IamUser" } }
+        "properties": {
+          "iamUser": {
+            "$ref": "#/components/schemas/IamUser"
+          }
+        }
       },
       "LoginRequest": {
         "type": "object",
         "properties": {
-          "userName": { "type": "string" },
-          "password": { "type": "string" }
+          "userName": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
         }
       },
       "LoginResponse": {
         "type": "object",
-        "properties": { "token": { "type": "string" } }
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
       },
       "ListIamUsersRequest": {
         "type": "object",
         "properties": {
-          "pagination": { "$ref": "#/components/schemas/Pagination" }
-        }
-      },
-      "Pagination": {
-        "type": "object",
-        "properties": {
-          "pageNumber": { "type": "integer", "format": "int32" },
-          "pageSize": { "type": "integer", "format": "int32" },
-          "sortAscending": { "type": "boolean" },
-          "sort": { "type": "string" },
-          "totalPages": { "type": "integer", "format": "int64" },
-          "totalRecords": { "type": "integer", "format": "int64" }
+          "pagination": {
+            "$ref": "#/components/schemas/Pagination"
+          }
         }
       },
       "ListIamUsersResponse": {
         "type": "object",
         "properties": {
-          "pagination": { "$ref": "#/components/schemas/Pagination" },
+          "pagination": {
+            "$ref": "#/components/schemas/Pagination"
+          },
           "iamUsers": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/IamUser" }
+            "items": {
+              "$ref": "#/components/schemas/IamUser"
+            }
           }
         }
       },
       "UserExistsRequest": {
         "type": "object",
-        "properties": { "id": { "type": "string" } }
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
       },
       "UserExistsResponse": {
         "type": "object",
-        "properties": { "iamUser": { "$ref": "#/components/schemas/IamUser" } }
+        "properties": {
+          "iamUser": {
+            "$ref": "#/components/schemas/IamUser"
+          }
+        }
       },
       "PrivacyProtectionData": {
         "type": "object",
         "properties": {
-          "encounterId": { "type": "string" },
-          "dataType": { "type": "string" },
-          "anonymizedData": { "type": "string" },
-          "isDataEncrypted": { "type": "boolean" },
-          "encryptionMethod": { "type": "string" },
-          "dataRetentionPolicy": { "type": "string" },
-          "hasDataSharingAgreement": { "type": "boolean" },
-          "dataPurpose": { "type": "string" }
+          "encounterId": {
+            "type": "string"
+          },
+          "dataType": {
+            "type": "string"
+          },
+          "anonymizedData": {
+            "type": "string"
+          },
+          "isDataEncrypted": {
+            "type": "boolean"
+          },
+          "encryptionMethod": {
+            "type": "string"
+          },
+          "dataRetentionPolicy": {
+            "type": "string"
+          },
+          "hasDataSharingAgreement": {
+            "type": "boolean"
+          },
+          "dataPurpose": {
+            "type": "string"
+          }
         }
       },
       "PrivacyProtectionDataRequest": {
@@ -1218,20 +1719,36 @@
       "SecurityResponse": {
         "type": "object",
         "properties": {
-          "encounterId": { "type": "string" },
-          "response": { "type": "string" }
+          "encounterId": {
+            "type": "string"
+          },
+          "response": {
+            "type": "string"
+          }
         }
       },
       "CreateOrganizationRequest": {
         "type": "object",
         "properties": {
-          "organization": { "$ref": "#/components/schemas/Organization" }
+          "organization": {
+            "$ref": "#/components/schemas/Organization"
+          }
         }
       },
       "CreateOrganizationResponse": {
         "type": "object",
         "properties": {
-          "organization": { "$ref": "#/components/schemas/Organization" }
+          "organization": {
+            "$ref": "#/components/schemas/Organization"
+          }
+        }
+      },
+      "ListOrganizationsRequest": {
+        "type": "object",
+        "properties": {
+          "pagination": {
+            "$ref": "#/components/schemas/Pagination"
+          }
         }
       },
       "ListOrganizationsResponse": {
@@ -1239,48 +1756,91 @@
         "properties": {
           "organizations": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/Organization" }
+            "items": {
+              "$ref": "#/components/schemas/Organization"
+            }
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/Pagination"
           }
         }
       },
       "RealTimeMonitoringData": {
         "type": "object",
         "properties": {
-          "encounterId": { "type": "string" },
-          "monitoredEntity": { "type": "string" },
-          "monitoringDetails": { "type": "string" },
-          "monitoringStartTime": { "$ref": "#/components/schemas/Timestamp" },
-          "monitoringEndTime": { "$ref": "#/components/schemas/Timestamp" },
+          "encounterId": {
+            "type": "string"
+          },
+          "monitoredEntity": {
+            "type": "string"
+          },
+          "monitoringDetails": {
+            "type": "string"
+          },
+          "monitoringStartTime": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "monitoringEndTime": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
           "triggeredAlerts": {
             "type": "array",
             "properties": {
               "underlyingElements": {
                 "type": "array",
-                "items": { "type": "object" }
+                "items": {
+                  "type": "object"
+                }
               },
               "unmodifiableView": {
                 "type": "array",
                 "properties": {
                   "underlyingElements": {
                     "type": "array",
-                    "items": { "type": "object" }
+                    "items": {
+                      "type": "object"
+                    }
                   },
-                  "empty": { "type": "boolean" },
-                  "first": { "type": "string" },
-                  "last": { "type": "string" }
+                  "empty": {
+                    "type": "boolean"
+                  },
+                  "first": {
+                    "type": "string"
+                  },
+                  "last": {
+                    "type": "string"
+                  }
                 },
-                "items": { "type": "string" }
+                "items": {
+                  "type": "string"
+                }
               },
-              "empty": { "type": "boolean" },
-              "first": { "type": "string" },
-              "last": { "type": "string" },
-              "modifiable": { "type": "boolean" }
+              "empty": {
+                "type": "boolean"
+              },
+              "first": {
+                "type": "string"
+              },
+              "last": {
+                "type": "string"
+              },
+              "modifiable": {
+                "type": "boolean"
+              }
             },
-            "items": { "type": "string" }
+            "items": {
+              "type": "string"
+            }
           },
-          "monitoringFrequency": { "type": "string" },
-          "isContinuousMonitoring": { "type": "boolean" },
-          "responsibleMonitoringTeam": { "type": "string" }
+          "monitoringFrequency": {
+            "type": "string"
+          },
+          "isContinuousMonitoring": {
+            "type": "boolean"
+          },
+          "responsibleMonitoringTeam": {
+            "type": "string"
+          }
         }
       },
       "RealTimeMonitoringDataRequest": {
@@ -1294,67 +1854,125 @@
       "AnomalyDetectionData": {
         "type": "object",
         "properties": {
-          "encounterId": { "type": "string" },
-          "userId": { "type": "string" },
-          "dataAccessPattern": { "type": "string" },
-          "timeStamp": { "$ref": "#/components/schemas/Timestamp" },
+          "encounterId": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "dataAccessPattern": {
+            "type": "string"
+          },
+          "timeStamp": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
           "anomaliesDetected": {
             "type": "array",
             "properties": {
               "underlyingElements": {
                 "type": "array",
-                "items": { "type": "object" }
+                "items": {
+                  "type": "object"
+                }
               },
               "unmodifiableView": {
                 "type": "array",
                 "properties": {
                   "underlyingElements": {
                     "type": "array",
-                    "items": { "type": "object" }
+                    "items": {
+                      "type": "object"
+                    }
                   },
-                  "empty": { "type": "boolean" },
-                  "first": { "type": "string" },
-                  "last": { "type": "string" }
+                  "empty": {
+                    "type": "boolean"
+                  },
+                  "first": {
+                    "type": "string"
+                  },
+                  "last": {
+                    "type": "string"
+                  }
                 },
-                "items": { "type": "string" }
+                "items": {
+                  "type": "string"
+                }
               },
-              "empty": { "type": "boolean" },
-              "first": { "type": "string" },
-              "last": { "type": "string" },
-              "modifiable": { "type": "boolean" }
+              "empty": {
+                "type": "boolean"
+              },
+              "first": {
+                "type": "string"
+              },
+              "last": {
+                "type": "string"
+              },
+              "modifiable": {
+                "type": "boolean"
+              }
             },
-            "items": { "type": "string" }
+            "items": {
+              "type": "string"
+            }
           },
-          "sourceIp": { "type": "string" },
-          "location": { "type": "string" },
+          "sourceIp": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
           "affectedSystems": {
             "type": "array",
             "properties": {
               "underlyingElements": {
                 "type": "array",
-                "items": { "type": "object" }
+                "items": {
+                  "type": "object"
+                }
               },
               "unmodifiableView": {
                 "type": "array",
                 "properties": {
                   "underlyingElements": {
                     "type": "array",
-                    "items": { "type": "object" }
+                    "items": {
+                      "type": "object"
+                    }
                   },
-                  "empty": { "type": "boolean" },
-                  "first": { "type": "string" },
-                  "last": { "type": "string" }
+                  "empty": {
+                    "type": "boolean"
+                  },
+                  "first": {
+                    "type": "string"
+                  },
+                  "last": {
+                    "type": "string"
+                  }
                 },
-                "items": { "type": "string" }
+                "items": {
+                  "type": "string"
+                }
               },
-              "empty": { "type": "boolean" },
-              "first": { "type": "string" },
-              "last": { "type": "string" },
-              "modifiable": { "type": "boolean" }
+              "empty": {
+                "type": "boolean"
+              },
+              "first": {
+                "type": "string"
+              },
+              "last": {
+                "type": "string"
+              },
+              "modifiable": {
+                "type": "boolean"
+              }
             },
-            "items": { "type": "string" }
+            "items": {
+              "type": "string"
+            }
           },
-          "severityLevel": { "type": "string" }
+          "severityLevel": {
+            "type": "string"
+          }
         }
       },
       "AnomalyDetectionDataRequest": {
@@ -1368,65 +1986,121 @@
       "AuthorizationControlData": {
         "type": "object",
         "properties": {
-          "encounterId": { "type": "string" },
-          "userId": { "type": "string" },
-          "dataAccessLevel": { "type": "string" },
-          "accessGrantedBy": { "type": "string" },
+          "encounterId": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "dataAccessLevel": {
+            "type": "string"
+          },
+          "accessGrantedBy": {
+            "type": "string"
+          },
           "accessScopes": {
             "type": "array",
             "properties": {
               "underlyingElements": {
                 "type": "array",
-                "items": { "type": "object" }
+                "items": {
+                  "type": "object"
+                }
               },
               "unmodifiableView": {
                 "type": "array",
                 "properties": {
                   "underlyingElements": {
                     "type": "array",
-                    "items": { "type": "object" }
+                    "items": {
+                      "type": "object"
+                    }
                   },
-                  "empty": { "type": "boolean" },
-                  "first": { "type": "string" },
-                  "last": { "type": "string" }
+                  "empty": {
+                    "type": "boolean"
+                  },
+                  "first": {
+                    "type": "string"
+                  },
+                  "last": {
+                    "type": "string"
+                  }
                 },
-                "items": { "type": "string" }
+                "items": {
+                  "type": "string"
+                }
               },
-              "empty": { "type": "boolean" },
-              "first": { "type": "string" },
-              "last": { "type": "string" },
-              "modifiable": { "type": "boolean" }
+              "empty": {
+                "type": "boolean"
+              },
+              "first": {
+                "type": "string"
+              },
+              "last": {
+                "type": "string"
+              },
+              "modifiable": {
+                "type": "boolean"
+              }
             },
-            "items": { "type": "string" }
+            "items": {
+              "type": "string"
+            }
           },
-          "accessValidityPeriod": { "type": "string" },
-          "isTemporaryAccess": { "type": "boolean" },
+          "accessValidityPeriod": {
+            "type": "string"
+          },
+          "isTemporaryAccess": {
+            "type": "boolean"
+          },
           "conditionalAccessParams": {
             "type": "array",
             "properties": {
               "underlyingElements": {
                 "type": "array",
-                "items": { "type": "object" }
+                "items": {
+                  "type": "object"
+                }
               },
               "unmodifiableView": {
                 "type": "array",
                 "properties": {
                   "underlyingElements": {
                     "type": "array",
-                    "items": { "type": "object" }
+                    "items": {
+                      "type": "object"
+                    }
                   },
-                  "empty": { "type": "boolean" },
-                  "first": { "type": "string" },
-                  "last": { "type": "string" }
+                  "empty": {
+                    "type": "boolean"
+                  },
+                  "first": {
+                    "type": "string"
+                  },
+                  "last": {
+                    "type": "string"
+                  }
                 },
-                "items": { "type": "string" }
+                "items": {
+                  "type": "string"
+                }
               },
-              "empty": { "type": "boolean" },
-              "first": { "type": "string" },
-              "last": { "type": "string" },
-              "modifiable": { "type": "boolean" }
+              "empty": {
+                "type": "boolean"
+              },
+              "first": {
+                "type": "string"
+              },
+              "last": {
+                "type": "string"
+              },
+              "modifiable": {
+                "type": "boolean"
+              }
             },
-            "items": { "type": "string" }
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -1441,67 +2115,125 @@
       "UserBehaviorAnalysisData": {
         "type": "object",
         "properties": {
-          "encounterId": { "type": "string" },
-          "userId": { "type": "string" },
-          "behaviorPattern": { "type": "string" },
+          "encounterId": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "behaviorPattern": {
+            "type": "string"
+          },
           "associatedActivities": {
             "type": "array",
             "properties": {
               "underlyingElements": {
                 "type": "array",
-                "items": { "type": "object" }
+                "items": {
+                  "type": "object"
+                }
               },
               "unmodifiableView": {
                 "type": "array",
                 "properties": {
                   "underlyingElements": {
                     "type": "array",
-                    "items": { "type": "object" }
+                    "items": {
+                      "type": "object"
+                    }
                   },
-                  "empty": { "type": "boolean" },
-                  "first": { "type": "string" },
-                  "last": { "type": "string" }
+                  "empty": {
+                    "type": "boolean"
+                  },
+                  "first": {
+                    "type": "string"
+                  },
+                  "last": {
+                    "type": "string"
+                  }
                 },
-                "items": { "type": "string" }
+                "items": {
+                  "type": "string"
+                }
               },
-              "empty": { "type": "boolean" },
-              "first": { "type": "string" },
-              "last": { "type": "string" },
-              "modifiable": { "type": "boolean" }
+              "empty": {
+                "type": "boolean"
+              },
+              "first": {
+                "type": "string"
+              },
+              "last": {
+                "type": "string"
+              },
+              "modifiable": {
+                "type": "boolean"
+              }
             },
-            "items": { "type": "string" }
+            "items": {
+              "type": "string"
+            }
           },
-          "analysisTimeFrame": { "type": "string" },
+          "analysisTimeFrame": {
+            "type": "string"
+          },
           "historicalBehaviorData": {
             "type": "array",
             "properties": {
               "underlyingElements": {
                 "type": "array",
-                "items": { "type": "object" }
+                "items": {
+                  "type": "object"
+                }
               },
               "unmodifiableView": {
                 "type": "array",
                 "properties": {
                   "underlyingElements": {
                     "type": "array",
-                    "items": { "type": "object" }
+                    "items": {
+                      "type": "object"
+                    }
                   },
-                  "empty": { "type": "boolean" },
-                  "first": { "type": "string" },
-                  "last": { "type": "string" }
+                  "empty": {
+                    "type": "boolean"
+                  },
+                  "first": {
+                    "type": "string"
+                  },
+                  "last": {
+                    "type": "string"
+                  }
                 },
-                "items": { "type": "string" }
+                "items": {
+                  "type": "string"
+                }
               },
-              "empty": { "type": "boolean" },
-              "first": { "type": "string" },
-              "last": { "type": "string" },
-              "modifiable": { "type": "boolean" }
+              "empty": {
+                "type": "boolean"
+              },
+              "first": {
+                "type": "string"
+              },
+              "last": {
+                "type": "string"
+              },
+              "modifiable": {
+                "type": "boolean"
+              }
             },
-            "items": { "type": "string" }
+            "items": {
+              "type": "string"
+            }
           },
-          "riskAssessment": { "type": "string" },
-          "isBehaviorOutlier": { "type": "boolean" },
-          "behaviorConsequence": { "type": "string" }
+          "riskAssessment": {
+            "type": "string"
+          },
+          "isBehaviorOutlier": {
+            "type": "boolean"
+          },
+          "behaviorConsequence": {
+            "type": "string"
+          }
         }
       },
       "UserBehaviorAnalysisDataRequest": {
@@ -1515,20 +2247,28 @@
       "CreateAnalysisEngineRequest": {
         "type": "object",
         "properties": {
-          "analysisEngine": { "$ref": "#/components/schemas/AnalysisEngine" }
+          "analysisEngine": {
+            "$ref": "#/components/schemas/AnalysisEngine"
+          }
         }
       },
       "CreateAnalysisEngineResponse": {
         "type": "object",
         "properties": {
-          "analysisEngine": { "$ref": "#/components/schemas/AnalysisEngine" }
+          "analysisEngine": {
+            "$ref": "#/components/schemas/AnalysisEngine"
+          }
         }
       },
       "ListAnalysisEnginesRequest": {
         "type": "object",
         "properties": {
-          "organizationId": { "type": "string" },
-          "pagination": { "$ref": "#/components/schemas/Pagination" }
+          "organizationId": {
+            "type": "string"
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/Pagination"
+          }
         }
       },
       "ListAnalysisEnginesResponse": {
@@ -1536,44 +2276,70 @@
         "properties": {
           "analysisEngine": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/AnalysisEngine" }
+            "items": {
+              "$ref": "#/components/schemas/AnalysisEngine"
+            }
           },
-          "pagination": { "$ref": "#/components/schemas/Pagination" }
+          "pagination": {
+            "$ref": "#/components/schemas/Pagination"
+          }
         }
       },
       "GetWorkspaceDetailsByIdResponse": {
         "type": "object",
         "properties": {
-          "workspace": { "$ref": "#/components/schemas/Workspace" }
+          "workspace": {
+            "$ref": "#/components/schemas/Workspace"
+          }
         }
       },
       "GetIamUserResponse": {
         "type": "object",
-        "properties": { "iamUser": { "$ref": "#/components/schemas/IamUser" } }
+        "properties": {
+          "iamUser": {
+            "$ref": "#/components/schemas/IamUser"
+          }
+        }
       },
       "CurrentUserResponse": {
         "type": "object",
-        "properties": { "iamUser": { "$ref": "#/components/schemas/IamUser" } }
+        "properties": {
+          "iamUser": {
+            "$ref": "#/components/schemas/IamUser"
+          }
+        }
       },
       "GetOrganizationDetailsByIdResponse": {
         "type": "object",
         "properties": {
-          "organization": { "$ref": "#/components/schemas/Organization" }
+          "organization": {
+            "$ref": "#/components/schemas/Organization"
+          }
         }
       },
       "GetAnalysisEngineResponse": {
         "type": "object",
         "properties": {
-          "analysisEngine": { "$ref": "#/components/schemas/AnalysisEngine" }
+          "analysisEngine": {
+            "$ref": "#/components/schemas/AnalysisEngine"
+          }
         }
       },
       "DeleteIamUserResponse": {
         "type": "object",
-        "properties": { "iamUser": { "$ref": "#/components/schemas/IamUser" } }
+        "properties": {
+          "iamUser": {
+            "$ref": "#/components/schemas/IamUser"
+          }
+        }
       },
       "DeleteAnalysisEngineResponse": {
         "type": "object",
-        "properties": { "success": { "type": "boolean" } }
+        "properties": {
+          "success": {
+            "type": "boolean"
+          }
+        }
       }
     },
     "securitySchemes": {

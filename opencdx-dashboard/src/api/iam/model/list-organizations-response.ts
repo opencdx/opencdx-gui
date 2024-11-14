@@ -16,6 +16,9 @@
 // May contain unused imports in some cases
 // @ts-ignore
 import type { Organization } from './organization';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { Pagination } from './pagination';
 
 /**
  * 
@@ -29,5 +32,11 @@ export interface ListOrganizationsResponse {
      * @memberof ListOrganizationsResponse
      */
     'organizations'?: Array<Organization>;
+    /**
+     * 
+     * @type {Pagination}
+     * @memberof ListOrganizationsResponse
+     */
+    'pagination'?: Pagination;
 }
 

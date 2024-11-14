@@ -13,30 +13,21 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { Pagination } from './pagination';
 
 /**
  * 
  * @export
- * @interface QuestionnaireItemInitial
+ * @interface ListWorkspacesRequest
  */
-export interface QuestionnaireItemInitial {
+export interface ListWorkspacesRequest {
     /**
      * 
-     * @type {boolean}
-     * @memberof QuestionnaireItemInitial
+     * @type {Pagination}
+     * @memberof ListWorkspacesRequest
      */
-    'valueBoolean'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof QuestionnaireItemInitial
-     */
-    'valueInteger'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof QuestionnaireItemInitial
-     */
-    'valueDecimal'?: number;
+    'pagination'?: Pagination;
 }
 

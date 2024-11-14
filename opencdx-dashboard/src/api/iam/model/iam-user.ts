@@ -55,7 +55,7 @@ export interface IamUser {
      * @type {string}
      * @memberof IamUser
      */
-    'type'?: IamType;
+    'type'?: Type;
     /**
      * 
      * @type {string}
@@ -103,7 +103,7 @@ export const Status = {
 } as const;
 
 export type Status = typeof Status[keyof typeof Status];
-export const IamType = {
+export const Type = {
     IamUserTypeUnspecified: 'IAM_USER_TYPE_UNSPECIFIED',
     IamUserTypeRegular: 'IAM_USER_TYPE_REGULAR',
     IamUserTypeSystem: 'IAM_USER_TYPE_SYSTEM',
@@ -111,6 +111,6 @@ export const IamType = {
     Unrecognized: 'UNRECOGNIZED'
 } as const;
 
-export type IamType = typeof IamType[keyof typeof IamType];
+export type Type = typeof Type[keyof typeof Type];
 
 
