@@ -1,0 +1,82 @@
+{
+  "resourceType": "Questionnaire",
+  "title": "Medical History",
+  "status": "draft",
+  "item": [
+    {
+      "type": "open-choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "drop-down",
+                "display": "Drop down"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "2591342486140",
+      "text": "Did you have any underlying medical conditions?",
+      "answerOption": [
+        {
+          "valueCoding": {
+            "display": "Autoimmune condition"
+          }
+        },
+        {
+          "valueCoding": {
+            "display": "Chronic Lung disease"
+          }
+        },
+        {
+          "valueCoding": {
+            "display": "Diabetes Mellitus"
+          }
+        },
+        {
+          "valueCoding": {
+            "display": "Former smoker"
+          }
+        }
+      ]
+    },
+    {
+      "type": "open-choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "drop-down",
+                "display": "Drop down"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "1243095938833",
+      "code": [
+        {
+          "system": "tinkar",
+          "code": "23e07078-f1e2-3f6a-9b7a-9397bcd91cfe"
+        }
+      ],
+      "text": "What is the specific type of chronic lung disease?",
+      "enableWhen": [
+        {
+          "question": "2591342486140",
+          "operator": "=",
+          "answerCoding": {
+            "display": "Chronic Lung disease"
+          }
+        }
+      ]
+    }
+  ]
+}

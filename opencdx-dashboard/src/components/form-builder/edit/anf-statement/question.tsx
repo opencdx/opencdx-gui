@@ -361,8 +361,8 @@ export default function BooleanQuestionConfig({
                                     onValueChange={field.onChange}
                                     className="mt-2"
                                 >
-                                    <Radio className="text-sm mr-4" value="dropdown">Drop down</Radio>
-                                    <Radio className="text-sm mr-4" value="radio">Radio button</Radio>
+                                    <Radio className="text-sm mr-4" value="drop-down">Drop down</Radio>
+                                    <Radio className="text-sm mr-4" value="radio-button">Radio button</Radio>
                                 </RadioGroup>
                             )}
                         />
@@ -398,13 +398,18 @@ export default function BooleanQuestionConfig({
                         {questionCodes.map((qCode, index) => (
                             <div key={index} className="flex flex-wrap gap-4">
                                 <div className="flex-1 min-w-[350px]">
-                                    <Select
-                                        label="Select Question Code"
-                                        variant="bordered"
-                                        radius="sm"
-                                        className="w-full bg-white"
-                                        value={qCode.type}
-                                        onChange={(e) => {
+                                <Controller
+                            name={`${basePath}.code[0].system`}
+                                        control={control}
+                                        render={({ field }) => 
+                                            <Select
+                                                {...field}
+                                                label="Select System"
+                                                variant="bordered"
+                                                radius="sm"
+                                                className="w-full bg-white"
+                                                value={qCode.type}
+                                                onChange={(e) => {
                                             const newCodes = [...questionCodes];
                                             newCodes[index].type = e.target.value;
                                             setQuestionCodes(newCodes);
@@ -413,24 +418,35 @@ export default function BooleanQuestionConfig({
                                         <SelectItem key="icd">ICD</SelectItem>
                                         <SelectItem key="loinc">LOINC</SelectItem>
                                         <SelectItem key="snomed">SNOMED</SelectItem>
-                                        <SelectItem key="ndc">NDC</SelectItem>
-                                    </Select>
+                                                <SelectItem key="ndc">NDC</SelectItem>
+                                            </Select>
+                                        }
+                                    />
+
+
                                     <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
-                                </div>
+                                    </div>
 
                                 <div className="flex-1 min-w-[350px]">
-                                    <Input
-                                        label="Question Code"
-                                        variant="bordered"
-                                        radius="sm"
-                                        className="w-full"
-                                        placeholder="Enter question code"
-                                        value={qCode.code}
-                                        onChange={(e) => {
+                                    <Controller
+                                        name={`${basePath}.code[0].code`}
+                                        control={control}
+                                        render={({ field }) => (
+                                            <Input
+                                                {...field}
+                                                label="Question Code"
+                                                variant="bordered"
+                                                radius="sm"
+                                                className="w-full"
+                                                placeholder="Enter question code"
+                                                value={qCode.code}
+                                                onChange={(e) => {
                                             const newCodes = [...questionCodes];
                                             newCodes[index].code = e.target.value;
-                                            setQuestionCodes(newCodes);
-                                        }}
+                                                    setQuestionCodes(newCodes);
+                                                }}
+                                            />
+                                        )}
                                     />
                                     <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
                                 </div>
@@ -493,6 +509,8 @@ export default function BooleanQuestionConfig({
                                         >
                                             <SelectItem key="=">=</SelectItem>
                                             <SelectItem key="<>">≠</SelectItem>
+                                            <SelectItem key="exists">Empty</SelectItem>
+                                            <SelectItem key="not-exists">Not empty</SelectItem>
                                         </Select>
                                         <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
                                     </div>
