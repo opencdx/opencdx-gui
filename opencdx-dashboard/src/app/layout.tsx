@@ -7,8 +7,8 @@ import clsx from 'clsx';
 
 
 import { Providers } from './providers';
-import {NextIntlClientProvider} from 'next-intl';
-import {getLocale, getMessages} from 'next-intl/server';
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale, getMessages } from 'next-intl/server';
 export const metadata: Metadata = {
   title: {
     default: 'Dashboard',
@@ -43,19 +43,19 @@ export default async function RootLayout({
           fontSans.variable,
         )}
       >
-        
+
         <Providers
           themeProps={{ attribute: 'class', defaultTheme: 'light', children }}
         >
           <div className="relative flex flex-col h-screen">
             <main>
-            <NextIntlClientProvider messages={messages}>
-              {children}
+              <NextIntlClientProvider messages={messages}>
+                {children}
               </NextIntlClientProvider>
-              </main>
+            </main>
           </div>
         </Providers>
-        
+
       </body>
     </html>
   );
@@ -63,8 +63,8 @@ export default async function RootLayout({
 
 // Can be imported from a shared config
 const locales = ['en', 'es'];
- 
+
 export function generateStaticParams() {
-  return locales.map((locale) => ({locale}));
+  return locales.map((locale) => ({ locale }));
 }
 
