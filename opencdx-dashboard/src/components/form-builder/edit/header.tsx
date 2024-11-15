@@ -85,14 +85,14 @@ const Header = ({formTitle, control}: {formTitle: string, control: Control}) => 
                                 radius="sm"
                                 size='sm'
                                 className="w-64 bg-white pr-4"
+                                selectionMode="multiple"
                                 selectedKeys={field.value ? new Set(field.value) : new Set()}
                                 onSelectionChange={(keys) => {
-                                    // Convert the selected keys Set to an array of strings
                                     field.onChange(Array.from(keys));
                                 }}
                             >
-                                {fields.map((field: any) => (
-                                    <SelectItem key={field.id} value={field.id}>{field.text}</SelectItem>
+                                {fields.map((field: any, index: number) => (
+                                    <SelectItem key={`$.${index}`} value={`$.${index}`}>{field.text}</SelectItem>
                                 ))}
                             </Select>
                         )}

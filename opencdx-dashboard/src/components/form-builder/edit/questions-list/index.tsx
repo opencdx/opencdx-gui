@@ -81,7 +81,7 @@ const Questions = () => {
       </div>
       <span className={cn(
         "w-full flex flex-row justify-between text-sm font-small",
-        activeTab?.idx === idx ? "text-[#006FEE]" : "text-black",
+        activeTab?.idx === idx ? "text-[#004499]" : "text-black",
         "group-hover:text-[#006FEE]"
       )}>
         {item.text && item.text.length > 40 ? `${item.text.substring(0, 40)}...` : item.text}

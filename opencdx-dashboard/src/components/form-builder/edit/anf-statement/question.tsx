@@ -218,18 +218,20 @@ export default function BooleanQuestionConfig({
                             {...field}
                             className="w-64 bg-white"
                             label="Data Type"
-                            defaultSelectedKeys={[field.value]}
+                            selectedKeys={[field.value]}
                             variant="bordered"
                             radius="sm"
                             aria-describedby={`type-${uniqueId}`}
                             onSelectionChange={(keys) => {
-                                const selectedValue = Array.from(keys)[0];
+                                const selectedValue = Array.from(keys)[0] as string;
                                 field.onChange(selectedValue);
+                                handleChange(selectedValue);
                             }}
-                            onChange={(e) => handleChange(e.target.value)}
                         >
-                            {Object.values(QuestionnaireItemType).map((type) => (
-                                <SelectItem key={type.key}>{type.label}</SelectItem>
+                            {QuestionnaireItemType.map((type) => (
+                                <SelectItem key={type.key} value={type.key}>
+                                    {type.label}
+                                </SelectItem>
                             ))}
                         </Select>
                     )}
