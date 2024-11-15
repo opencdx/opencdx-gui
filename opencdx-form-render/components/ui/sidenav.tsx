@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { TouchableOpacity, View, Text } from 'react-native';
-import { Link, useNavigation, usePathname } from 'expo-router';
+import { TouchableOpacity, View, Text, Image, ImageSourcePropType } from 'react-native';
+import { Link, usePathname, useNavigation } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { cn } from "../../lib/cn";
 
 interface Links {
   label: string;
   href: string;
-  icon: React.ReactNode;
+  selectedIcon: ImageSourcePropType;
+  unselectedIcon: ImageSourcePropType;
   onClick?: () => void;
 }
 
@@ -20,7 +21,10 @@ export const SidebarLink: React.FC<SidebarLinkProps> = ({ link, className }) => 
   const pathname = usePathname();
   const navigation = useNavigation();
 
-  const selected = useMemo(() => pathname.includes(link.href), [pathname, link.href]);
+  // Check if the current path matches the link's href exactly
+  // Normalize paths by ensuring both start with a leading slash
+  const normalizePath = (path: string) => (path.startsWith('/') ? path : `/${path}`);
+  const selected = normalizePath(pathname) === normalizePath(link.href);
 
   useEffect(() => {
     if (link.href === 'app/dashboard') {
@@ -55,13 +59,16 @@ export const SidebarLink: React.FC<SidebarLinkProps> = ({ link, className }) => 
     text-left
   `;
 
+  // Use the appropriate icon based on the selected state
+  const iconSource = selected ? link.selectedIcon : link.unselectedIcon;
+  
   return (
     <Link href={link.href as any} asChild>
       <TouchableOpacity className={linkStyle} onPress={handlePress}>
         <View className={viewStyle}>
           <View className="flex-row justify-start pl-2">
-            {link.icon}
-            <Text className={textStyle}>{link.label}</Text>
+          <Image source={iconSource} style={{ width: 20, height: 20 }} />
+          <Text className={textStyle}>{link.label}</Text>
           </View>
         </View>
       </TouchableOpacity>

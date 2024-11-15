@@ -14,8 +14,7 @@ import dayjs from 'dayjs';
 import DateOfBirthPicker from '~/components/ui/DateOfBirthPicker';
 
 
-
-const ProfileView = ({ links }: { links: any }) => {
+const ProfileView = ({ links, selectedTab }: { links: any; selectedTab: string }) => {
   const { userProfile, setUserProfile, updateUserStore, clearUserProfile } = useUserStore();
   const showToast = useShowToast();
   const [isEditing, setIsEditing] = useState(false);
@@ -140,8 +139,14 @@ const ProfileView = ({ links }: { links: any }) => {
           className="w-32 h-8 mb-8"
         />
         {links.map((link: any) => (
-          <SidebarLink key={link.href} link={link} />
-        ))}
+        <SidebarLink 
+        key={link.href} 
+        link={{
+          ...link,
+          icon: selectedTab === link.label ? link.selectedIcon : link.unselectedIcon
+        }}
+      />
+      ))}
       </View>
 
       {/* Header */}
