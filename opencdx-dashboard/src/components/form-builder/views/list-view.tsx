@@ -15,7 +15,7 @@ interface ListViewProps {
   onView: (questionnaire: Questionnaire) => void;
   onDownload: (questionnaire: Questionnaire) => void;
   onEdit: (questionnaire: Questionnaire) => void;
-  onDelete: (id: string) => void;
+  onDelete: (id: string, title: string) => void;
   convertDate: (date: any) => string;
   pagination: {
     totalPages: number;
@@ -107,7 +107,7 @@ const ListView: React.FC<ListViewProps> = ({
                       { action: onView, icon: removeRedEye.src, alt: 'Preview JSON', dataTestId: 'preview-json'   },
                       { action: onDownload, icon: fileDownload.src, alt: 'Download JSON', dataTestId: 'download-json' },
                       { action: onEdit, icon: editNote.src, alt: 'Edit Form', dataTestId: 'edit-form' },
-                      { action: () => onDelete(questionnaire.id!), icon: deleteOutline.src, alt: 'Delete Form', dataTestId: 'delete-form' },
+                      { action: () => onDelete(questionnaire.id!, questionnaire.title!), icon: deleteOutline.src, alt: 'Delete Form', dataTestId: 'delete-form' },
                     ].map(({ action, icon, alt ,dataTestId}, index) => (
                       <Tooltip content={alt} placement="top" classNames={{
                         base: "rounded-md",

@@ -15,7 +15,7 @@ interface GridViewProps {
   onView: (questionnaire: Questionnaire) => void;
   onDownload: (questionnaire: Questionnaire) => void;
   onEdit: (questionnaire: Questionnaire) => void;
-  onDelete: (id: string) => void;
+  onDelete: (id: string, title: string) => void;
   convertDate: (date: any) => string;
 }
 
@@ -31,7 +31,7 @@ const GridView: React.FC<GridViewProps> = ({
     { text: "Preview JSON", icon: removeRedEye.src, action: onView, dataTestId: "preview-json" },
     { text: "Download JSON", icon: fileDownload.src, action: onDownload, dataTestId: "download-json" },
     { text: "Edit Form", icon: editNote.src, action: onEdit, dataTestId: "edit-form" },
-    { text: "Delete Form", icon: deleteOutline.src, action: (q: Questionnaire) => onDelete(q.id!), dataTestId: "delete-form" },
+    { text: "Delete Form", icon: deleteOutline.src, action: (q: Questionnaire) => onDelete(q.id!, q.title!), dataTestId: "delete-form" },
   ], [onView, onDownload, onEdit, onDelete]);
 
   const renderQuestionnaireCard = useMemo(() => (questionnaire: Questionnaire) => (

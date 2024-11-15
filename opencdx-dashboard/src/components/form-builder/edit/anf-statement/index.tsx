@@ -8,7 +8,8 @@ import { OperatorTypeWrapper } from './operator-type';
 import { AnswerWrapper } from './answer';
 import { useFormContext } from 'react-hook-form';
 import Question from './question';
-
+import { toast, ToastContainer } from 'react-toastify';
+import { useTranslations } from 'next-intl';
 const QuestionnaireItemWrapper: React.FC<{
   item: QuestionnaireItem;
   questionnaireItemId: number;
@@ -23,6 +24,8 @@ const QuestionnaireItemWrapper: React.FC<{
   const [isDeleteItemModalOpen, setIsDeleteItemModalOpen] = useState(false);
 
   const defaultAnfStatement = useMemo(() => ({}), []);
+  const t = useTranslations('common');
+
 
   const handleComponentTypeChange = useCallback((value: AnfStatementType) => {
     setCurrentComponentType(value);
@@ -100,6 +103,19 @@ const QuestionnaireItemWrapper: React.FC<{
   return (
     <div>
       {/* Question display */}
+      <ToastContainer 
+          position={"top-right"}
+          icon={false}
+          autoClose={2000}
+          hideProgressBar={true}
+          closeOnClick={true}
+          pauseOnHover={true}
+          draggable={true}
+          theme={"colored"}
+          closeButton={false} 
+          className="toast-custom" 
+      />
+
       <Accordion >
         <AccordionItem
           className=' bg-white px-6 mb-4'
@@ -247,7 +263,7 @@ const QuestionnaireItemWrapper: React.FC<{
                 <Divider className="my-4 border-neutral-700" />
               )}
           </ControlledAccordion>
-
+         
          
         </div>
       ))}
@@ -283,8 +299,10 @@ const QuestionnaireItemWrapper: React.FC<{
                   size="lg"
                   isDisabled={anfStatementName.length === 0}
                   onPress={() => {
+                    toast.success(t('anf_statement_added'));
                     onClose();
                     handleContinue();
+                     
                   }}
                 >
                   Done

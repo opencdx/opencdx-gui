@@ -7,11 +7,13 @@ import { useQuestionnaireStore } from '@/hooks/questionnaire';
 import { QuestionnaireWrapper } from '@/components/form-builder/edit/edit-questionnaire-wrapper';
 import { Questionnaire } from '@/api/questionnaire/model/questionnaire';
 import { useForm, FormProvider } from 'react-hook-form';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
+import { useTranslations } from 'next-intl';  
 
 const Edit: React.FC<{ questionnaireId: string }> = ({ questionnaireId }) => {
+  const t = useTranslations('common');
   const { questionnaire: questionnaireData, updateQuestionnaireTitle } = useQuestionnaireStore();
   
   // Initialize form with empty object if questionnaireData is undefined
@@ -31,12 +33,11 @@ const Edit: React.FC<{ questionnaireId: string }> = ({ questionnaireId }) => {
       setShowModal(false);
     };
   }, []);
-  const notify = () => toast.error("Form successfully created! Begin adding questions.");
 
   const handleContinue = () => {
-    //notify();
     setValue('title', formName);
     updateQuestionnaireTitle(formName);
+    toast.success(t('form_created'));
   };
 
   const handleFormNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,6 +80,7 @@ const Edit: React.FC<{ questionnaireId: string }> = ({ questionnaireId }) => {
                   onPress={() => {
                     onClose();
                     handleContinue();
+                    
                   }}
                 >
                   Continue

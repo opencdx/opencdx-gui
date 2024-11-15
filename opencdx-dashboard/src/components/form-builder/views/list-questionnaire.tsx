@@ -141,7 +141,7 @@ export default function ListQuestionnaire() {
 
   const handleView = useCallback((questionnaire: Questionnaire) => {
     modalActions.openModal({
-      title: `Preview JSON: ${questionnaire.title}`,
+      title: `Preview JSON : ${questionnaire.title}`,
       content: <JsonView data={questionnaire} shouldExpandNode={allExpanded} style={defaultStyles} />,
       footer: <Button color="primary" variant="solid" onPress={modalActions.closeModal}>Close</Button>,
     });
@@ -152,11 +152,11 @@ export default function ListQuestionnaire() {
     router.push(`/pages/edit-questionnaire/${questionnaire.id}`);
   }, [updateQuestionnaire, router]);
 
-  const handleDelete = useCallback((id: string) => {
+  const handleDelete = useCallback((id: string, title: string) => {
     modalActions.openModal({
       title: 'Delete this form?',
       height: 'md:h-2/8 lg:h-2/8',
-      content: <p>Are you sure you want to delete this form? This action cannot be undone.</p>,
+      content: <p><b>{title}</b>, are you sure you want to delete this form? This cannot be undone.</p>,
       footer: (
         <>
           <Button color="primary" variant='bordered' onPress={modalActions.closeModal} aria-label='Cancel' tabIndex={0} size='lg'>
@@ -170,10 +170,7 @@ export default function ListQuestionnaire() {
             onPress={() => {
               modalActions.closeModal();
               deleteQuestionnaire(id);
-              if (data?.data?.questionnaires) {
-                const updatedQuestionnaires = data.data.questionnaires.filter((q: Questionnaire) => q.id !== id);
-                
-              }
+              fetchQuestionnaires();
             }}
           >
             Delete

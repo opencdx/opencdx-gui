@@ -13,7 +13,7 @@ export const CustomRadio = (props: any) => {
       classNames={{
         base: cn(
           'inline-flex m-0 bg-content1 hover:bg-content2 items-center justify-between',
-          'flex-row w-[450px] cursor-pointer rounded-lg gap-4 p-4 mb-1 border-2 border-transparent',
+          'flex-row w-[450px] cursor-pointer rounded-lg gap-1 p-4 mb-1 border-2 border-transparent',
           'data-[selected=true]:border-primary',
         ),
       }}
@@ -43,7 +43,7 @@ const ComponentTypeWrapper = ({
     { value: AnfStatementType.AnfStatementTypeAssociated, label: "Associated ANF Statement", description: "Select Main Statement for the Associated Statement" },
   ];
   return (
-    <div className='px-8'>
+    <div className='px-6'>
       <Controller
         control={control}
         name={name}

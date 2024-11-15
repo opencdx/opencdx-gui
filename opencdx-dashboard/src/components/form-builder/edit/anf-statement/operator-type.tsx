@@ -14,7 +14,7 @@ export const CustomRadio = (props: any) => {
       classNames={{
         base: cn(
           'inline-flex m-0 bg-content1 hover:bg-content2 items-center justify-between',
-          'flex-row cursor-pointer rounded-lg gap-2 p-2 mb-1 border-2 border-transparent',
+          'flex-row cursor-pointer rounded-lg gap-1 p-2 mb-1 border-2 border-transparent',
           'data-[selected=true]:border-primary',
         ),
       }}
@@ -38,17 +38,20 @@ const OperatorTypeWrapper = ({
 
   const radioOptions = [
     { value: AnfOperatorType.AnfOperatorTypeEqual, label: "=", description: "Equal to" },
-    { value: AnfOperatorType.AnfOperatorTypeNotEqual, label: "!=", description: "Not equal to" },
     { value: AnfOperatorType.AnfOperatorTypeGreaterThan, label: "(>)", description: "Greater than" },
+
     { value: AnfOperatorType.AnfOperatorTypeLessThan, label: "(<)", description: "Less than" },
-    { value: AnfOperatorType.AnfOperatorTypeGreaterThanOrEqual, label: "(>=)", description: "Greater than or equal to" },
-    { value: AnfOperatorType.AnfOperatorTypeLessThanOrEqual, label: "(<=)", description: "Less than or equal to" },
     { value: AnfOperatorType.AnfOperatorTypeContains, label: "Contains", description: "Contains" },
+
+    { value: AnfOperatorType.AnfOperatorTypeNotEqual, label: "!=", description: "Not equal to" },
+    { value: AnfOperatorType.AnfOperatorTypeGreaterThanOrEqual, label: "(>=)", description: "Greater than or equal to" },
+
+    { value: AnfOperatorType.AnfOperatorTypeLessThanOrEqual, label: "(<=)", description: "Less than or equal to" },
     { value: AnfOperatorType.AnfOperatorTypeNotContains, label: "Does not contain", description: "Does not contain" },
 
   ];
   return (
-    <div className='px-8'>
+    <div className='px-6'>
       <Controller
         control={control}
         name={name}

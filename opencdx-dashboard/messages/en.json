@@ -36,6 +36,8 @@
     "invalid_password": "The password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter and one number.",
     "invalid_email": "Please enter a valid email address",
     "already_have_account_placeholder": "Already have an account?",
+    "anf_statement_added": "ANF Statement Added!",
+    "form_created": "Form successfully created! Begin adding questions.",
     "dashboard_button_label": "Button",
     "dashboard_checkbox_label": "Checkboxes",
     "dashboard_radio_label": "Radio",
