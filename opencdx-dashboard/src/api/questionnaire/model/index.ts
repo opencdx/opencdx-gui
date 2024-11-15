@@ -35,3 +35,4 @@ export * from './user-questionnaire-data';
 export * from './user-questionnaire-data-request';
 export * from './user-questionnaire-data-response';
 export * from './value-codeable-concept';
+export { Status } from './questionnaire';

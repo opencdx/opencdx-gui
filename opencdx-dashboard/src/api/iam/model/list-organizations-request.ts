@@ -16,26 +16,17 @@
 // May contain unused imports in some cases
 // @ts-ignore
 import type { Pagination } from './pagination';
-// May contain unused imports in some cases
-// @ts-ignore
-import type { Workspace } from './workspace';
 
 /**
  * 
  * @export
- * @interface ListWorkspacesResponse
+ * @interface ListOrganizationsRequest
  */
-export interface ListWorkspacesResponse {
-    /**
-     * 
-     * @type {Array<Workspace>}
-     * @memberof ListWorkspacesResponse
-     */
-    'workspaces'?: Array<Workspace>;
+export interface ListOrganizationsRequest {
     /**
      * 
      * @type {Pagination}
-     * @memberof ListWorkspacesResponse
+     * @memberof ListOrganizationsRequest
      */
     'pagination'?: Pagination;
 }

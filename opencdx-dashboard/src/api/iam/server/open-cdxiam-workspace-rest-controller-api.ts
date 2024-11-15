@@ -28,6 +28,8 @@ import type { CreateWorkspaceResponse } from '../model';
 // @ts-ignore
 import type { GetWorkspaceDetailsByIdResponse } from '../model';
 // @ts-ignore
+import type { ListWorkspacesRequest } from '../model';
+// @ts-ignore
 import type { ListWorkspacesResponse } from '../model';
 // @ts-ignore
 import type { UpdateWorkspaceRequest } from '../model';
@@ -117,10 +119,13 @@ export const OpenCdxiamWorkspaceRestControllerApiAxiosParamCreator = function (c
         },
         /**
          * 
+         * @param {ListWorkspacesRequest} listWorkspacesRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listWorkspaces: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listWorkspaces: async (listWorkspacesRequest: ListWorkspacesRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'listWorkspacesRequest' is not null or undefined
+            assertParamExists('listWorkspaces', 'listWorkspacesRequest', listWorkspacesRequest)
             const localVarPath = `/workspace/list`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -139,9 +144,12 @@ export const OpenCdxiamWorkspaceRestControllerApiAxiosParamCreator = function (c
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(listWorkspacesRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -223,11 +231,12 @@ export const OpenCdxiamWorkspaceRestControllerApiFp = function(configuration?: C
         },
         /**
          * 
+         * @param {ListWorkspacesRequest} listWorkspacesRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listWorkspaces(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListWorkspacesResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listWorkspaces(options);
+        async listWorkspaces(listWorkspacesRequest: ListWorkspacesRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListWorkspacesResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listWorkspaces(listWorkspacesRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OpenCdxiamWorkspaceRestControllerApi.listWorkspaces']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -274,11 +283,12 @@ export const OpenCdxiamWorkspaceRestControllerApiFactory = function (configurati
         },
         /**
          * 
+         * @param {OpenCdxiamWorkspaceRestControllerApiListWorkspacesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listWorkspaces(options?: RawAxiosRequestConfig): AxiosPromise<ListWorkspacesResponse> {
-            return localVarFp.listWorkspaces(options).then((request) => request(axios, basePath));
+        listWorkspaces(requestParameters: OpenCdxiamWorkspaceRestControllerApiListWorkspacesRequest, options?: RawAxiosRequestConfig): AxiosPromise<ListWorkspacesResponse> {
+            return localVarFp.listWorkspaces(requestParameters.listWorkspacesRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -318,6 +328,20 @@ export interface OpenCdxiamWorkspaceRestControllerApiGetWorkspaceDetailsByIdRequ
      * @memberof OpenCdxiamWorkspaceRestControllerApiGetWorkspaceDetailsById
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for listWorkspaces operation in OpenCdxiamWorkspaceRestControllerApi.
+ * @export
+ * @interface OpenCdxiamWorkspaceRestControllerApiListWorkspacesRequest
+ */
+export interface OpenCdxiamWorkspaceRestControllerApiListWorkspacesRequest {
+    /**
+     * 
+     * @type {ListWorkspacesRequest}
+     * @memberof OpenCdxiamWorkspaceRestControllerApiListWorkspaces
+     */
+    readonly listWorkspacesRequest: ListWorkspacesRequest
 }
 
 /**
@@ -365,12 +389,13 @@ export class OpenCdxiamWorkspaceRestControllerApi extends BaseAPI {
 
     /**
      * 
+     * @param {OpenCdxiamWorkspaceRestControllerApiListWorkspacesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OpenCdxiamWorkspaceRestControllerApi
      */
-    public listWorkspaces(options?: RawAxiosRequestConfig) {
-        return OpenCdxiamWorkspaceRestControllerApiFp(this.configuration).listWorkspaces(options).then((request) => request(this.axios, this.basePath));
+    public listWorkspaces(requestParameters: OpenCdxiamWorkspaceRestControllerApiListWorkspacesRequest, options?: RawAxiosRequestConfig) {
+        return OpenCdxiamWorkspaceRestControllerApiFp(this.configuration).listWorkspaces(requestParameters.listWorkspacesRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
