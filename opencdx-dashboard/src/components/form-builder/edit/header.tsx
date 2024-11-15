@@ -57,6 +57,7 @@ const Header = ({formTitle, control}: {formTitle: string, control: Control}) => 
                             <Select
                                 {...field}
                                 label="Select a Rule"
+                                aria-label="Select a Rule"
                                 variant="bordered"
                                 radius="sm"
                                 size='sm'
@@ -79,6 +80,7 @@ const Header = ({formTitle, control}: {formTitle: string, control: Control}) => 
                         render={({ field }) => (
                             <Select
                                 label="Select Responses"
+                                aria-label="Select Responses"
                                 variant="bordered"
                                 radius="sm"
                                 size='sm'

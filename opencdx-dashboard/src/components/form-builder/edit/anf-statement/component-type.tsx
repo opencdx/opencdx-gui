@@ -42,6 +42,7 @@ const ComponentTypeWrapper = ({
     { value: AnfStatementType.AnfStatementTypeNotApplicable, label: "Contributing ANF Statement", description: "Select Main Statement for the Contributing ANF Statement" },
     { value: AnfStatementType.AnfStatementTypeAssociated, label: "Associated ANF Statement", description: "Select Main Statement for the Associated Statement" },
   ];
+
   return (
     <div className='px-6'>
       <Controller
@@ -60,13 +61,15 @@ const ComponentTypeWrapper = ({
             }}
           >
             <div className="flex flex-wrap">
-              {radioOptions.map((option) => (
+              {radioOptions.map((option, index) => (
                 <div key={option.value} className="w-1/2">
                   <CustomRadio
+                    id={`custom-radio-${questionnaireItemId}-${anfStatementConnectorId}-${index}`}
                     description={option.description}
                     value={option.value}
+                    aria-describedby={`description-${questionnaireItemId}-${anfStatementConnectorId}-${index}`}
                   >
-                    {option.label}
+                    <span id={`description-${questionnaireItemId}-${anfStatementConnectorId}-${index}`}>{option.label}</span>
                   </CustomRadio>
                 </div>
               ))}

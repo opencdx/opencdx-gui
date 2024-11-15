@@ -7,6 +7,7 @@ import { QuestionnaireItem } from "@/api/questionnaire/model/questionnaire-item"
 import { Controller, useFormContext } from 'react-hook-form';
 import { AnfOperatorType } from "@/api/questionnaire/model/anf-statement-connector";
 import { v4 as uuidv4 } from 'uuid';
+import { useId } from 'react';
 
 export default function BooleanQuestionConfig({
     item,
@@ -153,6 +154,9 @@ export default function BooleanQuestionConfig({
         setConditionalRows(newRows);
     };
 
+    // Generate a unique ID for ARIA attributes
+    const uniqueId = useId().replace(/[^a-zA-Z0-9-_]/g, '');
+
     return (
         <div className="space-y-6">
             <Divider />
@@ -169,34 +173,22 @@ export default function BooleanQuestionConfig({
                                 variant="bordered"
                                 radius="sm"
                                 className="w-64 bg-white"
+                                aria-describedby={`description-${uniqueId}`}
                             />
                         )}
                     />
-                    <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                    <p id={`description-${uniqueId}`} className="text-sm text-gray-500 mt-2">
+                        Descriptive informational helper text here.
+                    </p>
                 </div>
 
                 <div className="flex-1">
-                    {/* <Controller
-                        name={`${basePath}.units`}
-                        control={control}
-                        render={({ field }) => (
-                            <Select
-                                {...field}
-                                label="Units"
-                                variant="bordered"
-                                radius="sm"
-                                className="w-64 bg-white"
-                            >
-                                <SelectItem key="unit1">Unit 1</SelectItem>
-                                <SelectItem key="unit2">Unit 2</SelectItem>
-                            </Select>
-                        )}
-                    /> */}
                     <Select
                         label="Units"
                         variant="bordered"
                         radius="sm"
                         className="w-64 bg-white"
+                        aria-describedby={`units-${uniqueId}`}
                     >
                         <SelectItem key="meter">Meter</SelectItem>
                         <SelectItem key="month">Month</SelectItem>
@@ -204,24 +196,6 @@ export default function BooleanQuestionConfig({
                     <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
                 </div>
             </div>
-            <Divider />
-
-            {/* <div>
-                <Controller
-                    name={`${basePath}.initial[0].valueString`}
-                    control={control}
-                    render={({ field }) => (
-                        <Input
-                            {...field}
-                            label="Initial Value"
-                            variant="bordered"
-                            radius="sm"
-                            className="w-64 bg-white"
-                        />
-                    )}
-                />
-                <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
-            </div> */}
             <Divider />
 
             <div>
@@ -236,6 +210,7 @@ export default function BooleanQuestionConfig({
                             defaultSelectedKeys={[field.value]}
                             variant="bordered"
                             radius="sm"
+                            aria-describedby={`type-${uniqueId}`}
                             onSelectionChange={(keys) => {
                                 const selectedValue = Array.from(keys)[0];
                                 field.onChange(selectedValue);
@@ -262,6 +237,7 @@ export default function BooleanQuestionConfig({
                             {...field}
                             label="Select Operator"
                             orientation="horizontal"
+                            aria-label="Select Operator"
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                 field.onChange(e.target.value);
                                 //   const formData = getValues();
@@ -316,6 +292,7 @@ export default function BooleanQuestionConfig({
                                         render={({ field }) => (
                                             <Input
                                                 {...field}
+                                                aria-describedby={`answer-choice-${index + 1}`}
                                                 placeholder="Display"
                                                 variant="bordered"
                                                 radius="sm"
@@ -406,6 +383,7 @@ export default function BooleanQuestionConfig({
                                                 {...field}
                                                 label="Select System"
                                                 variant="bordered"
+                                                aria-describedby={`system-${uniqueId}`}
                                                 radius="sm"
                                                 className="w-full bg-white"
                                                 value={qCode.type}
@@ -438,6 +416,7 @@ export default function BooleanQuestionConfig({
                                                 variant="bordered"
                                                 radius="sm"
                                                 className="w-full"
+                                                aria-describedby={`question-code-${uniqueId}`}
                                                 placeholder="Enter question code"
                                                 value={qCode.code}
                                                 onChange={(e) => {
@@ -500,6 +479,7 @@ export default function BooleanQuestionConfig({
                                             variant="bordered"
                                             radius="sm"
                                             className="w-full bg-white"
+                                            aria-describedby={`operator-${uniqueId}`}   
                                             value={row.operator}
                                             onChange={(e) => {
                                                 const newRows = [...conditionalRows];
@@ -538,6 +518,7 @@ export default function BooleanQuestionConfig({
                                             variant="bordered"
                                             radius="sm"
                                             className="w-full bg-white"
+                                            aria-describedby={`action-${uniqueId}`}
                                             value={row.action}
                                             onChange={(e) => {
                                                 const newRows = [...conditionalRows];

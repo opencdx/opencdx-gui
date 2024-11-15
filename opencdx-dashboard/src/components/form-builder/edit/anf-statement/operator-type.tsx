@@ -39,17 +39,14 @@ const OperatorTypeWrapper = ({
   const radioOptions = [
     { value: AnfOperatorType.AnfOperatorTypeEqual, label: "=", description: "Equal to" },
     { value: AnfOperatorType.AnfOperatorTypeGreaterThan, label: "(>)", description: "Greater than" },
-
     { value: AnfOperatorType.AnfOperatorTypeLessThan, label: "(<)", description: "Less than" },
     { value: AnfOperatorType.AnfOperatorTypeContains, label: "Contains", description: "Contains" },
-
     { value: AnfOperatorType.AnfOperatorTypeNotEqual, label: "!=", description: "Not equal to" },
     { value: AnfOperatorType.AnfOperatorTypeGreaterThanOrEqual, label: "(>=)", description: "Greater than or equal to" },
-
     { value: AnfOperatorType.AnfOperatorTypeLessThanOrEqual, label: "(<=)", description: "Less than or equal to" },
     { value: AnfOperatorType.AnfOperatorTypeNotContains, label: "Does not contain", description: "Does not contain" },
-
   ];
+
   return (
     <div className='px-6'>
       <Controller
@@ -67,14 +64,19 @@ const OperatorTypeWrapper = ({
             }}
           >
             <div className="flex flex-wrap">
-              {radioOptions.map((option) => (
+              {radioOptions.map((option, index) => (
                 <div key={option.value} className="w-1/4">
                   <CustomRadio
+                    id={`custom-radio-${questionnaireItemId}-${anfStatementConnectorId}-${index}`}
                     description={option.description}
                     value={option.value}
+                    aria-describedby={`description-${questionnaireItemId}-${anfStatementConnectorId}-${index}`}
                   >
                     {option.label}
                   </CustomRadio>
+                  <span id={`description-${questionnaireItemId}-${anfStatementConnectorId}-${index}`} className="sr-only">
+                    {option.description}
+                  </span>
                 </div>
               ))}
             </div>
