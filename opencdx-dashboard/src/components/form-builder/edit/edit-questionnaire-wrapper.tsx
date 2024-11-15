@@ -29,7 +29,7 @@ const QuestionnaireWrapper = ({ questionnaire }: { questionnaire: Questionnaire 
       return () => clearTimeout(timer);
     }
     if (isCreateError || isUpdateError) {
-      toast.error('An error occurred', { position: 'top-center', autoClose: 2000 });
+      toast.error('An error occurred', { position: 'top-right', autoClose: 2000 });
     }
   }, [isCreated, isUpdated, isCreateError, isUpdateError, router]);
 
@@ -54,7 +54,17 @@ const QuestionnaireWrapper = ({ questionnaire }: { questionnaire: Questionnaire 
           <div className="flex flex-col h-full">
           <QuestionsWrapper />
           </div>
-        <ToastContainer />
+        <ToastContainer
+          position={"top-right"}
+          icon={false}
+          autoClose={2000}
+          hideProgressBar={true}
+          closeOnClick={true}
+          pauseOnHover={true}
+          draggable={true}
+          theme={"colored"}
+          closeButton={false} 
+        />
       </div>
     </form>
   );

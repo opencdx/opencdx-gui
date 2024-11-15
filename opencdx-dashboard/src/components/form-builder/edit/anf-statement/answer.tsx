@@ -13,7 +13,7 @@ export const CustomRadio = (props: any) => {
       classNames={{
         base: cn(
           'inline-flex m-0 bg-content1 hover:bg-content2 items-center justify-between',
-          'flex-row cursor-pointer rounded-lg gap-2 p-2 mb-1 border-2 border-transparent',
+          'flex-row cursor-pointer rounded-lg gap-1 p-2 mb-1 border-2 border-transparent',
           'data-[selected=true]:border-primary',
         ),
       }}
@@ -38,8 +38,8 @@ const AnswerWrapper = ({
   const radioOptions = [
     { value: 'anyvalue', label: "Any value", description: "Any value" },
     { value: 'value', label: "Value", description: "Value" },
-   
   ];
+
   return (
     <div className='px-8'>
       <Controller
@@ -50,6 +50,7 @@ const AnswerWrapper = ({
             {...field}  
             label="Select Answer"
             orientation="horizontal"
+            aria-describedby={`description-${questionnaireItemId}-${anfStatementConnectorId}`}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               field.onChange(e.target.value);
               const formData = getValues();
@@ -62,6 +63,7 @@ const AnswerWrapper = ({
                   <CustomRadio
                     description={option.description}
                     value={option.value}
+                    id={`description-${questionnaireItemId}-${anfStatementConnectorId}-${option.value}`}
                   >
                     {option.label}
                   </CustomRadio>

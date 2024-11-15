@@ -13,7 +13,7 @@ export const CustomRadio = (props: any) => {
       classNames={{
         base: cn(
           'inline-flex m-0 bg-content1 hover:bg-content2 items-center justify-between',
-          'flex-row w-[450px] cursor-pointer rounded-lg gap-4 p-4 mb-1 border-2 border-transparent',
+          'flex-row w-[450px] cursor-pointer rounded-lg gap-1 p-4 mb-1 border-2 border-transparent',
           'data-[selected=true]:border-primary',
         ),
       }}
@@ -42,8 +42,9 @@ const ComponentTypeWrapper = ({
     { value: AnfStatementType.AnfStatementTypeNotApplicable, label: "Contributing ANF Statement", description: "Select Main Statement for the Contributing ANF Statement" },
     { value: AnfStatementType.AnfStatementTypeAssociated, label: "Associated ANF Statement", description: "Select Main Statement for the Associated Statement" },
   ];
+
   return (
-    <div className='px-8'>
+    <div className='px-6'>
       <Controller
         control={control}
         name={name}
@@ -60,16 +61,21 @@ const ComponentTypeWrapper = ({
             }}
           >
             <div className="flex flex-wrap">
-              {radioOptions.map((option) => (
-                <div key={option.value} className="w-1/2">
-                  <CustomRadio
-                    description={option.description}
-                    value={option.value}
-                  >
-                    {option.label}
-                  </CustomRadio>
-                </div>
-              ))}
+              {radioOptions.map((option, index) => {
+                const descriptionId = `description-${questionnaireItemId}-${anfStatementConnectorId}-${index}`;
+                return (
+                  <div key={option.value} className="w-1/2">
+                    <CustomRadio
+                      id={`custom-radio-${questionnaireItemId}-${anfStatementConnectorId}-${index}`}
+                      description={option.description}
+                      value={option.value}
+                      aria-describedby={descriptionId}
+                    >
+                      <span id={descriptionId}>{option.label}</span>
+                    </CustomRadio>
+                  </div>
+                );
+              })}
             </div>
           </RadioGroup>
         )}

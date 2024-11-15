@@ -10,6 +10,7 @@ interface ControlledRadioProps {
 
 const ControlledRadio: React.FC<ControlledRadioProps> = ({ label, name, orientation = "horizontal" }) => {
   const { control } = useFormContext();
+  const descriptionId = `radio-group-${name}-description`;
 
   return (
     <div className='flex flex-col gap-4 pl-2'>
@@ -25,11 +26,14 @@ const ControlledRadio: React.FC<ControlledRadioProps> = ({ label, name, orientat
             }}
             value={String(value)}
             onChange={(event: { target: { value: string; }; }) => onChange(event.target.value === 'true')}
+            aria-describedby={descriptionId}
           >
             <Radio 
               value="true"
               description='Lorem ipsum'
               size='sm'
+              id={`${name}-true`}
+              
             >
               Yes
             </Radio>
@@ -38,9 +42,13 @@ const ControlledRadio: React.FC<ControlledRadioProps> = ({ label, name, orientat
               description='Lorem ipsum'
               size='sm'
               className='ml-12'
+              id={`${name}-false`}
             >
               No
             </Radio>
+            <div id={descriptionId} className="sr-only">
+              Description for the radio group
+            </div>
           </RadioGroup>
         )}
       />

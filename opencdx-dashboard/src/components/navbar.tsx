@@ -81,7 +81,7 @@ export function Navbar() {
                   />
                 }
               >
-                <User name="John Doe" />
+                <User name="John Doe" aria-label="John Doe" />
               </Button>
             </DropdownTrigger>
             <DropdownMenu 
@@ -89,6 +89,7 @@ export function Navbar() {
               aria-label="User actions"
               selectionMode="single"
               onAction={(key: Key) => handleDropdownAction(key as string) }
+              role="listbox"
             >
               {dropdownItems.map(({ key, label, icon }) => (
                 <DropdownItem
@@ -101,6 +102,9 @@ export function Navbar() {
                       height={20}
                     />
                   }
+                  aria-label={label}
+                  role="option"
+                  tabIndex={0}
                 >
                   {label}
                 </DropdownItem>

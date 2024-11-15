@@ -31,7 +31,7 @@ const ControlledAccordion: React.FC<AccordionProps> = ({ title, children, isTitl
           width={20}
           height={20}
           className="transform transition-transform duration-300"
-          style={{ transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
+          // style={{ transform:  'rotate(180deg)' : 'rotate(0deg)' }}
           priority
         />
       </div>

@@ -34,7 +34,8 @@
     background-color: rgba(243, 18, 96, 1) !important;
 }   
 .Toastify__toast-theme--colored.Toastify__toast--success {
-    background-color: #00b37e !important;
+    background: #A2E9C1 !important;
 }
-
-  
+.Toastify__toast-body > div:last-child {
+    color: black !important;
+}
