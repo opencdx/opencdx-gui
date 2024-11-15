@@ -37,7 +37,7 @@ const Edit: React.FC<{ questionnaireId: string }> = ({ questionnaireId }) => {
   const handleContinue = () => {
     setValue('title', formName);
     updateQuestionnaireTitle(formName);
-    toast.success(t('form_created'));
+    toast.success('Form successfully created! Begin adding questions.');
   };
 
   const handleFormNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
