@@ -14,15 +14,15 @@ const Dashboard = () => {
     { 
       label: 'Dashboard', 
       href: 'app/dashboard', 
-      selectedIcon: require('../../../assets/unselected_dashboard.png'),
+      selectedIcon: require('../../../assets/selected_dashboard.png'),
       unselectedIcon: require('../../../assets/unselected_dashboard.png'),
       onClick: () => setSelectedTab('Dashboard')
     },
     { 
       label: 'My Profile', 
       href: 'app/profile', 
-      selectedIcon: require('../../../assets/unselected_dashboard.png'),
-      unselectedIcon: require('../../../assets/unselected_dashboard.png'),
+      selectedIcon: require('../../../assets/person_selected.png'),
+      unselectedIcon: require('../../../assets/person.png'),
       onClick: () => setSelectedTab('My Profile')
     },
     { 

@@ -26,10 +26,6 @@ export const SidebarLink: React.FC<SidebarLinkProps> = ({ link, className }) => 
   const normalizePath = (path: string) => (path.startsWith('/') ? path : `/${path}`);
   const selected = normalizePath(pathname) === normalizePath(link.href);
 
-  // Debugging information
-  console.log(`Current pathname: ${pathname}, link.href: ${link.href}`);
-  console.log(`Rendering ${link.label} - selected: ${selected}`);
-
   useEffect(() => {
     if (link.href === 'app/dashboard') {
       AsyncStorage.getItem('serviceToken').then(token => {
@@ -63,12 +59,9 @@ export const SidebarLink: React.FC<SidebarLinkProps> = ({ link, className }) => 
     text-left
   `;
 
-
   // Use the appropriate icon based on the selected state
   const iconSource = selected ? link.selectedIcon : link.unselectedIcon;
-  console.log(`Icon for ${link.label} - selected: ${selected}, icon:`, iconSource);
-
-
+  
   return (
     <Link href={link.href as any} asChild>
       <TouchableOpacity className={linkStyle} onPress={handlePress}>
