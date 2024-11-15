@@ -8,7 +8,33 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { AnfOperatorType } from "@/api/questionnaire/model/anf-statement-connector";
 import { v4 as uuidv4 } from 'uuid';
 import { useId } from 'react';
+const QuestionnaireItemType = [
+    { key: "boolen", label: "Boolean" },
+    { key: "choice", label: "Choice" },
+    { key: "open-choice", label: "Open Choice" },
+    { key: "datetime", label: "Datetime" },
+    { key: "string", label: "String" },
+    { key: "number", label: "Number" },
+]
+const radioOptions = [
+    { value: AnfOperatorType.AnfOperatorTypeEqual, label: "=", description: "is equal to" },
+    { value: AnfOperatorType.AnfOperatorTypeNotEqual, label: "<>", description: "is not equal to" },
+    { value: AnfOperatorType.AnfOperatorTypeContains, label: "Empty", description: "is empty" },
+    { value: AnfOperatorType.AnfOperatorTypeNotContains, label: "Not empty", description: "is not empty" },
 
+];
+
+const radioOprionsExtended = [
+    { value: AnfOperatorType.AnfOperatorTypeEqual, label: "=", description: "is equal to" },
+    { value: AnfOperatorType.AnfOperatorTypeNotEqual, label: "<>", description: "is not equal to" },
+    { value: AnfOperatorType.AnfOperatorTypeGreaterThan, label: ">", description: "is greater than" },
+    { value: AnfOperatorType.AnfOperatorTypeLessThan, label: "<", description: "is less than" },
+    { value: AnfOperatorType.AnfOperatorTypeGreaterThanOrEqual, label: ">=", description: "is greater than or equal to" },
+    { value: AnfOperatorType.AnfOperatorTypeLessThanOrEqual, label: "<=", description: "is less than or equal to" },
+    { value: AnfOperatorType.AnfOperatorTypeContains, label: "Empty", description: "is empty" },
+    { value: AnfOperatorType.AnfOperatorTypeNotContains, label: "Not empty", description: "is not empty" },
+
+];
 export default function BooleanQuestionConfig({
     item,
     questionnaireItemId,
@@ -18,15 +44,41 @@ export default function BooleanQuestionConfig({
 }) {
     const { control, setValue, getValues } = useFormContext();
     const basePath = `item.${questionnaireItemId}`;
-    const QuestionnaireItemType = [
-        { key: "boolen", label: "Boolean" },
-        { key: "choice", label: "Choice" },
-        { key: "open-choice", label: "Open Choice" },
-        { key: "datetime", label: "Datetime" },
-        { key: "string", label: "String" },
-        { key: "number", label: "Number" },
-    ]
 
+    const [showQuestionCode, setShowQuestionCode] = useState(false);
+    const [showConditionalDisplay, setShowConditionalDisplay] = useState(false);
+
+    useEffect(() => {
+        if (item.enableWhen && item.enableWhen.length > 0) {
+            setShowConditionalDisplay(true);
+        } else {
+            setShowConditionalDisplay(false);
+        }
+        if (item.code && item.code.length > 0) {
+            setShowQuestionCode(true);
+        } else {
+            setShowQuestionCode(false);
+        }
+    }, []);
+    const fields = getValues('item') || [];
+    const [dataType, setDataType] = useState(item.type);
+    const handleChange = (value: string) => {
+        setDataType(value);
+    };
+
+    // Update the initial state to include the existing answer options if any
+    const [answerChoices, setAnswerChoices] = useState(() => {
+        const existingAnswers = getValues(`${basePath}.answerOption`) || [];
+        return existingAnswers.length > 0
+            ? existingAnswers.map((answer: any) => ({ display: answer.valueCoding.display }))
+            : [{ display: '' }];
+    });
+    useEffect(() => {
+        if (!item.linkId) {
+            setValue(`${basePath}.linkId`, uuidv4());
+        }
+
+    }, []);
 
     const CustomRadioOperator = (props: any) => {
         const { children, ...otherProps } = props;
@@ -46,23 +98,6 @@ export default function BooleanQuestionConfig({
             </Radio>
         );
     };
-    const [activeTab, setActiveTab] = useState('question');
-
-
-    const handleTabClick = (e: React.MouseEvent<HTMLButtonElement>, tabId: string) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setActiveTab(tabId);
-    };
-    useEffect(() => {
-        if (!item.linkId) {
-            setValue(`${basePath}.linkId`, uuidv4());
-        }
-
-    }, []);
-
-    const [showQuestionCode, setShowQuestionCode] = useState(false);
-    const [showConditionalDisplay, setShowConditionalDisplay] = useState(false);
 
     const CustomRadio = ({ title, description, name }: { title: string, description: string, name: string }) => (
         <div>
@@ -92,18 +127,7 @@ export default function BooleanQuestionConfig({
         </div>
     );
 
-    const [dataType, setDataType] = useState(item.type);
-    const handleChange = (value: string) => {
-        setDataType(value);
-    };
 
-    // Update the initial state to include the existing answer options if any
-    const [answerChoices, setAnswerChoices] = useState(() => {
-        const existingAnswers = getValues(`${basePath}.answerOption`) || [];
-        return existingAnswers.length > 0 
-            ? existingAnswers.map((answer: any) => ({ display: answer.valueCoding.display }))
-            : [{ display: '' }];
-    });
 
     const addAnswerChoice = () => {
         setAnswerChoices([...answerChoices, { display: '' }]);
@@ -112,36 +136,23 @@ export default function BooleanQuestionConfig({
         setValue(`${basePath}.answerOption`, [...currentAnswers, { valueCoding: { display: '' } }]);
     };
 
-    const radioOptions = [
-        { value: AnfOperatorType.AnfOperatorTypeEqual, label: "=", description: "is equal to" },
-        { value: AnfOperatorType.AnfOperatorTypeNotEqual, label: "<>", description: "is not equal to" },
-        { value: AnfOperatorType.AnfOperatorTypeContains, label: "Empty", description: "is empty" },
-        { value: AnfOperatorType.AnfOperatorTypeNotContains, label: "Not empty", description: "is not empty" },
 
-    ];
 
-    const radioOprionsExtended = [
-        { value: AnfOperatorType.AnfOperatorTypeEqual, label: "=", description: "is equal to" },
-        { value: AnfOperatorType.AnfOperatorTypeNotEqual, label: "<>", description: "is not equal to" },
-        { value: AnfOperatorType.AnfOperatorTypeGreaterThan, label: ">", description: "is greater than" },
-        { value: AnfOperatorType.AnfOperatorTypeLessThan, label: "<", description: "is less than" },
-        { value: AnfOperatorType.AnfOperatorTypeGreaterThanOrEqual, label: ">=", description: "is greater than or equal to" },
-        { value: AnfOperatorType.AnfOperatorTypeLessThanOrEqual, label: "<=", description: "is less than or equal to" },
-        { value: AnfOperatorType.AnfOperatorTypeContains, label: "Empty", description: "is empty" },
-        { value: AnfOperatorType.AnfOperatorTypeNotContains, label: "Not empty", description: "is not empty" },
-
-    ];
-
-    const [questionCodes, setQuestionCodes] = useState([{ type: '', code: '' }]);
+    const [questionCodes, setQuestionCodes] = useState(
+        item.code && item.code.length > 0
+            ? item.code.map((code: any) => ({ type: code.system, code: code.code }))
+            : [{ type: '', code: '' }]);
 
     const handleAddQuestionCode = () => {
         setQuestionCodes([...questionCodes, { type: '', code: '' }]);
     };
 
     // Add new state for conditional display rows
-    const [conditionalRows, setConditionalRows] = useState([
-        { operator: '', answer: '', action: '' }
-    ]);
+    const [conditionalRows, setConditionalRows] = useState(
+        item.enableWhen && item.enableWhen.length > 0
+            ? item.enableWhen.map((enableWhen: any) => ({ operator: enableWhen.operator, answer: enableWhen.answer, action: enableWhen.question }))
+            : [{ operator: '', answer: '', action: '' }]
+    );
 
     // Add handler for adding new conditional row
     const handleAddConditionalRow = () => {
@@ -297,12 +308,6 @@ export default function BooleanQuestionConfig({
                                                 variant="bordered"
                                                 radius="sm"
                                                 className="w-full"
-                                                onChange={(e) => {
-                                                    field.onChange(e.target.value);
-                                                    const newChoices = [...answerChoices];
-                                                    newChoices[index].display = e.target.value;
-                                                    setAnswerChoices(newChoices);
-                                                }}
                                             />
                                         )}
                                     />
@@ -364,6 +369,7 @@ export default function BooleanQuestionConfig({
                                 setShowQuestionCode(false);
                             }
                         }}
+                        defaultValue={showQuestionCode ? 'true' : 'false'}
                         className="mt-2 my-2"
                     >
                         <Radio className="text-sm mr-4" value="true">Yes</Radio>
@@ -375,10 +381,10 @@ export default function BooleanQuestionConfig({
                         {questionCodes.map((qCode, index) => (
                             <div key={index} className="flex flex-wrap gap-4">
                                 <div className="flex-1 min-w-[350px]">
-                                <Controller
-                            name={`${basePath}.code[0].system`}
+                                    <Controller
+                                        name={`${basePath}.code[${index}].system`}
                                         control={control}
-                                        render={({ field }) => 
+                                        render={({ field }) =>
                                             <Select
                                                 {...field}
                                                 label="Select System"
@@ -387,15 +393,16 @@ export default function BooleanQuestionConfig({
                                                 radius="sm"
                                                 className="w-full bg-white"
                                                 value={qCode.type}
-                                                onChange={(e) => {
-                                            const newCodes = [...questionCodes];
-                                            newCodes[index].type = e.target.value;
-                                            setQuestionCodes(newCodes);
-                                        }}
-                                    >
-                                        <SelectItem key="icd">ICD</SelectItem>
-                                        <SelectItem key="loinc">LOINC</SelectItem>
-                                        <SelectItem key="snomed">SNOMED</SelectItem>
+
+                                                defaultSelectedKeys={[field.value]}
+                                                onSelectionChange={(keys) => {
+                                                    const selectedValue = Array.from(keys)[0];
+                                                    field.onChange(selectedValue);
+                                                }}
+                                            >
+                                                <SelectItem key="icd">ICD</SelectItem>
+                                                <SelectItem key="loinc">LOINC</SelectItem>
+                                                <SelectItem key="snomed">SNOMED</SelectItem>
                                                 <SelectItem key="ndc">NDC</SelectItem>
                                             </Select>
                                         }
@@ -403,13 +410,14 @@ export default function BooleanQuestionConfig({
 
 
                                     <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
-                                    </div>
+                                </div>
 
                                 <div className="flex-1 min-w-[350px]">
                                     <Controller
-                                        name={`${basePath}.code[0].code`}
+                                        name={`${basePath}.code[${index}].code`}
                                         control={control}
                                         render={({ field }) => (
+
                                             <Input
                                                 {...field}
                                                 label="Question Code"
@@ -417,13 +425,6 @@ export default function BooleanQuestionConfig({
                                                 radius="sm"
                                                 className="w-full"
                                                 aria-describedby={`question-code-${uniqueId}`}
-                                                placeholder="Enter question code"
-                                                value={qCode.code}
-                                                onChange={(e) => {
-                                            const newCodes = [...questionCodes];
-                                            newCodes[index].code = e.target.value;
-                                                    setQuestionCodes(newCodes);
-                                                }}
                                             />
                                         )}
                                     />
@@ -474,62 +475,84 @@ export default function BooleanQuestionConfig({
                                 <div key={index} className="flex flex-wrap gap-4 mb-4 ">
 
                                     <div className="flex-1 min-w-[150px]">
-                                        <Select
-                                            label="Operator"
-                                            variant="bordered"
-                                            radius="sm"
-                                            className="w-full bg-white"
-                                            aria-describedby={`operator-${uniqueId}`}   
-                                            value={row.operator}
-                                            onChange={(e) => {
-                                                const newRows = [...conditionalRows];
-                                                newRows[index].operator = e.target.value;
-                                                setConditionalRows(newRows);
-                                            }}
-                                        >
-                                            <SelectItem key="=">=</SelectItem>
-                                            <SelectItem key="<>">≠</SelectItem>
-                                            <SelectItem key="exists">Empty</SelectItem>
-                                            <SelectItem key="not-exists">Not empty</SelectItem>
-                                        </Select>
-                                        <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
-                                    </div>
+                                        <Controller
+                                            name={`${basePath}.enableWhen[${index}].operator`}
+                                            control={control}
+                                            render={({ field }) => (
+                                                <Select
+                                                    {...field}
+                                                    label="Operator"
+                                                    variant="bordered"
+                                                    radius="sm"
+                                                    className="w-full bg-white"
+                                                    aria-describedby={`operator-${uniqueId}`}
+                                                    value={row.operator}
 
-                                    <div className="flex-1 min-w-[150px]">
-                                        <Input
-                                            label="Answer"
-                                            variant="bordered"
-                                            radius="sm"
-                                            className="w-full"
-                                            placeholder="Enter answer"
-                                            value={row.answer}
-                                            onChange={(e) => {
-                                                const newRows = [...conditionalRows];
-                                                newRows[index].answer = e.target.value;
-                                                setConditionalRows(newRows);
-                                            }}
+                                                    defaultSelectedKeys={[field.value]}
+                                                    onSelectionChange={(keys) => {
+                                                        const selectedValue = Array.from(keys)[0];
+                                                        field.onChange(selectedValue);
+                                                    }}
+
+
+                                                >
+                                                    {radioOprionsExtended.map((option) => (
+                                                        <SelectItem key={option.value}>{option.label}</SelectItem>
+                                                    ))}
+                                                </Select>
+                                            )}
                                         />
                                         <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
                                     </div>
 
                                     <div className="flex-1 min-w-[150px]">
-                                        <Select
-                                            label="Action"
-                                            variant="bordered"
-                                            radius="sm"
-                                            className="w-full bg-white"
-                                            aria-describedby={`action-${uniqueId}`}
-                                            value={row.action}
-                                            onChange={(e) => {
-                                                const newRows = [...conditionalRows];
-                                                newRows[index].action = e.target.value;
-                                                setConditionalRows(newRows);
-                                            }}
-                                        >
-                                            <SelectItem key="q1">Q1</SelectItem>
-                                            <SelectItem key="q2">Q2</SelectItem>
-                                            <SelectItem key="q3">Q3</SelectItem>
-                                        </Select>
+                                        <Controller
+                                            name={`${basePath}.enableWhen[${index}].answerCoding.display`}
+                                            control={control}
+                                            render={({ field }) => (
+                                                <Input
+
+                                                    {...field}
+                                                    label="Answer"
+                                                    variant="bordered"
+                                                    radius="sm"
+                                                    className="w-full"
+                                                    aria-describedby={`answer-${uniqueId}`}
+                                                />
+                                            )}
+                                        />
+                                        <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                                    </div>
+
+                                    <div className="flex-1 min-w-[150px]">
+                                        <Controller
+                                            name={`${basePath}.enableWhen[${index}].question`}
+                                            control={control}
+                                            render={({ field }) => (
+                                                <Select
+                                                    {...field}
+                                                    label="Action"
+                                                    variant="bordered"
+                                                    radius="sm"
+                                                    className="w-full bg-white"
+                                                    aria-describedby={`action-${uniqueId}`}
+                                                    value={row.action}
+
+                                                    defaultSelectedKeys={[field.value]}
+                                                    onSelectionChange={(keys) => {
+                                                        const selectedValue = Array.from(keys)[0];
+                                                        field.onChange(selectedValue);
+                                                    }}
+                                                >
+                                                    {fields
+                                                        .filter((field: any) => field.linkId !== item.linkId)
+                                                        .map((field: any) => (
+                                                            <SelectItem key={field.linkId}>{field.text}</SelectItem>
+                                                        ))
+                                                    }
+                                                </Select>
+                                            )}
+                                        />
                                         <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
                                     </div>
 

@@ -38,8 +38,8 @@ const AnswerWrapper = ({
   const radioOptions = [
     { value: 'anyvalue', label: "Any value", description: "Any value" },
     { value: 'value', label: "Value", description: "Value" },
-   
   ];
+
   return (
     <div className='px-8'>
       <Controller
@@ -50,6 +50,7 @@ const AnswerWrapper = ({
             {...field}  
             label="Select Answer"
             orientation="horizontal"
+            aria-describedby={`description-${questionnaireItemId}-${anfStatementConnectorId}`}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               field.onChange(e.target.value);
               const formData = getValues();
@@ -62,6 +63,7 @@ const AnswerWrapper = ({
                   <CustomRadio
                     description={option.description}
                     value={option.value}
+                    id={`description-${questionnaireItemId}-${anfStatementConnectorId}-${option.value}`}
                   >
                     {option.label}
                   </CustomRadio>

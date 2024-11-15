@@ -221,20 +221,22 @@ export default function ListQuestionnaire() {
             content: "bg-gray-900 text-white text-sm max-w-xs break-words"
           }}
         >
-          <label             className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent data-[pressed=true]:scale-[0.97] outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-4 min-w-20 h-10 text-small gap-2 rounded-medium [&>svg]:max-w-[theme(spacing.8)] transition-transform-colors-opacity motion-reduce:transition-none bg-primary text-primary-foreground data-[hover=true]:opacity-hover p-0 h-[40px]"
+          <label 
+            htmlFor="file-upload"
+            className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent data-[pressed=true]:scale-[0.97] outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-4 min-w-20 h-10 text-small gap-2 rounded-medium [&>svg]:max-w-[theme(spacing.8)] transition-transform-colors-opacity motion-reduce:transition-none bg-primary text-primary-foreground data-[hover=true]:opacity-hover p-0 h-[40px]"
           >  
-            
             <input
+              id="file-upload"
               hidden
               type="file"
               onChange={handleFileUpload}
               data-testid="upload-form"
+              accept="application/json"
+              aria-label="Upload Form"
             />
             Upload Form
             <Image src={fileUploadTransparent.src} alt="Upload" width={20} height={20} priority />
-
           </label>
-         
         </Tooltip>
         <Tabs
           color="primary"

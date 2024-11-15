@@ -61,18 +61,21 @@ const ComponentTypeWrapper = ({
             }}
           >
             <div className="flex flex-wrap">
-              {radioOptions.map((option, index) => (
-                <div key={option.value} className="w-1/2">
-                  <CustomRadio
-                    id={`custom-radio-${questionnaireItemId}-${anfStatementConnectorId}-${index}`}
-                    description={option.description}
-                    value={option.value}
-                    aria-describedby={`description-${questionnaireItemId}-${anfStatementConnectorId}-${index}`}
-                  >
-                    <span id={`description-${questionnaireItemId}-${anfStatementConnectorId}-${index}`}>{option.label}</span>
-                  </CustomRadio>
-                </div>
-              ))}
+              {radioOptions.map((option, index) => {
+                const descriptionId = `description-${questionnaireItemId}-${anfStatementConnectorId}-${index}`;
+                return (
+                  <div key={option.value} className="w-1/2">
+                    <CustomRadio
+                      id={`custom-radio-${questionnaireItemId}-${anfStatementConnectorId}-${index}`}
+                      description={option.description}
+                      value={option.value}
+                      aria-describedby={descriptionId}
+                    >
+                      <span id={descriptionId}>{option.label}</span>
+                    </CustomRadio>
+                  </div>
+                );
+              })}
             </div>
           </RadioGroup>
         )}
