@@ -70,7 +70,6 @@ const OperatorTypeWrapper = ({
                     id={`custom-radio-${questionnaireItemId}-${anfStatementConnectorId}-${index}`}
                     description={option.description}
                     value={option.value}
-                    aria-describedby={`description-${questionnaireItemId}-${anfStatementConnectorId}-${index}`}
                   >
                     {option.label}
                   </CustomRadio>

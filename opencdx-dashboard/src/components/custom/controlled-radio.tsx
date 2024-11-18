@@ -26,7 +26,6 @@ const ControlledRadio: React.FC<ControlledRadioProps> = ({ label, name, orientat
             }}
             value={String(value)}
             onChange={(event: { target: { value: string; }; }) => onChange(event.target.value === 'true')}
-            aria-describedby={descriptionId}
           >
             <Radio 
               value="true"
