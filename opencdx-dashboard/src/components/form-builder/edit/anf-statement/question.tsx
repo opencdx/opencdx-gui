@@ -338,6 +338,7 @@ export default function BooleanQuestionConfig({
                                     onValueChange={field.onChange}
                                     className="mt-2"
                                     aria-label="Answer list layout"
+                                    id="answer-list-layout-radio-group"
                                 >
                                     <Radio className="text-sm mr-4" value="drop-down">Drop down</Radio>
                                     <Radio className="text-sm mr-4" value="radio-button">Radio button</Radio>
@@ -368,6 +369,7 @@ export default function BooleanQuestionConfig({
                         defaultValue={showQuestionCode ? 'true' : 'false'}
                         className="mt-2 my-2"
                         aria-label="Add question code"
+                        id="add-question-code-radio-group"
                     >
                         <Radio className="text-sm mr-4" value="true">Yes</Radio>
                         <Radio className="text-sm mr-4" value="false">No</Radio>
@@ -456,9 +458,11 @@ export default function BooleanQuestionConfig({
                         }
                     }}
                     className="mt-2 my-2"
+                    id="conditional-display-radio-group"
+                    aria-label="Conditional display"
                 >
-                    <Radio className="text-sm mr-4" value="true">Yes</Radio>
-                    <Radio className="text-sm mr-4" value="false">No</Radio>
+                    <Radio className="text-sm mr-4" value="true" id="conditional-display-yes-radio">Yes</Radio>
+                    <Radio className="text-sm mr-4" value="false" id="conditional-display-no-radio">No</Radio>
                 </RadioGroup>
             </div>
 
