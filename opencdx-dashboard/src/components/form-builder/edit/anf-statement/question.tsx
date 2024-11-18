@@ -460,6 +460,7 @@ export default function BooleanQuestionConfig({
                     className="mt-2 my-2"
                     id="conditional-display-radio-group"
                     aria-label="Conditional display"
+                    defaultValue={showConditionalDisplay ? 'true' : 'false'}
                 >
                     <Radio className="text-sm mr-4" value="true" id="conditional-display-yes-radio">Yes</Radio>
                     <Radio className="text-sm mr-4" value="false" id="conditional-display-no-radio">No</Radio>
