@@ -118,6 +118,7 @@ export default function BooleanQuestionConfig({
                             }
                         }}
                         className="mt-2 my-2"
+                        aria-label={title}
                     >
                         <Radio className="text-sm mr-4" value="true">Yes</Radio>
                         <Radio className="text-sm mr-4" value="false">No</Radio>
@@ -184,7 +185,6 @@ export default function BooleanQuestionConfig({
                                 variant="bordered"
                                 radius="sm"
                                 className="w-64 bg-white"
-                                aria-describedby={`description-${uniqueId}`}
                             />
                         )}
                     />
@@ -199,7 +199,6 @@ export default function BooleanQuestionConfig({
                         variant="bordered"
                         radius="sm"
                         className="w-64 bg-white"
-                        aria-describedby={`units-${uniqueId}`}
                     >
                         <SelectItem key="meter">Meter</SelectItem>
                         <SelectItem key="month">Month</SelectItem>
@@ -218,18 +217,19 @@ export default function BooleanQuestionConfig({
                             {...field}
                             className="w-64 bg-white"
                             label="Data Type"
-                            defaultSelectedKeys={[field.value]}
+                            selectedKeys={[field.value]}
                             variant="bordered"
                             radius="sm"
-                            aria-describedby={`type-${uniqueId}`}
                             onSelectionChange={(keys) => {
-                                const selectedValue = Array.from(keys)[0];
+                                const selectedValue = Array.from(keys)[0] as string;
                                 field.onChange(selectedValue);
+                                handleChange(selectedValue);
                             }}
-                            onChange={(e) => handleChange(e.target.value)}
                         >
-                            {Object.values(QuestionnaireItemType).map((type) => (
-                                <SelectItem key={type.key}>{type.label}</SelectItem>
+                            {QuestionnaireItemType.map((type) => (
+                                <SelectItem key={type.key} value={type.key}>
+                                    {type.label}
+                                </SelectItem>
                             ))}
                         </Select>
                     )}
@@ -249,11 +249,7 @@ export default function BooleanQuestionConfig({
                             label="Select Operator"
                             orientation="horizontal"
                             aria-label="Select Operator"
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                field.onChange(e.target.value);
-                                //   const formData = getValues();
-                                //   localStorage.setItem('questionnaire-store', JSON.stringify(formData));
-                            }}
+                            id="operator-radio-group"
                         >
                             <div className="flex flex-wrap">
                                 {dataType === "boolean" || dataType === "choice" || dataType === "open-choice" ? (
@@ -303,7 +299,6 @@ export default function BooleanQuestionConfig({
                                         render={({ field }) => (
                                             <Input
                                                 {...field}
-                                                aria-describedby={`answer-choice-${index + 1}`}
                                                 placeholder="Display"
                                                 variant="bordered"
                                                 radius="sm"
@@ -321,7 +316,7 @@ export default function BooleanQuestionConfig({
                                 color="primary"
                                 radius="sm"
                                 fullWidth
-                                endContent={<Plus />}
+                                endContent={<Plus aria-label="Add another answer" />}
                                 onClick={addAnswerChoice}
                             >
                                 Add Another Answer
@@ -342,6 +337,8 @@ export default function BooleanQuestionConfig({
                                     value={field.value}
                                     onValueChange={field.onChange}
                                     className="mt-2"
+                                    aria-label="Answer list layout"
+                                    id="answer-list-layout-radio-group"
                                 >
                                     <Radio className="text-sm mr-4" value="drop-down">Drop down</Radio>
                                     <Radio className="text-sm mr-4" value="radio-button">Radio button</Radio>
@@ -371,6 +368,8 @@ export default function BooleanQuestionConfig({
                         }}
                         defaultValue={showQuestionCode ? 'true' : 'false'}
                         className="mt-2 my-2"
+                        aria-label="Add question code"
+                        id="add-question-code-radio-group"
                     >
                         <Radio className="text-sm mr-4" value="true">Yes</Radio>
                         <Radio className="text-sm mr-4" value="false">No</Radio>
@@ -389,7 +388,6 @@ export default function BooleanQuestionConfig({
                                                 {...field}
                                                 label="Select System"
                                                 variant="bordered"
-                                                aria-describedby={`system-${uniqueId}`}
                                                 radius="sm"
                                                 className="w-full bg-white"
                                                 value={qCode.type}
@@ -424,7 +422,6 @@ export default function BooleanQuestionConfig({
                                                 variant="bordered"
                                                 radius="sm"
                                                 className="w-full"
-                                                aria-describedby={`question-code-${uniqueId}`}
                                             />
                                         )}
                                     />
@@ -438,7 +435,7 @@ export default function BooleanQuestionConfig({
                             variant="flat"
                             color="primary"
                             radius="sm"
-                            endContent={<Plus />}
+                            endContent={<Plus aria-label="Add question code" />}
                             onClick={handleAddQuestionCode}
                         >
                             Add Question Code
@@ -461,9 +458,11 @@ export default function BooleanQuestionConfig({
                         }
                     }}
                     className="mt-2 my-2"
+                    id="conditional-display-radio-group"
+                    aria-label="Conditional display"
                 >
-                    <Radio className="text-sm mr-4" value="true">Yes</Radio>
-                    <Radio className="text-sm mr-4" value="false">No</Radio>
+                    <Radio className="text-sm mr-4" value="true" id="conditional-display-yes-radio">Yes</Radio>
+                    <Radio className="text-sm mr-4" value="false" id="conditional-display-no-radio">No</Radio>
                 </RadioGroup>
             </div>
 
@@ -485,7 +484,6 @@ export default function BooleanQuestionConfig({
                                                     variant="bordered"
                                                     radius="sm"
                                                     className="w-full bg-white"
-                                                    aria-describedby={`operator-${uniqueId}`}
                                                     value={row.operator}
 
                                                     defaultSelectedKeys={[field.value]}
@@ -517,7 +515,6 @@ export default function BooleanQuestionConfig({
                                                     variant="bordered"
                                                     radius="sm"
                                                     className="w-full"
-                                                    aria-describedby={`answer-${uniqueId}`}
                                                 />
                                             )}
                                         />
@@ -535,7 +532,6 @@ export default function BooleanQuestionConfig({
                                                     variant="bordered"
                                                     radius="sm"
                                                     className="w-full bg-white"
-                                                    aria-describedby={`action-${uniqueId}`}
                                                     value={row.action}
 
                                                     defaultSelectedKeys={[field.value]}
@@ -564,7 +560,7 @@ export default function BooleanQuestionConfig({
                                         className="mt-2"
                                         size="sm"
                                     >
-                                        <Trash className="h-4 w-4" />
+                                        <Trash className="h-4 w-4" aria-label="Remove condition" />
                                     </Button>
 
                                 </div>
@@ -583,7 +579,7 @@ export default function BooleanQuestionConfig({
                         radius="sm"
                         size="sm"
                         fullWidth
-                        endContent={<Plus />}
+                        endContent={<Plus aria-label="Add another condition" />}
                         onClick={handleAddConditionalRow}
                     >
                         Add Another Condition

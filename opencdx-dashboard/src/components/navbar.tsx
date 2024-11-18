@@ -68,28 +68,28 @@ export function Navbar() {
               <Button
                 variant="light"
                 disableAnimation
-                role="link"
-                aria-label="User actions dropdown"
                 className="w-full p-0"
                 endContent={
                   <Image 
                     src={arrowDown.src}
-                    alt="Dropdown arrow" 
+                    alt="Open user menu" 
                     width={24} 
                     height={24} 
                     priority 
+                    aria-hidden="true"
                   />
                 }
               >
-                <User name="John Doe" aria-label="John Doe" />
+                <User 
+                  name="John Doe"
+                  aria-hidden="true"
+                />
               </Button>
             </DropdownTrigger>
             <DropdownMenu 
               variant="faded" 
-              aria-label="User actions"
               selectionMode="single"
               onAction={(key: Key) => handleDropdownAction(key as string) }
-              role="listbox"
             >
               {dropdownItems.map(({ key, label, icon }) => (
                 <DropdownItem
@@ -102,9 +102,6 @@ export function Navbar() {
                       height={20}
                     />
                   }
-                  aria-label={label}
-                  role="option"
-                  tabIndex={0}
                 >
                   {label}
                 </DropdownItem>

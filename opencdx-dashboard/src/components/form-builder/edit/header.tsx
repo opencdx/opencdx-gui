@@ -1,5 +1,5 @@
-import { Card, CardBody, BreadcrumbItem, Breadcrumbs, Button, Image, Select, SelectItem } from 'ui-library';
-import { LeftChevronIcon} from 'ui-library'
+import { Card, CardBody, BreadcrumbItem, Breadcrumbs, Button, Image } from 'ui-library';
+import { LeftChevronIcon, DownArrow} from 'ui-library'
 import { useRouter } from 'next/navigation';
 import editNoteLite from '../../../../public/images/edit_note.png';
 import { useQuestionnaireStore } from '@/hooks/questionnaire';
@@ -47,64 +47,68 @@ const Header = ({formTitle, control}: {formTitle: string, control: Control}) => 
                                 </Breadcrumbs>
                             </div>
                         </div>
+                      
 
-
-                        <div className="flex flex-row items-center">
-                        <Controller
-                        name={`ruleId`}
-                        control={control}
-                        render={({ field }) => (
-                            <Select
-                                {...field}
-                                label="Select a Rule"
-                                aria-label="Select a Rule"
-                                variant="bordered"
-                                radius="sm"
-                                size='sm'
-                                className="w-64 bg-white pr-4"
-                                selectedKeys={field.value ? new Set([field.value]) : new Set()}
-                                onSelectionChange={(keys) => {
-                                    const selectedValue = Array.from(keys)[0];
-                                    field.onChange(selectedValue);
-                                }}
-                            >
-                                {(ruleSetData?.data.ruleSets ?? []).map((rule: any) => (
-                                    <SelectItem key={rule.ruleId} value={rule.ruleId}>{rule.name}</SelectItem>
-                                ))}
-                            </Select>
-                        )}
-                        />
-                        <Controller
-                        name={`ruleQuestionId`}
-                        control={control}
-                        render={({ field }) => (
-                            <Select
-                                label="Select Responses"
-                                aria-label="Select Responses"
-                                variant="bordered"
-                                radius="sm"
-                                size='sm'
-                                className="w-64 bg-white pr-4"
-                                selectedKeys={field.value ? new Set(field.value) : new Set()}
-                                onSelectionChange={(keys) => {
-                                    // Convert the selected keys Set to an array of strings
-                                    field.onChange(Array.from(keys));
-                                }}
-                            >
-                                {fields.map((field: any) => (
-                                    <SelectItem key={field.id} value={field.id}>{field.text}</SelectItem>
-                                ))}
-                            </Select>
-                        )}
-                        />
-                            <Button
-                                className="mr-4 pr-4"
+                        <div className="flex flex-row items-center space-x-4">
+                        <Button
+                               
                                 startContent={<LeftChevronIcon />}
                                 variant="bordered"
                                 color="primary"
                                 size='md'
                                 onPress={handleBack}
                             >Back</Button>
+                            <div className="relative">
+                                <Controller
+                                    name={`ruleId`}
+                                    control={control}
+                                    render={({ field }) => (
+                                        <>
+                                            <select
+                                                {...field}
+                                                className="w-48 h-10 bg-white px-[14px] border-2 rounded-lg appearance-none"
+                                                aria-label="Select a Rule"
+                                            >
+                                                <option value="">Select a Rule</option>
+                                                {(ruleSetData?.data.ruleSets ?? []).map((rule: any) => (
+                                                    <option key={rule.ruleId} value={rule.ruleId}>
+                                                        {rule.name}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            <DownArrow className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
+                                        </>
+                                    )}
+                                />
+                            </div>
+                            <div className="relative">
+                                <Controller
+                                    name={`ruleQuestionId`}
+                                    control={control}
+                                    render={({ field }) => (
+                                        <>
+                                            <select
+                                                {...field}
+                                                className="w-64 h-10 bg-white px-[14px] border-2 rounded-lg appearance-none"
+                                                aria-label="Select Responses"
+                                                onChange={(e) => {
+                                                    const values = Array.from(e.target.selectedOptions).map(option => option.value);
+                                                    field.onChange(values);
+                                                }}
+                                            >
+                                                <option value="">Select Response</option>
+                                                {fields.map((field: any, index: number) => (
+                                                    <option key={`$.${index}`} value={`$.${index}`}>
+                                                        {field.text}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            <DownArrow className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
+                                        </>
+                                    )}
+                                />
+                            </div>
+                           
                             <Button type="submit" size='md' variant="solid" color="primary">
                                 Submit Form
                             </Button>
