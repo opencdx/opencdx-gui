@@ -14,22 +14,17 @@ import { LoginRequest, SignUpRequest, ResetPasswordRequest, SignUpResponse } fro
  */
 export const useLogin = (onSuccess: (arg0: any) => void, onError: (arg0: unknown) => void) => {
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);
 
     const login = async (credentials: LoginRequest) => {
         setLoading(true);
         setError(null);
 
         try {
-            // Call the login API
             const response = await iamApi.login({ loginRequest: credentials });
-            // Execute the onSuccess callback if provided
             if (onSuccess) onSuccess(response.data);
-        } catch (err) {
-            console.error('Login failed:', err);
-            setError(err as any);
 
-            // Execute the onError callback if provided
+        } catch (err) {
             if (onError) onError(err);
         } finally {
             setLoading(false);
@@ -65,9 +60,6 @@ export const useSignUp = (onSuccess: (arg0: any) => void, onError: (arg0: unknow
                 if (onError) onError(error);
             }
         } catch (err) {
-            console.error('Login failed:', err);
-            setError(err as any);
-
             // Execute the onError callback if provided
             if (onError) onError(err);
         } finally {
@@ -95,9 +87,6 @@ export const useResetPassword = (onSuccess: (arg0: any) => void, onError: (arg0:
             const response = await iamApi.resetPassword({ resetPasswordRequest: credentials });
             if (onSuccess) onSuccess(response);
         } catch (err) {
-            console.error('Login failed:', err);
-            setError(err as any);
-
             // Execute the onError callback if provided
             if (onError) onError(err);
         } finally {
