@@ -57,6 +57,9 @@ const OperatorTypeWrapper = ({
             {...field}  
             label="Select Operator"
             orientation="horizontal"
+            classNames={{
+              label: 'text-black',
+            }}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               field.onChange(e.target.value);
               const formData = getValues();
@@ -67,13 +70,13 @@ const OperatorTypeWrapper = ({
               {radioOptions.map((option, index) => (
                 <div key={option.value} className="w-1/4">
                   <CustomRadio
-                    id={`custom-radio-${questionnaireItemId}-${anfStatementConnectorId}-${index}`}
+                    id={`custom-radio-${questionnaireItemId}-${anfStatementConnectorId}-${index}-${option.value}`}
                     description={option.description}
                     value={option.value}
                   >
                     {option.label}
                   </CustomRadio>
-                  <span id={`description-${questionnaireItemId}-${anfStatementConnectorId}-${index}`} className="sr-only">
+                  <span id={`description-${questionnaireItemId}-${anfStatementConnectorId}-${index}-${option.value}`} className="sr-only">
                     {option.description}
                   </span>
                 </div>

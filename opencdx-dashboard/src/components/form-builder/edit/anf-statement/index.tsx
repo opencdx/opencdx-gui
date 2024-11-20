@@ -22,6 +22,7 @@ const QuestionnaireItemWrapper: React.FC<{
   const [anfStatementName, setAnfStatementName] = useState('');
   const [deleteQuestionnaireItemId, setDeleteQuestionnaireItemId] = useState(0);
   const [isDeleteItemModalOpen, setIsDeleteItemModalOpen] = useState(false);
+  const [deleteQuestionnaireANFTitle, setDeleteQuestionnaireANFTitle] = useState('');
 
   const defaultAnfStatement = useMemo(() => ({}), []);
   const t = useTranslations('common');
@@ -80,6 +81,8 @@ const QuestionnaireItemWrapper: React.FC<{
   const handleDeleteANFButtonClick = useCallback((questionnaireItemId: number) => {
     setIsDeleteModalOpen(true);
     setDeleteQuestionnaireItemId(questionnaireItemId);
+    setDeleteQuestionnaireANFTitle(item?.anfStatementConnector?.[questionnaireItemId]?.name ?? '');
+
   }, []);
 
   const handleDeleteButtonClick = useCallback(() => {
@@ -98,6 +101,8 @@ const QuestionnaireItemWrapper: React.FC<{
     const currentItems = getValues(`item`) || [];
     const updatedItems = currentItems.filter((_: any, index: number) => index !== deleteQuestionnaireItemId);
     setValue(`item`, updatedItems);
+    toast.success('Question successfully deleted!');
+    setIsDeleteItemModalOpen(false);
   }, [getValues, setValue, deleteQuestionnaireItemId]);
 
   return (
@@ -152,7 +157,7 @@ const QuestionnaireItemWrapper: React.FC<{
         <ModalContent >
           <ModalHeader className="flex flex-col gap-1">Delete this question?</ModalHeader>
           <ModalBody className="w-full overflow-auto bg-white">
-            <p>Delete <strong>{item?.anfStatementConnector?.[questionnaireItemId]?.name ?? ''}</strong>? This cannot be undone.</p>
+            <p>Delete <strong>{deleteQuestionnaireANFTitle}</strong>? This cannot be undone.</p>
           </ModalBody>
           <ModalFooter>
             <Button color="primary" variant='bordered' size='lg' onClick={() => setIsDeleteModalOpen(false)}>

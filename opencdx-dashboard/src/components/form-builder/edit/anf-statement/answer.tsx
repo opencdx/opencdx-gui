@@ -50,6 +50,9 @@ const AnswerWrapper = ({
             {...field}  
             label="Select Answer"
             orientation="horizontal"
+            classNames={{
+              label: 'text-black',
+            }}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               field.onChange(e.target.value);
               const formData = getValues();

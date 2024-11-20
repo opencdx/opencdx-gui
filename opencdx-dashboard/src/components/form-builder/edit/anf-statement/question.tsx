@@ -12,7 +12,7 @@ const QuestionnaireItemType = [
     { key: "boolen", label: "Boolean" },
     { key: "choice", label: "Choice" },
     { key: "open-choice", label: "Open Choice" },
-    { key: "datetime", label: "Datetime" },
+    { key: "datetime", label: "Date/Time" },
     { key: "string", label: "String" },
     { key: "number", label: "Number" },
 ]
@@ -49,7 +49,7 @@ export default function BooleanQuestionConfig({
     const [showConditionalDisplay, setShowConditionalDisplay] = useState(false);
 
     useEffect(() => {
-        if (item.enableWhen && item.enableWhen.length > 0) {
+        if (item.enableWhen && item.enableWhen.length > 0 && item.enableWhen[0].operator) {
             setShowConditionalDisplay(true);
         } else {
             setShowConditionalDisplay(false);
@@ -81,11 +81,13 @@ export default function BooleanQuestionConfig({
     }, []);
 
     const CustomRadioOperator = (props: any) => {
-        const { children, ...otherProps } = props;
+        const { children, description, ...otherProps } = props;
+        const descriptionId = `${otherProps.id}-description-${otherProps.value}`;
 
         return (
             <Radio
                 {...otherProps}
+                aria-describedby={descriptionId}
                 classNames={{
                     base: cn(
                         'inline-flex m-0 bg-content1 hover:bg-content2 items-center justify-between',
@@ -94,7 +96,10 @@ export default function BooleanQuestionConfig({
                     ),
                 }}
             >
-                {children}
+                <div>
+                    {children}
+                    <p id={descriptionId} className="text-sm text-gray-500">{description}</p>
+                </div>
             </Radio>
         );
     };
@@ -194,20 +199,49 @@ export default function BooleanQuestionConfig({
                 </div>
 
                 <div className="flex-1">
-                    <Select
-                        label="Units"
-                        variant="bordered"
-                        radius="sm"
-                        className="w-64 bg-white"
-                    >
-                        <SelectItem key="meter">Meter</SelectItem>
-                        <SelectItem key="month">Month</SelectItem>
-                    </Select>
+                    <Controller
+                        name={`${basePath}.unit`}
+                        control={control}
+                        render={({ field }) => (
+                            <Select
+                                {...field}
+                                label="Units"
+                                variant="bordered"
+                                radius="sm"
+                                className="w-64 bg-white"
+                                selectedKeys={[field.value]}
+                                onSelectionChange={(keys) => {
+                                    const selectedValue = Array.from(keys)[0] as string;
+                                    field.onChange(selectedValue);
+                                }}
+                            >
+                                <SelectItem key="meter">Meter</SelectItem>
+                                <SelectItem key="month">Month</SelectItem>
+                            </Select>
+                        )}
+                    />
                     <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
                 </div>
             </div>
             <Divider />
-
+            <div>
+                <Controller
+                    name={`${basePath}.initial[0].valueString`}
+                    control={control}
+                    render={({ field }) => (
+                        <Input
+                                {...field}
+                                label="Initial Value"
+                                variant="bordered"
+                                radius="sm"
+                                type='number'
+                                className="w-64 bg-white"
+                            />
+                        )}
+                    />
+                <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+            </div>
+            <Divider />
             <div>
                 <Controller
                     name={`${basePath}.type`}
@@ -248,6 +282,9 @@ export default function BooleanQuestionConfig({
                             {...field}
                             label="Select Operator"
                             orientation="horizontal"
+                            classNames={{
+                                label: 'text-black',
+                              }}
                             aria-label="Select Operator"
                             id="operator-radio-group"
                         >
@@ -258,6 +295,7 @@ export default function BooleanQuestionConfig({
                                             <CustomRadioOperator
                                                 description={option.description}
                                                 value={option.value}
+                                                id={`operator-${option.value}`}
                                             >
                                                 {option.label}
                                             </CustomRadioOperator>
@@ -269,6 +307,7 @@ export default function BooleanQuestionConfig({
                                             <CustomRadioOperator
                                                 description={option.description}
                                                 value={option.value}
+                                                id={`operator-${option.value}`}
                                             >
                                                 {option.label}
                                             </CustomRadioOperator>
@@ -386,7 +425,7 @@ export default function BooleanQuestionConfig({
                                         render={({ field }) =>
                                             <Select
                                                 {...field}
-                                                label="Select System"
+                                                label="Select Question Code"
                                                 variant="bordered"
                                                 radius="sm"
                                                 className="w-full bg-white"
@@ -402,6 +441,7 @@ export default function BooleanQuestionConfig({
                                                 <SelectItem key="loinc">LOINC</SelectItem>
                                                 <SelectItem key="snomed">SNOMED</SelectItem>
                                                 <SelectItem key="ndc">NDC</SelectItem>
+                                                <SelectItem key="tinkar">Tinkar</SelectItem>
                                             </Select>
                                         }
                                     />
@@ -486,14 +526,13 @@ export default function BooleanQuestionConfig({
                                                     radius="sm"
                                                     className="w-full bg-white"
                                                     value={row.operator}
-
                                                     defaultSelectedKeys={[field.value]}
                                                     onSelectionChange={(keys) => {
                                                         const selectedValue = Array.from(keys)[0];
                                                         field.onChange(selectedValue);
                                                     }}
-
-
+                                                    tabIndex={0}
+                                                    aria-label="Select operator"
                                                 >
                                                     {radioOprionsExtended.map((option) => (
                                                         <SelectItem key={option.value}>{option.label}</SelectItem>
@@ -534,17 +573,24 @@ export default function BooleanQuestionConfig({
                                                     radius="sm"
                                                     className="w-full bg-white"
                                                     value={row.action}
-
                                                     defaultSelectedKeys={[field.value]}
                                                     onSelectionChange={(keys) => {
                                                         const selectedValue = Array.from(keys)[0];
                                                         field.onChange(selectedValue);
                                                     }}
+                                                    tabIndex={0}
+                                                    aria-label="Select action"
                                                 >
                                                     {fields
                                                         .filter((field: any) => field.linkId !== item.linkId)
-                                                        .map((field: any) => (
-                                                            <SelectItem key={field.linkId}>{field.text}</SelectItem>
+                                                        .map((field: any, index: number) => (
+                                                            <SelectItem 
+                                                                key={field.linkId}
+                                                                tabIndex={0}
+                                                                aria-label={`Select ${field.text}`}
+                                                            >
+                                                                {field.text}
+                                                            </SelectItem>
                                                         ))
                                                     }
                                                 </Select>
