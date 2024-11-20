@@ -21,7 +21,7 @@ const QuestionnaireSuccess: React.FC = () => {
     }, [navigation]);
 
     const renderContent = () => (
-        <View className="flex flex-col items-center justify-center h-screen w-full bg-white">
+        <View className="flex flex-col items-center justify-center w-auto h-screen w-full bg-white">
          <View className="bg-white p-8 text-center items-center">
             <View className="mb-6 flex justify-center items-center">
                 <Image
@@ -32,7 +32,7 @@ const QuestionnaireSuccess: React.FC = () => {
             </View> 
                 <Text className="text-2xl font-semibold text-gray-800 mb-4">Questionnaire Complete!</Text>
            </View>  
-                <Button onPress={handleProceedToDashboard} className="max-w-[600px] mx-auto py-3 text-lg mt-4">
+                <Button onPress={handleProceedToDashboard} className="max-w-[350px] w-auto mx-auto py-3 text-lg mt-4">
                     Return to Dashboard
                 </Button>
             
