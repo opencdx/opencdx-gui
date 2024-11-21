@@ -53,6 +53,9 @@ const ComponentTypeWrapper = ({
             {...field}
             label="Select Component Type"
             orientation="horizontal"
+            classNames={{
+              label: 'text-black',
+            }}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               field.onChange(e.target.value);
               const formData = getValues();

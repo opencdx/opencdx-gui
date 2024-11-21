@@ -6,6 +6,8 @@ import { cn } from '@/lib/utils';
 import { useFormContext } from 'react-hook-form';
 import { QuestionnaireItemWrapper } from '../anf-statement'
 import { Modal, Input, Button, ModalHeader, ModalBody, ModalFooter, ModalContent } from 'ui-library';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Questions = () => {
   const [activeTab, setActiveTab] = useState<{ item: QuestionnaireItem; idx: number } | null>(null);
@@ -180,22 +182,35 @@ const Questions = () => {
                   Cancel
                 </Button>
                 <Button
-                  color='default'
-                  aria-label="Done to Add Question"
                   tabIndex={0}
+                  color={question.length > 0 ? 'primary' : 'default'}
+                  aria-label="Continue to add Question"
                   size="lg"
+                  isDisabled={question.length === 0}
                   onPress={() => {
                     onClose();
                     handleSubmit();
+                    // toast.success('Question added!');
                   }}
                 >
-                  Done
+                  Add Question
                 </Button>
               </ModalFooter>
             </>
           )}
         </ModalContent>
       </Modal>
+      {/* <ToastContainer
+          position={"top-right"}
+          icon={false}
+          autoClose={2000}
+          hideProgressBar={true}
+          closeOnClick={true}
+          pauseOnHover={true}
+          draggable={true}
+          theme={"colored"}
+          closeButton={false} 
+        /> */}
     </div>
   );
 };

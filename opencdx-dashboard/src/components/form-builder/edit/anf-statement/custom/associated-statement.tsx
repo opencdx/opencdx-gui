@@ -21,7 +21,7 @@ export const AssociatedStatementComponent: React.FC<AssociatedStatementProps> = 
         <div >
             <div className='flex flex-col gap-4' >
                 <ControlledInput
-                    label="ID Reference"
+                    label="ID String"
                     name={`${tabName}.id.identifier`}
                 />
                 <Divider className="my-4" />
