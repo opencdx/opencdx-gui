@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { RadioGroup, Radio, Input, Select, SelectItem, Button } from "ui-library";
+import { RadioGroup, Radio, Input, Button } from "ui-library";
 import { Trash, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Divider } from "@nextui-org/react";
@@ -8,13 +8,22 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { AnfOperatorType } from "@/api/questionnaire/model/anf-statement-connector";
 import { v4 as uuidv4 } from 'uuid';
 import { useId } from 'react';
+import { CustomSelect } from "@/components/custom/controlled-select";
+import { ControlledRadio } from "@/components/custom/controlled-radio";
 const QuestionnaireItemType = [
-    { key: "boolen", label: "Boolean" },
+    { key: "boolean", label: "Boolean" },
     { key: "choice", label: "Choice" },
     { key: "open-choice", label: "Open Choice" },
     { key: "datetime", label: "Date/Time" },
     { key: "string", label: "String" },
     { key: "number", label: "Number" },
+]
+const QuestionCode = [
+    { key: "icd", label: "ICD" },
+    { key: "loinc", label: "LOINC" },
+    { key: "snomed", label: "SNOMED" },
+    { key: "ndc", label: "NDC" },
+    { key: "tinkar", label: "Tinkar" },
 ]
 const radioOptions = [
     { value: AnfOperatorType.AnfOperatorTypeEqual, label: "=", description: "is equal to" },
@@ -27,12 +36,13 @@ const radioOptions = [
 const radioOprionsExtended = [
     { value: AnfOperatorType.AnfOperatorTypeEqual, label: "=", description: "is equal to" },
     { value: AnfOperatorType.AnfOperatorTypeNotEqual, label: "<>", description: "is not equal to" },
-    { value: AnfOperatorType.AnfOperatorTypeGreaterThan, label: ">", description: "is greater than" },
-    { value: AnfOperatorType.AnfOperatorTypeLessThan, label: "<", description: "is less than" },
-    { value: AnfOperatorType.AnfOperatorTypeGreaterThanOrEqual, label: ">=", description: "is greater than or equal to" },
-    { value: AnfOperatorType.AnfOperatorTypeLessThanOrEqual, label: "<=", description: "is less than or equal to" },
     { value: AnfOperatorType.AnfOperatorTypeContains, label: "Empty", description: "is empty" },
     { value: AnfOperatorType.AnfOperatorTypeNotContains, label: "Not empty", description: "is not empty" },
+
+    { value: AnfOperatorType.AnfOperatorTypeGreaterThanOrEqual, label: ">=", description: "is greater than or equal to" },
+    { value: AnfOperatorType.AnfOperatorTypeLessThanOrEqual, label: "<=", description: "is less than or equal to" },
+    { value: AnfOperatorType.AnfOperatorTypeGreaterThan, label: ">", description: "is greater than" },
+    { value: AnfOperatorType.AnfOperatorTypeLessThan, label: "<", description: "is less than" },
 
 ];
 export default function BooleanQuestionConfig({
@@ -45,19 +55,20 @@ export default function BooleanQuestionConfig({
     const { control, setValue, getValues } = useFormContext();
     const basePath = `item.${questionnaireItemId}`;
 
-    const [showQuestionCode, setShowQuestionCode] = useState(false);
-    const [showConditionalDisplay, setShowConditionalDisplay] = useState(false);
+    const [showQuestionCode, setShowQuestionCode] = useState('no');
+    const [showConditionalDisplay, setShowConditionalDisplay] = useState('no');
 
     useEffect(() => {
         if (item.enableWhen && item.enableWhen.length > 0 && item.enableWhen[0].operator) {
-            setShowConditionalDisplay(true);
+            setShowConditionalDisplay('yes');
         } else {
-            setShowConditionalDisplay(false);
+            setShowConditionalDisplay('no');
         }
-        if (item.code && item.code.length > 0) {
-            setShowQuestionCode(true);
+        if (item.code && item.code.length > 0 && (item.code[0].system || item.code[0].code)) {
+            
+            setShowQuestionCode('yes');
         } else {
-            setShowQuestionCode(false);
+            setShowQuestionCode('no');
         }
     }, []);
     const fields = getValues('item') || [];
@@ -98,41 +109,11 @@ export default function BooleanQuestionConfig({
             >
                 <div>
                     {children}
-                    <p id={descriptionId} className="text-sm text-gray-500">{description}</p>
+                    <p id={descriptionId} className="text-sm text-gray-500" >{description}</p>
                 </div>
             </Radio>
         );
     };
-
-    const CustomRadio = ({ title, description, name }: { title: string, description: string, name: string }) => (
-        <div>
-            <p className="text-sm font-medium">{title}</p>
-            <p className="text-sm text-gray-500 mt-2">{description}</p>
-            <Controller
-                control={control}
-                name={`${basePath}.${name}`}
-                render={({ field }) => (
-                    <RadioGroup
-                        orientation="horizontal"
-                        value={field.value === true ? 'true' : 'false'}
-                        onValueChange={(value) => {
-                            if (value === 'true') {
-                                field.onChange(true);
-                            } else {
-                                field.onChange(false);
-                            }
-                        }}
-                        className="mt-2 my-2"
-                        aria-label={title}
-                    >
-                        <Radio className="text-sm mr-4" value="true">Yes</Radio>
-                        <Radio className="text-sm mr-4" value="false">No</Radio>
-                    </RadioGroup>
-                )}
-            />
-        </div>
-    );
-
 
 
     const addAnswerChoice = () => {
@@ -174,6 +155,11 @@ export default function BooleanQuestionConfig({
     // Generate a unique ID for ARIA attributes
     const uniqueId = useId().replace(/[^a-zA-Z0-9-_]/g, '');
 
+    const units = [
+        { value: 'year', label: 'Year' },
+        { value: 'month', label: 'Month' },
+        { value: 'day', label: 'Day' },
+    ]
     return (
         <div className="space-y-6">
             <Divider />
@@ -193,7 +179,7 @@ export default function BooleanQuestionConfig({
                             />
                         )}
                     />
-                    <p id={`description-${uniqueId}`} className="text-sm text-gray-500 mt-2">
+                    <p id={`description-${uniqueId}-text`} className="text-sm text-gray-500 mt-2">
                         Descriptive informational helper text here.
                     </p>
                 </div>
@@ -203,21 +189,20 @@ export default function BooleanQuestionConfig({
                         name={`${basePath}.unit`}
                         control={control}
                         render={({ field }) => (
-                            <Select
-                                {...field}
-                                label="Units"
-                                variant="bordered"
-                                radius="sm"
-                                className="w-64 bg-white"
-                                selectedKeys={[field.value]}
-                                onSelectionChange={(keys) => {
-                                    const selectedValue = Array.from(keys)[0] as string;
-                                    field.onChange(selectedValue);
+                            <CustomSelect
+                                value={field.value}
+                                onChange={(value) => {
+                                    const values = [value];
+                                    field.onChange(values);
                                 }}
-                            >
-                                <SelectItem key="meter">Meter</SelectItem>
-                                <SelectItem key="month">Month</SelectItem>
-                            </Select>
+                                options={units.map((unit: any, index: number) => ({
+                                    value: unit.value,
+                                    label: unit.label
+                                }))}
+                                placeholder="Units"
+                                className="w-72 h-14"
+                                aria-label="Select Unit"
+                            />
                         )}
                     />
                     <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
@@ -230,15 +215,15 @@ export default function BooleanQuestionConfig({
                     control={control}
                     render={({ field }) => (
                         <Input
-                                {...field}
-                                label="Initial Value"
-                                variant="bordered"
-                                radius="sm"
-                                type='number'
-                                className="w-64 bg-white"
-                            />
-                        )}
-                    />
+                            {...field}
+                            label="Initial Value"
+                            variant="bordered"
+                            radius="sm"
+                            type='number'
+                            className="w-64 bg-white"
+                        />
+                    )}
+                />
                 <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
             </div>
             <Divider />
@@ -247,25 +232,23 @@ export default function BooleanQuestionConfig({
                     name={`${basePath}.type`}
                     control={control}
                     render={({ field }: { field: any }) => (
-                        <Select
-                            {...field}
-                            className="w-64 bg-white"
-                            label="Data Type"
-                            selectedKeys={[field.value]}
-                            variant="bordered"
-                            radius="sm"
-                            onSelectionChange={(keys) => {
-                                const selectedValue = Array.from(keys)[0] as string;
+                        <CustomSelect
+                            value={field.value}
+                            onChange={(value) => {
+                                const values = [value];
+                                const selectedValue = Array.from(values)[0] as string;
                                 field.onChange(selectedValue);
                                 handleChange(selectedValue);
                             }}
-                        >
-                            {QuestionnaireItemType.map((type) => (
-                                <SelectItem key={type.key} value={type.key}>
-                                    {type.label}
-                                </SelectItem>
-                            ))}
-                        </Select>
+                            options={QuestionnaireItemType.map((type) => ({
+                                value: type.key,
+                                label: type.label
+                            }))}
+                            placeholder="Data Type"
+                            className="w-64 bg-white h-14"
+                            aria-label="Data Type"
+                        />
+
                     )}
                 />
 
@@ -279,42 +262,35 @@ export default function BooleanQuestionConfig({
                     name={`${basePath}.enableWhen[0].operator`}
                     render={({ field }) => (
                         <RadioGroup
-                            {...field}
-                            label="Select Operator"
-                            orientation="horizontal"
+                            orientation='horizontal'
+                            label='Select Operator'
                             classNames={{
-                                label: 'text-black',
-                              }}
-                            aria-label="Select Operator"
-                            id="operator-radio-group"
+                                label: 'text-md font-normal text-black mb-2',
+                                base: 'flex flex-wrap gap-4',
+                                wrapper: 'grid grid-cols-4 gap-4'
+                            }}
+                            value={String(field.value)}
+                            onChange={(event: { target: { value: string; }; }) => field.onChange(event.target.value)}
                         >
-                            <div className="flex flex-wrap">
-                                {dataType === "boolean" || dataType === "choice" || dataType === "open-choice" ? (
-                                    radioOptions.map((option) => (
-                                        <div key={option.value} className="w-1/4">
-                                            <CustomRadioOperator
-                                                description={option.description}
-                                                value={option.value}
-                                                id={`operator-${option.value}`}
-                                            >
-                                                {option.label}
-                                            </CustomRadioOperator>
-                                        </div>
-                                    ))
-                                ) :
-                                    radioOprionsExtended.map((option) => (
-                                        <div key={option.value} className="w-1/4">
-                                            <CustomRadioOperator
-                                                description={option.description}
-                                                value={option.value}
-                                                id={`operator-${option.value}`}
-                                            >
-                                                {option.label}
-                                            </CustomRadioOperator>
-                                        </div>
-                                    ))
-                                }
-                            </div>
+                            {
+                                (dataType === "boolean" || dataType === "choice" || dataType === "open-choice" 
+                                    ? radioOptions 
+                                    : radioOprionsExtended
+                                ).map((option) => (
+                                    <Radio
+                                        key={option.value}
+                                        value={option.value}
+                                        description={option.description}
+                                        size='md'
+                                        id={`${uniqueId}-${option.value}`}
+                                        classNames={{
+                                            base: 'w-full'
+                                        }}
+                                    >
+                                        {option.label}
+                                    </Radio>
+                                ))
+                            }
                         </RadioGroup>
                     )}
                 />
@@ -326,7 +302,7 @@ export default function BooleanQuestionConfig({
             {(dataType === "choice" || dataType === "open-choice") && (
                 <div>
                     <div>
-                        <p className="text-sm font-medium mb-2">Answer choices</p>
+                        <p className="text-md font-medium mb-2">Answer choices</p>
                         <p className="text-sm text-gray-500">Descriptive informational helper text here.</p>
                         <div className="border overflow-hidden border-[#99C7FB] p-4 mt-4 mb-4">
                             {answerChoices.map((choice: any, index: number) => (
@@ -365,22 +341,42 @@ export default function BooleanQuestionConfig({
                     <Divider />
 
                     <div className="mt-6">
-                        <p className="text-sm font-medium mb-2">Answer list layout</p>
+                        <p className="text-md font-medium mb-2">Answer list layout</p>
                         <p className="text-sm text-gray-500">Descriptive informational helper text here.</p>
                         <Controller
                             name={`${basePath}.extension[0].valueCodeableConcept.coding[0].code`}
                             control={control}
                             render={({ field }) => (
+                               
                                 <RadioGroup
                                     orientation="horizontal"
-                                    value={field.value}
-                                    onValueChange={field.onChange}
-                                    className="mt-2"
-                                    aria-label="Answer list layout"
-                                    id="answer-list-layout-radio-group"
+                                    classNames={{
+                                        label: 'text-sm font-normal text-black'
+                                    }}
+                                    value={String(field.value)}
+                                    onChange={(event: { target: { value: string; }; }) => field.onChange(event.target.value === 'drop-down')}
                                 >
-                                    <Radio className="text-sm mr-4" value="drop-down">Drop down</Radio>
-                                    <Radio className="text-sm mr-4" value="radio-button">Radio button</Radio>
+                                    <Radio
+                                        value="drop-down"
+                                        description='Lorem ipsum'
+                                        size='md'
+                                        id={`${uniqueId}-drop-down`}
+
+                                    >
+                                        Drop down
+                                    </Radio>
+                                    <Radio
+                                        value="radio-button"
+                                        description='Lorem ipsum'
+                                        size='md'
+                                        className='ml-12'
+                                        id={`${uniqueId}-radio-button`}
+                                    >
+                                        Radio button
+                                    </Radio>
+                                    <div id={`description-${uniqueId}-answer-list-layout`} className="sr-only">
+                                        Description for the radio group
+                                    </div>
                                 </RadioGroup>
                             )}
                         />
@@ -389,32 +385,54 @@ export default function BooleanQuestionConfig({
                 </div>
             )}
             <div className="space-y-4">
-                <CustomRadio title="Answer required?" description="Descriptive informational helper text here." name="required" />
+                <p className="text-md font-medium">Answer required?</p>
+                <p className="text-sm text-gray-500">Descriptive informational helper text here.</p>
+                <ControlledRadio name={`${basePath}.required`} />
                 <Divider />
-                <CustomRadio title="Read only?" description="Descriptive informational helper text here." name="readOnly" />
+                <p className="text-md font-medium">Read only?</p>
+                <p className="text-sm text-gray-500">Descriptive informational helper text here.</p>
+                <ControlledRadio name={`${basePath}.readOnly`} />
                 <Divider />
                 <div>
-                    <p className="text-sm font-medium">Add question code?</p>
+                    <p className="text-md font-medium">Add question code?</p>
                     <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                   
                     <RadioGroup
                         orientation="horizontal"
-                        onValueChange={(value) => {
-                            if (value === 'true') {
-                                setShowQuestionCode(true);
-                            } else {
-                                setShowQuestionCode(false);
-                            }
+                        classNames={{
+                            label: 'text-sm font-normal text-black'
                         }}
-                        defaultValue={showQuestionCode ? 'true' : 'false'}
-                        className="mt-2 my-2"
-                        aria-label="Add question code"
-                        id="add-question-code-radio-group"
+                        value={showQuestionCode}
+                        defaultValue={showQuestionCode}
+                        aria-labelledby={`description-${uniqueId}-question-code`}
+                        onChange={(event: { target: { value: string; }; }) => {
+                            setShowQuestionCode(event.target.value === 'yes' ? 'yes' : 'no')
+                        }}
                     >
-                        <Radio className="text-sm mr-4" value="true">Yes</Radio>
-                        <Radio className="text-sm mr-4" value="false">No</Radio>
+                        <Radio
+                            value="yes"
+                            description='Lorem ipsum'
+                            size='md'
+                            id={`${uniqueId}-yes-question-code`}
+
+                        >
+                            Yes
+                        </Radio>
+                        <Radio
+                            value="no"
+                            description='Lorem ipsum'
+                            size='md'
+                            className='ml-12'
+                            id={`${uniqueId}-no-question-code`}
+                        >
+                            No
+                        </Radio>
+                        <div id={`description-${uniqueId}-question-code`} className="sr-only">
+                            Description for the radio group
+                        </div>
                     </RadioGroup>
                 </div>
-                {showQuestionCode && (
+                {showQuestionCode === 'yes' && (
                     <div className="flex flex-col gap-4">
                         {questionCodes.map((qCode, index) => (
                             <div key={index} className="flex flex-wrap gap-4">
@@ -423,26 +441,22 @@ export default function BooleanQuestionConfig({
                                         name={`${basePath}.code[${index}].system`}
                                         control={control}
                                         render={({ field }) =>
-                                            <Select
-                                                {...field}
-                                                label="Select Question Code"
-                                                variant="bordered"
-                                                radius="sm"
-                                                className="w-full bg-white"
-                                                value={qCode.type}
-
-                                                defaultSelectedKeys={[field.value]}
-                                                onSelectionChange={(keys) => {
-                                                    const selectedValue = Array.from(keys)[0];
+                                            <CustomSelect
+                                                value={field.value}
+                                                onChange={(value) => {
+                                                    const values = [value];
+                                                    const selectedValue = Array.from(values)[0] as string;
                                                     field.onChange(selectedValue);
+                                                    handleChange(selectedValue);
                                                 }}
-                                            >
-                                                <SelectItem key="icd">ICD</SelectItem>
-                                                <SelectItem key="loinc">LOINC</SelectItem>
-                                                <SelectItem key="snomed">SNOMED</SelectItem>
-                                                <SelectItem key="ndc">NDC</SelectItem>
-                                                <SelectItem key="tinkar">Tinkar</SelectItem>
-                                            </Select>
+                                                options={QuestionCode.map((type) => ({
+                                                    value: type.key,
+                                                    label: type.label
+                                                }))}
+                                                placeholder="Select Question Code"
+                                                className="w-full bg-white h-14"
+                                                aria-label="Select Question Code"
+                                            />
                                         }
                                     />
 
@@ -471,7 +485,7 @@ export default function BooleanQuestionConfig({
                         ))}
 
                         <Button
-                            className="text-sm"
+                            className="text-sm w-fit"
                             variant="flat"
                             color="primary"
                             radius="sm"
@@ -486,28 +500,44 @@ export default function BooleanQuestionConfig({
             </div>
 
             <div>
-                <p className="text-sm font-medium">Conditional display?</p>
+                <p className="text-md font-medium">Conditional display?</p>
                 <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                
                 <RadioGroup
                     orientation="horizontal"
-                    onValueChange={(value) => {
-                        if (value === 'true') {
-                            setShowConditionalDisplay(true);
-                        } else {
-                            setShowConditionalDisplay(false);
-                        }
+                    classNames={{
+                        label: 'text-sm font-normal text-black'
                     }}
-                    className="mt-2 my-2"
-                    id="conditional-display-radio-group"
-                    aria-label="Conditional display"
-                    defaultValue={showConditionalDisplay ? 'true' : 'false'}
+                    value={String(showConditionalDisplay)}
+                    aria-labelledby={`description-${uniqueId}-conditional-display`}
+
+                    onChange={(event: { target: { value: string; }; }) => setShowConditionalDisplay(event.target.value === 'yes' ? 'yes' : 'no')}
                 >
-                    <Radio className="text-sm mr-4" value="true" id="conditional-display-yes-radio">Yes</Radio>
-                    <Radio className="text-sm mr-4" value="false" id="conditional-display-no-radio">No</Radio>
+                    <Radio
+                        value="yes"
+                        description='Lorem ipsum'
+                        size='md'
+                        id={`${uniqueId}-yes-conditional-display`}
+
+                    >
+                        Yes
+                    </Radio>
+                    <Radio
+                        value="no"
+                        description='Lorem ipsum'
+                        size='md'
+                        className='ml-12'
+                        id={`${uniqueId}-no-conditional-display`}
+                    >
+                        No
+                    </Radio>
+                    <div id={`description-${uniqueId}-conditional-display`} className="sr-only">
+                        Description for the radio group
+                    </div>
                 </RadioGroup>
             </div>
 
-            {showConditionalDisplay && (
+            {showConditionalDisplay === 'yes' && (
                 <div className="">
                     <div className="border border-[#99C7FB] p-4">
                         {conditionalRows.map((row, index) => (
@@ -519,25 +549,23 @@ export default function BooleanQuestionConfig({
                                             name={`${basePath}.enableWhen[${index}].operator`}
                                             control={control}
                                             render={({ field }) => (
-                                                <Select
-                                                    {...field}
-                                                    label="Operator"
-                                                    variant="bordered"
-                                                    radius="sm"
-                                                    className="w-full bg-white"
-                                                    value={row.operator}
-                                                    defaultSelectedKeys={[field.value]}
-                                                    onSelectionChange={(keys) => {
-                                                        const selectedValue = Array.from(keys)[0];
+                                               
+                                                <CustomSelect
+                                                    value={field.value}
+                                                    onChange={(value) => {
+                                                        const values = [value];
+                                                        const selectedValue = Array.from(values)[0] as string;
                                                         field.onChange(selectedValue);
+                                                        handleChange(selectedValue);
                                                     }}
-                                                    tabIndex={0}
+                                                    options={radioOprionsExtended.map((type) => ({
+                                                        value: type.value,
+                                                        label: type.label
+                                                    }))}
+                                                    placeholder="Select Question Code"
+                                                    className="w-full bg-white h-14"
                                                     aria-label="Select operator"
-                                                >
-                                                    {radioOprionsExtended.map((option) => (
-                                                        <SelectItem key={option.value}>{option.label}</SelectItem>
-                                                    ))}
-                                                </Select>
+                                                />
                                             )}
                                         />
                                         <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
@@ -566,34 +594,26 @@ export default function BooleanQuestionConfig({
                                             name={`${basePath}.enableWhen[${index}].question`}
                                             control={control}
                                             render={({ field }) => (
-                                                <Select
-                                                    {...field}
-                                                    label="Action"
-                                                    variant="bordered"
-                                                    radius="sm"
-                                                    className="w-full bg-white"
-                                                    value={row.action}
-                                                    defaultSelectedKeys={[field.value]}
-                                                    onSelectionChange={(keys) => {
-                                                        const selectedValue = Array.from(keys)[0];
+
+                                                <CustomSelect
+                                                    value={field.value}
+                                                    onChange={(value) => {
+                                                        const values = [value];
+                                                        const selectedValue = Array.from(values)[0] as string;
                                                         field.onChange(selectedValue);
+                                                        handleChange(selectedValue);
                                                     }}
-                                                    tabIndex={0}
-                                                    aria-label="Select action"
-                                                >
-                                                    {fields
+                                                    options={fields
                                                         .filter((field: any) => field.linkId !== item.linkId)
-                                                        .map((field: any, index: number) => (
-                                                            <SelectItem 
-                                                                key={field.linkId}
-                                                                tabIndex={0}
-                                                                aria-label={`Select ${field.text}`}
-                                                            >
-                                                                {field.text}
-                                                            </SelectItem>
-                                                        ))
-                                                    }
-                                                </Select>
+                                                        .map((field: any, index: number) => ({
+                                                            value: field.linkId,
+                                                            label: field.text
+                                                        }))}
+                                                    placeholder="Action"
+                                                    className="w-full bg-white h-14"
+                                                    aria-label="Action"
+                                                />
+                                               
                                             )}
                                         />
                                         <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
@@ -605,7 +625,6 @@ export default function BooleanQuestionConfig({
                                         variant="light"
                                         onClick={() => handleRemoveConditionalRow(index)}
                                         className="mt-2"
-                                        size="sm"
                                     >
                                         <Trash className="h-4 w-4" aria-label="Remove condition" />
                                     </Button>
@@ -624,7 +643,6 @@ export default function BooleanQuestionConfig({
                         variant="flat"
                         color="primary"
                         radius="sm"
-                        size="sm"
                         fullWidth
                         endContent={<Plus aria-label="Add another condition" />}
                         onClick={handleAddConditionalRow}

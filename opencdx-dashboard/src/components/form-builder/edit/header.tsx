@@ -6,6 +6,7 @@ import { useQuestionnaireStore } from '@/hooks/questionnaire';
 import { Control, Controller, useFormContext } from 'react-hook-form';
 import { useCallback, useEffect, useState } from 'react';
 import { useGetRuleSets } from '@/hooks/iam-hooks';
+import { CustomSelect } from '@/components/custom/controlled-select';
 
 const Header = ({formTitle, control}: {formTitle: string, control: Control}) => {
     const router = useRouter();
@@ -43,7 +44,7 @@ const Header = ({formTitle, control}: {formTitle: string, control: Control}) => 
                                 <Breadcrumbs separator="/">
                                     <BreadcrumbItem href="/dashboard/pages/form-builder">Dashboard</BreadcrumbItem>
                                     <BreadcrumbItem href="/dashboard/pages/form-builder">Form Builder</BreadcrumbItem>
-                                    <BreadcrumbItem>Edit Form: {formTitle}</BreadcrumbItem>
+                                    <BreadcrumbItem>Edit Form</BreadcrumbItem>
                                 </Breadcrumbs>
                             </div>
                         </div>
@@ -58,57 +59,45 @@ const Header = ({formTitle, control}: {formTitle: string, control: Control}) => 
                                 size='md'
                                 onPress={handleBack}
                             >Back</Button>
-                            <div className="relative">
-                                <Controller
-                                    name={`ruleId`}
-                                    control={control}
-                                    render={({ field }) => (
-                                        <>
-                                            <select
-                                                {...field}
-                                                className="w-48 h-10 bg-white px-[14px] border-2 rounded-lg appearance-none"
-                                                aria-label="Select a Rule"
-                                            >
-                                                <option value="">Select a Rule</option>
-                                                {(ruleSetData?.data.ruleSets ?? []).map((rule: any) => (
-                                                    <option key={rule.ruleId} value={rule.ruleId}>
-                                                        {rule.name}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                            <DownArrow className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
-                                        </>
-                                    )}
-                                />
-                            </div>
-                            <div className="relative">
-                                <Controller
-                                    name={`ruleQuestionId`}
-                                    control={control}
-                                    render={({ field }) => (
-                                        <>
-                                            <select
-                                                {...field}
-                                                className="w-64 h-10 bg-white px-[14px] border-2 rounded-lg appearance-none"
-                                                aria-label="Select Responses"
-                                                onChange={(e) => {
-                                                    const values = Array.from(e.target.selectedOptions).map(option => option.value);
-                                                    field.onChange(values);
-                                                }}
-                                            >
-                                                <option value="">Select Response</option>
-                                                {fields.map((field: any, index: number) => (
-                                                    <option key={`$.${index}`} value={`$.${index}`}>
-                                                        {field.text}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                            <DownArrow className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
-                                        </>
-                                    )}
-                                />
-                            </div>
-                           
+                            <Controller
+                                name={`ruleId`}
+                                control={control}
+                                render={({ field }) => (
+                                    <CustomSelect
+                                        value={field.value}
+                                        onChange={field.onChange}
+                                        options={(ruleSetData?.data.ruleSets ?? []).map((rule: any) => ({
+                                            value: rule.ruleId,
+                                            label: rule.name
+                                        }))}
+                                        placeholder="Select a Rule"
+                                        className="w-48 h-10"
+                                        aria-label="Select a Rule"
+                                    />
+                                )}
+                            />
+
+                            <Controller
+                                name={`ruleQuestionId`}
+                                control={control}
+                                render={({ field }) => (
+                                    <CustomSelect
+                                        value={field.value}
+                                        onChange={(value) => {
+                                            const values = [value];
+                                            field.onChange(values);
+                                        }}
+                                        options={fields.map((field: any, index: number) => ({
+                                            value: `$.${index}`,
+                                            label: field.text
+                                        }))}
+                                        placeholder="Select Response"
+                                        className="w-48 h-10"
+                                        aria-label="Select Responses"
+                                    />
+                                )}
+                            />
+                            
                             <Button type="submit" size='md' variant="solid" color="primary">
                                 Submit Form
                             </Button>

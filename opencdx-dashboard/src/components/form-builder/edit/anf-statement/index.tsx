@@ -222,7 +222,7 @@ const QuestionnaireItemWrapper: React.FC<{
       {item?.anfStatementConnector?.map((connector: AnfStatementConnector, id: number) => (
 
         <div key={id} className='mx-2 bg-white border border-grey-700 border-r-0 border-l-0 '>
-          <ControlledAccordion title={connector?.name ?? 'ANF Statement'} isTitleBold={false} className='p-8'>
+          <ControlledAccordion title={connector?.name ?? 'ANF Statement ' + (id + 1)} isTitleBold={false} className='p-8'>
             <Divider className=" border-neutral-700 mb-4" />
           <ComponentTypeWrapper
                 anfStatementConnectorId={id}

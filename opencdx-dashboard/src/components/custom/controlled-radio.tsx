@@ -26,11 +26,12 @@ const ControlledRadio: React.FC<ControlledRadioProps> = ({ label, name, orientat
             }}
             value={String(value)}
             onChange={(event: { target: { value: string; }; }) => onChange(event.target.value === 'true')}
+            aria-labelledby={descriptionId}
           >
             <Radio 
               value="true"
               description='Lorem ipsum'
-              size='sm'
+              size='md'
               id={`${name}-true`}
               
             >
@@ -39,7 +40,7 @@ const ControlledRadio: React.FC<ControlledRadioProps> = ({ label, name, orientat
             <Radio
               value="false"
               description='Lorem ipsum'
-              size='sm'
+              size='md'
               className='ml-12'
               id={`${name}-false`}
             >
