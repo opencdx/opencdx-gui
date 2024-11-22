@@ -158,7 +158,10 @@ export const SidebarLink = ({
 
 }) => {
   const { open, setOpen, animate } = useSidebar();
-  const pathname = usePathname();
+  let pathname = usePathname();
+  if (pathname.includes('pages/edit-questionnaire')) {
+    pathname = '/pages/form-builder';
+  }
   const selected = pathname === link.href;
   return (
     <Link

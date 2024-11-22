@@ -13,7 +13,8 @@ import { useTranslations } from 'next-intl';
 const QuestionnaireItemWrapper: React.FC<{
   item: QuestionnaireItem;
   questionnaireItemId: number;
-}> = ({ item, questionnaireItemId }) => {
+  onDelete?: () => void;
+}> = ({ item, questionnaireItemId, onDelete }) => {
   const [anfStatementConnectorLength, setAnfStatementConnectorLength] = useState(item?.anfStatementConnector?.length ?? 0);
   const [currentComponentType, setCurrentComponentType] = useState<AnfStatementType>(AnfStatementType.AnfStatementTypeUnspecified);
   const { getValues, setValue } = useFormContext();
@@ -52,7 +53,7 @@ const QuestionnaireItemWrapper: React.FC<{
 
   }, []);
 
- 
+
   const handleAddANFName =  (e: any) => {
     setAnfStatementName(e.target.value);
   };
@@ -103,7 +104,12 @@ const QuestionnaireItemWrapper: React.FC<{
     setValue(`item`, updatedItems);
     toast.success('Question successfully deleted!');
     setIsDeleteItemModalOpen(false);
-  }, [getValues, setValue, deleteQuestionnaireItemId]);
+    
+    
+    if (onDelete) {
+      onDelete();
+    }
+  }, [getValues, setValue, deleteQuestionnaireItemId, onDelete]);
 
   return (
     <div>
