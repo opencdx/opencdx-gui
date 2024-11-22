@@ -9,11 +9,12 @@ import { Modal, Input, Button, ModalHeader, ModalBody, ModalFooter, ModalContent
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Questions = () => {
+const Questions: React.FC = () => {
   const [activeTab, setActiveTab] = useState<{ item: QuestionnaireItem; idx: number } | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [question, setQuestion] = useState('');
   const { setValue, getValues } = useFormContext();
+  const [updateTrigger, setUpdateTrigger] = useState(0);
 
   const fields = getValues('item') || [];
 
@@ -33,10 +34,10 @@ const Questions = () => {
     const newQuestion: QuestionnaireItem = {
       text: question,
     };
-
     setValue('item', [...fields, newQuestion]);
     setShowModal(false);
     setQuestion('');
+    toast.success('Question added!');
   }, [question, fields, setValue]);
 
   const onDragEnd = (result: DropResult) => {
@@ -153,7 +154,9 @@ const Questions = () => {
             key={`${activeTab.item.linkId}-${activeTab.idx}`}
             item={activeTab.item}
             questionnaireItemId={activeTab.idx}
-          />
+            onDelete={() => setUpdateTrigger(prev => prev + 1)}
+            />
+         
         )}
       </div>
       <Modal
@@ -173,7 +176,7 @@ const Questions = () => {
                   type="text"
                   variant="bordered"
                   size="lg"
-                  placeholder="Question*"
+                  label="Question"
                   onChange={handleAddQuestion}
                 />
               </ModalBody>
@@ -188,9 +191,7 @@ const Questions = () => {
                   size="lg"
                   isDisabled={question.length === 0}
                   onPress={() => {
-                    onClose();
                     handleSubmit();
-                    // toast.success('Question added!');
                   }}
                 >
                   Add Question
@@ -200,17 +201,7 @@ const Questions = () => {
           )}
         </ModalContent>
       </Modal>
-      {/* <ToastContainer
-          position={"top-right"}
-          icon={false}
-          autoClose={2000}
-          hideProgressBar={true}
-          closeOnClick={true}
-          pauseOnHover={true}
-          draggable={true}
-          theme={"colored"}
-          closeButton={false} 
-        /> */}
+      
     </div>
   );
 };
