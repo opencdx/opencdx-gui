@@ -1,4 +1,4 @@
-import { Card, CardBody, BreadcrumbItem, Breadcrumbs, Button, Image } from 'ui-library';
+import { Card, CardBody, BreadcrumbItem, Breadcrumbs, Button, Image, Select, SelectItem } from 'ui-library';
 import { LeftChevronIcon, DownArrow} from 'ui-library'
 import { useRouter } from 'next/navigation';
 import editNoteLite from '../../../../public/images/edit_note.png';
@@ -63,17 +63,19 @@ const Header = ({formTitle, control}: {formTitle: string, control: Control}) => 
                                 name={`ruleId`}
                                 control={control}
                                 render={({ field }) => (
-                                    <CustomSelect
+                                    <Select
                                         value={field.value}
                                         onChange={field.onChange}
-                                        options={(ruleSetData?.data.ruleSets ?? []).map((rule: any) => ({
-                                            value: rule.ruleId,
-                                            label: rule.name
-                                        }))}
+                                        variant="bordered"
+                                        radius="sm"
                                         placeholder="Select a Rule"
                                         className="w-48 h-10"
                                         aria-label="Select a Rule"
-                                    />
+                                    >
+                                        {(ruleSetData?.data.ruleSets ?? []).map((rule: any) => (
+                                            <SelectItem key={rule.ruleId} value={rule.ruleId}>{rule.name}</SelectItem>
+                                        ))}
+                                    </Select>
                                 )}
                             />
 
@@ -81,20 +83,22 @@ const Header = ({formTitle, control}: {formTitle: string, control: Control}) => 
                                 name={`ruleQuestionId`}
                                 control={control}
                                 render={({ field }) => (
-                                    <CustomSelect
+                                    <Select
                                         value={field.value}
                                         onChange={(value) => {
                                             const values = [value];
                                             field.onChange(values);
                                         }}
-                                        options={fields.map((field: any, index: number) => ({
-                                            value: `$.${index}`,
-                                            label: field.text
-                                        }))}
+                                        variant="bordered"
+                                        radius="sm"
                                         placeholder="Select Response"
                                         className="w-48 h-10"
                                         aria-label="Select Responses"
-                                    />
+                                    >
+                                        {fields.map((field: any, index: number) => (
+                                            <SelectItem key={index} value={`$.${index}`}>{field.text}</SelectItem>
+                                        ))}
+                                    </Select>
                                 )}
                             />
                             
