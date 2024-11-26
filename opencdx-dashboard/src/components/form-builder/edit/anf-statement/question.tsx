@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { RadioGroup, Radio, Input, Button } from "ui-library";
+import { RadioGroup, Radio, Input, Button, Select, SelectItem } from "ui-library";
 import { Trash, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Divider } from "@nextui-org/react";
@@ -8,7 +8,6 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { AnfOperatorType } from "@/api/questionnaire/model/anf-statement-connector";
 import { v4 as uuidv4 } from 'uuid';
 import { useId } from 'react';
-import { CustomSelect } from "@/components/custom/controlled-select";
 import { ControlledRadio } from "@/components/custom/controlled-radio";
 const QuestionnaireItemType = [
     { key: "boolean", label: "Boolean" },
@@ -189,20 +188,23 @@ export default function BooleanQuestionConfig({
                         name={`${basePath}.unit`}
                         control={control}
                         render={({ field }) => (
-                            <CustomSelect
+                            <Select 
+                                {...field}
+                                variant="bordered"
+                                radius="sm"
                                 value={field.value}
-                                onChange={(value) => {
-                                    const values = [value];
+                                onChange={(event: any) => {
+                                    const values = [event.target.value];
                                     field.onChange(values);
                                 }}
-                                options={units.map((unit: any, index: number) => ({
-                                    value: unit.value,
-                                    label: unit.label
-                                }))}
-                                placeholder="Units"
+                                label="Units"
                                 className="w-72 h-14"
                                 aria-label="Select Unit"
-                            />
+                            >
+                                {units.map((unit: any, index: number) => (
+                                    <SelectItem key={index} value={unit.value}>{unit.label}</SelectItem>
+                                ))}
+                            </Select>
                         )}
                     />
                     <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
@@ -232,22 +234,23 @@ export default function BooleanQuestionConfig({
                     name={`${basePath}.type`}
                     control={control}
                     render={({ field }: { field: any }) => (
-                        <CustomSelect
+                        <Select 
+                            {...field}
+                            variant="bordered"
+                            radius="sm"
                             value={field.value}
-                            onChange={(value) => {
-                                const values = [value];
-                                const selectedValue = Array.from(values)[0] as string;
-                                field.onChange(selectedValue);
-                                handleChange(selectedValue);
+                            onChange={(event: any) => {
+                                field.onChange(event.target.value);
+                                handleChange(event.target.value);
                             }}
-                            options={QuestionnaireItemType.map((type) => ({
-                                value: type.key,
-                                label: type.label
-                            }))}
-                            placeholder="Data Type"
                             className="w-64 bg-white h-14"
                             aria-label="Data Type"
-                        />
+                            label="Data Type"
+                        >
+                            {QuestionnaireItemType.map((type) => (
+                                <SelectItem key={type.key} value={type.key}>{type.label}</SelectItem>
+                            ))}
+                        </Select>
 
                     )}
                 />
@@ -441,22 +444,25 @@ export default function BooleanQuestionConfig({
                                         name={`${basePath}.code[${index}].system`}
                                         control={control}
                                         render={({ field }) =>
-                                            <CustomSelect
+                                            <Select
                                                 value={field.value}
-                                                onChange={(value) => {
-                                                    const values = [value];
+                                                variant="bordered"
+                                                radius="sm"
+                                                onChange={(event: any) => {
+                                                    const values = [event.target.value];
                                                     const selectedValue = Array.from(values)[0] as string;
                                                     field.onChange(selectedValue);
                                                     handleChange(selectedValue);
                                                 }}
-                                                options={QuestionCode.map((type) => ({
-                                                    value: type.key,
-                                                    label: type.label
-                                                }))}
-                                                placeholder="Select Question Code"
+                                              
+                                                label="Select Question Code"
                                                 className="w-full bg-white h-14"
                                                 aria-label="Select Question Code"
-                                            />
+                                            >
+                                                {QuestionCode.map((type) => (
+                                                    <SelectItem key={type.key} value={type.key}>{type.label}</SelectItem>
+                                                ))}
+                                            </Select>
                                         }
                                     />
 
@@ -550,22 +556,24 @@ export default function BooleanQuestionConfig({
                                             control={control}
                                             render={({ field }) => (
                                                
-                                                <CustomSelect
+                                                <Select
                                                     value={field.value}
-                                                    onChange={(value) => {
-                                                        const values = [value];
+                                                    onChange={(event: any) => {
+                                                        const values = [event.target.value];
                                                         const selectedValue = Array.from(values)[0] as string;
                                                         field.onChange(selectedValue);
                                                         handleChange(selectedValue);
                                                     }}
-                                                    options={radioOprionsExtended.map((type) => ({
-                                                        value: type.value,
-                                                        label: type.label
-                                                    }))}
-                                                    placeholder="Select Question Code"
-                                                    className="w-full bg-white h-14"
+                                                    label="Operator"
+                                                    variant="bordered"
+                                                    radius="sm"
+                                                    className="w-full"
                                                     aria-label="Select operator"
-                                                />
+                                                >
+                                                    {radioOprionsExtended.map((type) => (
+                                                        <SelectItem key={type.value} value={type.value}>{type.label}</SelectItem>
+                                                    ))}
+                                                </Select>
                                             )}
                                         />
                                         <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
@@ -595,25 +603,27 @@ export default function BooleanQuestionConfig({
                                             control={control}
                                             render={({ field }) => (
 
-                                                <CustomSelect
+                                                <Select
                                                     value={field.value}
-                                                    onChange={(value) => {
-                                                        const values = [value];
+                                                    onChange={(event: any) => {
+                                                        const values = [event.target.value];
                                                         const selectedValue = Array.from(values)[0] as string;
                                                         field.onChange(selectedValue);
                                                         handleChange(selectedValue);
                                                     }}
-                                                    options={fields
-                                                        .filter((field: any) => field.linkId !== item.linkId)
-                                                        .map((field: any, index: number) => ({
-                                                            value: field.linkId,
-                                                            label: field.text
-                                                        }))}
-                                                    placeholder="Action"
-                                                    className="w-full bg-white h-14"
+                                                   
+                                                    label="Action"
+                                                    variant="bordered"
+                                                    radius="sm"
+                                                    className="w-full"
                                                     aria-label="Action"
-                                                />
-                                               
+                                                >
+                                                    {fields
+                                                        .filter((field: any) => field.linkId !== item.linkId)
+                                                        .map((field: any, index: number) => (
+                                                            <SelectItem key={index} value={field.linkId}>{field.text}</SelectItem>
+                                                        ))}
+                                                </Select>
                                             )}
                                         />
                                         <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
