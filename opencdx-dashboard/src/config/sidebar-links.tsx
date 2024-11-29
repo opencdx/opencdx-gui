@@ -1,42 +1,85 @@
 import React from 'react';
-import Image from 'next/image';
-
-import dash from '../../public/images/dash.png';
-import dashSelected from '../../public/images/dash_selected.png';
-import formBuilder from '../../public/images/form_builder.png';
-import formBuilderSelected from '../../public/images/form_builder_selected.png';
-import map from '../../public/images/map.png';
-import mapSelected from '../../public/images/map-selected.png';
+import { Mail, MailOutlined, SpaceDashboard, SpaceDashboardOutlined, DynamicForm, DynamicFormOutlined , Insights, InsightsOutlined,Chat, ChatOutlined, Extension,ExtensionOutlined, EditAttributes, EditAttributesOutlined,Inventory2, Inventory2Outlined} from '@mui/icons-material';
 
 export const links = [
   {
     label: 'Dashboard',
     href: '/pages/dashboard',
     icon: (
-      <Image src={dash.src} alt="" width={20} height={20} priority/>
+      <SpaceDashboard className="text-white"/>
     ),
     selectedIcon: (
-      <Image src={dashSelected.src} alt="" width={20} height={20} priority/>
+      <SpaceDashboardOutlined className="text-white"/>
+    ),
+  },
+  {
+    label: 'User Administration',
+    href: '/pages/user-administration',
+    icon: (
+      <Mail className="text-white"/>
+    ),
+    selectedIcon: (
+      <MailOutlined className="text-white"/>
+    ),
+  },
+  {
+    label: 'Classification Engine',
+    href: '/pages/classification-engine',
+    icon: (
+      <Insights className="text-white"/>
+    ),
+    selectedIcon: (
+      <InsightsOutlined className="text-white"/>
+    ),
+  },
+  {
+    label: 'Messaging',
+    href: '/pages/messaging',
+    icon: (
+      <Chat className="text-white"/>
+    ),
+    selectedIcon: (
+      <ChatOutlined className="text-white"/>
     ),
   },
   {
     label: 'Forms Builder',
     href: '/pages/form-builder',
     icon: (
-      <Image src={formBuilder.src} alt="" width={20} height={20} priority/>
+      <DynamicForm className="text-white"/>
     ),
     selectedIcon: (
-      <Image src={formBuilderSelected.src} alt="" width={20} height={20} priority/>
+      <DynamicFormOutlined className="text-white"/>
     ),
   },
   {
-    label: 'Maps',
-    href: '/pages/maps',
+    label: 'Configuration',
+    href: '/pages/configuration',
     icon: (
-      <Image src={map.src} alt="" width={20} height={20} priority/>
+      <Extension className="text-white"/>
     ),
     selectedIcon: (
-      <Image src={mapSelected.src} alt="" width={20} height={20} priority/>
+      <ExtensionOutlined className="text-white"/>
+    ),
+  },
+  {
+    label: 'Toggle Management',
+    href: '/pages/toggle-management',
+    icon: (
+      <EditAttributes className="text-white"/>
+    ),
+    selectedIcon: (
+      <EditAttributesOutlined className="text-white"/>
+    ),
+  },
+  {
+    label: 'Test Management',
+    href: '/pages/test-management',
+    icon: (
+      <Inventory2 className="text-white"/>
+    ),
+    selectedIcon: (
+      <Inventory2Outlined className="text-white"/>
     ),
   },
  

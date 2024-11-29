@@ -39,3 +39,27 @@
 .Toastify__toast-body > div:last-child {
     color: black !important;
 }
+
+/* Custom scrollbar styles */
+.scrollable-div {
+    max-height: 1500px;
+    overflow-y: auto;
+  }
+  
+  .scrollable-div::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .scrollable-div::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  .scrollable-div::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+  }
+  
+  .scrollable-div::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+  }

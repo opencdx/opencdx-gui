@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 import collapseIcon from '../../public/images/collapse_icon.png';
 import expandIcon from '../../public/images/expand_icon.png';
-import logoLong from '../../public/images/logo-long.png';
+import logoLong from '../../public/images/long.png';
 import logoShort from '../../public/images/logo-short.png';
 
 interface Links {
@@ -93,7 +93,7 @@ export const SidebarBody = ({
           className
         )}
         animate={{
-          width: animate ? (open ? "220px" : "72px") : "220px",
+          width: animate ? (open ? "260px" : "72px") : "260px",
         }}
         {...props}
       >
@@ -121,22 +121,6 @@ export const SidebarBody = ({
                 />
               </Link>
             )}
-            
-            <button 
-              onClick={() => setOpen(!open)} 
-              className={cn(
-                "flex items-center justify-center mt-8 -mr-6 z-50",
-               
-              )}
-            >
-              <Image
-                src={open ? collapseIcon.src : expandIcon.src}
-                alt={open ? "Collapse" : "Expand"}
-                width={26}
-                height={26}
-                priority
-              />
-            </button>
           </div>
           <div className="flex-1 overflow-y-auto">
             {children}
@@ -173,12 +157,13 @@ export const SidebarLink = ({
       {...props}
     >
       <div className={cn(
-        selected ? 'bg-gradient-to-r from-blue-800 to-blue-500 hover:from-blue-800 hover:to-blue-500 rounded-lg' : '',
-        open ? 'px-6' : 'px-2',
-        'flex items-start justify-start py-2',
+        selected ? 'bg-gradient-to-r from-blue-800 to-blue-500 hover:from-blue-800 hover:to-blue-500 rounded-lg ' : '',
+        open ? 'px-4 pr-20' : 'px-2',
+        'flex items-start justify-start py-3',
       )}>
         <div className="flex items-start justify-start">
           {selected ? link.selectedIcon : link.icon}
+
           {open && (
             <div className="text-white dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block pl-2">
               {link.label}
