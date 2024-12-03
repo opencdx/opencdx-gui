@@ -220,32 +220,35 @@ let categories: ToggleData[] = [
             id:'contact-info',
             key:'Contact Info', 
             description:'Toggle description lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod. ', 
-            enabled:false
+            enabled:false,
+            subCategory: [
+              {
+                id:'patient-legal-name',
+                key:'Patient Legal Name', 
+                description:'Toggle description lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod. ', 
+                enabled:false
+              },
+              {
+                id:'street-address',
+                key:'Street Address', 
+                description:'Toggle description lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod. ', 
+                enabled:false
+              },
+              {
+                id:'demographics',
+                key:'Demographics', 
+                description:'Toggle description lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod. ', 
+                enabled:false
+              },
+              {
+                id:'biological-sex-gender',
+                key:'Biological Sex/Gender', 
+                description:'Toggle description lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod. ', 
+                enabled:false
+              },
+            ]
           },
-          {
-            id:'patient-legal-name',
-            key:'Patient Legal Name', 
-            description:'Toggle description lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod. ', 
-            enabled:false
-          },
-          {
-            id:'street-address',
-            key:'Street Address', 
-            description:'Toggle description lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod. ', 
-            enabled:false
-          },
-          {
-            id:'demographics',
-            key:'Demographics', 
-            description:'Toggle description lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod. ', 
-            enabled:false
-          },
-          {
-            id:'biological-sex-gender',
-            key:'Biological Sex/Gender', 
-            description:'Toggle description lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod. ', 
-            enabled:false
-          },
+          
           {
             id:'ethnicity-race',
             key:'Ethnicity/Race', 

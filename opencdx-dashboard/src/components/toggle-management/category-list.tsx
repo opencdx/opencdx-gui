@@ -211,7 +211,8 @@ const CategoryList: React.FC = () => {
                                     </div>
                                     <div className="space-y-4">
                                         {category.subCategory?.map((item: any, itemIndex: number) => (
-                                            <div key={item.id || itemIndex} className="flex items-center justify-between p-4 ml-20" id={item.id || ''}>
+                                           <>
+                                           <div key={item.id || itemIndex} className="flex items-center justify-between p-4 ml-20" id={item.id || ''}>
                                                 <div>
                                                     <h3 className="text-sm font-semibold text-[#52525B] mb-1">{item.key}</h3>
                                                     <p className="text-xs text-[#3F3F46]">{item.description}</p>
@@ -223,6 +224,23 @@ const CategoryList: React.FC = () => {
                                                     }}
                                                 />
                                             </div>
+                                            {
+                                                item.subCategory && item.subCategory.map((subItem: any, subItemIndex: number) => (
+                                                    <div key={subItem.id || subItemIndex} className="flex items-center justify-between p-4 ml-40" id={subItem.id || ''}>
+                                                        <div>
+                                                            <h3 className="text-sm font-semibold text-[#52525B] mb-1">{subItem.key}</h3>
+                                                            <p className="text-xs text-[#3F3F46]">{subItem.description}</p>
+                                                        </div>
+                                                        <Switch checked={subItem.enabled || false}
+                                                            defaultSelected={subItem.enabled || false}
+                                                    onChange={(e) => {
+                                                        setToggleEnabled(item.id, e.target.checked);
+                                                            }}
+                                                        />
+                                                    </div>
+                                                ))
+                                            }
+                                            </>
                                         ))}
                                         <Divider />
                                     </div>
