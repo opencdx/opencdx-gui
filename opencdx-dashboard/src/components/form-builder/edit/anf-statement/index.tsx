@@ -10,6 +10,8 @@ import { useFormContext } from 'react-hook-form';
 import Question from './question';
 import { toast, ToastContainer } from 'react-toastify';
 import { useTranslations } from 'next-intl';
+import CustomModal from '@/components/custom/CustomModal';
+import { useModal } from '@/hooks/useModal';
 const QuestionnaireItemWrapper: React.FC<{
   item: QuestionnaireItem;
   questionnaireItemId: number;
@@ -18,16 +20,16 @@ const QuestionnaireItemWrapper: React.FC<{
   const [anfStatementConnectorLength, setAnfStatementConnectorLength] = useState(item?.anfStatementConnector?.length ?? 0);
   const [currentComponentType, setCurrentComponentType] = useState<AnfStatementType>(AnfStatementType.AnfStatementTypeUnspecified);
   const { getValues, setValue } = useFormContext();
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [showAddModal, setShowAddModal] = useState(false);
   const [anfStatementName, setAnfStatementName] = useState('');
   const [deleteQuestionnaireItemId, setDeleteQuestionnaireItemId] = useState(0);
-  const [isDeleteItemModalOpen, setIsDeleteItemModalOpen] = useState(false);
   const [deleteQuestionnaireANFTitle, setDeleteQuestionnaireANFTitle] = useState('');
 
   const defaultAnfStatement = useMemo(() => ({}), []);
   const t = useTranslations('common');
 
+  const deleteModal = useModal();
+  const deleteItemModal = useModal();
+  const addModal = useModal();
 
   const handleComponentTypeChange = useCallback((value: AnfStatementType) => {
     setCurrentComponentType(value);
@@ -60,11 +62,11 @@ const QuestionnaireItemWrapper: React.FC<{
 
   const handleAdd = useCallback(() => {
 
-    setShowAddModal(true);
+    addModal.openModal();
   }, []);
 
   const handleContinue = useCallback(() => {
-    setShowAddModal(false);
+    addModal.closeModal();
     const newConnector: AnfStatementConnector = {
       anfStatementType: AnfStatementType.AnfStatementTypeUnspecified,
       anfOperatorType: AnfOperatorType.AnfOperatorTypeUnspecified,
@@ -80,14 +82,14 @@ const QuestionnaireItemWrapper: React.FC<{
       setAnfStatementConnectorLength(prev => prev + 1);  }, [anfStatementName, anfStatementConnectorLength, questionnaireItemId, setValue]);
 
   const handleDeleteANFButtonClick = useCallback((questionnaireItemId: number) => {
-    setIsDeleteModalOpen(true);
+    deleteModal.openModal();
     setDeleteQuestionnaireItemId(questionnaireItemId);
     setDeleteQuestionnaireANFTitle(item?.anfStatementConnector?.[questionnaireItemId]?.name ?? '');
 
   }, []);
 
   const handleDeleteButtonClick = useCallback(() => {
-    setIsDeleteItemModalOpen(true);
+    deleteItemModal.openModal();
     setDeleteQuestionnaireItemId(questionnaireItemId);
   }, []);
 
@@ -95,19 +97,20 @@ const QuestionnaireItemWrapper: React.FC<{
     const currentItems = getValues(`item[${questionnaireItemId}].anfStatementConnector`) || [];
     const updatedItems = currentItems.filter((_: any, index: number) => index !== deleteQuestionnaireItemId);
     setValue(`item[${questionnaireItemId}].anfStatementConnector`, updatedItems);
-    setIsDeleteModalOpen(false);
+    deleteModal.closeModal();
   }, [getValues, setValue, deleteQuestionnaireItemId]);
 
   const deleteQuestion = useCallback(() => {
+
     const currentItems = getValues(`item`) || [];
     const updatedItems = currentItems.filter((_: any, index: number) => index !== deleteQuestionnaireItemId);
     setValue(`item`, updatedItems);
-    toast.success('Question successfully deleted!');
-    setIsDeleteItemModalOpen(false);
+    deleteItemModal.closeModal();
     
     
     if (onDelete) {
       onDelete();
+
     }
   }, [getValues, setValue, deleteQuestionnaireItemId, onDelete]);
 
@@ -151,61 +154,28 @@ const QuestionnaireItemWrapper: React.FC<{
         </AccordionItem>
       </Accordion>
 
-      {/* Delete ANFConfirmation Modal */}
-      <Modal
-        placement="auto"
-        onOpenChange={() => setIsDeleteModalOpen(false)}
-        hideCloseButton={true}
-        radius="none"
-        className={`w-full md:w-11/12 lg:w-4/5 overflow-auto`}
-        isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} >
+      <CustomModal
+        isOpen={deleteModal.isOpen}
+        onClose={deleteModal.closeModal}
+        title="Delete this question?"
+        body={<p>Delete <strong>{deleteQuestionnaireANFTitle}</strong>? This cannot be undone.</p>}
+        onConfirm={handleConfirmDelete}
+        confirmText="Delete"
+        cancelText="Cancel"
+        toastMessage="ANF Statement successfully deleted!"
+      />
 
-        <ModalContent >
-          <ModalHeader className="flex flex-col gap-1">Delete this question?</ModalHeader>
-          <ModalBody className="w-full overflow-auto bg-white">
-            <p>Delete <strong>{deleteQuestionnaireANFTitle}</strong>? This cannot be undone.</p>
-          </ModalBody>
-          <ModalFooter>
-            <Button color="primary" variant='bordered' size='lg' onClick={() => setIsDeleteModalOpen(false)}>
-              Cancel
-            </Button>
-            <Button color="danger"
-              aria-label='Delete'
-              tabIndex={0}
-              size='lg'
-              onClick={() => handleConfirmDelete( )}>
-              Delete
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-      <Modal
-        placement="auto"
-        onOpenChange={() => setIsDeleteItemModalOpen(false)}
-        hideCloseButton={true}
-        radius="none"
-        className={`w-full md:w-11/12 lg:w-4/5 overflow-auto`}
-        isOpen={isDeleteItemModalOpen} onClose={() => setIsDeleteItemModalOpen(false)} >
+      <CustomModal
+        isOpen={deleteItemModal.isOpen}
+        onClose={deleteItemModal.closeModal}
+        title="Delete this question?"
+        body={<p>Delete <strong>{item?.text ?? ''}</strong>? This will also delete the associated ANF Statement. This cannot be undone.</p>}
+        onConfirm={deleteQuestion}
+        confirmText="Delete"
+        cancelText="Cancel"
+        toastMessage="Question successfully deleted!"
+      />
 
-        <ModalContent >
-          <ModalHeader className="flex flex-col gap-1">Delete this question?</ModalHeader>
-          <ModalBody className="w-full overflow-auto bg-white">
-            <p>Delete <strong>{item?.text ?? ''}</strong>? This will also delete the associated ANF Statement. This cannot be undone.</p>
-          </ModalBody>
-          <ModalFooter>
-            <Button color="primary" variant='bordered' size='lg' onClick={() => setIsDeleteItemModalOpen(false)}>
-              Cancel
-            </Button>
-            <Button color="danger"
-              aria-label='Delete'
-              tabIndex={0}
-              size='lg'
-              onClick={() => deleteQuestion( )}>
-              Delete
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
       {/* ANF Definition buttons */}
       <div className=' bg-white  h-20 flex flex-row p-8 gap-3 items-center ml-2 mr-2'>
         <div className='font-medium text-lg flex-shrink-0 mr-auto'>ANF Definition</div>
@@ -278,51 +248,27 @@ const QuestionnaireItemWrapper: React.FC<{
          
         </div>
       ))}
-      <Modal
-        isOpen={showAddModal}
-        placement="center"
-        onOpenChange={setShowAddModal}
-        hideCloseButton
-        radius="none"
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">Add ANF Statement</ModalHeader>
-              <ModalBody>
-                <p>Please name your ANF Statement</p>
-                <Input
-                  type="text"
-                  variant="bordered"
-                  size="lg"
-                  label="ANF Statement Name*"
-                  onChange={handleAddANFName}
-                />
-              </ModalBody>
-              <ModalFooter>
-                <Button color="primary" variant="bordered" onPress={onClose} aria-label="Cancel" tabIndex={0} size="lg">
-                  Cancel
-                </Button>
-                <Button
-                  color={anfStatementName.length > 0 ? 'primary' : 'default'}
-                  aria-label="Continue to add ANF Statement"
-                  tabIndex={0}
-                  size="lg"
-                  isDisabled={anfStatementName.length === 0}
-                  onPress={() => {
-                    toast.success(t('anf_statement_added'));
-                    onClose();
-                    handleContinue();
-                     
-                  }}
-                >
-                  Done
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+      <CustomModal
+        isOpen={addModal.isOpen}
+        onClose={addModal.closeModal}
+        title="Add ANF Statement"
+        body={
+          <>
+            <p>Please name your ANF Statement</p>
+            <Input
+              type="text"
+              variant="bordered"
+              size="lg"
+              label="ANF Statement Name*"
+              onChange={handleAddANFName}
+            />
+          </>
+        }
+        onConfirm={handleContinue}
+        confirmText="Done"
+        cancelText="Cancel"
+        toastMessage={t('anf_statement_added')}
+      />
     </div>
   );
 };
