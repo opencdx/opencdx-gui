@@ -4,7 +4,7 @@ import path from 'path';
 test.describe('Login Page', () => {
   test.beforeEach(async ({ page }) => {
     // Navigate to the login page before each test
-    await page.goto('/auth/login');
+    await page.goto('/dashboard/auth/login');
   });
 
   test('should display login form', async ({ page }) => {
@@ -37,7 +37,7 @@ test.describe('Login Page', () => {
 
     // Assert successful login (e.g., redirect to dashboard)
     await page.waitForTimeout(3000);
-    await expect(page).toHaveURL('/form-builder');
+    await expect(page).toHaveURL('/dashboard/pages/form-builder');
   });
 
   test('should show error for invalid credentials', async ({ page }) => {
@@ -76,13 +76,13 @@ test.describe('Login Page', () => {
   test('should navigate to forgot password page', async ({ page }) => {
     await page.getByRole('link', { name: 'Forgot Password', exact: true }).click();
     await page.waitForTimeout(3000);
-    await expect(page).toHaveURL('/forgot-password');
+    await expect(page).toHaveURL('/dashboard/auth/forgot-password');
   });
 
   test('should navigate to signup page', async ({ page }) => {
     await page.getByRole('link', { name: "Sign Up" }).click();
     await page.waitForTimeout(3000);
-    await expect(page).toHaveURL('/signup');
+    await expect(page).toHaveURL('dashboard/auth/signup');
   });
 
   test('upload form and save', async ({ page }) => {
@@ -95,22 +95,17 @@ test.describe('Login Page', () => {
 
     // Save the file in variable to be uploaded
     const jsonFilePath = path.join(__dirname, 'file', 'alpha.json');
-
-    // Locate the file input element
     const fileInput = await page.locator('input[type="file"]');
 
     // Upload the JSON file
     await fileInput.setInputFiles(jsonFilePath);
-
     await page.getByRole('button', { name: 'Add ANF Statement' }).click();
-    // await page.locator('#riu').click();
-
-    await page.locator('span:has-text("ANF Statement")').click();
-    
-    await page.locator('span:has-text("User Question")').click();
-
+    await page.locator('label:has-text("ANF Statement Name*")').fill('Test');
+    await page.locator('button:has-text("Done")').click();
+    await page.locator('//img[@alt="Expand"]').click();
+    await page.locator('//span[contains(text(),"Main ANF Statement")]').click();
+    // await page.locator('span:has-text("User Question")').click();
     await page.getByRole('button', { name: 'Submit Form' }).click();
-
     await page.waitForTimeout(3000);
   });
 
