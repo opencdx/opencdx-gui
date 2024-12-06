@@ -20,9 +20,10 @@ const QuestionnaireItemType = [
 const QuestionCode = [
     { key: "icd", label: "ICD" },
     { key: "loinc", label: "LOINC" },
-    { key: "snomed", label: "SNOMED" },
+    { key: "master", label: "Master Specimen" },
+    { key: "modifier", label: "Modifiers" },
     { key: "ndc", label: "NDC" },
-    { key: "tinkar", label: "Tinkar" },
+    { key: "snomed", label: "SNOMED" },
 ]
 const radioOptions = [
     { value: AnfOperatorType.AnfOperatorTypeEqual, label: "=", description: "is equal to" },
