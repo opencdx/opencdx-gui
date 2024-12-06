@@ -357,8 +357,8 @@ export default function BooleanQuestionConfig({
                                     classNames={{
                                         label: 'text-sm font-normal text-black'
                                     }}
-                                    value={String(field.value)}
-                                    onChange={(event: { target: { value: string; }; }) => field.onChange(event.target.value === 'drop-down')}
+                                    defaultValue={String(field.value ?? 'drop-down')}
+                                    onChange={(event: { target: { value: string; }; }) => field.onChange(event.target.value === 'drop-down'? 'drop-down' : 'radio-button')}
                                 >
                                     <Radio
                                         value="drop-down"
