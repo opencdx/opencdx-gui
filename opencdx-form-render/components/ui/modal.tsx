@@ -56,16 +56,17 @@ const ModalComponent = React.memo(({
                         <Text id="modal-title" className={`text-lg font-bold ${titleColor}`}>{title}</Text>
                         <Text id="modal-description" className={`my-4 ${contentColor}`}>{content}</Text>
                       <View className={`${isMobile ? 'w-full p-3 flex-col items-center' :  'flex-row justify-end mt-5'}`}>
-                        <TouchableOpacity 
-                            onPress={onButtonTwoPress} 
-                            className= {`${buttonTwoColor} rounded-lg px-4 py-3 ${isMobile ? 'mb-4 w-full' :  'mr-3 w-[35%]'}`}>
-                            <Text className='text-white text-center'>{buttonTwoText}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity 
+                      <TouchableOpacity 
                             onPress={onButtonOnePress} 
-                            className= {`${buttonOneColor} border rounded-lg px-4 py-3 ${isMobile ? 'w-full' :  'w-[35%]'}`}>
+                            className= {`${buttonOneColor} border rounded-lg px-4 py-3 ${isMobile ? 'w-full' :  'mr-3 w-[35%]'}`}>
                             <Text className='text-blue-600 text-center'>{buttonOneText}</Text>
                         </TouchableOpacity>
+                        <TouchableOpacity 
+                            onPress={onButtonTwoPress} 
+                            className= {`${buttonTwoColor} rounded-lg px-4 py-3 ${isMobile ? 'mb-4 w-full' :  'w-[35%]'}`}>
+                            <Text className='text-white text-center'>{buttonTwoText}</Text>
+                        </TouchableOpacity>
+                        
                     </View>
                 </View>
             </View>

@@ -9,6 +9,7 @@ import { AnfOperatorType } from "@/api/questionnaire/model/anf-statement-connect
 import { v4 as uuidv4 } from 'uuid';
 import { useId } from 'react';
 import { ControlledRadio } from "@/components/custom/controlled-radio";
+import ControlledAccordion from "@/components/custom/controlled-accordian";
 const QuestionnaireItemType = [
     { key: "boolean", label: "Boolean" },
     { key: "choice", label: "Choice" },
@@ -20,9 +21,10 @@ const QuestionnaireItemType = [
 const QuestionCode = [
     { key: "icd", label: "ICD" },
     { key: "loinc", label: "LOINC" },
-    { key: "snomed", label: "SNOMED" },
+    { key: "master", label: "Master Specimen" },
+    { key: "modifier", label: "Modifiers" },
     { key: "ndc", label: "NDC" },
-    { key: "tinkar", label: "Tinkar" },
+    { key: "snomed", label: "SNOMED" },
 ]
 const radioOptions = [
     { value: AnfOperatorType.AnfOperatorTypeEqual, label: "=", description: "is equal to" },
@@ -64,7 +66,7 @@ export default function BooleanQuestionConfig({
             setShowConditionalDisplay('no');
         }
         if (item.code && item.code.length > 0 && (item.code[0].system || item.code[0].code)) {
-            
+
             setShowQuestionCode('yes');
         } else {
             setShowQuestionCode('no');
@@ -188,7 +190,7 @@ export default function BooleanQuestionConfig({
                         name={`${basePath}.unit`}
                         control={control}
                         render={({ field }) => (
-                            <Select 
+                            <Select
                                 {...field}
                                 variant="bordered"
                                 radius="sm"
@@ -234,7 +236,7 @@ export default function BooleanQuestionConfig({
                     name={`${basePath}.type`}
                     control={control}
                     render={({ field }: { field: any }) => (
-                        <Select 
+                        <Select
                             {...field}
                             variant="bordered"
                             radius="sm"
@@ -276,8 +278,8 @@ export default function BooleanQuestionConfig({
                             onChange={(event: { target: { value: string; }; }) => field.onChange(event.target.value)}
                         >
                             {
-                                (dataType === "boolean" || dataType === "choice" || dataType === "open-choice" 
-                                    ? radioOptions 
+                                (dataType === "boolean" || dataType === "choice" || dataType === "open-choice"
+                                    ? radioOptions
                                     : radioOprionsExtended
                                 ).map((option) => (
                                     <Radio
@@ -350,14 +352,14 @@ export default function BooleanQuestionConfig({
                             name={`${basePath}.extension[0].valueCodeableConcept.coding[0].code`}
                             control={control}
                             render={({ field }) => (
-                               
+
                                 <RadioGroup
                                     orientation="horizontal"
                                     classNames={{
                                         label: 'text-sm font-normal text-black'
                                     }}
-                                    value={String(field.value)}
-                                    onChange={(event: { target: { value: string; }; }) => field.onChange(event.target.value === 'drop-down')}
+                                    defaultValue={String(field.value ?? 'drop-down')}
+                                    onChange={(event: { target: { value: string; }; }) => field.onChange(event.target.value === 'drop-down' ? 'drop-down' : 'radio-button')}
                                 >
                                     <Radio
                                         value="drop-down"
@@ -399,7 +401,7 @@ export default function BooleanQuestionConfig({
                 <div>
                     <p className="text-md font-medium">Add question code?</p>
                     <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
-                   
+
                     <RadioGroup
                         orientation="horizontal"
                         classNames={{
@@ -454,7 +456,7 @@ export default function BooleanQuestionConfig({
                                                     field.onChange(selectedValue);
                                                     handleChange(selectedValue);
                                                 }}
-                                              
+
                                                 label="Select Question Code"
                                                 className="w-full bg-white h-14"
                                                 aria-label="Select Question Code"
@@ -508,7 +510,7 @@ export default function BooleanQuestionConfig({
             <div>
                 <p className="text-md font-medium">Conditional display?</p>
                 <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
-                
+
                 <RadioGroup
                     orientation="horizontal"
                     classNames={{
@@ -543,122 +545,127 @@ export default function BooleanQuestionConfig({
                 </RadioGroup>
             </div>
 
+
             {showConditionalDisplay === 'yes' && (
-                <div className="">
-                    <div className="border border-[#99C7FB] p-4">
-                        {conditionalRows.map((row, index) => (
-                            <>
-                                <div key={index} className="flex flex-wrap gap-4 mb-4 ">
+                <div>
+                    <Divider className="my-4" />
 
-                                    <div className="flex-1 min-w-[150px]">
-                                        <Controller
-                                            name={`${basePath}.enableWhen[${index}].operator`}
-                                            control={control}
-                                            render={({ field }) => (
-                                               
-                                                <Select
-                                                    value={field.value}
-                                                    onChange={(event: any) => {
-                                                        const values = [event.target.value];
-                                                        const selectedValue = Array.from(values)[0] as string;
-                                                        field.onChange(selectedValue);
-                                                        handleChange(selectedValue);
-                                                    }}
-                                                    label="Operator"
-                                                    variant="bordered"
-                                                    radius="sm"
-                                                    className="w-full"
-                                                    aria-label="Select operator"
-                                                >
-                                                    {radioOprionsExtended.map((type) => (
-                                                        <SelectItem key={type.value} value={type.value}>{type.label}</SelectItem>
-                                                    ))}
-                                                </Select>
-                                            )}
-                                        />
-                                        <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
-                                    </div>
+                    <ControlledAccordion title="Advanced Fields" className=" p-0">
+                        <div className="border border-[#99C7FB] p-4">
+                            {conditionalRows.map((row, index) => (
+                                <>
+                                    <div key={index} className="flex flex-wrap gap-4 mb-4 ">
 
-                                    <div className="flex-1 min-w-[150px]">
-                                        <Controller
-                                            name={`${basePath}.enableWhen[${index}].answerCoding.display`}
-                                            control={control}
-                                            render={({ field }) => (
-                                                <Input
+                                        <div className="flex-1 min-w-[150px]">
+                                            <Controller
+                                                name={`${basePath}.enableWhen[${index}].operator`}
+                                                control={control}
+                                                render={({ field }) => (
 
-                                                    {...field}
-                                                    label="Answer"
-                                                    variant="bordered"
-                                                    radius="sm"
-                                                    className="w-full"
-                                                />
-                                            )}
-                                        />
-                                        <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
-                                    </div>
-
-                                    <div className="flex-1 min-w-[150px]">
-                                        <Controller
-                                            name={`${basePath}.enableWhen[${index}].question`}
-                                            control={control}
-                                            render={({ field }) => (
-
-                                                <Select
-                                                    value={field.value}
-                                                    onChange={(event: any) => {
-                                                        const values = [event.target.value];
-                                                        const selectedValue = Array.from(values)[0] as string;
-                                                        field.onChange(selectedValue);
-                                                        handleChange(selectedValue);
-                                                    }}
-                                                   
-                                                    label="Action"
-                                                    variant="bordered"
-                                                    radius="sm"
-                                                    className="w-full"
-                                                    aria-label="Action"
-                                                >
-                                                    {fields
-                                                        .filter((field: any) => field.linkId !== item.linkId)
-                                                        .map((field: any, index: number) => (
-                                                            <SelectItem key={index} value={field.linkId}>{field.text}</SelectItem>
+                                                    <Select
+                                                        value={field.value}
+                                                        onChange={(event: any) => {
+                                                            const values = [event.target.value];
+                                                            const selectedValue = Array.from(values)[0] as string;
+                                                            field.onChange(selectedValue);
+                                                            handleChange(selectedValue);
+                                                        }}
+                                                        label="Operator"
+                                                        variant="bordered"
+                                                        radius="sm"
+                                                        className="w-full"
+                                                        aria-label="Select operator"
+                                                    >
+                                                        {radioOprionsExtended.map((type) => (
+                                                            <SelectItem key={type.value} value={type.value}>{type.label}</SelectItem>
                                                         ))}
-                                                </Select>
-                                            )}
-                                        />
-                                        <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                                                    </Select>
+                                                )}
+                                            />
+                                            <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                                        </div>
+
+                                        <div className="flex-1 min-w-[150px]">
+                                            <Controller
+                                                name={`${basePath}.enableWhen[${index}].answerCoding.display`}
+                                                control={control}
+                                                render={({ field }) => (
+                                                    <Input
+
+                                                        {...field}
+                                                        label="Answer"
+                                                        variant="bordered"
+                                                        radius="sm"
+                                                        className="w-full"
+                                                    />
+                                                )}
+                                            />
+                                            <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                                        </div>
+
+                                        <div className="flex-1 min-w-[150px]">
+                                            <Controller
+                                                name={`${basePath}.enableWhen[${index}].question`}
+                                                control={control}
+                                                render={({ field }) => (
+
+                                                    <Select
+                                                        value={field.value}
+                                                        onChange={(event: any) => {
+                                                            const values = [event.target.value];
+                                                            const selectedValue = Array.from(values)[0] as string;
+                                                            field.onChange(selectedValue);
+                                                            handleChange(selectedValue);
+                                                        }}
+
+                                                        label="Action"
+                                                        variant="bordered"
+                                                        radius="sm"
+                                                        className="w-full"
+                                                        aria-label="Action"
+                                                    >
+                                                        {fields
+                                                            .filter((field: any) => field.linkId !== item.linkId)
+                                                            .map((field: any, index: number) => (
+                                                                <SelectItem key={index} value={field.linkId}>{field.text}</SelectItem>
+                                                            ))}
+                                                    </Select>
+                                                )}
+                                            />
+                                            <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                                        </div>
+
+                                        <Button
+                                            isIconOnly
+                                            color="danger"
+                                            variant="light"
+                                            onClick={() => handleRemoveConditionalRow(index)}
+                                            className="mt-2"
+                                        >
+                                            <Trash className="h-4 w-4" aria-label="Remove condition" />
+                                        </Button>
+
                                     </div>
-
-                                    <Button
-                                        isIconOnly
-                                        color="danger"
-                                        variant="light"
-                                        onClick={() => handleRemoveConditionalRow(index)}
-                                        className="mt-2"
-                                    >
-                                        <Trash className="h-4 w-4" aria-label="Remove condition" />
-                                    </Button>
-
-                                </div>
-                                {conditionalRows.length > 1 && index !== conditionalRows.length - 1 && (
-                                    <Divider className=" my-4 border-[#99C7FB]" />
-                                )}
-                            </>
-                        ))}
-                    </div>
+                                    {conditionalRows.length > 1 && index !== conditionalRows.length - 1 && (
+                                        <Divider className=" my-4 border-[#99C7FB]" />
+                                    )}
+                                </>
+                            ))}
+                        </div>
 
 
-                    <Button
-                        className="text-sm mt-4"
-                        variant="flat"
-                        color="primary"
-                        radius="sm"
-                        fullWidth
-                        endContent={<Plus aria-label="Add another condition" />}
-                        onClick={handleAddConditionalRow}
-                    >
-                        Add Another Condition
-                    </Button>
+                        <Button
+                            className="text-sm mt-4"
+                            variant="flat"
+                            color="primary"
+                            radius="sm"
+                            fullWidth
+                            endContent={<Plus aria-label="Add another condition" />}
+                            onClick={handleAddConditionalRow}
+                        >
+                            Add Another Condition
+                        </Button>
+                    </ControlledAccordion>
                 </div>
             )}
 
