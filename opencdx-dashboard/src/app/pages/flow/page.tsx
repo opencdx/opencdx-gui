@@ -42,7 +42,7 @@ const FlowPage: React.FC = () => {
     { icon: <WorkspacesIcon fontSize="large" />, title: 'Workspace', value: organizations.length.toString(), ref: 'workspaces', url: '/pages/flow/workspaces' },
     { icon: <SmartphoneIcon fontSize="large" />, title: 'Devices', value: devices.length.toString(), ref: 'devices', url: '/pages/flow/devices' },
     { icon: <ScienceIcon fontSize="large" />, title: 'Tests', value: tests.length.toString(), ref: 'tests', url: '/pages/flow/tests' },
-    { icon: <AdminPanelSettingsIcon fontSize="large" />, title: 'Admin', value: adminUsers.length.toString(), ref: 'admin', url: '/pages/flow/admin' },
+    { icon: <AdminPanelSettingsIcon fontSize="large" />, title: 'Admin Users', value: adminUsers.length.toString(), ref: 'admin', url: '/pages/flow/admin' },
 
   ];
 
