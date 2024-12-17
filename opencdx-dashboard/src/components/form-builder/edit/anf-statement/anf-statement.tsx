@@ -24,6 +24,7 @@ import { TimeWrapper } from './time';
 import { TopicWrapper } from './topic';
 import { TypeWrapper } from './type';
 import { ModalWrapper } from './modal-wrapper';
+import { MethoWrapper } from './method';
 const ANFStatementWrapper = ({
   questionnaireItemId,
   anfStatementConnectorId,
@@ -106,6 +107,16 @@ const ANFStatementWrapper = ({
           anfStatementConnectorId={anfStatementConnectorId}
           questionnaireItemId={questionnaireItemId}
           anfStatement={anfStatement}
+        />
+      ),
+    },
+    {
+      id: 'method',
+      label: 'Method',
+      content: (
+        <MethoWrapper
+          anfStatementConnectorId={anfStatementConnectorId}
+          questionnaireItemId={questionnaireItemId}
         />
       ),
     },
