@@ -15,7 +15,7 @@ const MethoWrapper: React.FC<MethodWrapperProps> = ({
   return (
     <ControlledInput
       className="w-full p-4 pt-8"
-      label="Type"
+      label="Method"
       name={inputName}
     />
   );
