@@ -225,6 +225,7 @@ const QuestionnaireItemWrapper: React.FC<{
                     anfStatement={connector?.anfStatement ?? defaultAnfStatement}
                     anfStatementConnectorId={id}
                     questionnaireItemId={questionnaireItemId}
+                    currentComponentType={currentComponentType}
                   />
                 </>
               )}
