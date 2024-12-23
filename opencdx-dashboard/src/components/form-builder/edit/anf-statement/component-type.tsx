@@ -61,6 +61,9 @@ const ComponentTypeWrapper = ({
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               field.onChange(e.target.value);
               const formData = getValues();
+              if (e.target.value === AnfStatementType.AnfStatementTypeMain) {
+                formData.item[questionnaireItemId].anfStatementConnector[anfStatementConnectorId].mainStatement = null;
+              }
               localStorage.setItem('questionnaire-store', JSON.stringify(formData));
               onValueChange(e.target.value as AnfStatementType);
               setComponentType(e.target.value as AnfStatementType);
