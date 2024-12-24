@@ -11,7 +11,6 @@ const TopicWrapper: React.FC<TopicWrapperProps> = ({
   questionnaireItemId,
 }) => {
   const topicName = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.topic.expression`;
-  const methodName = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement.method.expression`;
 
   return (
     <>
@@ -21,12 +20,6 @@ const TopicWrapper: React.FC<TopicWrapperProps> = ({
         name={topicName}
       />
       <Divider className='bg-[#99C7FB]' />
-
-    <ControlledInput
-      className="w-full p-4 pt-8"
-        label="Method"
-        name={methodName}
-      />
     </>
   );
 };
