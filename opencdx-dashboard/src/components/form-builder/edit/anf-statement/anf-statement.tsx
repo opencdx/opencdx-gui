@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 
 import {
@@ -24,14 +23,18 @@ import { TimeWrapper } from './time';
 import { TopicWrapper } from './topic';
 import { TypeWrapper } from './type';
 import { ModalWrapper } from './modal-wrapper';
+import { MethoWrapper } from './method';
+import { AnfStatementType } from '@/api/questionnaire';
 const ANFStatementWrapper = ({
   questionnaireItemId,
   anfStatementConnectorId,
-  anfStatement
+  anfStatement,
+  currentComponentType
 }: {
   anfStatement: ANFStatement;
   questionnaireItemId: number;
   anfStatementConnectorId: number;
+  currentComponentType: AnfStatementType;
 }) => {
   const [activeTab, setActiveTab] = useState('time');
   const { isOpen, onOpen, onOpenChange , } = useDisclosure();
@@ -109,6 +112,29 @@ const ANFStatementWrapper = ({
         />
       ),
     },
+    {
+      id: 'method',
+      label: 'Method',
+      content: (
+        <MethoWrapper
+          anfStatementConnectorId={anfStatementConnectorId}
+          questionnaireItemId={questionnaireItemId}
+        />
+      ),
+    },
+  ];
+
+  const tabsContributing = [
+    {
+      id: 'topic',
+      label: 'Topic',
+      content: (
+        <TopicWrapper
+          anfStatementConnectorId={anfStatementConnectorId}
+          questionnaireItemId={questionnaireItemId}
+        />
+      ),
+    },
   ];
 
   const handleTabClick = (e: React.MouseEvent<HTMLButtonElement>, tabId: string) => {
@@ -116,6 +142,12 @@ const ANFStatementWrapper = ({
     e.stopPropagation();
     setActiveTab(tabId);
   };
+
+  useEffect(() => {
+    if (currentComponentType === 'ANF_STATEMENT_TYPE_CONTRIBUTING') {
+      setActiveTab('topic');
+    }
+  }, [currentComponentType]);
 
   return (
     <>
@@ -182,7 +214,7 @@ const ANFStatementWrapper = ({
       
       <div className="flex w-full flex-col px-8 ">
         <div className="flex bg-[#99C7FB] px-2 ">
-          {tabs.map((item) => (
+          {(currentComponentType === 'ANF_STATEMENT_TYPE_CONTRIBUTING' ? tabsContributing : tabs).map((item) => (
             <button
               key={item.id}
               className={cn(

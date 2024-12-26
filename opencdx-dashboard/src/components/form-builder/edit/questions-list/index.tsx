@@ -33,6 +33,7 @@ const Questions: React.FC = () => {
   const handleSubmit = useCallback(() => {
     const newQuestion: QuestionnaireItem = {
       text: question,
+      linkId: crypto.randomUUID(),
     };
     setValue('item', [...fields, newQuestion]);
     setShowModal(false);
