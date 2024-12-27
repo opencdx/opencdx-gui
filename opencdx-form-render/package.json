@@ -11,7 +11,8 @@
     "format": "eslint \"**/*.{js,jsx,ts,tsx}\" --fix && prettier \"**/*.{js,jsx,ts,tsx,json}\" --write",
     "web": "expo start --web",
     "generate-api:iam": "openapi-generator-cli generate -i ./api/json/iam.json -g typescript-axios -o ./api/iam/ --skip-validate-spec --additional-properties=useSingleRequestParameter=true,withoutPrefixEnums=true,enumNameSuffix=,withSeparateModelsAndApi=true,apiPackage=server,modelPackage=model --openapi-normalizer REFACTOR_ALLOF_WITH_PROPERTIES_ONLY=true",
-    "generate-api:health": "openapi-generator-cli generate -i ./api/json/health.json -g typescript-axios -o ./api/health/ --skip-validate-spec --additional-properties=useSingleRequestParameter=true,withoutPrefixEnums=true,enumNameSuffix=,withSeparateModelsAndApi=true,apiPackage=server,modelPackage=model --openapi-normalizer REFACTOR_ALLOF_WITH_PROPERTIES_ONLY=true"
+    "generate-api:health": "openapi-generator-cli generate -i ./api/json/health.json -g typescript-axios -o ./api/health/ --skip-validate-spec --additional-properties=useSingleRequestParameter=true,withoutPrefixEnums=true,enumNameSuffix=,withSeparateModelsAndApi=true,apiPackage=server,modelPackage=model --openapi-normalizer REFACTOR_ALLOF_WITH_PROPERTIES_ONLY=true",
+    "generate-api:questionnaire": "openapi-generator-cli generate -i ./api/json/questionnaire.json -g typescript-axios -o ./api/questionnaire/ --skip-validate-spec --additional-properties=useSingleRequestParameter=true,withoutPrefixEnums=true,enumNameSuffix=,withSeparateModelsAndApi=true,apiPackage=server,modelPackage=model --openapi-normalizer REFACTOR_ALLOF_WITH_PROPERTIES_ONLY=true"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
@@ -51,6 +52,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@openapitools/openapi-generator-cli": "^2.15.3",
     "@types/react": "~18.2.45",
     "@typescript-eslint/eslint-plugin": "^7.7.0",
     "@typescript-eslint/parser": "^7.7.0",
