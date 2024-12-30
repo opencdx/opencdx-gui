@@ -113,6 +113,14 @@ const TakeQuestionnaire: React.FC = () => {
     const patientId = userProfile?.id;
 
     const processQuestionnaireItems = (items: Array<QuestionnaireItem>) => {
+      let itemsJSON = JSON.stringify(items);
+      Object.keys(answers).forEach((key) => {
+        const replacePattern = new RegExp(`{{REPLACE_${key}}}`, 'g');
+        itemsJSON = itemsJSON.replace(replacePattern, answers[key]);
+      });
+
+      items = JSON.parse(itemsJSON);
+
       let updatedItems = items.map((item) => {
         const questionLinkId = item.linkId;
 
