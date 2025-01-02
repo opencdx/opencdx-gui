@@ -148,14 +148,56 @@ const TakeQuestionnaire: React.FC = () => {
         return item;
       });
 
+      // Check ANF operator type and only keep first matching answer
       updatedItems.forEach((item) => {
         if (item.anfStatementConnector) {
           item.anfStatementConnector.forEach((connector) => {
-            if (connector.anfOperatorType === AnfOperatorType.AnfOperatorTypeEqual) {
-              if (item.linkId) {
+            type OperatorFunctions = Record<AnfOperatorType, (a: number, b: number) => boolean>;
+            const operatorFunctions: OperatorFunctions = {
+              [AnfOperatorType.AnfOperatorTypeEqual]: (a: number, b: number) => a === b,
+              [AnfOperatorType.AnfOperatorTypeNotEqual]: (a: number, b: number) => a !== b,
+              [AnfOperatorType.AnfOperatorTypeGreaterThan]: (a: number, b: number) => a > b,
+              [AnfOperatorType.AnfOperatorTypeGreaterThanOrEqual]: (a: number, b: number) => a >= b,
+              [AnfOperatorType.AnfOperatorTypeLessThan]: (a: number, b: number) => a < b,
+              [AnfOperatorType.AnfOperatorTypeLessThanOrEqual]: (a: number, b: number) => a <= b,
+              [AnfOperatorType.AnfOperatorTypeUnspecified]: () => true,
+              [AnfOperatorType.AnfOperatorTypeContains]: () => true,
+              [AnfOperatorType.AnfOperatorTypeNotContains]: () => true,
+              [AnfOperatorType.AnfOperatorTypeIn]: () => true,
+              [AnfOperatorType.AnfOperatorTypeNotIn]: () => true,
+              [AnfOperatorType.Unrecognized]: () => true
+            };
+
+            if (item.linkId) {
+              if (connector.anfOperatorType === AnfOperatorType.AnfOperatorTypeEqual) {
                 const answerValue = answers[item.linkId];
                 if (answerValue === connector.operatorValue) {
                   item.anfStatementConnector = [connector];
+                }
+              } else if (connector.anfOperatorType === AnfOperatorType.AnfOperatorTypeNotEqual) {
+                const answerValue = answers[item.linkId];
+                if (answerValue !== connector.operatorValue) {
+                  item.anfStatementConnector = [connector];
+                }
+              } else if (connector.anfOperatorType === AnfOperatorType.AnfOperatorTypeContains) {
+                const answerValue = answers[item.linkId];
+                if (answerValue && connector.operatorValue && answerValue.includes(connector.operatorValue)) {
+                  item.anfStatementConnector = [connector];
+                }
+              } else if (connector.anfOperatorType === AnfOperatorType.AnfOperatorTypeNotContains) {
+                const answerValue = answers[item.linkId];
+                if (answerValue && connector.operatorValue && !answerValue.includes(connector.operatorValue)) {
+                  item.anfStatementConnector = [connector];
+                }
+              } else {
+                const answerValue = Number(answers[item.linkId]);
+                const operatorValue = Number(connector.operatorValue);
+
+                if (!isNaN(answerValue) && !isNaN(operatorValue) && connector.anfOperatorType) {
+                  const operatorFunction = operatorFunctions[connector.anfOperatorType];
+                  if (operatorFunction && operatorFunction(answerValue, operatorValue)) {
+                    item.anfStatementConnector = [connector];
+                  }
                 }
               }
             }
