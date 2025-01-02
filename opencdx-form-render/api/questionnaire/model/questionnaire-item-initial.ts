@@ -38,5 +38,11 @@ export interface QuestionnaireItemInitial {
      * @memberof QuestionnaireItemInitial
      */
     'valueDecimal'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof QuestionnaireItemInitial
+     */
+    'valueString'?: string;
 }
 

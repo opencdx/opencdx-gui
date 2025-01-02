@@ -47,6 +47,18 @@ export interface AnfStatementConnector {
      * @memberof AnfStatementConnector
      */
     'operatorValue'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnfStatementConnector
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnfStatementConnector
+     */
+    'mainStatement'?: string;
 }
 
 export const AnfStatementType = {
@@ -55,6 +67,7 @@ export const AnfStatementType = {
     AnfStatementTypeAssociated: 'ANF_STATEMENT_TYPE_ASSOCIATED',
     AnfStatementUserQuestion: 'ANF_STATEMENT_USER_QUESTION',
     AnfStatementTypeNotApplicable: 'ANF_STATEMENT_TYPE_NOT_APPLICABLE',
+    AnfStatementTypeContributing: 'ANF_STATEMENT_TYPE_CONTRIBUTING',
     Unrecognized: 'UNRECOGNIZED'
 } as const;
 

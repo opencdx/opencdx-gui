@@ -76,6 +76,6 @@ export interface PerformanceCircumstance {
      * @type {Array<string>}
      * @memberof PerformanceCircumstance
      */
-    'deviceid'?: Array<string>;
+    'deviceId'?: Array<string>;
 }
 
