@@ -11,7 +11,7 @@ import { ProgressBar } from 'react-native-paper';
 import ModalComponent from '../../../components/ui/modal';
 import { useShowToast } from '~/lib/toast';
 import useUserStore from '~/app/data_store/user_store';
-import { AnfStatementType, QuestionnaireItem } from '~/api/questionnaire';
+import { AnfOperatorType, AnfStatementType, QuestionnaireItem } from '~/api/questionnaire';
 
 const useGetQuestionnaireForm = () => {
   const [answers, setAnswers] = useState<{ [key: string]: string }>({});
@@ -146,6 +146,21 @@ const TakeQuestionnaire: React.FC = () => {
           item.answer = [];
         }
         return item;
+      });
+
+      updatedItems.forEach((item) => {
+        if (item.anfStatementConnector) {
+          item.anfStatementConnector.forEach((connector) => {
+            if (connector.anfOperatorType === AnfOperatorType.AnfOperatorTypeEqual) {
+              if (item.linkId) {
+                const answerValue = answers[item.linkId];
+                if (answerValue === connector.operatorValue) {
+                  item.anfStatementConnector = [connector];
+                }
+              }
+            }
+          });
+        }
       });
 
       // Remove contributing statements and store them
