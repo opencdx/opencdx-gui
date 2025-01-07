@@ -25,6 +25,7 @@ import { TypeWrapper } from './type';
 import { ModalWrapper } from './modal-wrapper';
 import { MethoWrapper } from './method';
 import { AnfStatementType } from '@/api/questionnaire';
+import { ModalCodeSearch } from './modal-code-search';
 const ANFStatementWrapper = ({
   questionnaireItemId,
   anfStatementConnectorId,
@@ -37,8 +38,9 @@ const ANFStatementWrapper = ({
   currentComponentType: AnfStatementType;
 }) => {
   const [activeTab, setActiveTab] = useState('time');
-  const { isOpen, onOpen, onOpenChange , } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange, } = useDisclosure();
   const [codes, setCodes] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const tabs = [
     {
       id: 'time',
@@ -156,7 +158,7 @@ const ANFStatementWrapper = ({
           <h2 className="text font-semibold">Anf Statement</h2>
           <div className="flex justify-start gap-2">
             <h3 className="text-sm font-medium">
-            Descriptive sentence of what this section is for goes here.
+              Descriptive sentence of what this section is for goes here.
             </h3>
           </div>
         </div>
@@ -190,20 +192,20 @@ const ANFStatementWrapper = ({
         </div>
       </div>
 
-      <Modal isOpen={isOpen} size='5xl' hideCloseButton = {true}
+      <Modal isOpen={isOpen} size='5xl' hideCloseButton={true}
         radius='none'
-       onOpenChange={onOpenChange}>
+        onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-              <div className="">{codes === 'systemVariables' ? <div className='text-primary'>System Variables</div> : <div className='flex gap-2 justify-between'><div className=''>Code Lookup</div> <Input size='sm' label='Search' variant='bordered' className='w-1/3' /></div>}</div>
+                <div className="">{codes === 'systemVariables' ? <div className='text-primary'>System Variables</div> : <div className='flex gap-2 justify-between'><div className=''>Code Lookup</div> <Input size='sm' label='Search' variant='bordered' className='w-1/3' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} /></div>}</div>
               </ModalHeader>
               <ModalBody className="">
-                  <ModalWrapper />
+                {codes === 'systemVariables' ? <ModalWrapper /> : <ModalCodeSearch query={searchQuery} />}
               </ModalBody>
               <ModalFooter>
-                <Button color="primary"  variant="solid" onPress={onClose}>
+                <Button color="primary" variant="solid" onPress={onClose}>
                   Close
                 </Button>
               </ModalFooter>
@@ -211,7 +213,7 @@ const ANFStatementWrapper = ({
           )}
         </ModalContent>
       </Modal>
-      
+
       <div className="flex w-full flex-col px-8 ">
         <div className="flex bg-[#99C7FB] px-2 ">
           {(currentComponentType === 'ANF_STATEMENT_TYPE_CONTRIBUTING' ? tabsContributing : tabs).map((item) => (
