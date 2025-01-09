@@ -70,7 +70,10 @@ const QuestionnaireItemWrapper: React.FC<{
     const newConnector: AnfStatementConnector = {
       anfStatementType: AnfStatementType.AnfStatementTypeUnspecified,
       anfOperatorType: AnfOperatorType.AnfOperatorTypeUnspecified,
-      anfStatement: defaultAnfStatement,
+      anfStatement: {
+        ...defaultAnfStatement,
+        id: crypto.randomUUID(),
+      },
       name: anfStatementName,
     };
 
