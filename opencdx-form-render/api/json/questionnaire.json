@@ -712,6 +712,9 @@
               "UNRECOGNIZED"
             ]
           },
+          "method": {
+            "$ref": "#/components/schemas/LogicalExpression"
+          },
           "narrativeCircumstance": {
             "$ref": "#/components/schemas/NarrativeCircumstance"
           },
@@ -737,6 +740,7 @@
               "ANF_STATEMENT_TYPE_ASSOCIATED",
               "ANF_STATEMENT_USER_QUESTION",
               "ANF_STATEMENT_TYPE_NOT_APPLICABLE",
+              "ANF_STATEMENT_TYPE_CONTRIBUTING",
               "UNRECOGNIZED"
             ]
           },
@@ -758,6 +762,12 @@
             ]
           },
           "operatorValue": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "mainStatement": {
             "type": "string"
           }
         }
@@ -1255,6 +1265,9 @@
           "valueDecimal": {
             "type": "number",
             "format": "double"
+          },
+          "valueString": {
+            "type": "string"
           }
         }
       },

@@ -127,6 +127,12 @@ export interface ANFStatement {
     'status'?: Status;
     /**
      * 
+     * @type {LogicalExpression}
+     * @memberof ANFStatement
+     */
+    'method'?: LogicalExpression;
+    /**
+     * 
      * @type {NarrativeCircumstance}
      * @memberof ANFStatement
      */
