@@ -215,7 +215,7 @@ const ANFStatementWrapper = ({
       </Modal>
 
       <div className="flex w-full flex-col px-8 ">
-        <div className="flex bg-[#99C7FB] px-2 ">
+        <div className="flex bg-[#99C7FB] px-2 justify-between">
           {(currentComponentType === 'ANF_STATEMENT_TYPE_CONTRIBUTING' ? tabsContributing : tabs).map((item) => (
             <button
               key={item.id}

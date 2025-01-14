@@ -129,6 +129,7 @@ const TakeQuestionnaire: React.FC = () => {
           switch (item.type) {
             case 'integer':
             case 'decimal':
+            case 'number':
               item.answer = [{ valueInteger: parseInt(answers[questionLinkId], 10) }];
               break;
             case 'boolean':
@@ -350,6 +351,26 @@ const TakeQuestionnaire: React.FC = () => {
                     }}
                   />
                 )}
+
+              {data?.data?.item?.[currentQuestionIndex]?.type === 'number' && (
+                <Input
+                  label="Type your answer here"
+                  value={questionLinkId && answers[questionLinkId] ? answers[questionLinkId] : ''}
+                  onChangeText={(text) => {
+                    if (questionLinkId) handleAnswerChange(questionLinkId, text);
+                  }}
+                />
+              )}
+
+              {data?.data?.item?.[currentQuestionIndex]?.type === 'datetime' && (
+                <Input
+                  label="Type your answer here"
+                  value={questionLinkId && answers[questionLinkId] ? answers[questionLinkId] : ''}
+                  onChangeText={(text) => {
+                    if (questionLinkId) handleAnswerChange(questionLinkId, text);
+                  }}
+                />
+              )}
 
               {data?.data?.item?.[currentQuestionIndex]?.type === 'boolean' && (
                 <RadioInput
