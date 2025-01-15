@@ -13,6 +13,7 @@ const SnippetItem: React.FC<{ item: QuestionnaireItem }> = ({ item }) => (
         copyIcon={<ContentCopyIcon />}
         variant="flat"
         radius="sm"
+        symbol=""
       >
         {`{{REPLACE_${item.linkId}}}`}
       </Snippet>

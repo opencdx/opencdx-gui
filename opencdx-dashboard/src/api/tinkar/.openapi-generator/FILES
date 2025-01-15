@@ -1,0 +1,13 @@
+.gitignore
+.npmignore
+api.ts
+base.ts
+common.ts
+configuration.ts
+git_push.sh
+index.ts
+model/index.ts
+model/tinkar-get-response.ts
+model/tinkar-get-result.ts
+model/tinkar-search-query-response.ts
+server/open-cdx-rest-tinkar-search-controller-api.ts
