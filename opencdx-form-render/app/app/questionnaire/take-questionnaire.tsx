@@ -247,6 +247,26 @@ const TakeQuestionnaire: React.FC = () => {
         return item;
       });
 
+      // Update upper and lower bounds
+      updatedItems = updatedItems.map((item) => {
+        if (item.anfStatementConnector) {
+          item.anfStatementConnector.forEach((connector) => {
+            if (connector.anfStatement?.performanceCircumstance?.result?.upperBoundConfig) {
+              if (!isNaN(Number(connector.anfStatement.performanceCircumstance.result.upperBoundConfig))) {
+                connector.anfStatement.performanceCircumstance.result.upperBound = parseFloat(connector.anfStatement.performanceCircumstance.result.upperBoundConfig);
+              }
+            }
+            if (connector.anfStatement?.performanceCircumstance?.result?.lowerBoundConfig) {
+              if (!isNaN(Number(connector.anfStatement.performanceCircumstance.result.lowerBoundConfig))) {
+                connector.anfStatement.performanceCircumstance.result.lowerBound = parseFloat(connector.anfStatement.performanceCircumstance.result.lowerBoundConfig);
+              }
+            }
+          });
+        }
+
+        return item;
+      });
+
       return updatedItems;
     };
 
