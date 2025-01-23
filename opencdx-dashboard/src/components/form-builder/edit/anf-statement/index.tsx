@@ -120,18 +120,7 @@ const QuestionnaireItemWrapper: React.FC<{
   return (
     <div>
       {/* Question display */}
-      <ToastContainer 
-          position={"top-right"}
-          icon={false}
-          autoClose={2000}
-          hideProgressBar={true}
-          closeOnClick={true}
-          pauseOnHover={true}
-          draggable={true}
-          theme={"colored"}
-          closeButton={false} 
-          className="toast-custom" 
-      />
+      
 
       <Accordion >
         <AccordionItem
