@@ -46,6 +46,23 @@ const radioOprionsExtended = [
     { value: AnfOperatorType.AnfOperatorTypeLessThan, label: "<", description: "is less than" },
 
 ];
+
+// Update the base select styles to include both states
+const selectStyles = `
+  w-full h-14 px-3 py-2 
+  bg-white rounded-lg 
+  border border-[#E4E4E7]
+  text-gray-900
+  appearance-none cursor-pointer 
+  transition-all duration-200
+  hover:bg-gray-50 
+  focus:outline-none
+  focus:ring-1
+  focus:ring-[#E4E4E7]
+  focus:border-[#E4E4E7]
+  [&:not(:focus)]:shadow-none
+`;
+
 export default function BooleanQuestionConfig({
     item,
     questionnaireItemId,
@@ -187,26 +204,29 @@ export default function BooleanQuestionConfig({
 
                 <div className="flex-1">
                     <Controller
-                        name={`${basePath}.unit`}
+                        name={`${basePath}.extension[0].valueCoding.display`}
                         control={control}
                         render={({ field }) => (
-                            <Select
-                                {...field}
-                                variant="bordered"
-                                radius="sm"
-                                value={field.value}
-                                onChange={(event: any) => {
-                                    const values = [event.target.value];
-                                    field.onChange(values);
-                                }}
-                                label="Units"
-                                className="w-72 h-14"
-                                aria-label="Select Unit"
-                            >
-                                {units.map((unit: any, index: number) => (
-                                    <SelectItem key={index} value={unit.value}>{unit.label}</SelectItem>
-                                ))}
-                            </Select>
+                            <div className="relative group w-64">
+                                <select
+                                    {...field}
+                                    value={field.value}
+                                    onChange={(event: any) => {
+                                        field.onChange(event.target.value);
+                                    }}
+                                    className={selectStyles}
+                                    aria-label="Select Unit"
+                                >
+                                    {units.map((unit: any, index: number) => (
+                                        <option key={index} value={unit.value}>{unit.label}</option>
+                                    ))}
+                                </select>
+                                <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none transition-transform duration-200 group-focus-within:rotate-180">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                    </svg>
+                                </div>
+                            </div>
                         )}
                     />
                     <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
@@ -236,23 +256,29 @@ export default function BooleanQuestionConfig({
                     name={`${basePath}.type`}
                     control={control}
                     render={({ field }: { field: any }) => (
-                        <Select
+                        <div className="relative group w-64">
+                        <select
                             {...field}
-                            variant="bordered"
-                            radius="sm"
                             value={field.value}
                             onChange={(event: any) => {
-                                field.onChange(event.target.value);
-                                handleChange(event.target.value);
+                                const values = [event.target.value];
+                                const selectedValue = Array.from(values)[0] as string;
+                                field.onChange(selectedValue);
+                                handleChange(selectedValue);
                             }}
-                            className="w-64 bg-white h-14"
+                            className={cn(selectStyles)}
                             aria-label="Data Type"
-                            label="Data Type"
                         >
                             {QuestionnaireItemType.map((type) => (
-                                <SelectItem key={type.key} value={type.key}>{type.label}</SelectItem>
+                                <option key={type.key} value={type.key}>{type.label}</option>
                             ))}
-                        </Select>
+                        </select>
+                         <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none transition-transform duration-200 group-focus-within:rotate-180">
+                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                    </svg>
+                                </div>
+                            </div>
 
                     )}
                 />
