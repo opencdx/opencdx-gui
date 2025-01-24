@@ -80,13 +80,14 @@ const Header = ({formTitle, control}: {formTitle: string, control: Control}) => 
                                     <div className="relative w-48 ">
                                     <select
                                     {...field}
-                                    value={field.value}
+                                    value={field.value || ''}
                                     onChange={(event: any) => {
                                         field.onChange(event.target.value);
                                     }}
                                     className={selectStyles}
-                                    aria-label="Select Unit"
+                                    aria-label="Select a Rule"
                                 >
+                                    <option value="">Select a Rule</option>
                                     {(ruleSetData?.data.ruleSets ?? []).map((rule: any, index: number) => (
                                         <option key={index} value={rule.ruleId}>{rule.name}</option>
                                     ))}
@@ -107,15 +108,16 @@ const Header = ({formTitle, control}: {formTitle: string, control: Control}) => 
                                     <div className="relative w-48 ">
                                     <select
                                     {...field}
-                                    value={field.value}
+                                    value={field.value?.[0] || ''}
                                     onChange={(event: any) => {
-                                        field.onChange([event.target.value]);
+                                        field.onChange(event.target.value ? [event.target.value] : []);
                                     }}
                                     className={selectStyles}
-                                    aria-label="Select Unit"
+                                    aria-label="Select a Response"
                                 >
+                                    <option value="">Select a Response</option>
                                     {fields.map((field: any, index: number) => (
-                                        <option key={index} value={`${field.text}`}>{field.text}</option>
+                                        <option key={index} value={`${field.linkId}`}>{field.text}</option>
                                     ))}
                                 </select>
                                 <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none transition-transform duration-200 group-focus-within:rotate-180">
