@@ -39,7 +39,7 @@ import fileUploadTransparent from '../../../../public/images/file_upload_transpa
 export default function ListQuestionnaire() {
   const { data: currentUser } = useCurrentUser();
   const { mutate: deleteQuestionnaire } = useDeleteQuestionnaire();
-  const { mutate: getQuestionnaireDataList, error, data } = useGetQuestionnaireList();
+  const { data, isLoading, refetch } = useGetQuestionnaireList();
   const router = useRouter();
   const { updateQuestionnaire } = useQuestionnaireStore();
 
@@ -51,13 +51,12 @@ export default function ListQuestionnaire() {
     return true;
   });
 
-  const [isLoading, setIsLoading] = useState(true);
   const [modalConfig, setModalConfig] = useState({
     isOpen: false,
     title: '',
     content: null,
     footer: null,
-    height: 'md:h-5/6 lg:h-5/6', // Add this line
+    height: 'md:h-5/6 lg:h-5/6',
   });
 
   useEffect(() => {
@@ -69,23 +68,6 @@ export default function ListQuestionnaire() {
   useEffect(() => {
     localStorage.setItem('isGrid', JSON.stringify(isGrid));
   }, [isGrid]);
-
-  const fetchQuestionnaires = useCallback(async () => {
-    try {
-      await getQuestionnaireDataList({
-        pagination: { pageSize: 300, sortAscending: true },
-        updateAnswers: true,
-      });
-    } catch (err) {
-      console.error('Error fetching data:', err);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [getQuestionnaireDataList]);
-
-  useEffect(() => {
-    fetchQuestionnaires();
-  }, [fetchQuestionnaires]);
 
   const handleViewToggle = useCallback((key: Key) => {
     const newIsGrid = key === 'grid';
@@ -167,10 +149,14 @@ export default function ListQuestionnaire() {
             aria-label='Delete'
             tabIndex={0}
             size='lg'
-            onPress={() => {
-              modalActions.closeModal();
-              deleteQuestionnaire(id);
-              fetchQuestionnaires();
+            onPress={async () => {
+              try {
+                await deleteQuestionnaire(id);
+                modalActions.closeModal();
+              } catch (error) {
+                console.error('Error deleting questionnaire:', error);
+                toast.error('Failed to delete the form');
+              }
             }}
           >
             Delete
@@ -178,7 +164,7 @@ export default function ListQuestionnaire() {
         </>
       ),
     });
-  }, [modalActions, deleteQuestionnaire, data]);
+  }, [modalActions, deleteQuestionnaire]);
 
   const renderHeader = useMemo(() => (
     <div className="flex flex-row justify-between items-center bg-white dark:bg-neutral-800 p-4 rounded-lg shadow-md border border-neutral-200 dark:border-neutral-700">
