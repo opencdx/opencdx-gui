@@ -174,6 +174,7 @@ export default function BooleanQuestionConfig({
     const uniqueId = useId().replace(/[^a-zA-Z0-9-_]/g, '');
 
     const units = [
+        { value: '', label: 'Select a unit' },
         { value: 'year', label: 'Year' },
         { value: 'month', label: 'Month' },
         { value: 'day', label: 'Day' },
@@ -210,7 +211,7 @@ export default function BooleanQuestionConfig({
                             <div className="relative group w-64">
                                 <select
                                     {...field}
-                                    value={field.value}
+                                    value={field.value || ''}
                                     onChange={(event: any) => {
                                         field.onChange(event.target.value);
                                     }}

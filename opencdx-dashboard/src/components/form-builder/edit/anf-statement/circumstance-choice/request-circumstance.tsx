@@ -4,13 +4,13 @@ import { ANFStatement } from '@/api/questionnaire/model/anfstatement';
 import { ControlledInput } from '@/components/custom/controlled-input';
 import { PlusIcon } from 'lucide-react';
 import { MeasureComponent } from '@/components/form-builder/edit/anf-statement/custom/measure';
-import { ParticipantComponent } from '@/components/form-builder/edit/anf-statement/custom/participant';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AssociatedStatementComponent } from '@/components/form-builder/edit/anf-statement/custom/associated-statement';
 import { RepetitionComponent } from '@/components/form-builder/edit/anf-statement/custom/repetition';
 import { DeviceIdComponent } from '@/components/form-builder/edit/anf-statement/custom/deviceid'
 import { PurposeComponent } from '@/components/form-builder/edit/anf-statement/custom/purpose'
 import ControlledAccordion from '@/components/custom/controlled-accordian';
+import { RequestedParticipantComponent } from '../custom/requested-participant';
 
 interface AccordionSectionProps {
     title: string;
@@ -82,7 +82,7 @@ const RequestCircumstance: React.FC<{
                     radius='sm' onClick={() => appendConditionalTrigger({})} endContent={<PlusIcon size={18} />}>Add Conditional Trigger</Button>      </AccordionSection>
 
             <AccordionSection title="Requested Participant" isTitleBold>
-                <ParticipantComponent anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} anfStatement={anfStatement} tabName={tabName} addLabel="Add Requested Participant" />
+                <RequestedParticipantComponent anfStatementConnectorId={anfStatementConnectorId} questionnaireItemId={questionnaireItemId} anfStatement={anfStatement} tabName={tabName} addLabel="Add Requested Participant" />
             </AccordionSection>
 
             <AccordionSection title="Priority:">

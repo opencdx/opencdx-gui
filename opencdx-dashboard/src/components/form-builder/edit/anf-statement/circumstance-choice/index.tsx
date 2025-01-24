@@ -1,7 +1,7 @@
 import { ANFStatement } from '@/api/questionnaire/model/anfstatement';
 import { useFormContext } from 'react-hook-form';
 import { RadioGroup, Radio } from 'ui-library';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { PerformanceCircumstance } from './performance-circumstance';
 import { RequestCircumstance } from './request-circumstance';
 import { NarrativeCircumstance } from './narrative-circumstance';
@@ -13,7 +13,9 @@ interface CircumstanceChoiceProps {
 }
 
 const CircumstanceChoice = ({ anfStatementConnectorId, questionnaireItemId, anfStatement }: CircumstanceChoiceProps) => {
-    const { setValue } = useFormContext();
+    const { setValue, getValues } = useFormContext();
+    const previousTabRef = useRef<string>();
+    const cachedValues = useRef<Record<string, any>>({});
     
     // Determine initial circumstance type from the ANF statement
     const getInitialCircumstanceType = () => {
@@ -30,11 +32,25 @@ const CircumstanceChoice = ({ anfStatementConnectorId, questionnaireItemId, anfS
         narrativeCircumstance: NarrativeCircumstance,
     };
 
-    const cleanupCircumstances = (selectedType: string) => {
+    const handleCircumstanceSwitch = (selectedType: string) => {
         const basePath = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement`;
-        const types = ['performanceCircumstance', 'requestCircumstance', 'narrativeCircumstance'];
+        const currentValues = getValues();
         
-        // Clear all other circumstance types except the selected one
+        // Cache current values before switching
+        if (previousTabRef.current) {
+            const currentCircumstanceValues = currentValues?.item?.[questionnaireItemId]?.anfStatementConnector?.[anfStatementConnectorId]?.anfStatement?.[previousTabRef.current];
+            if (currentCircumstanceValues) {
+                cachedValues.current[previousTabRef.current] = currentCircumstanceValues;
+            }
+        }
+
+        // Restore cached values for the selected type
+        if (cachedValues.current[selectedType]) {
+            setValue(`${basePath}.${selectedType}`, cachedValues.current[selectedType]);
+        }
+
+        // Hide current values from form but don't delete them
+        const types = ['performanceCircumstance', 'requestCircumstance', 'narrativeCircumstance'];
         types.forEach(type => {
             if (type !== selectedType) {
                 setValue(`${basePath}.${type}`, undefined);
@@ -42,9 +58,10 @@ const CircumstanceChoice = ({ anfStatementConnectorId, questionnaireItemId, anfS
         });
     };
 
-    // Clean up on mount and when tab changes
+    // Handle circumstance type changes
     useEffect(() => {
-        cleanupCircumstances(tabName);
+        handleCircumstanceSwitch(tabName);
+        previousTabRef.current = tabName;
     }, [tabName]);
 
     const CircumstanceComponent = circumstanceComponents[tabName as keyof typeof circumstanceComponents];
