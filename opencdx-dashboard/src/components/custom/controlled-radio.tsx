@@ -39,6 +39,7 @@ const ControlledRadio: React.FC<ControlledRadioProps> = ({ label, name, orientat
               value="false"
               size='md'
               id={`${name}-false`}
+              className="ml-12"
             >
               No
             </Radio>
