@@ -181,7 +181,7 @@ export default function BooleanQuestionConfig({
                         )}
                     />
                     <p id={`description-${uniqueId}-text`} className="text-sm text-gray-500 mt-2">
-                        Descriptive informational helper text here.
+                        The text of the question.
                     </p>
                 </div>
 
@@ -209,7 +209,7 @@ export default function BooleanQuestionConfig({
                             </Select>
                         )}
                     />
-                    <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                    <p className="text-sm text-gray-500 mt-2">The units for the answer.</p>
                 </div>
             </div>
             <Divider />
@@ -228,7 +228,7 @@ export default function BooleanQuestionConfig({
                         />
                     )}
                 />
-                <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                <p className="text-sm text-gray-500 mt-2">Value that should be pre-populated in the answer field.</p>
             </div>
             <Divider />
             <div>
@@ -257,7 +257,7 @@ export default function BooleanQuestionConfig({
                     )}
                 />
 
-                <p className="text-sm text-gray-500 mt-2">Please select your Datatype.</p>
+                <p className="text-sm text-gray-500 mt-2">The type of question item.</p>
             </div>
             <Divider />
 
@@ -308,7 +308,7 @@ export default function BooleanQuestionConfig({
                 <div>
                     <div>
                         <p className="text-md font-medium mb-2">Answer choices</p>
-                        <p className="text-sm text-gray-500">Descriptive informational helper text here.</p>
+                        <p className="text-sm text-gray-500">The permitted answers.</p>
                         <div className="border overflow-hidden border-[#99C7FB] p-4 mt-4 mb-4">
                             {answerChoices.map((choice: any, index: number) => (
                                 <div key={index} className="mt-2">
@@ -326,7 +326,6 @@ export default function BooleanQuestionConfig({
                                             />
                                         )}
                                     />
-                                    <p className="text-sm text-gray-500 mt-1">Descriptive informational helper text here.</p>
                                 </div>
                             ))}
 
@@ -347,7 +346,7 @@ export default function BooleanQuestionConfig({
 
                     <div className="mt-6">
                         <p className="text-md font-medium mb-2">Answer list layout</p>
-                        <p className="text-sm text-gray-500">Descriptive informational helper text here.</p>
+                        <p className="text-sm text-gray-500 mb-4">How the question should be displayed.</p>
                         <Controller
                             name={`${basePath}.extension[0].valueCodeableConcept.coding[0].code`}
                             control={control}
@@ -363,7 +362,6 @@ export default function BooleanQuestionConfig({
                                 >
                                     <Radio
                                         value="drop-down"
-                                        description='Lorem ipsum'
                                         size='md'
                                         id={`${uniqueId}-drop-down`}
 
@@ -372,7 +370,6 @@ export default function BooleanQuestionConfig({
                                     </Radio>
                                     <Radio
                                         value="radio-button"
-                                        description='Lorem ipsum'
                                         size='md'
                                         className='ml-12'
                                         id={`${uniqueId}-radio-button`}
@@ -391,16 +388,16 @@ export default function BooleanQuestionConfig({
             )}
             <div className="space-y-4">
                 <p className="text-md font-medium">Answer required?</p>
-                <p className="text-sm text-gray-500">Descriptive informational helper text here.</p>
+                <p className="text-sm text-gray-500">If yes, the questoin is required. If no, the question can be skipped.</p>
                 <ControlledRadio name={`${basePath}.required`} />
                 <Divider />
                 <p className="text-md font-medium">Read only?</p>
-                <p className="text-sm text-gray-500">Descriptive informational helper text here.</p>
+                <p className="text-sm text-gray-500">If yes, the answer cannot be changed by a respondant.</p>
                 <ControlledRadio name={`${basePath}.readOnly`} />
                 <Divider />
                 <div>
                     <p className="text-md font-medium">Add question code?</p>
-                    <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                    <p className="text-sm text-gray-500 mt-2 mb-4">A terminology code that can be associated to this question.</p>
 
                     <RadioGroup
                         orientation="horizontal"
@@ -416,7 +413,6 @@ export default function BooleanQuestionConfig({
                     >
                         <Radio
                             value="yes"
-                            description='Lorem ipsum'
                             size='md'
                             id={`${uniqueId}-yes-question-code`}
 
@@ -425,7 +421,6 @@ export default function BooleanQuestionConfig({
                         </Radio>
                         <Radio
                             value="no"
-                            description='Lorem ipsum'
                             size='md'
                             className='ml-12'
                             id={`${uniqueId}-no-question-code`}
@@ -469,7 +464,7 @@ export default function BooleanQuestionConfig({
                                     />
 
 
-                                    <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                                    <p className="text-sm text-gray-500 mt-2">The code system.</p>
                                 </div>
 
                                 <div className="flex-1 min-w-[350px]">
@@ -487,7 +482,7 @@ export default function BooleanQuestionConfig({
                                             />
                                         )}
                                     />
-                                    <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                                    <p className="text-sm text-gray-500 mt-2">The code from the coding system.</p>
                                 </div>
                             </div>
                         ))}
@@ -509,7 +504,7 @@ export default function BooleanQuestionConfig({
 
             <div>
                 <p className="text-md font-medium">Conditional display?</p>
-                <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                <p className="text-sm text-gray-500 mt-2 mb-4">A constrait that indicates when the question should be displayed.</p>
 
                 <RadioGroup
                     orientation="horizontal"
@@ -523,7 +518,6 @@ export default function BooleanQuestionConfig({
                 >
                     <Radio
                         value="yes"
-                        description='Lorem ipsum'
                         size='md'
                         id={`${uniqueId}-yes-conditional-display`}
 
@@ -532,7 +526,6 @@ export default function BooleanQuestionConfig({
                     </Radio>
                     <Radio
                         value="no"
-                        description='Lorem ipsum'
                         size='md'
                         className='ml-12'
                         id={`${uniqueId}-no-conditional-display`}
@@ -582,7 +575,7 @@ export default function BooleanQuestionConfig({
                                                     </Select>
                                                 )}
                                             />
-                                            <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                                            <p className="text-sm text-gray-500 mt-2">The operatore in order for the question to be displayed.</p>
                                         </div>
 
                                         <div className="flex-1 min-w-[150px]">
@@ -600,7 +593,7 @@ export default function BooleanQuestionConfig({
                                                     />
                                                 )}
                                             />
-                                            <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                                            <p className="text-sm text-gray-500 mt-2">The answer that will trigger the question to be displayed.</p>
                                         </div>
 
                                         <div className="flex-1 min-w-[150px]">
@@ -632,7 +625,7 @@ export default function BooleanQuestionConfig({
                                                     </Select>
                                                 )}
                                             />
-                                            <p className="text-sm text-gray-500 mt-2">Descriptive informational helper text here.</p>
+                                            <p className="text-sm text-gray-500 mt-2">Which question should be displayed.</p>
                                         </div>
 
                                         <Button
