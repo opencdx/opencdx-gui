@@ -1,7 +1,7 @@
 import { ANFStatement } from '@/api/questionnaire/model/anfstatement';
 import { useFormContext } from 'react-hook-form';
 import { RadioGroup, Radio } from 'ui-library';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { PerformanceCircumstance } from './performance-circumstance';
 import { RequestCircumstance } from './request-circumstance';
 import { NarrativeCircumstance } from './narrative-circumstance';
@@ -13,7 +13,8 @@ interface CircumstanceChoiceProps {
 }
 
 const CircumstanceChoice = ({ anfStatementConnectorId, questionnaireItemId, anfStatement }: CircumstanceChoiceProps) => {
-    const { setValue } = useFormContext();
+    const { setValue, getValues } = useFormContext();
+    const previousTabRef = useRef<string>();
     
     // Determine initial circumstance type from the ANF statement
     const getInitialCircumstanceType = () => {
@@ -34,6 +35,26 @@ const CircumstanceChoice = ({ anfStatementConnectorId, questionnaireItemId, anfS
         const basePath = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement`;
         const types = ['performanceCircumstance', 'requestCircumstance', 'narrativeCircumstance'];
         
+        // Get the current form values
+        const currentValues = getValues();
+        
+        // Get data from the previous tab if it exists
+        if (previousTabRef.current) {
+            const previousData = currentValues?.item?.[questionnaireItemId]?.anfStatementConnector?.[anfStatementConnectorId]?.anfStatement?.[previousTabRef.current];
+            const previousDeviceId = previousData?.deviceid;
+            const previousParticipant = previousData?.participant;
+            
+            // If we have data from the previous tab, preserve it in the new tab
+            if (previousDeviceId || previousParticipant) {
+                const existingData = currentValues?.item?.[questionnaireItemId]?.anfStatementConnector?.[anfStatementConnectorId]?.anfStatement?.[selectedType] || {};
+                setValue(`${basePath}.${selectedType}`, {
+                    ...existingData,
+                    ...(previousDeviceId && { deviceid: previousDeviceId }),
+                    ...(previousParticipant && { participant: previousParticipant })
+                });
+            }
+        }
+        
         // Clear all other circumstance types except the selected one
         types.forEach(type => {
             if (type !== selectedType) {
@@ -45,6 +66,7 @@ const CircumstanceChoice = ({ anfStatementConnectorId, questionnaireItemId, anfS
     // Clean up on mount and when tab changes
     useEffect(() => {
         cleanupCircumstances(tabName);
+        previousTabRef.current = tabName;
     }, [tabName]);
 
     const CircumstanceComponent = circumstanceComponents[tabName as keyof typeof circumstanceComponents];
