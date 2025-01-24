@@ -15,6 +15,7 @@ interface CircumstanceChoiceProps {
 const CircumstanceChoice = ({ anfStatementConnectorId, questionnaireItemId, anfStatement }: CircumstanceChoiceProps) => {
     const { setValue, getValues } = useFormContext();
     const previousTabRef = useRef<string>();
+    const cachedValues = useRef<Record<string, any>>({});
     
     // Determine initial circumstance type from the ANF statement
     const getInitialCircumstanceType = () => {
@@ -31,31 +32,25 @@ const CircumstanceChoice = ({ anfStatementConnectorId, questionnaireItemId, anfS
         narrativeCircumstance: NarrativeCircumstance,
     };
 
-    const cleanupCircumstances = (selectedType: string) => {
+    const handleCircumstanceSwitch = (selectedType: string) => {
         const basePath = `item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.anfStatement`;
-        const types = ['performanceCircumstance', 'requestCircumstance', 'narrativeCircumstance'];
-        
-        // Get the current form values
         const currentValues = getValues();
         
-        // Get data from the previous tab if it exists
+        // Cache current values before switching
         if (previousTabRef.current) {
-            const previousData = currentValues?.item?.[questionnaireItemId]?.anfStatementConnector?.[anfStatementConnectorId]?.anfStatement?.[previousTabRef.current];
-            const previousDeviceId = previousData?.deviceid;
-            const previousParticipant = previousData?.participant;
-            
-            // If we have data from the previous tab, preserve it in the new tab
-            if (previousDeviceId || previousParticipant) {
-                const existingData = currentValues?.item?.[questionnaireItemId]?.anfStatementConnector?.[anfStatementConnectorId]?.anfStatement?.[selectedType] || {};
-                setValue(`${basePath}.${selectedType}`, {
-                    ...existingData,
-                    ...(previousDeviceId && { deviceid: previousDeviceId }),
-                    ...(previousParticipant && { participant: previousParticipant })
-                });
+            const currentCircumstanceValues = currentValues?.item?.[questionnaireItemId]?.anfStatementConnector?.[anfStatementConnectorId]?.anfStatement?.[previousTabRef.current];
+            if (currentCircumstanceValues) {
+                cachedValues.current[previousTabRef.current] = currentCircumstanceValues;
             }
         }
-        
-        // Clear all other circumstance types except the selected one
+
+        // Restore cached values for the selected type
+        if (cachedValues.current[selectedType]) {
+            setValue(`${basePath}.${selectedType}`, cachedValues.current[selectedType]);
+        }
+
+        // Hide current values from form but don't delete them
+        const types = ['performanceCircumstance', 'requestCircumstance', 'narrativeCircumstance'];
         types.forEach(type => {
             if (type !== selectedType) {
                 setValue(`${basePath}.${type}`, undefined);
@@ -63,9 +58,9 @@ const CircumstanceChoice = ({ anfStatementConnectorId, questionnaireItemId, anfS
         });
     };
 
-    // Clean up on mount and when tab changes
+    // Handle circumstance type changes
     useEffect(() => {
-        cleanupCircumstances(tabName);
+        handleCircumstanceSwitch(tabName);
         previousTabRef.current = tabName;
     }, [tabName]);
 
