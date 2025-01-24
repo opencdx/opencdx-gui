@@ -12,6 +12,7 @@ interface CustomModalProps {
   confirmText: string;
   cancelText: string;
   toastMessage: string;
+  length?: number;
 }
 
 const CustomModal: React.FC<CustomModalProps> = ({
@@ -23,6 +24,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
   confirmText,
   cancelText,
   toastMessage,
+  length
 }) => {
   const handleConfirm = () => {
     onConfirm();
@@ -41,7 +43,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
           <Button color="primary" variant="bordered" onPress={onClose}>
             {cancelText}
           </Button>
-          <Button color="danger" onPress={handleConfirm}>
+          <Button color={(length || 0) > 0 ? 'primary' : 'default'} onPress={handleConfirm}>
             {confirmText}
           </Button>
         </ModalFooter>

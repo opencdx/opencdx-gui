@@ -245,6 +245,7 @@ const QuestionnaireItemWrapper: React.FC<{
         isOpen={addModal.isOpen}
         onClose={addModal.closeModal}
         title="Add ANF Statement"
+        length={anfStatementName.length}
         body={
           <>
             <p>Please name your ANF Statement</p>
