@@ -6,7 +6,7 @@ import { LoginRequest, SignUpRequest, ChangePasswordRequest, ResetPasswordReques
 import { GetQuestionnaireListRequest, QuestionnaireRequest } from "@/api/questionnaire";
 import { RuleSetsRequest } from "@/api/classification";
 
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
 // This hook uses the useMutation hook from react-query
@@ -96,9 +96,14 @@ export const useCurrentUser = () => {
 }
 
 export const useGetQuestionnaireList = () => {
-
-    return useMutation({
-        mutationFn: (params: GetQuestionnaireListRequest) => questionnaireApi.getQuestionnaires({ getQuestionnaireListRequest: params })
+    return useQuery({
+        queryKey: ['questionnaires'],
+        queryFn: () => questionnaireApi.getQuestionnaires({ 
+            getQuestionnaireListRequest: {
+                pagination: { pageSize: 300, sortAscending: true },
+                updateAnswers: true,
+            }
+        })
     });
 };
 
@@ -110,9 +115,13 @@ export const useGetQuestionnaire = () => {
 };
 
 export const useDeleteQuestionnaire = () => {
+    const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: (credentials: string) => questionnaireApi.deleteQuestionnaire({ id: credentials })
+        mutationFn: (credentials: string) => questionnaireApi.deleteQuestionnaire({ id: credentials }),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['questionnaires'] });
+        }
     });
 };
 

@@ -5,7 +5,9 @@ import '../../styles/password-validation.css';
 import styles from '../../styles/custom-input.module.css';
 import { AxiosError } from 'axios';
 import ValidationRow from '@/components/custom/validationRow';
-
+import eyeIcon from '../../../public/eye.svg';
+import crossEyeIcon from '../../../public/cross_eye.svg';
+import logo from '../../../public/login-logo.png';
 import { Card, CardBody, CardFooter, CardHeader, Image, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from 'ui-library';
 import { toast, ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/navigation';
@@ -132,7 +134,7 @@ const handleError = (error: AxiosError) => {
             alt="opencdx logos"
             aria-label="OpenCDX Logo"
             radius="none"
-            src="/login-logo.png"
+            src={logo.src}
             />
         </div>
         </CardHeader>
@@ -172,11 +174,12 @@ const handleError = (error: AxiosError) => {
                     aria-label="toggle password visibility"
                     type="button"
                     onClick={toggleVisibility}
+                    style={{ position:'absolute', right: 10, top: 15 }}
                   >
                     {isVisible ? (
-                      <img alt="nextui logo" src="/eye.svg" />
+                      <img alt="nextui logo" src={eyeIcon.src} />
                     ) : (
-                      <img alt="nextui logo" src="/cross_eye.svg" />
+                      <img alt="nextui logo" src={crossEyeIcon.src} />
                     )}
                   </button>
                 }
@@ -200,11 +203,12 @@ const handleError = (error: AxiosError) => {
                     aria-label="toggle password visibility"
                     type="button"
                     onClick={toggleConfirmVisibility}
+                    style={{ position:'absolute', right: 10, top: 15 }}
                   >
                     {isConfirmVisible ? (
-                      <img alt="nextui logo" src="/eye.svg" />
+                      <Image alt="nextui logo" src={eyeIcon.src}  />
                     ) : (
-                      <img alt="nextui logo" src="/cross_eye.svg" />
+                      <Image alt="nextui logo" src={crossEyeIcon.src}  />
                     )}
                   </button>
                 }

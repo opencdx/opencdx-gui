@@ -13,7 +13,7 @@ const ControlledRadio: React.FC<ControlledRadioProps> = ({ label, name, orientat
   const descriptionId = `radio-group-${name}-description`;
 
   return (
-    <div className='flex flex-col gap-4 pl-2'>
+    <div className='flex flex-col gap-4'>
       <Controller
         control={control}
         name={name}
@@ -30,18 +30,14 @@ const ControlledRadio: React.FC<ControlledRadioProps> = ({ label, name, orientat
           >
             <Radio 
               value="true"
-              description='Lorem ipsum'
               size='md'
               id={`${name}-true`}
-              
             >
               Yes
             </Radio>
             <Radio
               value="false"
-              description='Lorem ipsum'
               size='md'
-              className='ml-12'
               id={`${name}-false`}
             >
               No
