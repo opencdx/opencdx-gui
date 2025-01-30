@@ -95,14 +95,66 @@ const TakeQuestionnaire: React.FC = () => {
 
 
   const handleContinue = () => {
-
     if (currentQuestionIndex < totalQuestions - 1) {
       setViewedQuestions((prev) => new Set(prev).add(currentQuestionIndex));
       if (currentQuestionIndex < (data?.data?.item?.length || 0) - 1) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
+        const nextQuestion = data?.data?.item?.[currentQuestionIndex + 1];
+        if (nextQuestion && 
+            (nextQuestion?.enableWhen?.length ?? 0) > 0 && 
+            nextQuestion.enableWhen?.some(condition => condition.question)) {
+          // Check if any enableWhen criteria is met to display the question
+          const shouldDisplay = nextQuestion.enableWhen?.some(condition => {
+            if (!condition.question) return false;
+            const conditionAnswer = answers[condition.question];
+            if (!conditionAnswer) return false;
+
+            switch(condition.operator) {
+              case '=':
+                return conditionAnswer === condition.answerCoding?.display;
+              case '!=':
+                return conditionAnswer !== condition.answerCoding?.display;
+              default:
+                return false;
+            }
+          });
+
+          if (shouldDisplay) {
+            setCurrentQuestionIndex(currentQuestionIndex + 1);
+          } else {
+            // Find next question to display
+            let nextIndex = currentQuestionIndex + 2;
+            while (nextIndex < totalQuestions) {
+              const questionToCheck = data?.data?.item?.[nextIndex];
+              if (!questionToCheck?.enableWhen?.length) {
+                // Found a question without conditions
+                setCurrentQuestionIndex(nextIndex);
+                break;
+              }
+              // Check if this question should be displayed
+              const shouldShowQuestion = questionToCheck.enableWhen?.some(condition => {
+                if (!condition.question) return false;
+                const answer = answers[condition.question];
+                if (!answer) return false;
+                return condition.operator === '=' ? 
+                  answer === condition.answerCoding?.display :
+                  answer !== condition.answerCoding?.display;
+              });
+              if (shouldShowQuestion) {
+                setCurrentQuestionIndex(nextIndex);
+                break;
+              }
+              nextIndex++;
+            }
+            // If no other questions to be displayed, submit questionnaire
+            if (nextIndex >= totalQuestions) {
+              onSubmit();
+            }
+          }
+        } else {
+          setCurrentQuestionIndex(currentQuestionIndex + 1);
+        }
       }
-    }
-    else {
+    } else {
       setViewedQuestions((prev) => new Set(prev).add(currentQuestionIndex));
       onSubmit();
     }
@@ -324,7 +376,7 @@ const TakeQuestionnaire: React.FC = () => {
 
                   // Check for "Drop down" display in extensions
                   data?.data?.item?.[currentQuestionIndex]?.extension?.some(
-                    (ext) => ext.valueCodeableConcept?.coding?.some((coding) => coding.display === "Drop down")
+                    (ext) => ext.valueCodeableConcept?.coding?.some((coding) => coding.code === "drop-down")
                   ) ? (
                     // Render SelectInput for dropdown display
                     <SelectInput
