@@ -19,12 +19,16 @@ const QuestionnaireItemType = [
     { key: "number", label: "Number" },
 ]
 const QuestionCode = [
+    { key: "", label: "Select a system"},
     { key: "icd", label: "ICD" },
     { key: "loinc", label: "LOINC" },
     { key: "master", label: "Master Specimen" },
     { key: "modifier", label: "Modifiers" },
     { key: "ndc", label: "NDC" },
     { key: "snomed", label: "SNOMED" },
+    { key: "tinkar", label: "Tinkar" },
+    { key: "lidr-devices", label: "LIDR Devices" },
+    { key: "lidr-allowed-results", label: "LIDR Allowed Results" },
 ]
 const radioOptions = [
     { value: AnfOperatorType.AnfOperatorTypeEqual, label: "=", description: "is equal to" },
@@ -467,29 +471,29 @@ export default function BooleanQuestionConfig({
                                     <Controller
                                         name={`${basePath}.code[${index}].system`}
                                         control={control}
-                                        render={({ field }) =>
-                                            <Select
-                                                value={field.value}
-                                                variant="bordered"
-                                                radius="sm"
-                                                onChange={(event: any) => {
-                                                    const values = [event.target.value];
-                                                    const selectedValue = Array.from(values)[0] as string;
-                                                    field.onChange(selectedValue);
-                                                    handleChange(selectedValue);
-                                                }}
-
-                                                label="Select Question Code"
-                                                className="w-full bg-white h-14"
-                                                aria-label="Select Question Code"
-                                            >
-                                                {QuestionCode.map((type) => (
-                                                    <SelectItem key={type.key} value={type.key}>{type.label}</SelectItem>
-                                                ))}
-                                            </Select>
-                                        }
+                                        render={({ field }) => (
+                                            <div className="relative group w-full">
+                                                <select
+                                                    {...field}
+                                                    value={field.value || ''}
+                                                    onChange={(event: any) => {
+                                                        field.onChange(event.target.value);
+                                                    }}
+                                                    className={selectStyles}
+                                                    aria-label="Select Question Code"
+                                                >
+                                                    {QuestionCode.map((type) => (
+                                                        <option key={type.key} value={type.key}>{type.label}</option>
+                                                    ))}
+                                                </select>
+                                                <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none transition-transform duration-200 group-focus-within:rotate-180">
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        )}
                                     />
-
 
                                     <p className="text-sm text-gray-500 mt-2">The code system.</p>
                                 </div>
