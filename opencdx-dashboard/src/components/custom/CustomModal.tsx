@@ -43,7 +43,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
           <Button color="primary" variant="bordered" onPress={onClose}>
             {cancelText}
           </Button>
-          <Button color={(length || 0) > 0 ? 'primary' : 'default'} onPress={handleConfirm}>
+          <Button color={(length || 0) > 0 ? 'primary' : 'default'} onPress={handleConfirm} isDisabled={length === 0}>
             {confirmText}
           </Button>
         </ModalFooter>
