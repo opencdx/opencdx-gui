@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Platform } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 
 interface AnswerOption {
@@ -33,12 +33,14 @@ export const RadioInput: React.FC<RadioInputProps> = ({
                 {/* Top separator line for all option */}
                 <View className="h-px bg-gray-300 w-full" />
                 <View className="flex-row items-center py-4 w-full">
-                <RadioButton
-                    value={option.value}
-                    color="#0066cc" // Primary color for selected radio button
-                    uncheckedColor="#E4E4E7"
-                />
-                <Text className="text-base font-normal">{option.label}</Text>
+                    <View className="mr-2">
+                        <RadioButton.Android
+                            value={option.value}
+                            color="#0066cc"
+                            uncheckedColor="#E4E4E7"
+                        />
+                    </View>
+                    <Text className="text-base font-normal flex-1">{option.label}</Text>
                 </View>
                 {/* Bottom separator line for just last option */}
                 {index === options.length - 1 && <View className="h-px bg-gray-300 w-full" />}
