@@ -51,69 +51,96 @@ const ComponentTypeWrapper = ({
         control={control}
         name={name}
         render={({ field }) => (
-          <RadioGroup
-            {...field}
-            label="Select Component Type"
-            orientation="horizontal"
-            classNames={{
-              label: 'text-black',
-            }}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              field.onChange(e.target.value);
-              const formData = getValues();
-              if (e.target.value === AnfStatementType.AnfStatementTypeMain) {
-                formData.item[questionnaireItemId].anfStatementConnector[anfStatementConnectorId].mainStatement = null;
-              }
-              localStorage.setItem('questionnaire-store', JSON.stringify(formData));
-              onValueChange(e.target.value as AnfStatementType);
-              setComponentType(e.target.value as AnfStatementType);
-            }}
-          >
-            <div className="flex flex-wrap">
-              {radioOptions.map((option, index) => {
-                const descriptionId = `description-${questionnaireItemId}-${anfStatementConnectorId}-${index}`;
-                return (
-                  <div key={option.value} className="w-1/2">
-                    <CustomRadio
-                      id={`custom-radio-${questionnaireItemId}-${anfStatementConnectorId}-${index}`}
-                      description={option.description}
-                      value={option.value}
-                    >
-                      <span id={descriptionId}>{option.label}</span>
-                    </CustomRadio>
-                  </div>
-                );
-              })}
-              {(componentType === AnfStatementType.AnfStatementTypeContributing || componentType === AnfStatementType.AnfStatementTypeAssociated) && (
-                <Controller
-                  name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.mainStatement`}
-                  control={control}
-                  render={({ field }) => (
-                    <Select
-                      value={field.value}
-                      defaultSelectedKeys={[field.value]}
-                      onChange={(event) => {
-                        field.onChange(event.target.value);
-                        const formData = getValues();
-                        localStorage.setItem('questionnaire-store', JSON.stringify(formData));
-                      }}
-                      variant="bordered"
-                      radius="sm"
-                      placeholder="ANF Statement"
-                      description="Select Main ANF Statement"
-                      className="w-80"
-                      size="lg"
-                      aria-label="ANF Statement"
-                    >
-                      {fields.map((field: any) => (
-                        <SelectItem key={field.linkId}>{field.text}</SelectItem>
-                      ))}
-                    </Select>
-                  )}
-                />
-              )}
-            </div>
-          </RadioGroup>
+          <div>
+            <RadioGroup
+              {...field}
+              label="Select Component Type"
+              orientation="horizontal"
+              classNames={{
+                label: 'text-black',
+              }}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                field.onChange(e.target.value);
+                const formData = getValues();
+                if (e.target.value === AnfStatementType.AnfStatementTypeMain) {
+                  formData.item[questionnaireItemId].anfStatementConnector[anfStatementConnectorId].mainStatement = null;
+                }
+                localStorage.setItem('questionnaire-store', JSON.stringify(formData));
+                onValueChange(e.target.value as AnfStatementType);
+                setComponentType(e.target.value as AnfStatementType);
+              }}
+            >
+              <div className="flex flex-wrap">
+                {radioOptions.map((option, index) => {
+                  const descriptionId = `description-${questionnaireItemId}-${anfStatementConnectorId}-${index}`;
+                  return (
+                    <div key={option.value} className="w-1/2">
+                      <CustomRadio
+                        id={`custom-radio-${questionnaireItemId}-${anfStatementConnectorId}-${index}`}
+                        description={option.description}
+                        value={option.value}
+                      >
+                        <span id={descriptionId}>{option.label}</span>
+                      </CustomRadio>
+                    </div>
+                  );
+                })}
+                {componentType === AnfStatementType.AnfStatementTypeContributing && (
+                  <Controller
+                    name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.mainStatement`}
+                    control={control}
+                    render={({ field }) => (
+                      <Select
+                        value={field.value}
+                        defaultSelectedKeys={[field.value]}
+                        onChange={(event) => {
+                          field.onChange(event.target.value);
+                          const formData = getValues();
+                          localStorage.setItem('questionnaire-store', JSON.stringify(formData));
+                        }}
+                        variant="bordered"
+                        radius="sm"
+                        placeholder="ANF Statement"
+                        description="Select Main ANF Statement"
+                        className="w-80 pl-8"
+                        size="lg"
+                        aria-label="ANF Statement"
+                      >
+                        {fields.map((field: any) => (
+                          <SelectItem key={field.linkId}>{field.text}</SelectItem>
+                        ))}
+                      </Select>
+                    )}
+                  />
+                )}
+              </div>
+            </RadioGroup>
+
+            {componentType === AnfStatementType.AnfStatementTypeAssociated && (
+              <div className="mt-4 pl-8">
+                <Select
+                  value={field.value}
+                  defaultSelectedKeys={[field.value]}
+                  onChange={(event) => {
+                    field.onChange(event.target.value);
+                    const formData = getValues();
+                    localStorage.setItem('questionnaire-store', JSON.stringify(formData));
+                  }}
+                  variant="bordered"
+                  radius="sm"
+                  placeholder="ANF Statement"
+                  description="Select Main ANF Statement"
+                  className="w-80"
+                  size="lg"
+                  aria-label="ANF Statement"
+                >
+                  {fields.map((field: any) => (
+                    <SelectItem key={field.linkId}>{field.text}</SelectItem>
+                  ))}
+                </Select>
+              </div>
+            )}
+          </div>
         )}
       />
     </div>
