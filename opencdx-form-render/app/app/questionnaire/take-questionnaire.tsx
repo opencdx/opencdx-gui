@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, Pressable, Platform, KeyboardAvoidingView, StatusBar, SafeAreaView } from 'react-native';
+import { View, Text, ScrollView, Pressable, Platform, KeyboardAvoidingView, StatusBar, SafeAreaView, Modal, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useGetQuestionnaire, useSubmitUserQuestionnaire } from '~/lib/iam-hooks';
 import { CloseIcon } from '@gluestack-ui/themed';
@@ -12,6 +12,8 @@ import ModalComponent from '../../../components/ui/modal';
 import { useShowToast } from '~/lib/toast';
 import useUserStore from '~/app/data_store/user_store';
 import { AnfOperatorType, AnfStatementType, QuestionnaireItem } from '~/api/questionnaire';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { format } from 'date-fns';
 
 const useGetQuestionnaireForm = () => {
   const [answers, setAnswers] = useState<{ [key: string]: string }>({});
@@ -54,6 +56,8 @@ const TakeQuestionnaire: React.FC = () => {
   const isCurrentQuestionRequired = data?.data?.item?.[currentQuestionIndex]?.required ?? true;
   const questionLinkId = data?.data?.item?.[currentQuestionIndex]?.linkId;
   const { userProfile } = useUserStore();
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   useEffect(() => {
     const fetchQuestionnaire = async () => {
@@ -435,13 +439,95 @@ const TakeQuestionnaire: React.FC = () => {
               )}
 
               {data?.data?.item?.[currentQuestionIndex]?.type === 'datetime' && (
-                <Input
-                  label="Type your answer here"
-                  value={questionLinkId && answers[questionLinkId] ? answers[questionLinkId] : ''}
-                  onChangeText={(text) => {
-                    if (questionLinkId) handleAnswerChange(questionLinkId, text);
-                  }}
-                />
+                <View className="w-full">
+                  {Platform.OS === 'web' ? (
+                    <input
+                      type="date"
+                      className="w-full p-2 border rounded"
+                      value={questionLinkId && answers[questionLinkId] ? answers[questionLinkId] : ''}
+                      onChange={(e) => {
+                        if (questionLinkId) handleAnswerChange(questionLinkId, e.target.value);
+                      }}
+                    />
+                  ) : (
+                    <>
+                      <TouchableOpacity 
+                        onPress={() => {
+                          setSelectedDate(
+                            questionLinkId && answers[questionLinkId] 
+                              ? new Date(answers[questionLinkId]) 
+                              : new Date()
+                          );
+                          setShowDatePicker(true);
+                        }}
+                        activeOpacity={0.7}
+                        style={{ width: '100%', backgroundColor: 'white' }}
+                      >
+                        <View pointerEvents="none">
+                          <Input
+                            label="Select date"
+                            value={questionLinkId && answers[questionLinkId] ? answers[questionLinkId] : ''}
+                            isEditable={false}
+                            onChangeText={() => {}}
+                          />
+                        </View>
+                      </TouchableOpacity>
+                      
+                      {Platform.OS === 'ios' ? (
+                        <Modal
+                          transparent={true}
+                          visible={showDatePicker}
+                          animationType="slide"
+                          onRequestClose={() => setShowDatePicker(false)}
+                        >
+                          <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                            <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+                              <View style={{ backgroundColor: 'white', padding: 20 }}>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
+                                  <Button onPress={() => {
+                                    if (questionLinkId) {
+                                      const formattedDate = format(
+                                        selectedDate || new Date(), 
+                                        'MM-dd-yyyy'
+                                      );
+                                      handleAnswerChange(questionLinkId, formattedDate);
+                                    }
+                                    setShowDatePicker(false);
+                                  }}>
+                                    <Text>Done</Text>
+                                  </Button>
+                                </View>
+                                <DateTimePicker
+                                  value={selectedDate || new Date()}
+                                  mode="date"
+                                  display="spinner"
+                                  onChange={(event, date) => {
+                                    if (date) setSelectedDate(date);
+                                  }}
+                                />
+                              </View>
+                            </View>
+                          </View>
+                        </Modal>
+                      ) : (
+                        showDatePicker && (
+                          <DateTimePicker
+                            value={selectedDate || new Date()}
+                            mode="date"
+                            display="default"
+                            onChange={(event, date) => {
+                              setShowDatePicker(false);
+                              if (date && questionLinkId && event.type === 'set') {
+                                const formattedDate = format(date, 'MM-dd-yyyy');
+                                handleAnswerChange(questionLinkId, formattedDate);
+                              }
+                            }}
+                          />
+                        )
+                      )}
+                    </>
+                  )}
+                </View>
               )}
 
               {data?.data?.item?.[currentQuestionIndex]?.type === 'boolean' && (
