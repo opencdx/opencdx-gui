@@ -17,7 +17,7 @@ import { useResetPassword } from '@/hooks/iam-hooks';
 import { Button, Input } from 'ui-library';
 import {useTranslations} from 'next-intl';
 import Loading from '@/components/custom/loading';
-
+import back from '../../../public/back.svg';
 
 export default function ResetPassword() {
   const router = useRouter();
@@ -118,7 +118,7 @@ const handleError = (error: AxiosError) => {
     color="primary"
     variant="light"
     onClick={handleBack} // Handle back button click
-    startContent={<Image src="/back.svg" alt="back" width={16} height={16} />}
+    startContent={<Image src={back.src} alt="back" width={16} height={16} />}
   >
     {t('go_back')}
   </Button>
