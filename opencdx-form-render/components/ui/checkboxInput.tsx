@@ -8,15 +8,14 @@ interface AnswerOption {
 }
 
 interface CheckboxInputProps {
-  name: string;
   label?: string;
-  options: AnswerOption[];
+  options: Array<{ label: string; value: string }>;
   selectedValues: string[];
-  onValueChange: (value: string) => void;
+  onValueChange: (values: string[]) => void;
   required?: boolean; // Add required prop
 }
 
-const CheckboxInput: React.FC<CheckboxInputProps> = ({
+export const CheckboxInput: React.FC<CheckboxInputProps> = ({
   label,
   options,
   selectedValues,
@@ -33,7 +32,12 @@ const CheckboxInput: React.FC<CheckboxInputProps> = ({
           <View className="flex-row items-center py-4 w-full">
             <Checkbox
               status={selectedValues.includes(option.value) ? 'checked' : 'unchecked'}
-              onPress={() => onValueChange(option.value)}
+              onPress={() => {
+                const newValues = selectedValues.includes(option.value)
+                  ? selectedValues.filter(v => v !== option.value)
+                  : [...selectedValues, option.value];
+                onValueChange(newValues);
+              }}
               color="#0066cc" // Primary color for selected checkbox
               uncheckedColor="#E4E4E7"
             />
@@ -46,5 +50,3 @@ const CheckboxInput: React.FC<CheckboxInputProps> = ({
     </View>
   );
 };
-
-export default CheckboxInput;

@@ -19,7 +19,7 @@ const QuestionnaireItemType = [
     { key: "number", label: "Number" },
 ]
 const QuestionCode = [
-    { key: "", label: "Select a system"},
+    { key: "", label: "Select a system" },
     { key: "icd", label: "ICD" },
     { key: "loinc", label: "LOINC" },
     { key: "master", label: "Master Specimen" },
@@ -39,15 +39,17 @@ const radioOptions = [
 ];
 
 const radioOprionsExtended = [
-    { value: AnfOperatorType.AnfOperatorTypeEqual, label: "=", description: "is equal to" },
-    { value: AnfOperatorType.AnfOperatorTypeNotEqual, label: "<>", description: "is not equal to" },
-    { value: AnfOperatorType.AnfOperatorTypeContains, label: "Empty", description: "is empty" },
-    { value: AnfOperatorType.AnfOperatorTypeNotContains, label: "Not empty", description: "is not empty" },
+    { value: "", label: "Select operator", description: "select operator" },
+    { value: "=", label: "=", description: "is equal to" },
+    { value: "!=", label: "<>", description: "is not equal to" },
+    { value: "empty", label: "Empty", description: "is empty" },
+    { value: "not_empty", label: "Not empty", description: "is not empty" },
+    { value: "any", label: "Any", description: "any" },
 
-    { value: AnfOperatorType.AnfOperatorTypeGreaterThanOrEqual, label: ">=", description: "is greater than or equal to" },
-    { value: AnfOperatorType.AnfOperatorTypeLessThanOrEqual, label: "<=", description: "is less than or equal to" },
-    { value: AnfOperatorType.AnfOperatorTypeGreaterThan, label: ">", description: "is greater than" },
-    { value: AnfOperatorType.AnfOperatorTypeLessThan, label: "<", description: "is less than" },
+    { value: ">=", label: ">=", description: "is greater than or equal to" },
+    { value: "<=", label: "<=", description: "is less than or equal to" },
+    { value: ">", label: ">", description: "is greater than" },
+    { value: "<", label: "<", description: "is less than" },
 
 ];
 
@@ -228,7 +230,7 @@ export default function BooleanQuestionConfig({
                                 </select>
                                 <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none transition-transform duration-200 group-focus-within:rotate-180">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                        <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
                                 </div>
                             </div>
@@ -262,28 +264,28 @@ export default function BooleanQuestionConfig({
                     control={control}
                     render={({ field }: { field: any }) => (
                         <div className="relative group w-64">
-                        <select
-                            {...field}
-                            value={field.value}
-                            onChange={(event: any) => {
-                                const values = [event.target.value];
-                                const selectedValue = Array.from(values)[0] as string;
-                                field.onChange(selectedValue);
-                                handleChange(selectedValue);
-                            }}
-                            className={cn(selectStyles)}
-                            aria-label="Data Type"
-                        >
-                            {QuestionnaireItemType.map((type) => (
-                                <option key={type.key} value={type.key}>{type.label}</option>
-                            ))}
-                        </select>
-                         <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none transition-transform duration-200 group-focus-within:rotate-180">
-                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                                    </svg>
-                                </div>
+                            <select
+                                {...field}
+                                value={field.value}
+                                onChange={(event: any) => {
+                                    const values = [event.target.value];
+                                    const selectedValue = Array.from(values)[0] as string;
+                                    field.onChange(selectedValue);
+                                    handleChange(selectedValue);
+                                }}
+                                className={cn(selectStyles)}
+                                aria-label="Data Type"
+                            >
+                                {QuestionnaireItemType.map((type) => (
+                                    <option key={type.key} value={type.key}>{type.label}</option>
+                                ))}
+                            </select>
+                            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none transition-transform duration-200 group-focus-within:rotate-180">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
                             </div>
+                        </div>
 
                     )}
                 />
@@ -488,7 +490,7 @@ export default function BooleanQuestionConfig({
                                                 </select>
                                                 <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none transition-transform duration-200 group-focus-within:rotate-180">
                                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                                        <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                                     </svg>
                                                 </div>
                                             </div>
@@ -579,34 +581,51 @@ export default function BooleanQuestionConfig({
                             {conditionalRows.map((row, index) => (
                                 <>
                                     <div key={index} className="flex flex-wrap gap-4 mb-4 ">
+                                        <div className="flex-1 min-w-[150px]">
+                                            <Controller
+                                                name={`${basePath}.enableWhen[${index}].question`}
+                                                control={control}
+                                                render={({ field }) => (
+                                                    <select
+                                                        {...field}
+                                                        value={field.value || ''}
+                                                        onChange={(event) => {
+                                                            field.onChange(event.target.value);
+                                                        }}
+                                                        className={selectStyles}
+                                                        aria-label="Action"
+                                                    >
+                                                        {fields
+                                                            .map((field: any, index: number) => (
+                                                                <option key={index} value={field.linkId}>{field.text}</option>
+                                                            ))}
+                                                    </select>
+                                                )}
+                                            />
+                                            <p className="text-sm text-gray-500 mt-2">Which question to compare the answer to.</p>
+                                        </div>
 
                                         <div className="flex-1 min-w-[150px]">
                                             <Controller
                                                 name={`${basePath}.enableWhen[${index}].operator`}
                                                 control={control}
                                                 render={({ field }) => (
-
-                                                    <Select
-                                                        value={field.value}
-                                                        onChange={(event: any) => {
-                                                            const values = [event.target.value];
-                                                            const selectedValue = Array.from(values)[0] as string;
-                                                            field.onChange(selectedValue);
-                                                            handleChange(selectedValue);
+                                                    <select
+                                                        {...field}
+                                                        value={field.value || ''}
+                                                        onChange={(event) => {
+                                                            field.onChange(event.target.value);
                                                         }}
-                                                        label="Operator"
-                                                        variant="bordered"
-                                                        radius="sm"
-                                                        className="w-full"
+                                                        className={selectStyles}
                                                         aria-label="Select operator"
                                                     >
                                                         {radioOprionsExtended.map((type) => (
-                                                            <SelectItem key={type.value} value={type.value}>{type.label}</SelectItem>
+                                                            <option key={type.value} value={type.value}>{type.label}</option>
                                                         ))}
-                                                    </Select>
+                                                    </select>
                                                 )}
                                             />
-                                            <p className="text-sm text-gray-500 mt-2">The operatore in order for the question to be displayed.</p>
+                                            <p className="text-sm text-gray-500 mt-2">The operator to compare the answer to.</p>
                                         </div>
 
                                         <div className="flex-1 min-w-[150px]">
@@ -624,39 +643,7 @@ export default function BooleanQuestionConfig({
                                                     />
                                                 )}
                                             />
-                                            <p className="text-sm text-gray-500 mt-2">The answer that will trigger the question to be displayed.</p>
-                                        </div>
-
-                                        <div className="flex-1 min-w-[150px]">
-                                            <Controller
-                                                name={`${basePath}.enableWhen[${index}].question`}
-                                                control={control}
-                                                render={({ field }) => (
-
-                                                    <Select
-                                                        value={field.value}
-                                                        onChange={(event: any) => {
-                                                            const values = [event.target.value];
-                                                            const selectedValue = Array.from(values)[0] as string;
-                                                            field.onChange(selectedValue);
-                                                            handleChange(selectedValue);
-                                                        }}
-
-                                                        label="Action"
-                                                        variant="bordered"
-                                                        radius="sm"
-                                                        className="w-full"
-                                                        aria-label="Action"
-                                                    >
-                                                        {fields
-                                                            .filter((field: any) => field.linkId !== item.linkId)
-                                                            .map((field: any, index: number) => (
-                                                                <SelectItem key={index} value={field.linkId}>{field.text}</SelectItem>
-                                                            ))}
-                                                    </Select>
-                                                )}
-                                            />
-                                            <p className="text-sm text-gray-500 mt-2">Which question should be displayed.</p>
+                                            <p className="text-sm text-gray-500 mt-2">The answer that will trigger this question to be displayed.</p>
                                         </div>
 
                                         <Button
