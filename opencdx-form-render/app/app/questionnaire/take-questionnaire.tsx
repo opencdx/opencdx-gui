@@ -216,58 +216,73 @@ const TakeQuestionnaire: React.FC = () => {
         return item;
       });
 
-      // Check ANF operator type and only keep first matching answer
+      // Check ANF operator type and remove non-matching answers
       updatedItems.forEach((item) => {
         if (item.anfStatementConnector) {
-          item.anfStatementConnector.forEach((connector) => {
-            type OperatorFunctions = Record<AnfOperatorType, (a: number, b: number) => boolean>;
-            const operatorFunctions: OperatorFunctions = {
-              [AnfOperatorType.AnfOperatorTypeEqual]: (a: number, b: number) => a === b,
-              [AnfOperatorType.AnfOperatorTypeNotEqual]: (a: number, b: number) => a !== b,
-              [AnfOperatorType.AnfOperatorTypeGreaterThan]: (a: number, b: number) => a > b,
-              [AnfOperatorType.AnfOperatorTypeGreaterThanOrEqual]: (a: number, b: number) => a >= b,
-              [AnfOperatorType.AnfOperatorTypeLessThan]: (a: number, b: number) => a < b,
-              [AnfOperatorType.AnfOperatorTypeLessThanOrEqual]: (a: number, b: number) => a <= b,
-              [AnfOperatorType.AnfOperatorTypeUnspecified]: () => true,
-              [AnfOperatorType.AnfOperatorTypeContains]: () => true,
-              [AnfOperatorType.AnfOperatorTypeNotContains]: () => true,
-              [AnfOperatorType.AnfOperatorTypeIn]: () => true,
-              [AnfOperatorType.AnfOperatorTypeNotIn]: () => true,
-              [AnfOperatorType.Unrecognized]: () => true
-            };
+          item.anfStatementConnector = item.anfStatementConnector.filter((connector) => {
+            // Keep statements with empty/blank operatorValue
+            if (!connector.operatorValue || connector.operatorValue === '') {
+              return true;
+            }
 
-            if (item.linkId) {
-              if (connector.anfOperatorType === AnfOperatorType.AnfOperatorTypeEqual) {
-                const answerValue = answers[item.linkId];
-                if (answerValue === connector.operatorValue) {
-                  item.anfStatementConnector = [connector];
-                }
-              } else if (connector.anfOperatorType === AnfOperatorType.AnfOperatorTypeNotEqual) {
-                const answerValue = answers[item.linkId];
-                if (answerValue !== connector.operatorValue) {
-                  item.anfStatementConnector = [connector];
-                }
-              } else if (connector.anfOperatorType === AnfOperatorType.AnfOperatorTypeContains) {
-                const answerValue = answers[item.linkId];
-                if (answerValue && connector.operatorValue && answerValue.includes(connector.operatorValue)) {
-                  item.anfStatementConnector = [connector];
-                }
-              } else if (connector.anfOperatorType === AnfOperatorType.AnfOperatorTypeNotContains) {
-                const answerValue = answers[item.linkId];
-                if (answerValue && connector.operatorValue && !answerValue.includes(connector.operatorValue)) {
-                  item.anfStatementConnector = [connector];
-                }
-              } else {
-                const answerValue = Number(answers[item.linkId]);
+            if (!item.linkId) return false;
+            
+            const answerValue = answers[item.linkId];
+            if (!answerValue) return false;
+
+            const answerValues = Array.isArray(answerValue) ? answerValue : [answerValue];
+
+            switch (connector.anfOperatorType) {
+              case AnfOperatorType.AnfOperatorTypeEqual:
+                return answerValues.some(value => value === connector.operatorValue);
+
+              case AnfOperatorType.AnfOperatorTypeNotEqual:
+                return answerValues.some(value => value !== connector.operatorValue);
+
+              case AnfOperatorType.AnfOperatorTypeContains:
+                return answerValues.some(value => 
+                  value && connector.operatorValue && value.includes(connector.operatorValue)
+                );
+
+              case AnfOperatorType.AnfOperatorTypeNotContains:
+                return answerValues.some(value => 
+                  value && connector.operatorValue && !value.includes(connector.operatorValue)
+                );
+
+              case AnfOperatorType.AnfOperatorTypeGreaterThan:
+              case AnfOperatorType.AnfOperatorTypeGreaterThanOrEqual:
+              case AnfOperatorType.AnfOperatorTypeLessThan:
+              case AnfOperatorType.AnfOperatorTypeLessThanOrEqual:
                 const operatorValue = Number(connector.operatorValue);
+                if (isNaN(operatorValue)) return false;
 
-                if (!isNaN(answerValue) && !isNaN(operatorValue) && connector.anfOperatorType) {
-                  const operatorFunction = operatorFunctions[connector.anfOperatorType];
-                  if (operatorFunction && operatorFunction(answerValue, operatorValue)) {
-                    item.anfStatementConnector = [connector];
+                return answerValues.some(value => {
+                  const numValue = Number(value);
+                  if (isNaN(numValue)) return false;
+
+                  switch (connector.anfOperatorType) {
+                    case AnfOperatorType.AnfOperatorTypeGreaterThan:
+                      return numValue > operatorValue;
+                    case AnfOperatorType.AnfOperatorTypeGreaterThanOrEqual:
+                      return numValue >= operatorValue;
+                    case AnfOperatorType.AnfOperatorTypeLessThan:
+                      return numValue < operatorValue;
+                    case AnfOperatorType.AnfOperatorTypeLessThanOrEqual:
+                      return numValue <= operatorValue;
+                    default:
+                      return false;
                   }
-                }
-              }
+                });
+
+              // For other operator types, keep them
+              case AnfOperatorType.AnfOperatorTypeUnspecified:
+              case AnfOperatorType.AnfOperatorTypeIn:
+              case AnfOperatorType.AnfOperatorTypeNotIn:
+              case AnfOperatorType.Unrecognized:
+                return true;
+
+              default:
+                return false;
             }
           });
         }

@@ -11,6 +11,7 @@ import { useId } from 'react';
 import { ControlledRadio } from "@/components/custom/controlled-radio";
 import ControlledAccordion from "@/components/custom/controlled-accordian";
 const QuestionnaireItemType = [
+    { key: "", label: "Select a type" },
     { key: "boolean", label: "Boolean" },
     { key: "choice", label: "Choice" },
     { key: "open-choice", label: "Open Choice" },
