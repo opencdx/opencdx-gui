@@ -118,26 +118,32 @@ const ComponentTypeWrapper = ({
 
             {componentType === AnfStatementType.AnfStatementTypeAssociated && (
               <div className="mt-4 pl-8">
-                <Select
-                  value={field.value}
-                  defaultSelectedKeys={[field.value]}
-                  onChange={(event) => {
-                    field.onChange(event.target.value);
-                    const formData = getValues();
-                    localStorage.setItem('questionnaire-store', JSON.stringify(formData));
-                  }}
-                  variant="bordered"
-                  radius="sm"
-                  placeholder="ANF Statement"
-                  description="Select Main ANF Statement"
-                  className="w-80"
-                  size="lg"
-                  aria-label="ANF Statement"
-                >
-                  {fields.map((field: any) => (
-                    <SelectItem key={field.linkId}>{field.text}</SelectItem>
-                  ))}
-                </Select>
+                <Controller
+                  name={`item.${questionnaireItemId}.anfStatementConnector.${anfStatementConnectorId}.mainStatement`}
+                  control={control}
+                  render={({ field: selectField }) => (
+                    <Select
+                      value={selectField.value}
+                      defaultSelectedKeys={[selectField.value]}
+                      onChange={(event) => {
+                        selectField.onChange(event.target.value);
+                        const formData = getValues();
+                        localStorage.setItem('questionnaire-store', JSON.stringify(formData));
+                      }}
+                      variant="bordered"
+                      radius="sm"
+                      placeholder="ANF Statement"
+                      description="Select Main ANF Statement"
+                      className="w-80"
+                      size="lg"
+                      aria-label="ANF Statement"
+                    >
+                      {fields.map((field: any) => (
+                        <SelectItem key={field.linkId}>{field.text}</SelectItem>
+                      ))}
+                    </Select>
+                  )}
+                />
               </div>
             )}
           </div>

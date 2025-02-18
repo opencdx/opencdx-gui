@@ -14,18 +14,18 @@ import useUserStore from '~/app/data_store/user_store';
 import { AnfOperatorType, AnfStatementType, QuestionnaireItem } from '~/api/questionnaire';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { format } from 'date-fns';
+import { CheckboxInput } from '../../../components/ui/checkboxInput';
 
 const useGetQuestionnaireForm = () => {
-  const [answers, setAnswers] = useState<{ [key: string]: string }>({});
+  const [answers, setAnswers] = useState<{ [key: string]: string | string[] }>({});
 
-  const handleAnswerChange = (questionId: string, answer: string) => {
-    if (answer.length > 0) {
+  const handleAnswerChange = (questionId: string, answer: string | string[]) => {
+    if (Array.isArray(answer) ? answer.length > 0 : answer.length > 0) {
       setAnswers((prevAnswers) => ({
         ...prevAnswers,
         [questionId]: answer,
       }));
     } else {
-      // Optionally remove answer if the input is cleared (length = 0)
       setAnswers((prevAnswers) => {
         const { [questionId]: _, ...rest } = prevAnswers;
         return rest;
@@ -114,9 +114,13 @@ const TakeQuestionnaire: React.FC = () => {
 
             switch(condition.operator) {
               case '=':
-                return conditionAnswer === condition.answerCoding?.display;
+                return Array.isArray(conditionAnswer) 
+                  ? conditionAnswer.includes(condition.answerCoding?.display || '')
+                  : conditionAnswer === condition.answerCoding?.display;
               case '!=':
-                return conditionAnswer !== condition.answerCoding?.display;
+                return Array.isArray(conditionAnswer)
+                  ? !conditionAnswer.includes(condition.answerCoding?.display || '')
+                  : conditionAnswer !== condition.answerCoding?.display;
               default:
                 return false;
             }
@@ -172,7 +176,8 @@ const TakeQuestionnaire: React.FC = () => {
       let itemsJSON = JSON.stringify(items);
       Object.keys(answers).forEach((key) => {
         const replacePattern = new RegExp(`{{REPLACE_${key}}}`, 'g');
-        itemsJSON = itemsJSON.replace(replacePattern, answers[key]);
+        const answerValue = Array.isArray(answers[key]) ? answers[key].join(',') : answers[key];
+        itemsJSON = itemsJSON.replace(replacePattern, answerValue as string);
       });
 
       items = JSON.parse(itemsJSON);
@@ -183,10 +188,17 @@ const TakeQuestionnaire: React.FC = () => {
         // Populate answers
         if (questionLinkId && answers[questionLinkId] !== undefined) {
           switch (item.type) {
+            case 'open-choice':
+              // Handle array of answers for open-choice
+              const answerArray = Array.isArray(answers[questionLinkId]) 
+                ? answers[questionLinkId] as string[]
+                : [answers[questionLinkId] as string];
+              item.answer = answerArray.map(ans => ({ valueString: ans }));
+              break;
             case 'integer':
             case 'decimal':
             case 'number':
-              item.answer = [{ valueInteger: parseInt(answers[questionLinkId], 10) }];
+              item.answer = [{ valueInteger: parseInt(answers[questionLinkId] as string, 10) }];
               break;
             case 'boolean':
               item.answer = [{ valueBoolean: answers[questionLinkId] === 'true' }];
@@ -194,9 +206,8 @@ const TakeQuestionnaire: React.FC = () => {
             case 'text':
             case 'string':
             case 'choice':
-            case 'open-choice':
             default:
-              item.answer = [{ valueString: answers[questionLinkId] }];
+              item.answer = [{ valueString: answers[questionLinkId] as string }];
               break;
           }
         } else {
@@ -205,58 +216,73 @@ const TakeQuestionnaire: React.FC = () => {
         return item;
       });
 
-      // Check ANF operator type and only keep first matching answer
+      // Check ANF operator type and remove non-matching answers
       updatedItems.forEach((item) => {
         if (item.anfStatementConnector) {
-          item.anfStatementConnector.forEach((connector) => {
-            type OperatorFunctions = Record<AnfOperatorType, (a: number, b: number) => boolean>;
-            const operatorFunctions: OperatorFunctions = {
-              [AnfOperatorType.AnfOperatorTypeEqual]: (a: number, b: number) => a === b,
-              [AnfOperatorType.AnfOperatorTypeNotEqual]: (a: number, b: number) => a !== b,
-              [AnfOperatorType.AnfOperatorTypeGreaterThan]: (a: number, b: number) => a > b,
-              [AnfOperatorType.AnfOperatorTypeGreaterThanOrEqual]: (a: number, b: number) => a >= b,
-              [AnfOperatorType.AnfOperatorTypeLessThan]: (a: number, b: number) => a < b,
-              [AnfOperatorType.AnfOperatorTypeLessThanOrEqual]: (a: number, b: number) => a <= b,
-              [AnfOperatorType.AnfOperatorTypeUnspecified]: () => true,
-              [AnfOperatorType.AnfOperatorTypeContains]: () => true,
-              [AnfOperatorType.AnfOperatorTypeNotContains]: () => true,
-              [AnfOperatorType.AnfOperatorTypeIn]: () => true,
-              [AnfOperatorType.AnfOperatorTypeNotIn]: () => true,
-              [AnfOperatorType.Unrecognized]: () => true
-            };
+          item.anfStatementConnector = item.anfStatementConnector.filter((connector) => {
+            // Keep statements with empty/blank operatorValue
+            if (!connector.operatorValue || connector.operatorValue === '') {
+              return true;
+            }
 
-            if (item.linkId) {
-              if (connector.anfOperatorType === AnfOperatorType.AnfOperatorTypeEqual) {
-                const answerValue = answers[item.linkId];
-                if (answerValue === connector.operatorValue) {
-                  item.anfStatementConnector = [connector];
-                }
-              } else if (connector.anfOperatorType === AnfOperatorType.AnfOperatorTypeNotEqual) {
-                const answerValue = answers[item.linkId];
-                if (answerValue !== connector.operatorValue) {
-                  item.anfStatementConnector = [connector];
-                }
-              } else if (connector.anfOperatorType === AnfOperatorType.AnfOperatorTypeContains) {
-                const answerValue = answers[item.linkId];
-                if (answerValue && connector.operatorValue && answerValue.includes(connector.operatorValue)) {
-                  item.anfStatementConnector = [connector];
-                }
-              } else if (connector.anfOperatorType === AnfOperatorType.AnfOperatorTypeNotContains) {
-                const answerValue = answers[item.linkId];
-                if (answerValue && connector.operatorValue && !answerValue.includes(connector.operatorValue)) {
-                  item.anfStatementConnector = [connector];
-                }
-              } else {
-                const answerValue = Number(answers[item.linkId]);
+            if (!item.linkId) return false;
+            
+            const answerValue = answers[item.linkId];
+            if (!answerValue) return false;
+
+            const answerValues = Array.isArray(answerValue) ? answerValue : [answerValue];
+
+            switch (connector.anfOperatorType) {
+              case AnfOperatorType.AnfOperatorTypeEqual:
+                return answerValues.some(value => value === connector.operatorValue);
+
+              case AnfOperatorType.AnfOperatorTypeNotEqual:
+                return answerValues.some(value => value !== connector.operatorValue);
+
+              case AnfOperatorType.AnfOperatorTypeContains:
+                return answerValues.some(value => 
+                  value && connector.operatorValue && value.includes(connector.operatorValue)
+                );
+
+              case AnfOperatorType.AnfOperatorTypeNotContains:
+                return answerValues.some(value => 
+                  value && connector.operatorValue && !value.includes(connector.operatorValue)
+                );
+
+              case AnfOperatorType.AnfOperatorTypeGreaterThan:
+              case AnfOperatorType.AnfOperatorTypeGreaterThanOrEqual:
+              case AnfOperatorType.AnfOperatorTypeLessThan:
+              case AnfOperatorType.AnfOperatorTypeLessThanOrEqual:
                 const operatorValue = Number(connector.operatorValue);
+                if (isNaN(operatorValue)) return false;
 
-                if (!isNaN(answerValue) && !isNaN(operatorValue) && connector.anfOperatorType) {
-                  const operatorFunction = operatorFunctions[connector.anfOperatorType];
-                  if (operatorFunction && operatorFunction(answerValue, operatorValue)) {
-                    item.anfStatementConnector = [connector];
+                return answerValues.some(value => {
+                  const numValue = Number(value);
+                  if (isNaN(numValue)) return false;
+
+                  switch (connector.anfOperatorType) {
+                    case AnfOperatorType.AnfOperatorTypeGreaterThan:
+                      return numValue > operatorValue;
+                    case AnfOperatorType.AnfOperatorTypeGreaterThanOrEqual:
+                      return numValue >= operatorValue;
+                    case AnfOperatorType.AnfOperatorTypeLessThan:
+                      return numValue < operatorValue;
+                    case AnfOperatorType.AnfOperatorTypeLessThanOrEqual:
+                      return numValue <= operatorValue;
+                    default:
+                      return false;
                   }
-                }
-              }
+                });
+
+              // For other operator types, keep them
+              case AnfOperatorType.AnfOperatorTypeUnspecified:
+              case AnfOperatorType.AnfOperatorTypeIn:
+              case AnfOperatorType.AnfOperatorTypeNotIn:
+              case AnfOperatorType.Unrecognized:
+                return true;
+
+              default:
+                return false;
             }
           });
         }
@@ -361,7 +387,11 @@ const TakeQuestionnaire: React.FC = () => {
               {(data?.data?.item?.[currentQuestionIndex]?.type === 'integer' || data?.data?.item?.[currentQuestionIndex]?.type === 'decimal') && (
                 <Input
                   label={data?.data?.item?.[currentQuestionIndex]?.text || 'Enter Value'}
-                  value={questionLinkId && answers[questionLinkId] ? answers[questionLinkId] : ''} // Check if questionLinkId is defined
+                  value={questionLinkId && answers[questionLinkId] 
+                    ? (Array.isArray(answers[questionLinkId]) 
+                        ? answers[questionLinkId].join(', ') 
+                        : answers[questionLinkId] as string)
+                    : ''}
                   keyboardType={data?.data?.item?.[currentQuestionIndex]?.type === 'integer' ? 'number-pad' : 'decimal-pad'}
                   onChangeText={(text) => {
                     const filteredText = data?.data?.item?.[currentQuestionIndex]?.type === 'integer'
@@ -375,15 +405,11 @@ const TakeQuestionnaire: React.FC = () => {
                 />
               )}
 
-              {(data?.data?.item?.[currentQuestionIndex]?.type === 'choice' ||
+{(data?.data?.item?.[currentQuestionIndex]?.type === 'choice' ||
                 data?.data?.item?.[currentQuestionIndex]?.type === 'open-choice') && (
-
-                  // Check for "Drop down" display in extensions
-                  data?.data?.item?.[currentQuestionIndex]?.extension?.some(
-                    (ext) => ext.valueCodeableConcept?.coding?.some((coding) => coding.code === "drop-down")
-                  ) ? (
-                    // Render SelectInput for dropdown display
-                    <SelectInput
+                  data?.data?.item?.[currentQuestionIndex]?.type === 'open-choice' ? (
+                    // Render CheckboxInput for open-choice
+                    <CheckboxInput
                       label=""
                       options={
                         data?.data?.item?.[currentQuestionIndex]?.answerOption?.map((option) => ({
@@ -391,28 +417,53 @@ const TakeQuestionnaire: React.FC = () => {
                           value: option.valueCoding?.code || option.valueCoding?.display || '',
                         })) || []
                       }
-                      value={questionLinkId && answers[questionLinkId] ? answers[questionLinkId] : ''}
-                      onValueChange={(value: string) => {
-                        if (questionLinkId) handleAnswerChange(questionLinkId, value);
-                      }}
-                    />
-                  ) : (
-                    // Render RadioInput for non-dropdown choice
-                    <RadioInput
-                      name={`question-${currentQuestionIndex}`}
-                      label=""
-                      options={
-                        data?.data?.item?.[currentQuestionIndex]?.answerOption?.map((option) => ({
-                          label: option.valueCoding?.display || '',
-                          value: option.valueCoding?.display || '',
-                        })) || []
+                      selectedValues={
+                        questionLinkId && Array.isArray(answers[questionLinkId]) 
+                          ? answers[questionLinkId] as string[]
+                          : []
                       }
-                      value={questionLinkId && answers[questionLinkId] ? answers[questionLinkId] : ''}
-                      onValueChange={(value: string) => {
-                        if (questionLinkId) handleAnswerChange(questionLinkId, value);
+                      onValueChange={(values: string[]) => {
+                        if (questionLinkId) handleAnswerChange(questionLinkId, values);
                       }}
                       required={isCurrentQuestionRequired}
                     />
+                  ) : (
+                    // Check for "Drop down" display in extensions
+                    data?.data?.item?.[currentQuestionIndex]?.extension?.some(
+                      (ext) => ext.valueCodeableConcept?.coding?.some((coding) => coding.code === "drop-down")
+                    ) ? (
+                      // Render SelectInput for dropdown display
+                      <SelectInput
+                        label=""
+                        options={
+                          data?.data?.item?.[currentQuestionIndex]?.answerOption?.map((option) => ({
+                            label: option.valueCoding?.display || '',
+                            value: option.valueCoding?.code || option.valueCoding?.display || '',
+                          })) || []
+                        }
+                        value={questionLinkId && !Array.isArray(answers[questionLinkId]) ? answers[questionLinkId] as string : ''}
+                        onValueChange={(value: string) => {
+                          if (questionLinkId) handleAnswerChange(questionLinkId, value);
+                        }}
+                      />
+                    ) : (
+                      // Render RadioInput for regular choice
+                      <RadioInput
+                        name={`question-${currentQuestionIndex}`}
+                        label=""
+                        options={
+                          data?.data?.item?.[currentQuestionIndex]?.answerOption?.map((option) => ({
+                            label: option.valueCoding?.display || '',
+                            value: option.valueCoding?.code || option.valueCoding?.display || '',
+                          })) || []
+                        }
+                        value={questionLinkId && !Array.isArray(answers[questionLinkId]) ? answers[questionLinkId] as string : ''}
+                        onValueChange={(value: string) => {
+                          if (questionLinkId) handleAnswerChange(questionLinkId, value);
+                        }}
+                        required={isCurrentQuestionRequired}
+                      />
+                    )
                   )
                 )}
 

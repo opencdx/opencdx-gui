@@ -1,19 +1,4 @@
-# Hello World, Next-Gen: A React Starter Project Showcasing Performance, Accessibility, and Industry Standards
-
-<p>
-  <img alt="React" src="https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white" />
-  <img alt="redux" src="https://img.shields.io/badge/-Redux-764ABC?style=flat-square&logo=redux&logoColor=white" />
-  <img alt="NextJs" src="https://img.shields.io/badge/next%20js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" />
-  <img alt="npm" src="https://img.shields.io/badge/-NPM-CB3837?style=flat-square&logo=npm&logoColor=white" />
-  <img alt="html5" src="https://img.shields.io/badge/-HTML5-E34F26?style=flat-square&logo=html5&logoColor=white" />
-  <img alt="MaterialUI" src="https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white" />
-  <img alt="JWT" src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white" />
-  <img alt="Prettier" src="https://img.shields.io/badge/-Prettier-F7B93E?style=flat-square&logo=prettier&logoColor=white" />
-  <img alt="Nodejs" src="https://img.shields.io/badge/-Nodejs-43853d?style=flat-square&logo=Node.js&logoColor=white" />
-  <img alt="Cypress" src="https://img.shields.io/badge/Cypress-17202C?style=for-the-badge&logo=cypress&logoColor=white" />
-  <img alt="StoryBook" src="https://img.shields.io/badge/storybook-FF4785?style=for-the-badge&logo=storybook&logoColor=white"/>
-  <img alt="TailwindCSS" src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"/>
-</p>
+# OpenCDx Dashboard
 
 ## Table of Contents
 
@@ -22,9 +7,9 @@
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 
-## About
+# About
 
-This project serves as a foundational example for building user-friendly web applications using the React ecosystem.  The "Hello World" theme demonstrates core concepts while incorporating essential features like user authentication and adherence to accessibility standards.
+This project is the dashboard for the OpenCDx platform that contains the questionnaire and ANF form builder.
 
 ## Technologies Used
 
@@ -33,12 +18,63 @@ This project serves as a foundational example for building user-friendly web app
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Tailwind Variants](https://tailwind-variants.org)
 - [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
 - [next-themes](https://github.com/pacocoursey/next-themes)
 
+<p>
+  <img alt="React" src="https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white" />
+  <img alt="NextJs" src="https://img.shields.io/badge/next%20js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" />
+  <img alt="npm" src="https://img.shields.io/badge/-NPM-CB3837?style=flat-square&logo=npm&logoColor=white" />
+  <img alt="html5" src="https://img.shields.io/badge/-HTML5-E34F26?style=flat-square&logo=html5&logoColor=white" />
+  <img alt="MaterialUI" src="https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white" />
+  <img alt="JWT" src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white" />
+  <img alt="Prettier" src="https://img.shields.io/badge/-Prettier-F7B93E?style=flat-square&logo=prettier&logoColor=white" />
+  <img alt="Nodejs" src="https://img.shields.io/badge/-Nodejs-43853d?style=flat-square&logo=Node.js&logoColor=white" />
+  <img alt="Cypress" src="https://img.shields.io/badge/Cypress-17202C?style=for-the-badge&logo=cypress&logoColor=white" />
+  <img alt="TailwindCSS" src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"/>
+</p>
 
-# Homepage: 
-- The application starts with a welcoming "Hello World" message, a clear call-to-action (e.g., "Sign In" or "Register"), and potentially a brief overview of the application's purpose.
+# Getting Started
+
+## Prerequisites
+
+Before cloning/forking this project, make sure you have the following tools installed:
+
+- [Git](https://git-scm.com/downloads)
+- [NodeJS](https://nodejs.org/en/download/)
+- [OpenCDx UI Library](https://github.com/opencdx/ui-library)
+
+   - Clone the UI Library in the same parent directory as opencdx-gui (so parent directory contains both opencdx-gui and ui-library)
+      ```bash
+      git clone git@github.com:opencdx/ui-library.git
+   - Under ui-library install project dependencies
+      ```bash
+      npm install
+
+## Installation
+
+1. Install the project dependencies using npm:
+   
+   ```bash
+   npm install
+
+
+2. Start the app
+
+   ```bash
+    npm start
+
+3.  The URL for the application will be dispalyed in the console logs (e.g http://localhost:3001). To access the application, copy that URL and add /dashboard to the end of the URL (e.g http://localhost:3001/dashboard).
+
+## Cypress
+
+1. Start the Cypress
+
+   ```bash
+    npm run cy
+
+2.  Open your web browser to access the application
+
+
 # Authentication:
 - Sign-In: A form for users to enter their credentials (username/email and password). Uses secure practices like hashing and salting passwords.
 - Registration: A form to create new accounts. It may include validation for password strength and email format.
@@ -60,72 +96,6 @@ Keyboard Navigation: All interactive elements can be accessed and used with a ke
 - Internationalization (i18n): Support for multiple languages to reach a broader audience.
 - Responsive Design: Ensures the application looks and functions well on various screen sizes (desktops, tablets, mobile devices).
 - Unit/Integration Testing: Tests that validate the functionality of individual components and their interactions.
-
-
-
-## Getting Started
-
-To get started, follow these steps:
-
-
-## Prerequisits
-
-Before cloning/forking this project, make sure you have the following tools installed:
-
-- [Git](https://git-scm.com/downloads)
-- [NodeJS](https://nodejs.org/en/download/)
-
-## Installation
-1. Clone the repository to your local machine:
-
-   ```bash
-   git clone https://[github.com/safe-health/hello-world-gui](https://github.com/safe-health/hello-world-gui/)
-
-2. Install the project dependencies using npm:
-   
-   ```bash
-   npm install
-
-
-3. Start the app
-
-   ```bash
-    npm run dev
-
-4.  Open your web browser and visit http://localhost:3000 to access the application
-
-
-![Thumbnail](https://github.com/safe-health/hello-world-gui/blob/main/public/dashboard.jpeg)
-
-
-
-## StoryBook
-
-1. Start the storybook
-
-   ```bash
-    npm run storybook
-
-2.  Open your web browser and visit http://localhost:6006/ to access the application
-
-
-![Thumbnail](https://github.com/safe-health/hello-world-gui/blob/main/public/storybook.jpeg)
-
-
-
-
-## Cypress
-
-1. Start the Cypress
-
-   ```bash
-    npm run cy
-
-2.  Open your web browser to access the application
-
-
-![Thumbnail](https://github.com/safe-health/hello-world-gui/blob/main/public/cypress.png)
-
 
 
 
