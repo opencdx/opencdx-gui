@@ -295,49 +295,6 @@ export default function BooleanQuestionConfig({
             </div>
             <Divider />
 
-            <div className='w-full'>
-                <Controller
-                    control={control}
-                    name={`${basePath}.enableWhen[0].operator`}
-                    render={({ field }) => (
-                        <RadioGroup
-                            orientation='horizontal'
-                            label='Select Operator'
-                            classNames={{
-                                label: 'text-md font-normal text-black mb-2',
-                                base: 'flex flex-wrap gap-4',
-                                wrapper: 'grid grid-cols-4 gap-4'
-                            }}
-                            value={String(field.value)}
-                            onChange={(event: { target: { value: string; }; }) => field.onChange(event.target.value)}
-                        >
-                            {
-                                (dataType === "boolean" || dataType === "choice" || dataType === "open-choice"
-                                    ? radioOptions
-                                    : radioOprionsExtended
-                                ).map((option) => (
-                                    <Radio
-                                        key={option.value}
-                                        value={option.value}
-                                        description={option.description}
-                                        size='md'
-                                        id={`${uniqueId}-${option.value}`}
-                                        classNames={{
-                                            base: 'w-full'
-                                        }}
-                                    >
-                                        {option.label}
-                                    </Radio>
-                                ))
-                            }
-                        </RadioGroup>
-                    )}
-                />
-            </div>
-
-
-            <Divider />
-
             {(dataType === "choice" || dataType === "open-choice") && (
                 <div>
                     <div>
