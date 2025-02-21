@@ -379,7 +379,7 @@ export default function BooleanQuestionConfig({
             )}
             <div className="space-y-4">
                 <p className="text-md font-medium">Answer required?</p>
-                <p className="text-sm text-gray-500">If yes, the questoin is required. If no, the question can be skipped.</p>
+                <p className="text-sm text-gray-500">If yes, the question is required. If no, the question can be skipped.</p>
                 <ControlledRadio name={`${basePath}.required`} />
                 <Divider />
                 <p className="text-md font-medium">Read only?</p>
