@@ -69,7 +69,7 @@
     "framer-motion": "~11.1.1",
     "immer": "^10.1.1",
     "intl-messageformat": "^10.5.0",
-    "lucide-react": "^0.395.0",
+    "lucide-react": "^0.474.0",
     "next": "14.2.14",
     "next-intl": "^3.17.2",
     "next-themes": "^0.2.1",
