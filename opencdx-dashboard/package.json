@@ -22,7 +22,7 @@
     "@emotion/styled": "^11.11.5",
     "@hello-pangea/dnd": "^17.0.0",
     "@hookform/resolvers": "^3.7.0",
-    "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
+    "@ianvs/prettier-plugin-sort-imports": "^4.4.0",
     "@mui/icons-material": "^5.16.7",
     "@nextui-org/breadcrumbs": "^2.0.10",
     "@nextui-org/button": "2.0.33",
