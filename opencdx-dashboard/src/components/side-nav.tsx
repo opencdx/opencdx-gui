@@ -178,7 +178,7 @@ export const SidebarLink = ({
         'flex items-start justify-start py-2',
       )}>
         <div className="flex items-start justify-start">
-          {selected ? link.selectedIcon : link.icon}
+          {selected ? link.selectedIcon() : link.icon()}
           {open && (
             <div className="text-white dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block pl-2">
               {link.label}

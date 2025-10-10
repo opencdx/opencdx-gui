@@ -4,12 +4,9 @@ import { Key, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
 import Image from 'next/image';
-import { NavbarContent, NavbarItem, Navbar as NextUINavbar } from '@nextui-org/navbar';
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, User } from 'ui-library';
 import { Locale } from '@/config/locale';
 import { setUserLocale } from '@/lib/locale';
 import { logout } from '@/hooks/iam-hooks';
-
 
 import arrowDown from '../../public/images/arrow-down.png';
 import settings from '../../public/settings.png';
@@ -25,13 +22,7 @@ export function Navbar() {
   const router = useRouter();
   const locale = useLocale();
 
-  const handleLocaleChange = useCallback((key: Locale) => {
-    if (key !== locale) {
-      setUserLocale(key);
-    }
-  }, [locale]);
-
-  const handleDropdownAction = useCallback((key: string) => {
+  const handleAction = useCallback((key: string) => {
     switch (key) {
       case 'logout':
         logout(router);
@@ -42,74 +33,54 @@ export function Navbar() {
       case 'locale':
         const otherLocale = localeOptions.find(option => option.key !== locale)?.key;
         if (otherLocale) {
-          handleLocaleChange(otherLocale);
+          setUserLocale(otherLocale);
         }
         break;
     }
-  }, [router, locale, handleLocaleChange]);
-
-  const dropdownItems = useMemo(() => [
-    {
-      key: 'locale',
-      label: localeOptions.find(option => option.key !== locale)?.label,
-      icon: language.src
-    },
-    { key: 'settings', label: 'Settings', icon: settings.src },
-    { key: 'change_password', label: 'Change Password', icon: language.src },
-    { key: 'logout', label: 'Logout', icon: logoutImage.src }
-  ], [locale]);
+  }, [router, locale]);
 
   return (
-    <NextUINavbar maxWidth="full" className="rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full" position="sticky" aria-label="User actions dropdown">
-      <NavbarContent justify="end" aria-label="User actions">
-        <NavbarItem className="hidden md:flex" aria-label="User actions Item">
-          <Dropdown>
-            <DropdownTrigger>
-              <Button
-                variant="light"
-                disableAnimation
-                className="w-full p-0"
-                endContent={
-                  <Image 
-                    src={arrowDown.src}
-                    alt="Open user menu" 
-                    width={24} 
-                    height={24} 
-                    priority 
-                    aria-hidden="true"
-                  />
-                }
-              >
-                <User 
-                  name="John Doe"
-                  aria-hidden="true"
-                />
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu 
-              variant="faded" 
-              selectionMode="single"
-              onAction={(key: Key) => handleDropdownAction(key as string) }
+    <nav className="flex justify-end items-center px-6 py-3 bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-700">
+      <div className="flex items-center gap-4">
+        <span className="text-sm font-medium">John Doe</span>
+        <div className="relative group">
+          <button
+            className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            aria-label="User menu"
+          >
+            <Image 
+              src={arrowDown.src}
+              alt="" 
+              width={16} 
+              height={16} 
+              priority 
+            />
+          </button>
+          <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-neutral-800 rounded-lg shadow-lg border border-neutral-200 dark:border-neutral-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+            <button
+              onClick={() => handleAction('locale')}
+              className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-left"
             >
-              {dropdownItems.map(({ key, label, icon }) => (
-                <DropdownItem
-                  key={key}
-                  startContent={
-                    <Image
-                      alt={`${label} icon`}
-                      src={icon}
-                      width={20}
-                      height={20}
-                    />
-                  }
-                >
-                  {label}
-                </DropdownItem>
-              ))}
-            </DropdownMenu>
-          </Dropdown>
-        </NavbarItem>
-      </NavbarContent>
-    </NextUINavbar>
+              <Image src={language} alt="" width={20} height={20} />
+              <span className="text-sm">{localeOptions.find(option => option.key !== locale)?.label}</span>
+            </button>
+            <button
+              onClick={() => handleAction('change_password')}
+              className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-left"
+            >
+              <Image src={settings} alt="" width={20} height={20} />
+              <span className="text-sm">Change Password</span>
+            </button>
+            <button
+              onClick={() => handleAction('logout')}
+              className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-left rounded-b-lg"
+            >
+              <Image src={logoutImage} alt="" width={20} height={20} />
+              <span className="text-sm">Logout</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
   );
 }
