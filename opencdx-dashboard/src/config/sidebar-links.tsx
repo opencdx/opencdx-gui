@@ -12,32 +12,31 @@ export const links = [
   {
     label: 'Dashboard',
     href: '/pages/dashboard',
-    icon: (
+    icon: () => (
       <Image src={dash.src} alt="" width={20} height={20} priority/>
     ),
-    selectedIcon: (
+    selectedIcon: () => (
       <Image src={dashSelected.src} alt="" width={20} height={20} priority/>
     ),
   },
   {
     label: 'Forms Builder',
     href: '/pages/form-builder',
-    icon: (
+    icon: () => (
       <Image src={formBuilder.src} alt="" width={20} height={20} priority/>
     ),
-    selectedIcon: (
+    selectedIcon: () => (
       <Image src={formBuilderSelected.src} alt="" width={20} height={20} priority/>
     ),
   },
   {
     label: 'Maps',
     href: '/pages/maps',
-    icon: (
+    icon: () => (
       <Image src={map.src} alt="" width={20} height={20} priority/>
     ),
-    selectedIcon: (
+    selectedIcon: () => (
       <Image src={mapSelected.src} alt="" width={20} height={20} priority/>
     ),
   },
- 
 ];

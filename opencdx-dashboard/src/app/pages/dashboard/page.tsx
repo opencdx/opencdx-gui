@@ -2,6 +2,7 @@
 
 import { Users, Clock, UserMinus, ClipboardList, Building, MessageSquare, Search } from 'lucide-react'
 import { Input, Card, CardBody, Image } from 'ui-library'
+import { PageErrorBoundary } from '@/components/custom/page-error-boundary';
 
 import person from '../../../../public/images/person.png';
 
@@ -35,37 +36,39 @@ const statCards = [
 
 export default function Component() {
   return (
-    <div className="bg-[#F4F9FF] min-h-screen p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
-        <header className="flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold">Welcome John!</h1>
-            <p className="text-muted-foreground">Here's a high-level look at your data to date.</p>
+    <PageErrorBoundary componentName="Dashboard">
+      <div className="bg-[#F4F9FF] min-h-screen p-6">
+        <div className="max-w-7xl mx-auto space-y-6">
+          <header className="flex justify-between items-center">
+            <div>
+              <h1 className="text-3xl font-bold">Welcome John!</h1>
+              <p className="text-muted-foreground">Here's a high-level look at your data to date.</p>
+            </div>
+            <div className="relative flex items-center">
+              <Image src="/images/person.png" alt="Search" width={20} height={20} />
+              <Input
+                type="search"
+                placeholder="Search all OpenCDx"
+                className="w-64 bg-white"
+                variant="bordered"
+              />
+            </div>
+          </header>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {statCards.map((card, index) => (
+              <StatCard key={index} {...card} />
+            ))}
           </div>
-          <div className="relative flex items-center">
-            <Image src="/images/person.png" alt="Search" width={20} height={20} />
-            <Input
-              type="search"
-              placeholder="Search all OpenCDx"
-              className="w-64 bg-white"
-              variant="bordered"
-            />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card className="h-64 bg-white rounded-lg overflow-hidden" />
+            <Card className="h-64 bg-white rounded-lg overflow-hidden" />
           </div>
-        </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {statCards.map((card, index) => (
-            <StatCard key={index} {...card} />
-          ))}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="h-64 bg-white rounded-lg overflow-hidden" />
           <Card className="h-64 bg-white rounded-lg overflow-hidden" />
         </div>
-
-        <Card className="h-64 bg-white rounded-lg overflow-hidden" />
       </div>
-    </div>
+    </PageErrorBoundary>
   )
 }

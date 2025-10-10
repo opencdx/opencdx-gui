@@ -51,7 +51,13 @@ export default function ListQuestionnaire() {
     return true;
   });
 
-  const [modalConfig, setModalConfig] = useState({
+  const [modalConfig, setModalConfig] = useState<{
+    isOpen: boolean;
+    title: string;
+    content: React.ReactNode;
+    footer: React.ReactNode;
+    height: string;
+  }>({
     isOpen: false,
     title: '',
     content: null,
