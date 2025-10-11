@@ -40,15 +40,30 @@ This project is the dashboard for the OpenCDx platform that contains the questio
 Before cloning/forking this project, make sure you have the following tools installed:
 
 - [Git](https://git-scm.com/downloads)
-- [NodeJS](https://nodejs.org/en/download/)
+- [NodeJS](https://nodejs.org/en/download/) (v20 or higher)
 - [OpenCDx UI Library](https://github.com/opencdx/ui-library)
 
-   - Clone the UI Library in the same parent directory as opencdx-gui (so parent directory contains both opencdx-gui and ui-library)
-      ```bash
-      git clone git@github.com:opencdx/ui-library.git
-   - Under ui-library install project dependencies
-      ```bash
-      npm install
+## ui-library Setup
+
+The dashboard depends on the OpenCDx UI Library. Clone and build it as a sibling directory:
+
+```bash
+# From parent directory containing opencdx-gui
+git clone https://github.com/opencdx/ui-library.git
+cd ui-library
+npm ci
+npm run build
+npm run build:types
+```
+
+**Important**: The dashboard uses `"ui-library": "file:../../ui-library"` which points to the built package. You must rebuild ui-library after making changes to it:
+
+```bash
+cd ui-library
+npm run build && npm run build:types
+cd ../opencdx-gui/opencdx-dashboard
+npm install  # Re-link updated build
+```
 
 ## Installation
 
@@ -57,11 +72,10 @@ Before cloning/forking this project, make sure you have the following tools inst
    ```bash
    npm install
 
-
 2. Start the app
 
    ```bash
-    npm start
+   npm start
 
 3.  The URL for the application will be dispalyed in the console logs (e.g http://localhost:3001). To access the application, copy that URL and add /dashboard to the end of the URL (e.g http://localhost:3001/dashboard).
 
