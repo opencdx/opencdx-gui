@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { Settings } from 'lucide-react';
 
 import dash from '../../public/images/dash.png';
 import dashSelected from '../../public/images/dash_selected.png';
@@ -7,7 +8,6 @@ import formBuilder from '../../public/images/form_builder.png';
 import formBuilderSelected from '../../public/images/form_builder_selected.png';
 import map from '../../public/images/map.png';
 import mapSelected from '../../public/images/map-selected.png';
-import settings from '../../public/settings.png';
 
 export const links = [
   {
@@ -44,10 +44,10 @@ export const links = [
     label: 'Setup',
     href: '/pages/setup',
     icon: () => (
-      <Image src={settings.src} alt="" width={20} height={20} priority/>
+      <Settings size={20} className="text-white" />
     ),
     selectedIcon: () => (
-      <Image src={settings.src} alt="" width={20} height={20} priority/>
+      <Settings size={20} className="text-white" />
     ),
   },
 ];
