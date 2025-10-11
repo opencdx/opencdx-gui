@@ -130,7 +130,7 @@ const Header = ({formTitle, control}: {formTitle: string, control: Control}) => 
                             />
                             
                             <Button type="submit" size='md' variant="solid" color="primary">
-                                Submit Form
+                                Save Form
                             </Button>
                         </div>
                     </div>

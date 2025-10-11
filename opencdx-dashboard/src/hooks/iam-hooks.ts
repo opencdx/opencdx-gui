@@ -1,5 +1,5 @@
 
-import { iamApi, questionnaireApi, classificationApi } from "../api";
+import { iamApi, iamOrgApi, iamWorkspaceApi, questionnaireApi, classificationApi } from "../api";
 import { LoginRequest, SignUpRequest, ChangePasswordRequest, ResetPasswordRequest, SignUpResponse } from "../api/iam";
 
 
@@ -159,5 +159,30 @@ export const handleSessionOut = (router: ReturnType<typeof useRouter>) => {
     if (!isAuthenticated || isAuthenticated.length === 0) {
         router.replace('/auth/login');
     }
+};
+
+// Dashboard metrics hooks
+export const useUserList = () => {
+    return useQuery({
+        queryKey: ['users'],
+        queryFn: () => iamApi.listIamUsers({ listIamUsersRequest: { pagination: { pageNumber: 0, pageSize: 100, sortAscending: true } } }),
+        staleTime: 60000 // 1 minute
+    });
+};
+
+export const useOrganizationList = () => {
+    return useQuery({
+        queryKey: ['organizations'],
+        queryFn: () => iamOrgApi.listIamOrganizations({ listIamOrganizationsRequest: { pagination: { pageNumber: 0, pageSize: 100, sortAscending: true } } }),
+        staleTime: 60000
+    });
+};
+
+export const useWorkspaceList = () => {
+    return useQuery({
+        queryKey: ['workspaces'],
+        queryFn: () => iamWorkspaceApi.listIamWorkspaces({ listIamWorkspacesRequest: { pagination: { pageNumber: 0, pageSize: 100, sortAscending: true } } }),
+        staleTime: 60000
+    });
 };
 

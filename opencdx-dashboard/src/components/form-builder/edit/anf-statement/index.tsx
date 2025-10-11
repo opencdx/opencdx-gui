@@ -122,10 +122,12 @@ const QuestionnaireItemWrapper: React.FC<{
       {/* Question display */}
       
 
-      <Accordion >
+      <Accordion defaultExpandedKeys={["0"]}>
         <AccordionItem
+          key="0"
           className=' bg-white px-6 mb-4'
           title={<><strong>Question {questionnaireItemId + 1}: </strong>{item?.text ?? ''}</>}
+          textValue={`Question ${questionnaireItemId + 1}: ${item?.text ?? ''}`}
         >
           <Question
             item={item}

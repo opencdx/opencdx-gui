@@ -100,9 +100,9 @@ const InfoItem: React.FC<InfoItemProps> = ({ icon, title, value, isEllipsis }) =
       {icon}
       <span className="text-sm font-semibold">{title}</span>
     </div>
-    <p className={`text-sm font-sm ml-8 ${isEllipsis ? 'truncate' : ''}`}>
+    <div className={`text-sm font-sm ml-8 ${isEllipsis ? 'truncate' : ''}`}>
       {value}
-    </p>
+    </div>
   </div>
 );
 

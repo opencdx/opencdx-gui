@@ -1,4 +1,9 @@
-import { Configuration as IAMConfig, OpenCdxiamUserRestControllerApi } from "./iam";
+import { 
+    Configuration as IAMConfig, 
+    OpenCdxiamUserRestControllerApi,
+    OpenCdxiamOrganizationRestControllerApi,
+    OpenCdxiamWorkspaceRestControllerApi
+} from "./iam";
 import { Configuration as QuestionnaireConfig, OpenCdxRestQuestionnaireControllerApi } from "./questionnaire";
 import { Configuration as ClassificationConfig, OpenCdxRestClassificationControllerApi } from "./classification";
 import { Configuration as TinkarConfig, OpenCdxRestTinkarSearchControllerApi } from "./tinkar"
@@ -33,5 +38,7 @@ tinkar.accessToken = async () => {
 
 export const classificationApi = new OpenCdxRestClassificationControllerApi(classification);
 export const iamApi = new OpenCdxiamUserRestControllerApi(iam);
+export const iamOrgApi = new OpenCdxiamOrganizationRestControllerApi(iam);
+export const iamWorkspaceApi = new OpenCdxiamWorkspaceRestControllerApi(iam);
 export const questionnaireApi = new OpenCdxRestQuestionnaireControllerApi(questionnaire);
 export const tinkarApi = new OpenCdxRestTinkarSearchControllerApi(tinkar);

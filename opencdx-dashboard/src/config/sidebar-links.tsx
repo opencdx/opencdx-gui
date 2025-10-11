@@ -7,6 +7,7 @@ import formBuilder from '../../public/images/form_builder.png';
 import formBuilderSelected from '../../public/images/form_builder_selected.png';
 import map from '../../public/images/map.png';
 import mapSelected from '../../public/images/map-selected.png';
+import settings from '../../public/settings.png';
 
 export const links = [
   {
@@ -37,6 +38,16 @@ export const links = [
     ),
     selectedIcon: () => (
       <Image src={mapSelected.src} alt="" width={20} height={20} priority/>
+    ),
+  },
+  {
+    label: 'Setup',
+    href: '/pages/setup',
+    icon: () => (
+      <Image src={settings.src} alt="" width={20} height={20} priority/>
+    ),
+    selectedIcon: () => (
+      <Image src={settings.src} alt="" width={20} height={20} priority/>
     ),
   },
 ];

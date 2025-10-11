@@ -3,6 +3,7 @@
 import { Users, Clock, UserMinus, ClipboardList, Building, MessageSquare, Search } from 'lucide-react'
 import { Input, Card, CardBody, Image } from 'ui-library'
 import { PageErrorBoundary } from '@/components/custom/page-error-boundary';
+import { useUserList, useOrganizationList, useWorkspaceList } from '@/hooks/iam-hooks';
 
 import person from '../../../../public/images/person.png';
 
@@ -25,16 +26,27 @@ const StatCard: React.FC<StatCardProps> = ({ icon, title, value, color }) => (
   </Card>
 )
 
-const statCards = [
-  { icon: <Image src={person.src} alt="Total Users" width={24} height={24} />, title: "Total Users", value: 571, color: "bg-blue-500" },
-  { icon: <Image src={person.src} alt="Pending" width={24} height={24} />, title: "Pending", value: 93, color: "bg-yellow-500" },
-  { icon: <Image src={person.src} alt="Inactive Users" width={24} height={24} />, title: "Inactive Users", value: 24, color: "bg-red-500" },
-  { icon: <Image src={person.src} alt="Test Types" width={24} height={24} />, title: "Test Types", value: 6, color: "bg-green-500" },
-  { icon: <Image src={person.src} alt="Organization" width={24} height={24} />, title: "Organization", value: 3, color: "bg-purple-500" },
-  { icon: <Image src={person.src} alt="User Responses" width={24} height={24} />, title: "User Responses", value: 8, color: "bg-indigo-500" },
-]
-
 export default function Component() {
+  const { data: userData } = useUserList();
+  const { data: orgData } = useOrganizationList();
+  const { data: workspaceData } = useWorkspaceList();
+
+  const users = userData?.data?.iamUsers || [];
+  const totalUsers = users.length;
+  const activeUsers = users.filter((u: any) => u.status === 'IAM_USER_STATUS_ACTIVE').length;
+  const inactiveUsers = users.filter((u: any) => u.status === 'IAM_USER_STATUS_INACTIVE').length;
+  const organizations = orgData?.data?.iamOrganizations?.length || 0;
+  const workspaces = workspaceData?.data?.iamWorkspaces?.length || 0;
+
+  const statCards = [
+    { icon: <Users size={24} />, title: "Total Users", value: totalUsers, color: "bg-blue-500" },
+    { icon: <Clock size={24} />, title: "Active Users", value: activeUsers, color: "bg-green-500" },
+    { icon: <UserMinus size={24} />, title: "Inactive Users", value: inactiveUsers, color: "bg-red-500" },
+    { icon: <ClipboardList size={24} />, title: "Forms", value: 0, color: "bg-yellow-500" },
+    { icon: <Building size={24} />, title: "Organizations", value: organizations, color: "bg-purple-500" },
+    { icon: <MessageSquare size={24} />, title: "Workspaces", value: workspaces, color: "bg-indigo-500" },
+  ];
+
   return (
     <PageErrorBoundary componentName="Dashboard">
       <div className="bg-[#F4F9FF] min-h-screen p-6">
@@ -45,7 +57,7 @@ export default function Component() {
               <p className="text-muted-foreground">Here's a high-level look at your data to date.</p>
             </div>
             <div className="relative flex items-center">
-              <Image src="/images/person.png" alt="Search" width={20} height={20} />
+              <Image src={person.src} alt="Search" width={20} height={20} />
               <Input
                 type="search"
                 placeholder="Search all OpenCDx"
@@ -62,11 +74,32 @@ export default function Component() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="h-64 bg-white rounded-lg overflow-hidden" />
-            <Card className="h-64 bg-white rounded-lg overflow-hidden" />
+            <Card className="h-64 bg-white rounded-lg overflow-hidden">
+              <CardBody className="flex items-center justify-center h-full">
+                <div className="text-center text-gray-400">
+                  <p className="text-lg font-medium">Analytics Chart</p>
+                  <p className="text-sm mt-2">Feature coming soon</p>
+                </div>
+              </CardBody>
+            </Card>
+            <Card className="h-64 bg-white rounded-lg overflow-hidden">
+              <CardBody className="flex items-center justify-center h-full">
+                <div className="text-center text-gray-400">
+                  <p className="text-lg font-medium">Recent Activity</p>
+                  <p className="text-sm mt-2">Feature coming soon</p>
+                </div>
+              </CardBody>
+            </Card>
           </div>
 
-          <Card className="h-64 bg-white rounded-lg overflow-hidden" />
+          <Card className="h-64 bg-white rounded-lg overflow-hidden">
+            <CardBody className="flex items-center justify-center h-full">
+              <div className="text-center text-gray-400">
+                <p className="text-lg font-medium">System Health Monitor</p>
+                <p className="text-sm mt-2">Feature coming soon</p>
+              </div>
+            </CardBody>
+          </Card>
         </div>
       </div>
     </PageErrorBoundary>
