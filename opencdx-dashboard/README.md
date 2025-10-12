@@ -43,6 +43,8 @@ Before cloning/forking this project, make sure you have the following tools inst
 - [NodeJS](https://nodejs.org/en/download/) (v20 or higher)
 - [OpenCDx UI Library](https://github.com/opencdx/ui-library)
 
+**Version Requirements**: See [VERSION_COMPATIBILITY.md](../../../.github/node/VERSION_COMPATIBILITY.md) for package version requirements.
+
 ## ui-library Setup
 
 The dashboard depends on the OpenCDx UI Library. Clone and build it as a sibling directory:
