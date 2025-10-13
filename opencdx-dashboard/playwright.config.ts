@@ -28,7 +28,7 @@ export default defineConfig({
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://localhost:3000/dashboard',
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://127.0.0.1:3000',
 
@@ -75,9 +75,11 @@ export default defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
+  // Leave webServer disabled; we start Next manually in dev to avoid port races.
   // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://127.0.0.1:3000',
-  //   reuseExistingServer: !process.env.CI,
+  //   command: 'PORT=3000 npm run start',
+  //   url: 'http://localhost:3000',
+  //   reuseExistingServer: true,
+  //   timeout: 300000
   // },
 });

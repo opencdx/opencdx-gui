@@ -26,18 +26,17 @@ test.describe('Login Page', () => {
   });
 
   test('should successfully log in with valid credentials', async ({ page }) => {
-    // Mock successful login API response
+    // Mock successful login API response with redirect
     await page.route('**/iam/user/login', async route => {
-      await route.fulfill({ status: 200, body: JSON.stringify({ success: true }) });
+      await route.fulfill({ status: 200, body: JSON.stringify({ success: true, redirect: '/dashboard/pages/form-builder' }) });
     });
 
     await page.getByLabel('Email Address').fill('admin@opencdx.org');
     await page.getByLabel('Password', { exact: true }).fill('password');
     await page.getByRole('button', { name: 'Login' }).click();
 
-    // Assert successful login (e.g., redirect to dashboard)
-    await page.waitForTimeout(3000);
-    await expect(page).toHaveURL('/dashboard/pages/form-builder');
+    // Wait for navigation to the dashboard page
+    await page.waitForURL('/dashboard/pages/form-builder', { timeout: 10000 });
   });
 
   test('should show error for invalid credentials', async ({ page }) => {
@@ -56,8 +55,8 @@ test.describe('Login Page', () => {
 
   test('should toggle password visibility', async ({ page }) => {
     const passwordInput = page.getByLabel('Password', { exact: true });
-    // Update the aria-label for the toggle button
-    const toggleButton = page.getByRole('button', { name: 'Toggle password visibility' });
+    // Button uses aria-label="toggle password visibility" (lowercase)
+    const toggleButton = page.getByRole('button', { name: 'toggle password visibility' });
 
     await passwordInput.fill('secretPassword');
     
@@ -75,14 +74,12 @@ test.describe('Login Page', () => {
 
   test('should navigate to forgot password page', async ({ page }) => {
     await page.getByRole('link', { name: 'Forgot Password', exact: true }).click();
-    await page.waitForTimeout(3000);
-    await expect(page).toHaveURL('/dashboard/auth/forgot-password');
+    await page.waitForURL('/dashboard/auth/forgot-password', { timeout: 10000 });
   });
 
   test('should navigate to signup page', async ({ page }) => {
     await page.getByRole('link', { name: "Sign Up" }).click();
-    await page.waitForTimeout(3000);
-    await expect(page).toHaveURL('dashboard/auth/signup');
+    await page.waitForURL('/dashboard/auth/signup', { timeout: 10000 });
   });
 
   test('upload form and save', async ({ page }) => {
@@ -93,27 +90,20 @@ test.describe('Login Page', () => {
     await page.getByLabel('Password', { exact: true }).fill('password');
     await page.getByRole('button', { name: 'Login' }).click();
 
-    // Save the file in variable to be uploaded
+    // Navigate to form builder
+    await page.goto('/dashboard/pages/form-builder');
+    // Upload JSON using the actual hidden input id
     const jsonFilePath = path.join(__dirname, 'file', 'alpha.json');
-    const fileInput = await page.locator('input[type="file"]');
-
-    // Upload the JSON file
-    await fileInput.setInputFiles(jsonFilePath);
+    await page.locator('#file-upload').setInputFiles(jsonFilePath);
+    await page.waitForURL('/dashboard/pages/edit-questionnaire/upload-questionnaire');
     await page.getByRole('button', { name: 'Add ANF Statement' }).click();
     await page.locator('label:has-text("ANF Statement Name*")').fill('Test');
     await page.locator('button:has-text("Done")').click();
     await page.locator('//img[@alt="Expand"]').click();
     await page.locator('//span[contains(text(),"Main ANF Statement")]').click();
-    // await page.locator('span:has-text("User Question")').click();
-    await page.getByRole('button', { name: 'Submit Form' }).click();
+    await page.getByRole('button', { name: 'Save Form' }).click();
     await page.waitForTimeout(3000);
   });
 
-  test.afterEach(async ( { page} ) => {
-    await page.close();
-  });
-
-  test.afterAll(async ( { browser }) => {
-    await browser.close();
-  });
+  // Note: Do not manually close page/browser; Playwright test runner manages lifecycle.
 });

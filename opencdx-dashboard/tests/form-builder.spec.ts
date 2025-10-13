@@ -406,7 +406,7 @@ test.describe('Form Builder', () => {
     });
 
     // Navigate to the form builder page
-    await page.goto('/form-builder');
+    await page.goto('/dashboard/pages/form-builder');
   });
 
   test('should display the form builder header', async ({ page }) => {
@@ -428,17 +428,13 @@ test.describe('Form Builder', () => {
 
   test('should open create new form page', async ({ page }) => {
     await page.click('button:has-text("Create New Form")');
-    await expect(page).toHaveURL('/edit-questionnaire/new-questionnaire');
+    await expect(page).toHaveURL('/dashboard/pages/edit-questionnaire/new-questionnaire');
   });
 
   test('should upload a form', async ({ page }) => {
-    const fileChooserPromise = page.waitForEvent('filechooser');
-    await page.click('label:has-text("Upload Form")');
-    const fileChooser = await fileChooserPromise;
-    await fileChooser.setFiles('./src/store/COVID-19.Simple.json');
-    
+    await page.locator('#file-upload').setInputFiles('./src/store/COVID-19.Simple.json');
     // Check if redirected to upload page
-    await expect(page).toHaveURL('/edit-questionnaire/upload-questionnaire');
+    await expect(page).toHaveURL('/dashboard/pages/edit-questionnaire/upload-questionnaire');
   });
 
   test('should display questionnaire cards in grid view', async ({ page }) => {
@@ -461,14 +457,14 @@ test.describe('Form Builder', () => {
     expect(download.suggestedFilename()).toMatch(/\.json$/);
 
     // Test edit form
-    await firstCard.locator('data-testid=edit-form').click();
-    await expect(page).toHaveURL(/\/edit-questionnaire\/\w+/);
+    await firstCard.getByTestId('edit-form').click();
+    await expect(page).toHaveURL(/\/dashboard\/pages\/edit-questionnaire\/\w+/);
     await page.goBack();
 
     // Test delete form
     await firstCard.locator('data-testid=delete-form').click();
     await expect(page.locator('role=dialog')).toBeVisible();
-    await expect(page.locator('role=dialog')).toContainText('Are you sure you want to delete this form?');
+    await expect(page.locator('role=dialog')).toContainText(/are you sure you want to delete this form\?/i);
     await page.click('button:has-text("Cancel")');
   });
 
@@ -491,14 +487,14 @@ test.describe('Form Builder', () => {
     expect(download.suggestedFilename()).toMatch(/\.json$/);
 
     // Test edit form
-    await firstRow.locator('data-testid=edit-form').click();
-    await expect(page).toHaveURL(/\/edit-questionnaire\/\w+/);
+    await firstRow.getByTestId('edit-form').click();
+    await expect(page).toHaveURL(/\/dashboard\/pages\/edit-questionnaire\/\w+/);
     await page.goBack();
 
     // Test delete form
     await firstRow.locator('data-testid=delete-form').click();
     await expect(page.locator('role=dialog')).toBeVisible();
-    await expect(page.locator('role=dialog')).toContainText('Are you sure you want to delete this form?');
+    await expect(page.locator('role=dialog')).toContainText(/are you sure you want to delete this form\?/i);
     await page.click('button:has-text("Cancel")');
   });
 
