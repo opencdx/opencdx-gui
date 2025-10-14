@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { Card, CardBody, CardFooter, CardHeader, Image } from 'ui-library';
 import { toast, ToastContainer } from 'react-toastify';
 
-import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 import { Button, Input } from 'ui-library';
 import {useTranslations} from 'next-intl';

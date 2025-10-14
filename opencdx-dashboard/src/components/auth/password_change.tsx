@@ -10,7 +10,7 @@ import React, { useState } from 'react';
 import { Card, CardBody, CardFooter, CardHeader, Image } from 'ui-library';
 import { toast, ToastContainer } from 'react-toastify';
 
-import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.min.css';
 import { usePasswordChange } from '@/hooks/iam-hooks';
 
 import { Button, Input } from 'ui-library';

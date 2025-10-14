@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { Settings } from 'lucide-react';
+import { Settings, Users } from 'lucide-react';
 
 import dash from '../../public/images/dash.png';
 import dashSelected from '../../public/images/dash_selected.png';
@@ -38,6 +38,16 @@ export const links = [
     ),
     selectedIcon: () => (
       <Image src={mapSelected.src} alt="" width={20} height={20} priority/>
+    ),
+  },
+  {
+    label: 'Users',
+    href: '/pages/users',
+    icon: () => (
+      <Users size={20} className="text-white" />
+    ),
+    selectedIcon: () => (
+      <Users size={20} className="text-white" />
     ),
   },
   {

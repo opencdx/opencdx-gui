@@ -7,7 +7,7 @@ import { useFormContext } from 'react-hook-form';
 import { QuestionnaireItemWrapper } from '../anf-statement'
 import { Modal, Input, Button, ModalHeader, ModalBody, ModalFooter, ModalContent } from 'ui-library';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 const Questions: React.FC = () => {
   const [activeTab, setActiveTab] = useState<{ item: QuestionnaireItem; idx: number } | null>(null);
@@ -126,20 +126,32 @@ const Questions: React.FC = () => {
                 {fields.map((item: QuestionnaireItem, idx: number) => (
                   <Draggable key={item.linkId || idx.toString()} draggableId={item.linkId || idx.toString()} index={idx}>
                     {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
-                      item.text && item.text.length > 40 ? (
-                        <Tooltip 
-                          content={`${idx + 1}. ${item.text}`} 
-                          placement="top"
-                          classNames={{
-                            base: "rounded-md",
-                            content: "bg-gray-900 text-white text-sm max-w-xs break-words"
-                          }}
-                        >
-                          {renderDraggableItem(provided, item, idx)}
-                        </Tooltip>
-                      ) : (
-                        renderDraggableItem(provided, item, idx)
-                      )
+                      (() => {
+                        const fullText = `${idx + 1}. ${item.text ?? ''}`;
+                        // Keep draggable refs on a DOM element, and make Tooltip child a plain string
+                        return (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                          >
+                            {item.text && item.text.length > 40 ? (
+                              <Tooltip
+                                content={fullText}
+                                placement="top"
+                                classNames={{
+                                  base: "rounded-md",
+                                  content: "bg-gray-900 text-white text-sm max-w-xs break-words"
+                                }}
+                              >
+                                {fullText}
+                              </Tooltip>
+                            ) : (
+                              renderDraggableItem(provided, item, idx)
+                            )}
+                          </div>
+                        );
+                      })()
                     )}
                   </Draggable>
                 ))}

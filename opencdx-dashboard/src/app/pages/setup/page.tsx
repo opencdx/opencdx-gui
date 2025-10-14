@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Card, CardBody } from 'ui-library';
 import axios from 'axios';
+ 
 
 interface AuditConfigStatus {
   natsAuditEnabled: boolean;
@@ -14,6 +15,7 @@ export default function SetupPage() {
   const [auditConfig, setAuditConfig] = useState<AuditConfigStatus | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  
 
   useEffect(() => {
     const fetchAuditConfig = async () => {
@@ -34,6 +36,8 @@ export default function SetupPage() {
 
     fetchAuditConfig();
   }, []);
+
+  
 
   return (
     <div className="p-8 bg-[#F4F9FF] min-h-screen">
@@ -113,6 +117,8 @@ export default function SetupPage() {
             )}
           </CardBody>
         </Card>
+
+        
 
         {/* Future Setup Sections */}
         <Card className="bg-white">

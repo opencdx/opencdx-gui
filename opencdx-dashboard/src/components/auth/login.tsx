@@ -15,7 +15,7 @@ import {
 } from 'ui-library';
 import { toast, ToastContainer } from 'react-toastify';
 
-import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 import { useLogin } from '@/hooks/iam-hooks';
 import { useTranslations } from 'next-intl';

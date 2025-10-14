@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.min.css';
 import { Questionnaire } from '@/api/questionnaire/model/questionnaire';
 import { useCreateQuestionnaire, useUpdateQuestionnaire } from '@/hooks/iam-hooks';
 import { Header } from './header';

@@ -4,6 +4,7 @@ import { Users, Clock, UserMinus, ClipboardList, Building, MessageSquare, Search
 import { Input, Card, CardBody, Image } from 'ui-library'
 import { PageErrorBoundary } from '@/components/custom/page-error-boundary';
 import { useUserList, useOrganizationList, useWorkspaceList } from '@/hooks/iam-hooks';
+import Link from 'next/link'
 
 import person from '../../../../public/images/person.png';
 
@@ -12,19 +13,23 @@ interface StatCardProps {
   title: string
   value: number
   color: string
+  href?: string
 }
 
-const StatCard: React.FC<StatCardProps> = ({ icon, title, value, color }) => (
-  <Card className="bg-white rounded-lg overflow-hidden">
-    <CardBody className="p-2 flex flex-row items-center  justify-center">
-      <div className={`text-white bg-primary-200 rounded-full p-1`}>{icon}</div>
-      <div>
-        <p className="text-sm text-muted-foreground px-2">{title}</p>
-        <p className="text-xl font-bold text-primary-500 text-left px-2">{value}</p>
-      </div>
-    </CardBody>
-  </Card>
-)
+const StatCard: React.FC<StatCardProps> = ({ icon, title, value, color, href }) => {
+  const content = (
+    <Card className="bg-white rounded-lg overflow-hidden">
+      <CardBody className="p-2 flex flex-row items-center  justify-center">
+        <div className={`text-white bg-primary-200 rounded-full p-1`}>{icon}</div>
+        <div>
+          <p className="text-sm text-muted-foreground px-2">{title}</p>
+          <p className="text-xl font-bold text-primary-500 text-left px-2">{value}</p>
+        </div>
+      </CardBody>
+    </Card>
+  );
+  return href ? <Link href={href} className="block">{content}</Link> : content;
+}
 
 export default function Component() {
   const { data: userData } = useUserList();
@@ -39,9 +44,9 @@ export default function Component() {
   const workspaces = workspaceData?.data?.iamWorkspaces?.length || 0;
 
   const statCards = [
-    { icon: <Users size={24} />, title: "Total Users", value: totalUsers, color: "bg-blue-500" },
-    { icon: <Clock size={24} />, title: "Active Users", value: activeUsers, color: "bg-green-500" },
-    { icon: <UserMinus size={24} />, title: "Inactive Users", value: inactiveUsers, color: "bg-red-500" },
+    { icon: <Users size={24} />, title: "Total Users", value: totalUsers, color: "bg-blue-500", href: "/pages/users" },
+    { icon: <Clock size={24} />, title: "Active Users", value: activeUsers, color: "bg-green-500", href: "/pages/users?status=active" },
+    { icon: <UserMinus size={24} />, title: "Inactive Users", value: inactiveUsers, color: "bg-red-500", href: "/pages/users?status=inactive" },
     { icon: <ClipboardList size={24} />, title: "Forms", value: 0, color: "bg-yellow-500" },
     { icon: <Building size={24} />, title: "Organizations", value: organizations, color: "bg-purple-500" },
     { icon: <MessageSquare size={24} />, title: "Workspaces", value: workspaces, color: "bg-indigo-500" },

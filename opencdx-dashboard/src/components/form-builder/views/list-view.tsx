@@ -104,18 +104,29 @@ const ListView: React.FC<ListViewProps> = ({
                 <td className="px-6 py-4">
                   <div className="flex space-x-2">
                     {[
-                      { action: onView, icon: removeRedEye.src, alt: 'Preview JSON', dataTestId: 'preview-json'   },
+                      { action: onView, icon: removeRedEye.src, alt: 'Preview JSON', dataTestId: 'preview-json' },
                       { action: onDownload, icon: fileDownload.src, alt: 'Download JSON', dataTestId: 'download-json' },
                       { action: onEdit, icon: editNote.src, alt: 'Edit Form', dataTestId: 'edit-form' },
                       { action: () => onDelete(questionnaire.id!, questionnaire.title!), icon: deleteOutline.src, alt: 'Delete Form', dataTestId: 'delete-form' },
-                    ].map(({ action, icon, alt ,dataTestId}, index) => (
-                      <Tooltip content={alt} placement="top" classNames={{
-                        base: "rounded-md",
-                        content: "bg-gray-900 text-white text-sm max-w-xs break-words"
-                      }}>
-                        <Button key={index} isIconOnly variant="bordered" color='primary' onPress={() => action(questionnaire)} data-testid={dataTestId}>
+                    ].map(({ action, icon, alt, dataTestId }) => (
+                      <Tooltip
+                        key={`${questionnaire.id}-${dataTestId}`}
+                        content={alt}
+                        placement="top"
+                        classNames={{
+                          base: "rounded-md",
+                          content: "bg-gray-900 text-white text-sm max-w-xs break-words"
+                        }}
+                      >
+                        <Button
+                          isIconOnly
+                          variant="bordered"
+                          color='primary'
+                          onPress={() => action(questionnaire)}
+                          data-testid={dataTestId}
+                        >
                           <Image src={icon} alt={alt} width={24} height={24} className='text-black-500 flex-shrink-0' />
-                      </Button>
+                        </Button>
                       </Tooltip>
                     ))}
                   </div>

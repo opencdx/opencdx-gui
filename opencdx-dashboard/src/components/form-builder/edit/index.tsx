@@ -9,7 +9,7 @@ import { Questionnaire } from '@/api/questionnaire/model/questionnaire';
 import { useForm, FormProvider } from 'react-hook-form';
 import { toast, ToastContainer } from 'react-toastify';
 
-import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.min.css';
 import { useTranslations } from 'next-intl';  
 
 const Edit: React.FC<{ questionnaireId: string }> = ({ questionnaireId }) => {

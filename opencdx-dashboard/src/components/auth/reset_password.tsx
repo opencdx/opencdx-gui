@@ -11,7 +11,7 @@ import logo from '../../../public/login-logo.png';
 import { Card, CardBody, CardFooter, CardHeader, Image, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from 'ui-library';
 import { toast, ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/navigation';
-import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.min.css';
 import { useResetPassword } from '@/hooks/iam-hooks';
 
 import { Button, Input } from 'ui-library';
