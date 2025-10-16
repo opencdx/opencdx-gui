@@ -36,6 +36,10 @@
         "foregroundImage": "./assets/logo-long.png",
         "backgroundColor": "#ffffff"
       }
+    },
+    "extra": {
+      "apiHost": "https://localhost",
+      "apiPort": ":8080"
     }
   }
 }

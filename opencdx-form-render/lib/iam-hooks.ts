@@ -22,10 +22,15 @@ export const useLogin = (onSuccess: (arg0: any) => void, onError: (arg0: unknown
         setError(null);
 
         try {
+            console.debug('[auth][login][request]', { userName: credentials?.userName });
             const response = await iamApi.login({ loginRequest: credentials });
+            console.debug('[auth][login][success]', { status: (response as any)?.status ?? 200 });
             if (onSuccess) onSuccess(response.data);
 
         } catch (err) {
+            const status = (err as any)?.response?.status;
+            const data = (err as any)?.response?.data;
+            console.warn('[auth][login][error]', { status, data });
             if (onError) onError(err);
         } finally {
             setLoading(false);
@@ -150,12 +155,16 @@ export const useGetHealthUserProfile = (onSuccess: (arg0: any) => void, onError:
 
         try {
             // Call the userProfile API
+            console.debug('[health][profile][request]');
             const response = await healthApi.getHealthUserProfile();
-            console.log(response.data)
+            console.debug('[health][profile][success]', { status: (response as any)?.status ?? 200 });
             // Execute the onSuccess callback if provided
             if (onSuccess) onSuccess(response.data);
         } catch (err) {
             setError(err as any);
+            const status = (err as any)?.response?.status;
+            const data = (err as any)?.response?.data;
+            console.warn('[health][profile][error]', { status, data });
 
             // Execute the onError callback if provided
             if (onError) onError(err);
