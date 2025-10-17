@@ -91,6 +91,11 @@ export default function RootLayout() {
                 title: 'Questionnaire',
                 contentStyle: { backgroundColor: 'white' },
               }} />
+              <Stack.Screen name="app/questionnaire/questionnaire-success" options={{
+                headerShown: false,
+                title: 'Questionnaire Complete',
+                contentStyle: { backgroundColor: 'white' },
+              }} />
               <Stack.Screen name="app/profile/index" options={{
                 headerShown: false,
                 title: 'Profile',
