@@ -1,0 +1,3703 @@
+{
+    "id": "67803815f538191c27faf8ac",
+    "resourceType": "",
+    "title": "At Home Syphilis Test",
+    "status": "active",
+    "description": "",
+    "item": [
+        {
+            "type": "number",
+            "linkId": "4abafaa9-ca69-4d61-813b-da9c814d8986",
+            "text": "Patient's age?",
+            "enableWhen": [
+                {}
+            ],
+            "code": [],
+            "item": [],
+            "extension": [],
+            "answerOption": [],
+            "initial": [
+                {}
+            ],
+            "anfStatementConnector": [
+                {
+                    "anfStatement": {
+                        "id": "8949b8a3-dab6-4f44-833d-8ed3e7754837",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "dd44b7a7-015a-336a-a5e0-2330f3ec44dd"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "{{REPLACE_4abafaa9-ca69-4d61-813b-da9c814d8986}}",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "{{REPLACE_4abafaa9-ca69-4d61-813b-da9c814d8986}}",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "03057bd4-1b5c-3b97-be04-eb0aa70b9ebf"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "",
+                    "name": "Main"
+                }
+            ],
+            "answer": []
+        },
+        {
+            "type": "choice",
+            "linkId": "ad09abf1-76ae-4ec1-b25f-48c2b0ed301b",
+            "text": "Patient's sex at birth?",
+            "enableWhen": [
+                {}
+            ],
+            "code": [],
+            "item": [],
+            "extension": [
+                {
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "id": "",
+                                "system": "",
+                                "version": "",
+                                "code": "",
+                                "display": ""
+                            }
+                        ]
+                    }
+                }
+            ],
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Male"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Female"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Intersex"
+                    },
+                    "extension": []
+                }
+            ],
+            "initial": [
+                {}
+            ],
+            "anfStatementConnector": [
+                {
+                    "anfStatement": {
+                        "id": "10c5a293-d10c-4379-8d77-6bf30d0abb97",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "cf312e35-e5e9-36e0-8ede-720a6e7aad72"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "Male",
+                    "name": "Male"
+                },
+                {
+                    "anfStatement": {
+                        "id": "e0699bd9-a370-4f4a-900f-a72d0a99e07f",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "47bd3fa7-e605-3185-bf2c-4fa5e9c5c469"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "Female",
+                    "name": "Female"
+                },
+                {
+                    "anfStatement": {
+                        "id": "f69ee139-c2c1-4318-9f2e-15a9daf40346",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "d536a730-fd7b-352f-b2a2-15d068dc149e"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "Intersex",
+                    "name": "Intersex"
+                }
+            ],
+            "answer": []
+        },
+        {
+            "type": "choice",
+            "linkId": "04ae0afd-db75-4f3a-b17b-258469765118",
+            "text": "Patient's current sex?",
+            "enableWhen": [
+                {}
+            ],
+            "code": [],
+            "item": [],
+            "extension": [
+                {
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "id": "",
+                                "system": "",
+                                "version": "",
+                                "code": "",
+                                "display": ""
+                            }
+                        ]
+                    }
+                }
+            ],
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Male"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Female"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Intersex"
+                    },
+                    "extension": []
+                }
+            ],
+            "initial": [
+                {}
+            ],
+            "anfStatementConnector": [
+                {
+                    "anfStatement": {
+                        "id": "209fd5ac-8fcd-4717-b1b3-e9e39e018acc",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "cf312e35-e5e9-36e0-8ede-720a6e7aad72"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "Male",
+                    "name": "Male"
+                },
+                {
+                    "anfStatement": {
+                        "id": "9eb3cb7e-571b-484e-b5ac-93f5e950e41d",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "47bd3fa7-e605-3185-bf2c-4fa5e9c5c469"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "Female",
+                    "name": "Female"
+                },
+                {
+                    "anfStatement": {
+                        "id": "ae4a4c15-8674-4a5d-9cbe-bd0385ec901f",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "d536a730-fd7b-352f-b2a2-15d068dc149e"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "Intersex",
+                    "name": "Intersex"
+                }
+            ],
+            "answer": []
+        },
+        {
+            "type": "choice",
+            "linkId": "1360767b-944d-4bee-b4b1-5b3e5ee294b0",
+            "text": "Patient's current gender?",
+            "enableWhen": [
+                {}
+            ],
+            "code": [],
+            "item": [],
+            "extension": [
+                {
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "id": "",
+                                "system": "",
+                                "version": "",
+                                "code": "",
+                                "display": ""
+                            }
+                        ]
+                    }
+                }
+            ],
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Male Gender"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Female Gender"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Transgender Male"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Transgender Female"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Nonbinary"
+                    },
+                    "extension": []
+                }
+            ],
+            "initial": [
+                {}
+            ],
+            "anfStatementConnector": [
+                {
+                    "anfStatement": {
+                        "id": "bd4c4aa1-611d-4a2b-bfca-42fa663de881",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "c4ec0ed1-57f3-37a4-ace2-81524f044b02"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "Male Gender",
+                    "name": "Male Gender"
+                },
+                {
+                    "anfStatement": {
+                        "id": "61c5d5bc-e758-4a38-9ab3-ccb2d705d42d",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "3f8f02e3-5c9e-3270-8c64-f3851480e81f"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "Female Gender",
+                    "name": "Female Gender"
+                },
+                {
+                    "anfStatement": {
+                        "id": "dc567c72-65d0-44be-b5b8-538878e206b2",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": ""
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "Transgender Male",
+                    "name": "Transgender Male"
+                },
+                {
+                    "anfStatement": {
+                        "id": "3a74314d-da3b-4f53-9e18-6746be33ac53",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": ""
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "Transgender Female",
+                    "name": "Transgender Female"
+                },
+                {
+                    "anfStatement": {
+                        "id": "3971f046-a40e-4a14-8b9b-bdb997cd4e1f",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "99e9e4ef-ab1f-313f-9a95-16a342166874"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "Nonbinary",
+                    "name": "Nonbinary"
+                }
+            ],
+            "answer": []
+        },
+        {
+            "type": "choice",
+            "linkId": "4c27ae87-6a7e-4f58-8ca4-f3275a7bdc97",
+            "text": "Patient's race?",
+            "enableWhen": [
+                {}
+            ],
+            "code": [],
+            "item": [],
+            "extension": [
+                {
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "id": "",
+                                "system": "",
+                                "version": "",
+                                "code": "",
+                                "display": ""
+                            }
+                        ]
+                    }
+                }
+            ],
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "American Indian or Alaska native"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Asian"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Black or African American"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Native Hawaiian or Other Pacific Islander"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "White"
+                    },
+                    "extension": []
+                }
+            ],
+            "initial": [
+                {}
+            ],
+            "anfStatementConnector": [
+                {
+                    "anfStatement": {
+                        "id": "723642fa-057b-4194-a760-955fcec243e7",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "a7e56e3e-e353-3ba9-806f-a538bd9abc6f"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "American Indian or Alaska native",
+                    "name": "American Indian or Alaska native"
+                },
+                {
+                    "anfStatement": {
+                        "id": "b04b78ad-0259-4262-b632-ab6b65dae1af",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "36624312-9577-35b6-a55e-a334d42269e5"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "Asian",
+                    "name": "Asian"
+                },
+                {
+                    "anfStatement": {
+                        "id": "b598942e-3aa6-496d-9a73-0478481031d9",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "21dd8200-113f-3fee-83c7-02321c17db78"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "Black or African American",
+                    "name": "Black or African American"
+                },
+                {
+                    "anfStatement": {
+                        "id": "e36bb810-b3cb-42ee-9446-b8c528db0fd4",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": ""
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "Native Hawaiian or Other Pacific Islander",
+                    "name": "Native Hawaiian or Other Pacific Islander"
+                },
+                {
+                    "anfStatement": {
+                        "id": "e189c7d0-5b6e-47b2-9f8b-31dbf2869669",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "2fcd53c3-c4c5-3410-8c74-b13dfa5ca7ae"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "White",
+                    "name": "White"
+                }
+            ],
+            "answer": []
+        },
+        {
+            "type": "choice",
+            "linkId": "021e0524-8013-45f2-b636-98b25c44bf81",
+            "text": "Patient's ethnicity?",
+            "enableWhen": [
+                {}
+            ],
+            "code": [],
+            "item": [],
+            "extension": [
+                {
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "id": "",
+                                "system": "",
+                                "version": "",
+                                "code": "",
+                                "display": ""
+                            }
+                        ]
+                    }
+                }
+            ],
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Hispanic or Latino"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Not hispanic or Latino"
+                    },
+                    "extension": []
+                }
+            ],
+            "initial": [
+                {}
+            ],
+            "anfStatementConnector": [
+                {
+                    "anfStatement": {
+                        "id": "e4fabe11-2bd8-4207-bfb5-9bba8f19237e",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "53f633c1-0116-3db2-b787-9224acc7db7b"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "Hispanic or Latino",
+                    "name": "Hispanic or Latino"
+                },
+                {
+                    "anfStatement": {
+                        "id": "06077881-b225-47fa-b875-b1289347b015",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": ""
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "Not hispanic or Latino",
+                    "name": "Not hispanic or Latino"
+                }
+            ],
+            "answer": []
+        },
+        {
+            "type": "boolean",
+            "linkId": "61516bd1-11b9-4fd3-9d2c-92154ba31cc7",
+            "text": "Does the patient have a history of syphilis?",
+            "enableWhen": [
+                {}
+            ],
+            "code": [],
+            "item": [],
+            "extension": [],
+            "answerOption": [],
+            "initial": [
+                {}
+            ],
+            "anfStatementConnector": [
+                {
+                    "anfStatement": {
+                        "id": "109874d7-2aae-4f48-b8e4-5fd2324f59f9",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "09a6918c-350f-3e86-8d97-b0b581ab7534"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "true",
+                    "name": "true"
+                },
+                {
+                    "anfStatement": {
+                        "id": "109874d7-2aae-4f48-b8e4-5fd2324f59f9",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "09a6918c-350f-3e86-8d97-b0b581ab7534"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "0",
+                                "upperBound": 0,
+                                "lowerBoundConfig": "0",
+                                "lowerBound": 0,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "14408bfd-fc60-3581-96ae-b8f7eb1075f7"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "false",
+                    "name": "false"
+                }
+            ],
+            "answer": []
+        },
+        {
+            "type": "boolean",
+            "linkId": "53636b09-a6be-458a-9fdf-9658472fa8d6",
+            "text": "Does the patient have genital lesions?",
+            "enableWhen": [
+                {}
+            ],
+            "code": [],
+            "item": [],
+            "extension": [],
+            "answerOption": [],
+            "initial": [
+                {}
+            ],
+            "anfStatementConnector": [
+                {
+                    "anfStatement": {
+                        "id": "8c1e138e-7ec5-451b-aa5e-d36b2f984e29",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "bb813239-fb52-3ef1-8c79-df775502b8ac"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "true",
+                    "name": "true"
+                },
+                {
+                    "anfStatement": {
+                        "id": "8c1e138e-7ec5-451b-aa5e-d36b2f984e29",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "bb813239-fb52-3ef1-8c79-df775502b8ac"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "0",
+                                "upperBound": 0,
+                                "lowerBoundConfig": "0",
+                                "lowerBound": 0,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "14408bfd-fc60-3581-96ae-b8f7eb1075f7"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "false",
+                    "name": "false"
+                }
+            ],
+            "answer": []
+        },
+        {
+            "type": "boolean",
+            "linkId": "c86332cd-4ce5-48d2-a2d6-7ba8e13859ed",
+            "text": "Does the patient have a rash on the palms of hands?",
+            "enableWhen": [
+                {}
+            ],
+            "code": [],
+            "item": [],
+            "extension": [],
+            "answerOption": [],
+            "initial": [
+                {}
+            ],
+            "anfStatementConnector": [
+                {
+                    "anfStatement": {
+                        "id": "e9848738-f25e-488a-bf38-9cf6a8e57f09",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": ""
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "true",
+                    "name": "true"
+                },
+                {
+                    "anfStatement": {
+                        "id": "e9848738-f25e-488a-bf38-9cf6a8e57f09",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": ""
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "0",
+                                "upperBound": 0,
+                                "lowerBoundConfig": "0",
+                                "lowerBound": 0,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "14408bfd-fc60-3581-96ae-b8f7eb1075f7"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "false",
+                    "name": "false"
+                }
+            ],
+            "answer": []
+        },
+        {
+            "type": "boolean",
+            "linkId": "84364800-dc3f-4d62-82f7-67b4f26e7d21",
+            "text": "Does the patient have a rash on the soles of feet?",
+            "enableWhen": [
+                {}
+            ],
+            "code": [],
+            "item": [],
+            "extension": [],
+            "answerOption": [],
+            "initial": [
+                {}
+            ],
+            "anfStatementConnector": [
+                {
+                    "anfStatement": {
+                        "id": "971c9f77-f5a2-44b4-bb60-bc340973e2e3",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "f76f1175-5f76-36e3-b348-02f0db36aef4"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "true",
+                    "name": "true"
+                },
+                {
+                    "anfStatement": {
+                        "id": "971c9f77-f5a2-44b4-bb60-bc340973e2e3",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "f76f1175-5f76-36e3-b348-02f0db36aef4"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "0",
+                                "upperBound": 0,
+                                "lowerBoundConfig": "0",
+                                "lowerBound": 0,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "14408bfd-fc60-3581-96ae-b8f7eb1075f7"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "false",
+                    "name": "false"
+                }
+            ],
+            "answer": []
+        },
+        {
+            "type": "boolean",
+            "linkId": "e25269f5-9ebd-4f71-971b-2fdb5ca9ec50",
+            "text": "Does the patient have white spots in your mouth?",
+            "enableWhen": [
+                {}
+            ],
+            "code": [],
+            "item": [],
+            "extension": [],
+            "answerOption": [],
+            "initial": [
+                {}
+            ],
+            "anfStatementConnector": [
+                {
+                    "anfStatement": {
+                        "id": "6f25409d-093b-4eb8-a705-74d950b384fb",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "65a60ff4-7524-3205-a59d-bef6db347a7e"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "true",
+                    "name": "true"
+                },
+                {
+                    "anfStatement": {
+                        "id": "6f25409d-093b-4eb8-a705-74d950b384fb",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "65a60ff4-7524-3205-a59d-bef6db347a7e"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "0",
+                                "upperBound": 0,
+                                "lowerBoundConfig": "0",
+                                "lowerBound": 0,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "14408bfd-fc60-3581-96ae-b8f7eb1075f7"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "false",
+                    "name": "false"
+                }
+            ],
+            "answer": []
+        },
+        {
+            "type": "boolean",
+            "linkId": "ffb1e68e-e4df-4bce-88a9-f97b51704830",
+            "text": "Was the patient sexually active in the past year?",
+            "enableWhen": [
+                {}
+            ],
+            "code": [],
+            "item": [],
+            "extension": [],
+            "answerOption": [],
+            "initial": [
+                {}
+            ],
+            "anfStatementConnector": [
+                {
+                    "anfStatement": {
+                        "id": "b98fcb7d-a928-4c1f-89a8-5cc1b05966be",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "d1261856-3728-3272-a59f-537f6383e231"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "true",
+                    "name": "true"
+                },
+                {
+                    "anfStatement": {
+                        "id": "b98fcb7d-a928-4c1f-89a8-5cc1b05966be",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "d1261856-3728-3272-a59f-537f6383e231"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "0",
+                                "upperBound": 0,
+                                "lowerBoundConfig": "0",
+                                "lowerBound": 0,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "14408bfd-fc60-3581-96ae-b8f7eb1075f7"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "false",
+                    "name": "false"
+                }
+            ],
+            "answer": []
+        },
+        {
+            "type": "number",
+            "linkId": "035415d6-e485-436d-b61b-8fe48a124aee",
+            "text": "Patient’s number of sexual partners last year?",
+            "enableWhen": [
+                {}
+            ],
+            "code": [],
+            "item": [],
+            "extension": [],
+            "answerOption": [],
+            "initial": [
+                {}
+            ],
+            "anfStatementConnector": [
+                {
+                    "anfStatement": {
+                        "id": "e20db106-213f-4f38-94a9-d146f37a6f22",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "b9062233-b112-3a30-957f-8a674a2769dc"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "{{REPLACE_035415d6-e485-436d-b61b-8fe48a124aee}}",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "{{REPLACE_035415d6-e485-436d-b61b-8fe48a124aee}}",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "",
+                    "name": "Patient’s number of sexual partners last year?"
+                }
+            ],
+            "answer": []
+        },
+        {
+            "type": "boolean",
+            "linkId": "bdb7264f-dea3-407f-9c15-20cebe8c2bb5",
+            "text": "Does the patient have sex with men?",
+            "enableWhen": [
+                {}
+            ],
+            "code": [],
+            "item": [],
+            "extension": [],
+            "answerOption": [],
+            "initial": [
+                {}
+            ],
+            "anfStatementConnector": [
+                {
+                    "anfStatement": {
+                        "id": "8fd7b26a-5d7c-4258-bbba-dba6e65fcd62",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "273f89c1-b46c-3467-8bab-cfbf5f103a99"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "true",
+                    "name": "true"
+                },
+                {
+                    "anfStatement": {
+                        "id": "8fd7b26a-5d7c-4258-bbba-dba6e65fcd62",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "273f89c1-b46c-3467-8bab-cfbf5f103a99"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "0",
+                                "upperBound": 0,
+                                "lowerBoundConfig": "0",
+                                "lowerBound": 0,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "14408bfd-fc60-3581-96ae-b8f7eb1075f7"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "false",
+                    "name": "false"
+                }
+            ],
+            "answer": []
+        },
+        {
+            "type": "boolean",
+            "linkId": "9b121878-eba4-4343-bd95-bd7d2c031080",
+            "text": "Does the patient have sex with women?",
+            "enableWhen": [
+                {}
+            ],
+            "code": [],
+            "item": [],
+            "extension": [],
+            "answerOption": [],
+            "initial": [
+                {}
+            ],
+            "anfStatementConnector": [
+                {
+                    "anfStatement": {
+                        "id": "4e4ef40e-4c7b-401b-879d-35604b62f66a",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "d7011a70-20dc-3f70-956f-3639b1ae6239"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "true",
+                    "name": "true"
+                },
+                {
+                    "anfStatement": {
+                        "id": "4e4ef40e-4c7b-401b-879d-35604b62f66a",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "d7011a70-20dc-3f70-956f-3639b1ae6239"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "0",
+                                "upperBound": 0,
+                                "lowerBoundConfig": "0",
+                                "lowerBound": 0,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "14408bfd-fc60-3581-96ae-b8f7eb1075f7"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "false",
+                    "name": "false"
+                }
+            ],
+            "answer": []
+        },
+        {
+            "type": "boolean",
+            "linkId": "33314f85-1f7b-499d-8e7d-a4938929a159",
+            "text": "Has the patient taken a syphilis antibodies test?",
+            "enableWhen": [
+                {}
+            ],
+            "code": [],
+            "item": [],
+            "extension": [],
+            "answerOption": [],
+            "initial": [
+                {}
+            ],
+            "anfStatementConnector": [
+                {
+                    "anfStatement": {
+                        "id": "1638a028-2cae-4c62-8f20-ff68fe948250",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "2d83b186-1ce3-3e63-b6f4-85d5ee5213ae"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "true",
+                    "name": "true"
+                },
+                {
+                    "anfStatement": {
+                        "id": "1638a028-2cae-4c62-8f20-ff68fe948250",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "2d83b186-1ce3-3e63-b6f4-85d5ee5213ae"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "14408bfd-fc60-3581-96ae-b8f7eb1075f7"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "false",
+                    "name": "false"
+                }
+            ],
+            "answer": []
+        },
+        {
+            "type": "datetime",
+            "linkId": "68e73e7b-ddb5-4afd-a231-2168b7b5e403",
+            "text": "When was the syphilis antibodies test ordered?",
+            "enableWhen": [
+                {}
+            ],
+            "code": [],
+            "item": [],
+            "extension": [],
+            "answerOption": [],
+            "initial": [
+                {}
+            ],
+            "anfStatementConnector": [
+                {
+                    "anfStatement": {
+                        "id": "ebc2153c-6f39-4d1a-b57a-6cf1718a68f0",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "2d83b186-1ce3-3e63-b6f4-85d5ee5213ae"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "true",
+                    "name": "true"
+                },
+                {
+                    "anfStatement": {
+                        "id": "ebc2153c-6f39-4d1a-b57a-6cf1718a68f0",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "2d83b186-1ce3-3e63-b6f4-85d5ee5213ae"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "0",
+                                "upperBound": 0,
+                                "lowerBoundConfig": "0",
+                                "lowerBound": 0,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "14408bfd-fc60-3581-96ae-b8f7eb1075f7"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "false",
+                    "name": "false"
+                }
+            ],
+            "answer": []
+        },
+        {
+            "type": "boolean",
+            "linkId": "4a6a303b-6823-4313-a2e1-cf3aaf723966",
+            "text": "Is a follow up syphilis antibodies test needed?",
+            "enableWhen": [
+                {}
+            ],
+            "code": [],
+            "item": [],
+            "extension": [],
+            "answerOption": [],
+            "initial": [
+                {}
+            ],
+            "anfStatementConnector": [
+                {
+                    "anfStatement": {
+                        "id": "15f3daac-4177-40b2-8135-c9e552e63a28",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "2d83b186-1ce3-3e63-b6f4-85d5ee5213ae"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "true",
+                    "name": "true"
+                },
+                {
+                    "anfStatement": {
+                        "id": "15f3daac-4177-40b2-8135-c9e552e63a28",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "2d83b186-1ce3-3e63-b6f4-85d5ee5213ae"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "0",
+                                "upperBound": 0,
+                                "lowerBoundConfig": "0",
+                                "lowerBound": 0,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "14408bfd-fc60-3581-96ae-b8f7eb1075f7"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "false",
+                    "name": "false"
+                }
+            ],
+            "answer": []
+        },
+        {
+            "type": "choice",
+            "linkId": "95d1d2b3-ce57-458f-8fa4-6c98f599c118",
+            "text": "Patient’s state of the syphilis infection?",
+            "enableWhen": [
+                {}
+            ],
+            "code": [],
+            "item": [],
+            "extension": [
+                {
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "id": "",
+                                "system": "",
+                                "version": "",
+                                "code": "",
+                                "display": ""
+                            }
+                        ]
+                    }
+                }
+            ],
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Primary syphilis"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Secondary syphilis"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Latent syphilis"
+                    },
+                    "extension": []
+                },
+                {
+                    "valueCoding": {
+                        "id": "",
+                        "system": "",
+                        "version": "",
+                        "code": "",
+                        "display": "Late (tertiary) syphilis"
+                    },
+                    "extension": []
+                }
+            ],
+            "initial": [
+                {}
+            ],
+            "anfStatementConnector": [
+                {
+                    "anfStatement": {
+                        "id": "5860cf25-5d95-4673-b5f4-cedbb3948766",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "149ef402-9aad-30a0-a2c3-ee64f08bdb53"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "Primary syphilis",
+                    "name": "Primary syphilis"
+                },
+                {
+                    "anfStatement": {
+                        "id": "4b06c6db-2cd5-4d54-b19e-9d07fe96a2c1",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "033bf3bc-e3e8-3be7-a76d-1607b09cbbb9"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "Secondary syphilis",
+                    "name": "Secondary syphilis"
+                },
+                {
+                    "anfStatement": {
+                        "id": "804abc4d-a38a-4e19-bf2b-c487cd8f1a53",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "36061b49-5ba7-3d19-b297-8022d831c546"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "Latent syphilis",
+                    "name": "Latent syphilis"
+                },
+                {
+                    "anfStatement": {
+                        "id": "2f6a3854-6aac-451e-8a33-cd75ab6370b7",
+                        "time": {
+                            "upperBoundConfig": "",
+                            "upperBound": 0,
+                            "lowerBoundConfig": "",
+                            "lowerBound": 0,
+                            "includeUpperBound": true,
+                            "includeLowerBound": true,
+                            "semantic": {
+                                "expression": "b5ba88ba-22d5-37fe-a9a1-b82c377e0212"
+                            },
+                            "resolution": 1
+                        },
+                        "subjectOfRecord": {
+                            "id": "",
+                            "code": {
+                                "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                            }
+                        },
+                        "authors": [],
+                        "subjectOfInformation": {
+                            "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                        },
+                        "associatedStatement": [],
+                        "topic": {
+                            "expression": "254b9a3c-be88-3f4c-9eab-86937741c7d3"
+                        },
+                        "type": {
+                            "expression": "395cc864-7c51-4072-b3e7-f9195b40053a"
+                        },
+                        "performanceCircumstance": {
+                            "purpose": [],
+                            "status": {
+                                "expression": "eb5ce0e5-3516-3006-be5b-c95f8c1ca078"
+                            },
+                            "result": {
+                                "upperBoundConfig": "1",
+                                "upperBound": 1,
+                                "lowerBoundConfig": "1",
+                                "lowerBound": 1,
+                                "includeUpperBound": true,
+                                "includeLowerBound": true,
+                                "semantic": {
+                                    "expression": "8a2ec13a-fada-3d24-bc27-f3b81c9dec02"
+                                },
+                                "resolution": 1
+                            },
+                            "participant": [
+                                {
+                                    "id": "",
+                                    "code": {
+                                        "expression": "86490a44-8539-31e2-8e0f-3a6253a72fca"
+                                    }
+                                }
+                            ],
+                            "deviceid": []
+                        },
+                        "status": "STATUS_UNSPECIFIED"
+                    },
+                    "anfStatementType": "ANF_STATEMENT_TYPE_MAIN",
+                    "anfOperatorType": "ANF_OPERATOR_TYPE_EQUAL",
+                    "operatorValue": "Late (tertiary) syphilis",
+                    "name": "Late (tertiary) syphilis"
+                }
+            ],
+            "answer": []
+        }
+    ],
+    "ruleQuestionId": [],
+    "created": "2025-01-09T20:56:53.762Z",
+    "modified": "2025-01-22T18:46:30.277Z",
+    "creator": "676436ead7fa3e6eceaa27d3",
+    "modifier": "676436ead7fa3e6eceaa27d3",
+    "version": "34"
+}
