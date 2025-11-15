@@ -44,7 +44,7 @@
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-hook-form": "^7.53.1",
-    "react-native": "0.79.2",
+    "react-native": "0.81.0",
     "react-native-gesture-handler": "~2.16.1",
     "react-native-paper": "^5.12.5",
     "react-native-reanimated": "~3.10.1",
